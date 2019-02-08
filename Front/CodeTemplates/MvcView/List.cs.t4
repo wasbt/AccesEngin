@@ -1,0 +1,181 @@
+﻿<#@ template language="C#" HostSpecific="True" #>
+<#@ output extension=".cshtml" #>
+<#@ include file="Imports.include.t4" #>
+@model Front.Models.StandardModel<#= "<" + ViewDataTypeName + ">" #>
+@using PagedList.Mvc
+<#
+// The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
+if(IsPartialView) {
+#>
+
+<#
+} else if(IsLayoutPageSelected) {
+#>
+
+@{
+    ViewBag.Title = "Gestion des XXX";
+<#
+if (!String.IsNullOrEmpty(LayoutPageFile)) {
+#>
+    Layout = "<#= LayoutPageFile#>";
+<#
+}
+#>
+}
+
+<#
+} else {
+#>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title><#= ViewName #></title>
+</head>
+<body>
+<#
+    PushIndent("    ");
+}
+#>
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card-box">
+<div class="row">
+    <div id="search" class="col-md-10 form-inline pull-left">
+		@using (Html.BeginForm())
+		{
+            @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control", placeholder = ".." } })
+			@Html.DropDownList("columnName", UIHelper.GetSelectList("<#= ViewDataTypeName #>"), new { @class = "form-control" })
+			@Html.Hidden("newSearch",1)
+			<input class="btn btn-default btn-search" type="submit" value="Filtrer" />
+		}
+	</div>
+    <div class="col-md-2 text-right">
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-rounded create-link">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
+        </a>
+    </div>
+</div>
+
+<table class="@UIHelper.CrudTableCss">
+    <tr>
+<#
+IEnumerable<PropertyMetadata> properties = ModelMetadata.Properties;
+foreach (PropertyMetadata property in properties) {
+    
+	if (property.IsPrimaryKey)
+		{
+#>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().<#= GetValueExpression(property) #>)
+        </th>
+<#
+		continue;
+		}
+	
+	
+	
+	if (property.Scaffold  && !property.IsForeignKey) {
+#>
+<#
+		
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().<#= GetValueExpression(property) #>)
+        </th>
+<#
+    }
+}
+#>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.resultList) {
+    <tr class="line">
+<#
+foreach (PropertyMetadata property in properties) {
+	if (property.IsPrimaryKey)
+		{
+#>
+        <td>
+            @Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
+        </td>
+<#
+		continue;
+		}
+
+    if (property.Scaffold  && !property.IsForeignKey) {
+#>
+<#
+        // We do not want to show any association properties for which there is
+        // no associated foreign key.
+        if (property.IsAssociation && GetRelatedModelMetadata(property) == null) {
+            continue;
+        }
+#>
+        <td>
+            @Html.DisplayFor(modelItem => <#= "item." + GetValueExpression(property) #>)
+        </td>
+<#
+    }
+}
+
+string pkName = GetPrimaryKeyName();
+if (pkName != null) {
+#>
+        <td class="AdminListButtons">
+			@Html.Partial("_AdminListButtons", item.Id)
+        </td>
+<#
+} else {
+#>
+        <td class="AdminListButtons">
+			@Html.Partial("_AdminListButtons", item.Id)
+        </td>
+<#
+}
+#>
+    </tr>
+}
+
+</table>
+<br />
+
+Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
+@Html.PagedListPager(Model.resultList, page => Url.Action("Index", new { page, Model.content , Model.columnName }))
+</div>
+</div>
+</div>
+
+
+@section scripts{
+    <link href="~/Content/admin-crud.css" rel="stylesheet" />
+    <script src="~/Scripts/admin.crud.js"></script>
+}
+
+
+<#
+// The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+#>
+<#
+if(!IsPartialView && !IsLayoutPageSelected) {
+    ClearIndent();
+#>
+</body>
+</html>
+<#
+}
+#>
+<#@ include file="ModelMetadataFunctions.cs.include.t4" #>
