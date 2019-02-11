@@ -157,15 +157,46 @@
         </div> <!-- end navbar-custom -->
     </header>
     <!-- End Navigation Bar-->
+    <div class="wrapper">
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="pull-right m-t-20">
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+                    </div>
+                    <h4 class="page-title">@ViewBag.Title</h4>
+                </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            @Html.Partial("_MessageHeader")
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @RenderBody()
+
+                </div>
+            </div>
+        </div>
+        <!-- end container -->
+        <!-- Right Sidebar -->
+        <div class="side-bar right-bar">
+            <a href="javascript:void(0);" class="right-bar-toggle">
+                <i class="mdi mdi-close-circle-outline"></i>
+            </a>
+        </div>
+        <!-- /Right-bar -->
     </div>
 
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    2016 - @DateTime.Now.Year © Ocp Acces D'Engin
+                </div>
+            </div>
+        </div>
+    </footer>
     @*@Html.Partial("_FooterAllScripts")*@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
 

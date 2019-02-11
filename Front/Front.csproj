@@ -45,10 +45,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -109,6 +120,15 @@
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList, Version=7.5.0.0, Culture=neutral, PublicKeyToken=00b6c4f97602e5e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.7.5.0\lib\net461\X.PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc, Version=7.5.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.7.5.0\lib\net461\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc.Bootstrap4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.Bootstrap4.7.5.0\lib\net452\X.PagedList.Mvc.Bootstrap4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -189,14 +209,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AGUtils\UIHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\TypeCheckListsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -205,6 +228,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\StandardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1412,6 +1436,11 @@
     <Content Include="Areas\BackOffice\Views\TypeCheckLists\Details.cshtml" />
     <Content Include="Areas\BackOffice\Views\TypeCheckLists\Edit.cshtml" />
     <Content Include="Areas\BackOffice\Views\TypeCheckLists\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Profiles\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Profiles\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Profiles\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Profiles\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Profiles\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1457,11 +1486,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_MessageHeader.cshtml" />
+    <Content Include="Views\Shared\_BackToList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BackOffice\Models\" />
     <Folder Include="assets\plugins\jstree\themes\default\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -1477,9 +1509,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL.csproj">
+      <Project>{9708b573-cfe4-432d-b97e-7db4efa4ca0f}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{bf483b4a-8efb-493e-8493-7fa9e5210d94}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{637b4990-5383-476f-8cff-d9da909bc92c}</Project>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

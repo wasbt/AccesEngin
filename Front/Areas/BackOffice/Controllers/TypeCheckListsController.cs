@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -10,27 +11,51 @@ using DAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
-using Shared.Models;
+using Shared;
+using Front.AGUtils;
 
 namespace Front.Areas.BackOffice.Controllers
 {
     public class TypeCheckListsController : BaseController
     {
         // GET: BackOffice/TypeCheckLists
-        public ActionResult Index(StandardModel<TypeCheckList> model)
+        public async Task<ActionResult> Index(StandardModel<TypeCheckList> model)
         {
             var typeCheckList = context.TypeCheckList.Include(t => t.AspNetUsers);
-            return View(typeCheckList.ToList());
+            int pageSize = 10;
+            
+			int pageNumber = (model.page ?? 1);
+
+            pageNumber = (model.newSearch ?? pageNumber);
+
+			var query = context.TypeCheckList.AsQueryable();
+
+            if (!String.IsNullOrEmpty(model.content))
+            {
+                query = (IQueryable<TypeCheckList>)query.ProcessWhere(model.columnName, model.content);
+            }
+
+            query = query.OrderBy(x => x.Id);
+
+			model.resultList = query.ToPagedList(pageNumber, pageSize);
+            
+			ViewBag.Log = query.ToString();
+
+            return View(model);
+
+			// V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
+            // V1: return View(await Task.Run(()=>typeCheckList.OrderBy(x=>x.Id).ToPagedList(pageNumber,pageSize)));
+            // V0: return View(await typeCheckList.ToListAsync());
         }
 
         // GET: BackOffice/TypeCheckLists/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeCheckList typeCheckList = context.TypeCheckList.Find(id);
+            TypeCheckList typeCheckList = await context.TypeCheckList.FindAsync(id);
             if (typeCheckList == null)
             {
                 return HttpNotFound();
@@ -41,7 +66,6 @@ namespace Front.Areas.BackOffice.Controllers
         // GET: BackOffice/TypeCheckLists/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
             return View();
         }
 
@@ -50,13 +74,15 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CreatedOn,CreatedBy")] TypeCheckList typeCheckList)
+        public async Task<ActionResult> Create(TypeCheckList typeCheckList)
         {
+                typeCheckList.CreatedOn = DateTime.Now;
+                typeCheckList.CreatedBy = CurrentUserId;
             if (ModelState.IsValid)
             {
                 context.TypeCheckList.Add(typeCheckList);
-                context.SaveChanges();
-				TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
+                await context.SaveChangesAsync();
+				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
@@ -65,13 +91,13 @@ namespace Front.Areas.BackOffice.Controllers
         }
 
         // GET: BackOffice/TypeCheckLists/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeCheckList typeCheckList = context.TypeCheckList.Find(id);
+            TypeCheckList typeCheckList = await context.TypeCheckList.FindAsync(id);
             if (typeCheckList == null)
             {
                 return HttpNotFound();
@@ -85,13 +111,13 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CreatedOn,CreatedBy")] TypeCheckList typeCheckList)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedOn,CreatedBy")] TypeCheckList typeCheckList)
         {
             if (ModelState.IsValid)
             {
                 context.Entry(typeCheckList).State = EntityState.Modified;
-                context.SaveChanges();
-				TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
+                await context.SaveChangesAsync();
+				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", typeCheckList.CreatedBy);
@@ -99,13 +125,13 @@ namespace Front.Areas.BackOffice.Controllers
         }
 
         // GET: BackOffice/TypeCheckLists/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeCheckList typeCheckList = context.TypeCheckList.Find(id);
+            TypeCheckList typeCheckList = await context.TypeCheckList.FindAsync(id);
             if (typeCheckList == null)
             {
                 return HttpNotFound();
@@ -116,12 +142,12 @@ namespace Front.Areas.BackOffice.Controllers
         // POST: BackOffice/TypeCheckLists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            TypeCheckList typeCheckList = context.TypeCheckList.Find(id);
+            TypeCheckList typeCheckList = await context.TypeCheckList.FindAsync(id);
             context.TypeCheckList.Remove(typeCheckList);
-            context.SaveChanges();
-            TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
+            await context.SaveChangesAsync();
+            TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");
         }
 

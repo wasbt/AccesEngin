@@ -1,0 +1,24 @@
+﻿@using Shared
+@{
+    var successMessage = TempData[ConstsAccesEngin.MESSAGE_SUCCESS] as string;
+    var errorMessage = TempData[ConstsAccesEngin.MESSAGE_ERROR] as string;
+}
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Erreur !</strong> @Html.Raw(errorMessage)
+    </div>
+}
+
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success alert-dismissible green" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Succès !</strong> @Html.Raw(successMessage)
+    </div>
+}
+
+
+

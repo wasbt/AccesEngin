@@ -1,0 +1,76 @@
+﻿@model DAL.Profiles
+
+@{
+    ViewBag.Title = "Attention !";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+<h3>Etes-vous sûr de vouloir procéder à la suppression?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DtLastConnection)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DtLastConnection)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.Partial("_BackToList")
+            @Html.Partial("_BtnDelete")
+        </div>
+    }
+</div>
+</div>
+</div>
+</div>

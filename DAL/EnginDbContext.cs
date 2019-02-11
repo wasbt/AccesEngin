@@ -6,22 +6,23 @@ namespace DAL
     using System.Linq;
     using DAL.Configurations;
 
-    public partial class EnginModel : DbContext
+    public partial class EnginDbContext : DbContext
     {
-        public EnginModel()
+        public EnginDbContext()
             : base("name=EnginDataModel")
         {
         }
 
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AppFile> AppFile { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<CheckListExigence> CheckListExigence { get; set; }
         public virtual DbSet<CheckListRubrique> CheckListRubrique { get; set; }
         public virtual DbSet<DemandeAccesEngin> DemandeAccesEngin { get; set; }
-        public virtual DbSet<Profiles> Profile { get; set; }
         public virtual DbSet<ResultatExigence> ResultatExigence { get; set; }
+        public virtual DbSet<Profile> Profile { get; set; }
         public virtual DbSet<TypeCheckList> TypeCheckList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

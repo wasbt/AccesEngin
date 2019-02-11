@@ -58,9 +58,22 @@
     <Compile Include="CheckListRubrique.cs" />
     <Compile Include="Configurations\ProfileEntityConfiguration.cs" />
     <Compile Include="DemandeAccesEngin.cs" />
-    <Compile Include="EnginModel.cs" />
+    <Compile Include="EnginDbContext.cs" />
+    <Compile Include="AppFile.cs" />
+    <Compile Include="Migrations\201902111507055_addTableFile.cs" />
+    <Compile Include="Migrations\201902111507055_addTableFile.Designer.cs">
+      <DependentUpon>201902111507055_addTableFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111656302_Profile.cs" />
+    <Compile Include="Migrations\201902111656302_Profile.Designer.cs">
+      <DependentUpon>201902111656302_Profile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902111700134_Profiles.cs" />
+    <Compile Include="Migrations\201902111700134_Profiles.Designer.cs">
+      <DependentUpon>201902111700134_Profiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Profiles.cs" />
+    <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultatExigence.cs" />
     <Compile Include="TypeCheckList.cs" />
@@ -68,6 +81,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201902111507055_addTableFile.resx">
+      <DependentUpon>201902111507055_addTableFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111656302_Profile.resx">
+      <DependentUpon>201902111656302_Profile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111700134_Profiles.resx">
+      <DependentUpon>201902111700134_Profiles.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

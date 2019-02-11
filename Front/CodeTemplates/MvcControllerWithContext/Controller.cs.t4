@@ -49,7 +49,8 @@ using <#= namespaceName #>;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
-using Shared.Models;
+using Shared;
+using Front.AGUtils;
 
 namespace <#= Namespace #>
 {
@@ -206,7 +207,7 @@ namespace <#= Namespace #>
 <# } else { #>
                 context.SaveChanges();
 <# } #>
-				TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
+				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
@@ -264,7 +265,7 @@ namespace <#= Namespace #>
 <# } else { #>
                 context.SaveChanges();
 <# } #>
-				TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
+				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
 <# foreach (var property in relatedProperties.Values) { #>
@@ -316,7 +317,7 @@ namespace <#= Namespace #>
 <# } else { #>
             context.SaveChanges();
 <# } #>
-            TempData[ConstsOcpVlr.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
+            TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");
         }
 

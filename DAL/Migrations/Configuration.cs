@@ -5,14 +5,14 @@ namespace DAL.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DAL.EnginModel>
+    internal sealed class Configuration : DbMigrationsConfiguration<DAL.EnginDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(DAL.EnginModel context)
+        protected override void Seed(DAL.EnginDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
