@@ -3,7 +3,7 @@ namespace DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Profile : DbMigration
+    public partial class removerequiredFKcreateByfromdal : DbMigration
     {
         public override void Up()
         {

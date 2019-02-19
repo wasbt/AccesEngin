@@ -7,18 +7,18 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class addTableFile : IMigrationMetadata
+    public sealed partial class removerequiredFKcreateByfromdal : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addTableFile));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removerequiredFKcreateByfromdal));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902111507055_addTableFile"; }
+            get { return "201902121110426_remove required FK createBy from dal"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

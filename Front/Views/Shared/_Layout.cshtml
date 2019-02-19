@@ -148,7 +148,9 @@
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
                         <li class="has-submenu">
-                            <a href="index.html"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                            <a href="@Url.Action("Index", "Settings", new { area = "BackOffice" })">
+                                <i class="fa fa-cog"></i>Administration
+                            </a>
                         </li>
                     </ul>
                     <!-- End navigation menu -->

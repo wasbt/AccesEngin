@@ -23,7 +23,6 @@ namespace DAL
 
         public DateTime CreatedOn { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string CreatedBy { get; set; }
 

@@ -4,7 +4,6 @@ namespace DAL
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using DAL.Configurations;
 
     public partial class EnginDbContext : DbContext
     {
@@ -14,16 +13,16 @@ namespace DAL
         }
 
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AppFile> AppFile { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<CheckListExigence> CheckListExigence { get; set; }
         public virtual DbSet<CheckListRubrique> CheckListRubrique { get; set; }
         public virtual DbSet<DemandeAccesEngin> DemandeAccesEngin { get; set; }
-        public virtual DbSet<ResultatExigence> ResultatExigence { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
+        public virtual DbSet<ResultatExigence> ResultatExigence { get; set; }
         public virtual DbSet<TypeCheckList> TypeCheckList { get; set; }
+        public virtual DbSet<AppFile> AppFile { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -68,6 +67,9 @@ namespace DAL
                 .HasForeignKey(e => e.CreatedBy)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<AspNetUsers>()
+                .HasOptional(e => e.Profile)
+                .WithRequired(e => e.AspNetUsers);
 
             modelBuilder.Entity<CheckListExigence>()
                 .HasMany(e => e.ResultatExigence)
@@ -93,9 +95,6 @@ namespace DAL
                 .HasMany(e => e.DemandeAccesEngin)
                 .WithRequired(e => e.TypeCheckList)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Configurations.Add(new ProfileEntityConfiguration());
-
         }
     }
 }

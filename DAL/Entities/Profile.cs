@@ -6,6 +6,7 @@ namespace DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("Profile")]
     public partial class Profile
     {
         public string Id { get; set; }

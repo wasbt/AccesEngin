@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Profiles] (
+﻿CREATE TABLE [dbo].[Profile] (
     [Id]               NVARCHAR (128) NOT NULL,
     [FullName]         NVARCHAR (MAX) NULL,
     [Email]            NVARCHAR (MAX) NULL,

@@ -9,11 +9,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Front.Models;
+using System.Data.Entity;
+using Shared;
 
 namespace Front.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -22,7 +24,7 @@ namespace Front.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +36,9 @@ namespace Front.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -79,6 +81,35 @@ namespace Front.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    FillSessionParamsFor(model.Email);
+                    #region Save last connexion date
+                    //UserProfile profil = new UserProfile();
+                    try
+                    {
+                        var profil = context.Profile.SingleOrDefault(u => u.Email == model.Email);
+                        profil.DtLastConnection = DateTime.Now;
+                        context.Entry(profil).State = EntityState.Modified;
+                        await context.SaveChangesAsync();
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        //Exception raise = dbEx;
+                        //foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        //{
+                        //    foreach (var validationError in validationErrors.ValidationErrors)
+                        //    {
+                        //        string message = string.Format("{0}:{1}",
+                        //            validationErrors.Entry.Entity.ToString(),
+                        //            validationError.ErrorMessage);
+                        //        // raise a new exception nesting  
+                        //        // the current instance as InnerException  
+                        //        raise = new InvalidOperationException(message, raise);
+                        //    }
+                        //}
+                        //throw raise;
+                    }
+                    #endregion
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -90,6 +121,20 @@ namespace Front.Controllers
                     return View(model);
             }
         }
+
+        #region Fill session user profile
+        private void FillSessionParamsFor(string email)
+        {
+            var CurrentUserProfile = context.AspNetUsers.Where(u => u.Email.Equals(email)).SingleOrDefault().Profile;
+
+            Session[ConstsAccesEngin.SESSION_SessionID] = Session.SessionID;
+            Session[ConstsAccesEngin.SESSION_FullName] = CurrentUserProfile.FullName;
+            Session[ConstsAccesEngin.SESSION_Email] = CurrentUserProfile.AspNetUsers.Email;
+            Session[ConstsAccesEngin.SESSION_ProfileId] = CurrentUserProfile.Id;
+            Session[ConstsAccesEngin.SESSION_UserRoleNamesList] = CurrentUserProfile.AspNetUsers.AspNetRoles.Select(r => r.Name).ToList();
+
+        }
+        #endregion
 
         //
         // GET: /Account/VerifyCode
@@ -120,7 +165,7 @@ namespace Front.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -155,8 +200,8 @@ namespace Front.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

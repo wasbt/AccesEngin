@@ -1,4 +1,4 @@
-﻿@model DAL.Profile
+﻿@model DAL.CheckListExigence
 
 @{
     ViewBag.Title = "Details";
@@ -24,43 +24,43 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FullName)
+            @Html.DisplayNameFor(model => model.CheckListRubrique.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FullName)
+            @Html.DisplayFor(model => model.CheckListRubrique.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.DisplayNameFor(model => model.ShowOrder)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Phone)
+            @Html.DisplayFor(model => model.ShowOrder)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Details)
+            @Html.DisplayNameFor(model => model.IsActif)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Details)
+            @Html.DisplayFor(model => model.IsActif)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DtLastConnection)
+            @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DtLastConnection)
+            @Html.DisplayFor(model => model.CreatedOn)
         </dd>
 
     </dl>

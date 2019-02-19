@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Profiles : IMigrationMetadata
+    public sealed partial class addAppFileTbale : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Profiles));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addAppFileTbale));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902111700134_Profiles"; }
+            get { return "201902121050394_add AppFileTbale"; }
         }
         
         string IMigrationMetadata.Source

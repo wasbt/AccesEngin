@@ -1,0 +1,22 @@
+﻿@using Shared;
+@{
+    ViewBag.Title = "Administration";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h5>Paramétrage</h5>
+            </div>
+            <!-- List group -->
+            <ul class="list-group">
+                <li class="list-group-item"><a href="@Url.Action("Index","Profiles", new { area = "BackOffice" }, null)">Gestion des utilisateurs</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Index","TypeCheckLists", new { area = "BackOffice" }, null)">Gestion des Type demande d'acces</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Index","CheckListRubriques", new { area = "BackOffice" }, null)">Gestion des rubriques</a></li>
+                <li class="list-group-item"><a href="@Url.Action("Index","CheckListExigences", new { area = "BackOffice" }, null)">Gestion des exigences</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>

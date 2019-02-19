@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Profile : IMigrationMetadata
+    public sealed partial class dropcolumn : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Profile));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(dropcolumn));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902111656302_Profile"; }
+            get { return "201902191648059_drop column"; }
         }
         
         string IMigrationMetadata.Source

@@ -50,48 +50,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AspNetRoles.cs" />
-    <Compile Include="AspNetUserClaims.cs" />
-    <Compile Include="AspNetUserLogins.cs" />
-    <Compile Include="AspNetUsers.cs" />
-    <Compile Include="CheckListExigence.cs" />
-    <Compile Include="CheckListRubrique.cs" />
+    <Compile Include="Entities\AppFile.cs" />
+    <Compile Include="Entities\AspNetRoles.cs" />
+    <Compile Include="Entities\AspNetUserClaims.cs" />
+    <Compile Include="Entities\AspNetUserLogins.cs" />
+    <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\CheckListExigence.cs" />
+    <Compile Include="Entities\CheckListRubrique.cs" />
     <Compile Include="Configurations\ProfileEntityConfiguration.cs" />
-    <Compile Include="DemandeAccesEngin.cs" />
-    <Compile Include="EnginDbContext.cs" />
-    <Compile Include="AppFile.cs" />
-    <Compile Include="Migrations\201902111507055_addTableFile.cs" />
-    <Compile Include="Migrations\201902111507055_addTableFile.Designer.cs">
-      <DependentUpon>201902111507055_addTableFile.cs</DependentUpon>
+    <Compile Include="Entities\DemandeAccesEngin.cs" />
+    <Compile Include="EnginDataModel.cs" />
+    <Compile Include="Metadata\ProfileMetadata.cs" />
+    <Compile Include="Migrations\201902121050394_add AppFileTbale.cs" />
+    <Compile Include="Migrations\201902121050394_add AppFileTbale.Designer.cs">
+      <DependentUpon>201902121050394_add AppFileTbale.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902111656302_Profile.cs" />
-    <Compile Include="Migrations\201902111656302_Profile.Designer.cs">
-      <DependentUpon>201902111656302_Profile.cs</DependentUpon>
+    <Compile Include="Migrations\201902121110426_remove required FK createBy from dal.cs" />
+    <Compile Include="Migrations\201902121110426_remove required FK createBy from dal.Designer.cs">
+      <DependentUpon>201902121110426_remove required FK createBy from dal.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902111700134_Profiles.cs" />
-    <Compile Include="Migrations\201902111700134_Profiles.Designer.cs">
-      <DependentUpon>201902111700134_Profiles.cs</DependentUpon>
+    <Compile Include="Migrations\201902191648059_drop column.cs" />
+    <Compile Include="Migrations\201902191648059_drop column.Designer.cs">
+      <DependentUpon>201902191648059_drop column.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Profile.cs" />
+    <Compile Include="Entities\Profile.cs" />
+    <Compile Include="PartialClasses\Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultatExigence.cs" />
-    <Compile Include="TypeCheckList.cs" />
+    <Compile Include="Entities\ResultatExigence.cs" />
+    <Compile Include="Entities\TypeCheckList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201902111507055_addTableFile.resx">
-      <DependentUpon>201902111507055_addTableFile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902121050394_add AppFileTbale.resx">
+      <DependentUpon>201902121050394_add AppFileTbale.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902111656302_Profile.resx">
-      <DependentUpon>201902111656302_Profile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902121110426_remove required FK createBy from dal.resx">
+      <DependentUpon>201902121110426_remove required FK createBy from dal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902111700134_Profiles.resx">
-      <DependentUpon>201902111700134_Profiles.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902191648059_drop column.resx">
+      <DependentUpon>201902191648059_drop column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

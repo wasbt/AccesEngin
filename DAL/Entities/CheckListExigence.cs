@@ -26,11 +26,10 @@ namespace DAL
 
         public bool IsActif { get; set; }
 
-        public double Poids { get; set; }
+        //public string Observation { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        [Required]
         [StringLength(128)]
         public string CreatedBy { get; set; }
 

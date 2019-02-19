@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace DAL.Configurations
 {
-    public class ProfileEntityConfiguration : EntityTypeConfiguration<Profile>
+    public class AspNetUsersEntityConfiguration : EntityTypeConfiguration<AspNetUsers>
     {
-        public ProfileEntityConfiguration() : base()
+        public AspNetUsersEntityConfiguration() : base()
         {
             this
-           .HasOptional(e => e.AspNetUsers)
-           .WithRequired(e => e.Profile);
+           .HasOptional(s => s.Profile) 
+                .WithRequired(ad => ad.AspNetUsers); 
         }
-
     }
+
 }

@@ -216,7 +216,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\CheckListExigencesController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\CheckListRubriquesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\ProfilesController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\SettingsController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\TypeCheckListsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -1441,6 +1444,17 @@
     <Content Include="Areas\BackOffice\Views\Profiles\Details.cshtml" />
     <Content Include="Areas\BackOffice\Views\Profiles\Edit.cshtml" />
     <Content Include="Areas\BackOffice\Views\Profiles\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Settings\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListRubriques\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListRubriques\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListRubriques\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListRubriques\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListRubriques\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListExigences\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListExigences\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListExigences\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListExigences\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\CheckListExigences\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1488,6 +1502,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_MessageHeader.cshtml" />
     <Content Include="Views\Shared\_BackToList.cshtml" />
+    <Content Include="Views\Shared\_AdminListButtons.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
