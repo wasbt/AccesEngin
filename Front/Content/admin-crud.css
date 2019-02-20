@@ -1,0 +1,10 @@
+﻿.AdminListButtons{
+    visibility:hidden
+}
+
+.admin-hide{
+    visibility:hidden
+}
+.admin-show{
+    visibility:visible
+}

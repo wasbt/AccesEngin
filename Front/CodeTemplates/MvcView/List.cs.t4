@@ -60,7 +60,7 @@ if (!String.IsNullOrEmpty(LayoutPageFile)) {
 		}
 	</div>
     <div class="col-md-2 text-right">
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-rounded create-link">
+        <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
         </a>
     </div>

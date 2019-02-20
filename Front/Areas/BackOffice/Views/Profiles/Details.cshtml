@@ -9,66 +9,58 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
-            <h2 class="header">Détails de XXX #@Model.Name</h2>
+            <h2 class="header">Détails de profil #@Model.FullName</h2>
 
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </dt>
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.AspNetUsers.Email)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.FullName)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Email)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Details)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Details)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Details)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Details)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DtLastConnection)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DtLastConnection)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.Partial("_BackToList")
-    @Html.Partial("_BtnAdminEdit", Model.Id)
-</p>
-</div>
-</div>
+                </dl>
+            </div>
+            <p>
+                @Html.Partial("_BackToList")
+                @Html.Partial("_BtnAdminEdit", Model.Id)
+            </p>
+        </div>
+    </div>
 </div>

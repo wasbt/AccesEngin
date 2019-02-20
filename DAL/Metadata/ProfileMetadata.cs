@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Metadata
+namespace DAL
 {
-    public class ProfileMetadata
+    public partial class ProfileMetadata
     {
         [Display(Name = "#")]
         public string Id { get; set; }
@@ -20,6 +20,7 @@ namespace DAL.Metadata
         [Display(Name = "Description")]
         public string Details { get; set; }
         [Display(Name = "Date de dernière connexion")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? DtLastConnection { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
     }

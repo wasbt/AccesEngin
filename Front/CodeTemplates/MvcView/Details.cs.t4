@@ -89,7 +89,7 @@ if (pkName != null) {
 } else {
 #>
     @Html.Partial("_BackToList")
-	@Html.ActionLink("Mettre à jour", "Edit", new { /* id = Model.PrimaryKey */}, new { @class = "btn btn-success btn-rounded" })
+	@Html.ActionLink("Mettre à jour", "Edit", new { /* id = Model.PrimaryKey */}, new { @class = "btn btn-success waves-effect w-md waves-light m-b-5" })
 <#
 }
 #>

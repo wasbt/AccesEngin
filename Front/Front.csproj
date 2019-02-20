@@ -223,6 +223,7 @@
     <Compile Include="Areas\BackOffice\Controllers\TypeCheckListsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DemandeAccesEnginsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -234,6 +235,8 @@
     <Compile Include="Models\StandardModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ControleCheckListVM.cs" />
+    <Compile Include="ViewModels\ResultatsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
@@ -1270,10 +1273,9 @@
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\img\loading.gif" />
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\js\jqueryui-editable.js" />
     <Content Include="assets\plugins\x-editable\dist\jqueryui-editable\js\jqueryui-editable.min.js" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\admin-crud.css" />
+    <Content Include="Content\ocp-overrides.css" />
+    <Content Include="Content\PdfStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -1285,8 +1287,10 @@
     <Content Include="images\loader.gif" />
     <Content Include="images\login-bg.jpg" />
     <Content Include="images\logo-ocp.png" />
+    <Content Include="images\logo.png" />
     <Content Include="images\ocp.png" />
     <Content Include="images\veille.jpg" />
+    <Content Include="Scripts\admin.crud.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1461,6 +1465,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1503,6 +1509,15 @@
     <Content Include="Views\Shared\_MessageHeader.cshtml" />
     <Content Include="Views\Shared\_BackToList.cshtml" />
     <Content Include="Views\Shared\_AdminListButtons.cshtml" />
+    <Content Include="Views\Shared\_BtnAdminEdit.cshtml" />
+    <Content Include="Views\Shared\_BtnDelete.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\Create.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\Delete.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\Details.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\Edit.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\Index.cshtml" />
+    <Content Include="Views\Home\Resultats.cshtml" />
+    <Content Include="Views\Home\NewControleResultatCheckList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1515,10 +1530,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

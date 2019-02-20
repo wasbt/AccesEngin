@@ -123,17 +123,35 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Profile profiles)
+        public async Task<ActionResult> Edit(Profile profile, RegisterViewModel model)
         {
+            ModelState.Remove("Password");
+            ModelState.Remove("Confirm password");
             if (ModelState.IsValid)
             {
-                context.Entry(profiles).State = EntityState.Modified;
+                //Edite Profile
+                context.Entry(profile).State = EntityState.Modified;
                 await context.SaveChangesAsync();
+
+                //Edite AspNetUsers
+                if (!string.IsNullOrWhiteSpace(profile.Email))
+                {
+                    var user = UserManager.FindById(profile.Id);
+                    if (!string.IsNullOrWhiteSpace(model.Password) && !string.IsNullOrWhiteSpace(model.ConfirmPassword))
+                    {
+                        var newPasswordHash = UserManager.PasswordHasher.HashPassword(model.Password);
+                        user.PasswordHash = newPasswordHash;
+                    }
+                    user.Email = profile.Email;
+                    user.UserName = profile.Email;
+                    Task.WaitAny(UserManager.UpdateAsync(user));
+                }
+
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
-            ViewBag.Id = new SelectList(context.AspNetUsers, "Id", "Email", profiles.Id);
-            return View(profiles);
+            ViewBag.Id = new SelectList(context.AspNetUsers, "Id", "Email", profile.Id);
+            return View(profile);
         }
 
         // GET: BackOffice/Profiles/Delete/5

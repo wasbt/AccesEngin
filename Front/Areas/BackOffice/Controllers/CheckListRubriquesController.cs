@@ -115,10 +115,12 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,TypeCheckListId,Name,ShowOrder,IsActif,CreatedOn,CreatedBy")] CheckListRubrique checkListRubrique)
+        public async Task<ActionResult> Edit(CheckListRubrique checkListRubrique)
         {
             if (ModelState.IsValid)
             {
+                checkListRubrique.CreatedBy = CurrentUserId;
+                checkListRubrique.CreatedOn = DateTime.Now;
                 context.Entry(checkListRubrique).State = EntityState.Modified;
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";

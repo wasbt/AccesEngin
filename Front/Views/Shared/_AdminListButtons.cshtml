@@ -1,11 +1,11 @@
 ﻿@model object
 
-<a href="@Url.Action("Edit", new { id=Model.ToString() })" class="edit-link btn btn-success btn-rounded">
+<a href="@Url.Action("Edit", new { id=Model.ToString() })" class="btn btn-success waves-effect w-md waves-light m-b-5">
     <span class="fa fa-edit"></span>&nbsp;Mettre à jour
 </a>
-<a href="@Url.Action("Details", new { id=Model.ToString() })" class="details-link btn btn-secondary btn-rounded">
+<a href="@Url.Action("Details", new { id=Model.ToString() })" class="btn btn-secondary waves-effect w-md waves-light m-b-5">
     <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Details
 </a>
-<a href="@Url.Action("Delete", new { id=Model.ToString() })" class="delete-link btn btn-danger btn-rounded">
+<a href="@Url.Action("Delete", new { id=Model.ToString() })" class="btn btn-danger waves-effect w-md waves-light m-b-5">
     <span class="mdi mdi-trash-can"></span>&nbsp;Supprimer
 </a>

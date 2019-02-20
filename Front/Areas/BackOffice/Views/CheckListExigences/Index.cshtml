@@ -4,7 +4,7 @@
 @using X.PagedList.Mvc.Bootstrap4
 
 @{
-    ViewBag.Title = "Gestion des XXX";
+    ViewBag.Title = "Gestion des exigences";
 }
 
 
@@ -31,13 +31,11 @@
 <table class="@UIHelper.CrudTableCss">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().AspNetUsers.Email)
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CheckListRubrique.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Name)
@@ -49,6 +47,9 @@
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().IsActif)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().AspNetUsers.Email)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedOn)
         </th>
         <th></th>
@@ -57,13 +58,11 @@
 @foreach (var item in Model.resultList) {
     <tr class="line">
         <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.CheckListRubrique.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -75,10 +74,13 @@
             @Html.DisplayFor(modelItem => item.IsActif)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.CreatedOn)
         </td>
         <td class="AdminListButtons">
-			@Html.Partial("_AdminListButtons", item.Id)
+            @Html.Partial("_AdminListButtons", item.Id)
         </td>
     </tr>
 }

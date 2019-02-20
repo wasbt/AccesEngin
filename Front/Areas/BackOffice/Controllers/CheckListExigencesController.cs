@@ -119,6 +119,8 @@ namespace Front.Areas.BackOffice.Controllers
         {
             if (ModelState.IsValid)
             {
+                checkListExigence.CreatedBy = CurrentUserId;
+                checkListExigence.CreatedOn = DateTime.Now;
                 context.Entry(checkListExigence).State = EntityState.Modified;
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";

@@ -41,13 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\IN\SaveNewResultatExigence.cs" />
     <Compile Include="ConstsAccesEngin.cs" />
     <Compile Include="MailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RESTServiceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\IN\" />
     <Folder Include="API\OUT\" />
     <Folder Include="DTO\" />
     <Folder Include="ENUMS\" />

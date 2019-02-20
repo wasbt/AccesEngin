@@ -4,7 +4,7 @@
 @using X.PagedList.Mvc.Bootstrap4
 
 @{
-    ViewBag.Title = "Gestion des XXX";
+    ViewBag.Title = "Gestion des Rubriques";
 }
 
 
@@ -22,7 +22,7 @@
 		}
 	</div>
     <div class="col-md-2 text-right">
-        <a href="@Url.Action("Create")" class="btn btn-primary btn-rounded create-link">
+        <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
             <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
         </a>
     </div>
@@ -31,13 +31,10 @@
 <table class="@UIHelper.CrudTableCss">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().AspNetUsers.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().TypeCheckList.Name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().TypeCheckListId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Name)
@@ -49,6 +46,9 @@
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().IsActif)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedBy)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedOn)
         </th>
         <th></th>
@@ -56,14 +56,12 @@
 
 @foreach (var item in Model.resultList) {
     <tr class="line">
+
         <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -75,10 +73,13 @@
             @Html.DisplayFor(modelItem => item.IsActif)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.CreatedOn)
         </td>
         <td class="AdminListButtons">
-			@Html.Partial("_AdminListButtons", item.Id)
+            @Html.Partial("_AdminListButtons", item.Id)
         </td>
     </tr>
 }

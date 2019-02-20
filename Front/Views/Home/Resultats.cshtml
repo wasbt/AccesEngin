@@ -1,0 +1,54 @@
+﻿@model Front.ViewModels.ResultatsVM
+@{
+    ViewBag.Title = "Résultats";
+}
+
+<h2>@Model.TypeCheckList.Name</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+
+                <table id="" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Exigences</th>
+                            <th>Conforme</th>
+                            <th>Observation</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
+                            {
+                                <tr style="background-color:#9CCC65; color:white">
+                                    <td colspan="4"><b>@rubric.Name</b></td>
+                                </tr>
+                                foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
+                                {
+                                    <tr>
+                                        <td>@exigence.Name</td>
+                                        <td><input type="checkbox" name="name" value="" /></td>
+                                        <td><input type="text" name="name" value="" /></td>
+                                        <td><input type="date" name="name" value="" /></td>
+
+                                    </tr>
+
+                                }
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

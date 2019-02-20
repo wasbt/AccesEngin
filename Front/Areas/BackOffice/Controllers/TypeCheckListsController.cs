@@ -111,11 +111,13 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,CreatedOn,CreatedBy")] TypeCheckList typeCheckList)
+        public async Task<ActionResult> Edit(TypeCheckList typeCheckList)
         {
             if (ModelState.IsValid)
             {
-                context.Entry(typeCheckList).State = EntityState.Modified;
+                typeCheckList.CreatedOn = DateTime.Now;
+                typeCheckList.CreatedBy = CurrentUserId;
+                var tt = context.Entry(typeCheckList).State = EntityState.Modified;
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");

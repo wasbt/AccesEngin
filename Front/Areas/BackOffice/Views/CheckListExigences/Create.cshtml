@@ -1,7 +1,7 @@
 ﻿@model DAL.CheckListExigence
 
 @{
-    ViewBag.Title = "Nouveau XX";
+    ViewBag.Title = "Nouveau exigence";
 }
 
 <div class="row">
@@ -38,17 +38,19 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class=" form-group">
             @Html.LabelFor(model => model.IsActif, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActif)
-                    @Html.ValidationMessageFor(model => model.IsActif, "", new { @class = "text-danger" })
-                </div>
+            <div class="checkbox checkbox-primary col-md-10">
+                &nbsp;<input id="IsActifId" type="checkbox" value="true" name="IsActif">
+                <label for="IsActifId">
+                    &nbsp;
+                </label>
+                @Html.ValidationMessageFor(model => model.IsActif, "", new { @class = "text-danger" })
+
             </div>
         </div>
 
-		<div class="form-group">
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Ajouter" class="btn btn-primary btn-rounded" />
             </div>

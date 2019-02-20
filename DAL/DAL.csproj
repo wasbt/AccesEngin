@@ -60,7 +60,11 @@
     <Compile Include="Configurations\ProfileEntityConfiguration.cs" />
     <Compile Include="Entities\DemandeAccesEngin.cs" />
     <Compile Include="EnginDataModel.cs" />
+    <Compile Include="Metadata\CheckListExigenceMetadata.cs" />
+    <Compile Include="Metadata\CheckListRubriqueMetadata.cs" />
+    <Compile Include="Metadata\DemandeAccesEnginMetadata.cs" />
     <Compile Include="Metadata\ProfileMetadata.cs" />
+    <Compile Include="Metadata\TypeCheckListMetadata.cs" />
     <Compile Include="Migrations\201902121050394_add AppFileTbale.cs" />
     <Compile Include="Migrations\201902121050394_add AppFileTbale.Designer.cs">
       <DependentUpon>201902121050394_add AppFileTbale.cs</DependentUpon>
@@ -75,7 +79,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
+    <Compile Include="PartialClasses\CheckListExigence.cs" />
+    <Compile Include="PartialClasses\CheckListRubrique.cs" />
+    <Compile Include="PartialClasses\DemandeAccesEngin.cs" />
     <Compile Include="PartialClasses\Profile.cs" />
+    <Compile Include="PartialClasses\TypeCheckList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\ResultatExigence.cs" />
     <Compile Include="Entities\TypeCheckList.cs" />

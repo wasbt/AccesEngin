@@ -9,19 +9,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
-            <h2 class="header">Détails de XXX #@Model.Name</h2>
+            <h2 class="header">Détails de exigence #@Model.Name</h2>
 
 
 <div>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.CheckListRubrique.Name)
@@ -54,7 +48,13 @@
         <dd>
             @Html.DisplayFor(model => model.IsActif)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>

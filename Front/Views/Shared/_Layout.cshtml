@@ -6,15 +6,10 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
 
     <!-- App css -->
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
-    <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/ghse-overrides.css" rel="stylesheet" />
+    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
 
-    <script src="/assets/js/modernizr.min.js"></script>
     <style>
         .hrefstyle {
             display: block;
@@ -54,8 +49,8 @@
                     <!--</a>-->
                     <!-- Image Logo -->
                     <a href="index.html" class="logo">
-                        <img src="assets/images/logo-sm.png" alt="" height="26" class="logo-small">
-                        <img src="assets/images/logo.png" alt="" height="24" class="logo-large">
+                        <img src="~/assets/images/logo-sm.png" alt="" height="26" class="logo-small">
+                        <img src="~/images/logo.png" height="24" class="logo-large" />
                     </a>
 
                 </div>
@@ -105,7 +100,7 @@
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                                aria-haspopup="false" aria-expanded="false">
-                                <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                                <img src="~/assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
@@ -147,6 +142,11 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
+                        <li class="has-submenu">
+                            <a href="@Url.Action("Index", "DemandeAccesEngins",new { area = "" })">
+                                <i class="fa fa-cog"></i>Contrôle
+                            </a>
+                        </li>
                         <li class="has-submenu">
                             <a href="@Url.Action("Index", "Settings", new { area = "BackOffice" })">
                                 <i class="fa fa-cog"></i>Administration
@@ -194,11 +194,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    2016 - @DateTime.Now.Year © Ocp Acces D'Engin
+                    2016 - @DateTime.Now.Year © Ocp Acces Des Engins
                 </div>
             </div>
         </div>
     </footer>
+    
+    @Scripts.Render("~/bundles/templateJS")
     @*@Html.Partial("_FooterAllScripts")*@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
 
