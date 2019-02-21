@@ -55,7 +55,9 @@
     <Compile Include="Entities\AspNetUserClaims.cs" />
     <Compile Include="Entities\AspNetUserLogins.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\InfoGenerale.cs" />
     <Compile Include="Entities\CheckListExigence.cs" />
+    <Compile Include="Entities\InfoGeneralRubrique.cs" />
     <Compile Include="Entities\CheckListRubrique.cs" />
     <Compile Include="Configurations\ProfileEntityConfiguration.cs" />
     <Compile Include="Entities\DemandeAccesEngin.cs" />
@@ -76,6 +78,18 @@
     <Compile Include="Migrations\201902191648059_drop column.cs" />
     <Compile Include="Migrations\201902191648059_drop column.Designer.cs">
       <DependentUpon>201902191648059_drop column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211322578_Edite Comumn name.cs" />
+    <Compile Include="Migrations\201902211322578_Edite Comumn name.Designer.cs">
+      <DependentUpon>201902211322578_Edite Comumn name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211741108_info General.cs" />
+    <Compile Include="Migrations\201902211741108_info General.Designer.cs">
+      <DependentUpon>201902211741108_info General.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211757008_Add map.cs" />
+    <Compile Include="Migrations\201902211757008_Add map.Designer.cs">
+      <DependentUpon>201902211757008_Add map.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
@@ -101,6 +115,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902191648059_drop column.resx">
       <DependentUpon>201902191648059_drop column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211322578_Edite Comumn name.resx">
+      <DependentUpon>201902211322578_Edite Comumn name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211741108_info General.resx">
+      <DependentUpon>201902211741108_info General.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211757008_Add map.resx">
+      <DependentUpon>201902211757008_Add map.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -23,9 +23,16 @@ namespace DAL
         public virtual DbSet<ResultatExigence> ResultatExigence { get; set; }
         public virtual DbSet<TypeCheckList> TypeCheckList { get; set; }
         public virtual DbSet<AppFile> AppFile { get; set; }
+        public virtual DbSet<InfoGenerale> InfoGenerale { get; set; }
+        public virtual DbSet<InfoGeneralRubrique> InfoGeneralRubrique { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<InfoGenerale>()
+                .HasMany(e => e.TypeCheckList)
+                .WithMany(e => e.InfoGenerale)
+                .Map(m => m.ToTable("MAP_InfoGenerale_TypeCheckList").MapLeftKey("InfoGeneraleId").MapRightKey("TypeCheckListId"));
+
             modelBuilder.Entity<AspNetRoles>()
                 .HasMany(e => e.AspNetUsers)
                 .WithMany(e => e.AspNetRoles)
@@ -49,8 +56,20 @@ namespace DAL
                 .HasForeignKey(e => e.CreatedBy)
                 .WillCascadeOnDelete(false);
 
+                modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.InfoGenerale)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.CreatedBy)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.CheckListRubrique)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.CreatedBy)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.InfoGeneralRubrique)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.CreatedBy)
                 .WillCascadeOnDelete(false);
@@ -79,6 +98,11 @@ namespace DAL
             modelBuilder.Entity<CheckListRubrique>()
                 .HasMany(e => e.CheckListExigence)
                 .WithRequired(e => e.CheckListRubrique)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InfoGeneralRubrique>()
+                .HasMany(e => e.InfoGenerale)
+                .WithRequired(e => e.InfoGeneralRubrique)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DemandeAccesEngin>()

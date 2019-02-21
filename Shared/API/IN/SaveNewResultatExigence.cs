@@ -8,14 +8,13 @@ namespace Shared.API.IN
 {
     public class SaveNewResultatExigence
     {
-        public ICollection<ResultatExigence> ResultatExigenceList { get; set; }
+        public ICollection<ControlResultatExigence> ResultatExigenceList { get; set; }
         public long DemandeAccesEnginId { get; set; }
 
     }
-    public class ResultatExigence
+    public class ControlResultatExigence
     {
 
-        public long Id { get; set; }
 
         public long CheckListExigenceId { get; set; }
 

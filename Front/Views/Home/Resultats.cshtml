@@ -34,12 +34,18 @@
                                 </tr>
                                 foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
                                 {
+                                    var data = Model.controle.ResultatExigence.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
+
+                                    if (data == null)
+                                    {
+                                        continue;
+                                    }
                                     <tr>
                                         <td>@exigence.Name</td>
-                                        <td><input type="checkbox" name="name" value="" /></td>
-                                        <td><input type="text" name="name" value="" /></td>
-                                        <td><input type="date" name="name" value="" /></td>
-
+                                        <td>@(data.IsConform ? "Conforme":"Non conforme")</td>
+                                        <td>@data.Observation</td>
+                                        <td>@data.Date</td>
+                                     
                                     </tr>
 
                                 }

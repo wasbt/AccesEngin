@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
+using DAL;
 namespace Front.Controllers
 {
     public class HomeController : BaseController
@@ -59,7 +59,7 @@ namespace Front.Controllers
             #endregion
 
             #region MyRegion
-
+            //To Model
             var ResultatViewModel = new ResultatsVM
             {
                 TypeCheckList = checkList,
@@ -114,7 +114,23 @@ namespace Front.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewControleResultatCheckList(SaveNewResultatExigence ResultatExigence)
         {
-            return null;
+            foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
+            {
+                var controlResultatExigence = new ResultatExigence()
+                {
+                    DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
+                    CheckListExigenceId = resultatEx.CheckListExigenceId,
+                    IsConform = resultatEx.IsConform,
+                    Date = resultatEx.Date,
+                    Observation = resultatEx.Observation,
+                    CreatedOn = DateTime.Now
+                };
+
+                var addedMissionResultatExigence = context.ResultatExigence.Add(controlResultatExigence);
+            }
+            await context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "DemandeAccesEngins");
         }
         #endregion
     }

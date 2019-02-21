@@ -20,7 +20,7 @@ namespace DAL
         public DateTime Date { get; set; }
 
         [Required]
-        public string Oobservation { get; set; }
+        public string Observation { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

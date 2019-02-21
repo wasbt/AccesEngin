@@ -18,6 +18,8 @@ namespace DAL
             DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
             TypeCheckList = new HashSet<TypeCheckList>();
             AspNetRoles = new HashSet<AspNetRoles>();
+            InfoGenerale = new HashSet<InfoGenerale>();
+            InfoGeneralRubrique = new HashSet<InfoGeneralRubrique>();
         }
 
         public string Id { get; set; }
@@ -69,5 +71,9 @@ namespace DAL
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+        public virtual ICollection<InfoGenerale> InfoGenerale { get; set; }
+        public virtual ICollection<InfoGeneralRubrique> InfoGeneralRubrique { get; set; }
+
+
     }
 }

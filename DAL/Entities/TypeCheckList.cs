@@ -14,6 +14,7 @@ namespace DAL
         {
             CheckListRubrique = new HashSet<CheckListRubrique>();
             DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
+            InfoGenerale = new HashSet<InfoGenerale>();
         }
 
         public int Id { get; set; }
@@ -33,5 +34,8 @@ namespace DAL
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeAccesEngin> DemandeAccesEngin { get; set; }
+
+        public virtual ICollection<InfoGenerale> InfoGenerale { get; set; }
+
     }
 }
