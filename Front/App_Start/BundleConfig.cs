@@ -28,7 +28,8 @@ namespace Front
                     "~/assets/css/icons.css",
                     "~/assets/css/style.css",
                     "~/Content/ocp-overrides.css",
-                    "~/assets/plugins/sweet-alert/sweetalert2.min.css"
+                    "~/assets/plugins/sweet-alert/sweetalert2.min.css",
+                    "~/assets/plugins/select2/css/select2.min.css"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/templateJS").Include(
@@ -38,7 +39,8 @@ namespace Front
                             "~/assets/js/waves.js",
                             "~/assets/js/jquery.slimscroll.js",
                             "~/assets/plugins/sweet-alert/sweetalert2.min.js",
-                            "~/assets/pages/jquery.sweet-alert.init.js"
+                            "~/assets/pages/jquery.sweet-alert.init.js",
+                            "~/assets/plugins/select2/js/select2.min.js"
                         ));
 
 

@@ -1,0 +1,55 @@
+﻿@model DAL.InfoGeneralRubrique
+
+@{
+    ViewBag.Title = "Nouveau XX";
+}
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card-box">
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShowOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShowOrder, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShowOrder, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActif, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsActif)
+                    @Html.ValidationMessageFor(model => model.IsActif, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+		<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5" >Ajouter</button>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("_BackToList")
+  </div>
+        </div>
+    </div>

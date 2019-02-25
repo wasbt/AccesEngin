@@ -1,0 +1,68 @@
+﻿@model DAL.InfoGeneralRubrique
+
+@{
+    ViewBag.Title = "Attention !";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+<h3>Etes-vous sûr de vouloir procéder à la suppression?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShowOrder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShowOrder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActif)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActif)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.Partial("_BackToList")
+            @Html.Partial("_BtnDelete")
+        </div>
+    }
+</div>
+</div>
+</div>
+</div>

@@ -25,6 +25,7 @@ namespace DAL
         public virtual DbSet<AppFile> AppFile { get; set; }
         public virtual DbSet<InfoGenerale> InfoGenerale { get; set; }
         public virtual DbSet<InfoGeneralRubrique> InfoGeneralRubrique { get; set; }
+        public virtual DbSet<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -33,10 +34,11 @@ namespace DAL
                 .WithMany(e => e.InfoGenerale)
                 .Map(m => m.ToTable("MAP_InfoGenerale_TypeCheckList").MapLeftKey("InfoGeneraleId").MapRightKey("TypeCheckListId"));
 
+            #region AspNetRoles
             modelBuilder.Entity<AspNetRoles>()
-                .HasMany(e => e.AspNetUsers)
-                .WithMany(e => e.AspNetRoles)
-                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
+               .HasMany(e => e.AspNetUsers)
+               .WithMany(e => e.AspNetRoles)
+               .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.AspNetUserClaims)
@@ -56,11 +58,11 @@ namespace DAL
                 .HasForeignKey(e => e.CreatedBy)
                 .WillCascadeOnDelete(false);
 
-                modelBuilder.Entity<AspNetUsers>()
-                .HasMany(e => e.InfoGenerale)
-                .WithRequired(e => e.AspNetUsers)
-                .HasForeignKey(e => e.CreatedBy)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<AspNetUsers>()
+            .HasMany(e => e.InfoGenerale)
+            .WithRequired(e => e.AspNetUsers)
+            .HasForeignKey(e => e.CreatedBy)
+            .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.CheckListRubrique)
@@ -89,10 +91,17 @@ namespace DAL
             modelBuilder.Entity<AspNetUsers>()
                 .HasOptional(e => e.Profile)
                 .WithRequired(e => e.AspNetUsers);
+            #endregion
+
 
             modelBuilder.Entity<CheckListExigence>()
                 .HasMany(e => e.ResultatExigence)
                 .WithRequired(e => e.CheckListExigence)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InfoGenerale>()
+                .HasMany(e => e.ResultatInfoGenerale)
+                .WithRequired(e => e.InfoGenerale)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<CheckListRubrique>()
@@ -107,6 +116,11 @@ namespace DAL
 
             modelBuilder.Entity<DemandeAccesEngin>()
                 .HasMany(e => e.ResultatExigence)
+                .WithRequired(e => e.DemandeAccesEngin)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DemandeAccesEngin>()
+                .HasMany(e => e.ResultatInfoGenerale)
                 .WithRequired(e => e.DemandeAccesEngin)
                 .WillCascadeOnDelete(false);
 

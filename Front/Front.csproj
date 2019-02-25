@@ -60,12 +60,21 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -215,13 +224,18 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\AccesEnginAPIController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\CheckListExigencesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\CheckListRubriquesController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\InfoGeneralesController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\InfoGeneralRubriquesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\SettingsController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\TypeCheckListsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DemandeAccesEnginsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1459,6 +1473,16 @@
     <Content Include="Areas\BackOffice\Views\CheckListExigences\Details.cshtml" />
     <Content Include="Areas\BackOffice\Views\CheckListExigences\Edit.cshtml" />
     <Content Include="Areas\BackOffice\Views\CheckListExigences\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGeneralRubriques\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGeneralRubriques\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGeneralRubriques\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGeneralRubriques\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGeneralRubriques\Index.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGenerales\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGenerales\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGenerales\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGenerales\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\InfoGenerales\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1523,6 +1547,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BackOffice\Models\" />
     <Folder Include="assets\plugins\jstree\themes\default\" />
+    <Folder Include="Views\BaseApi\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

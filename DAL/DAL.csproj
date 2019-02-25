@@ -62,9 +62,11 @@
     <Compile Include="Configurations\ProfileEntityConfiguration.cs" />
     <Compile Include="Entities\DemandeAccesEngin.cs" />
     <Compile Include="EnginDataModel.cs" />
+    <Compile Include="Entities\ResultatInfoGenerale.cs" />
     <Compile Include="Metadata\CheckListExigenceMetadata.cs" />
     <Compile Include="Metadata\CheckListRubriqueMetadata.cs" />
     <Compile Include="Metadata\DemandeAccesEnginMetadata.cs" />
+    <Compile Include="Metadata\InfoGeneraleMetadata.cs" />
     <Compile Include="Metadata\ProfileMetadata.cs" />
     <Compile Include="Metadata\TypeCheckListMetadata.cs" />
     <Compile Include="Migrations\201902121050394_add AppFileTbale.cs" />
@@ -91,11 +93,20 @@
     <Compile Include="Migrations\201902211757008_Add map.Designer.cs">
       <DependentUpon>201902211757008_Add map.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902251115444_ResultatInfoGenerale.cs" />
+    <Compile Include="Migrations\201902251115444_ResultatInfoGenerale.Designer.cs">
+      <DependentUpon>201902251115444_ResultatInfoGenerale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902251450004_Alter table Info.cs" />
+    <Compile Include="Migrations\201902251450004_Alter table Info.Designer.cs">
+      <DependentUpon>201902251450004_Alter table Info.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
     <Compile Include="PartialClasses\CheckListRubrique.cs" />
     <Compile Include="PartialClasses\DemandeAccesEngin.cs" />
+    <Compile Include="PartialClasses\InfoGenerale.cs" />
     <Compile Include="PartialClasses\Profile.cs" />
     <Compile Include="PartialClasses\TypeCheckList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -124,6 +135,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902211757008_Add map.resx">
       <DependentUpon>201902211757008_Add map.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251115444_ResultatInfoGenerale.resx">
+      <DependentUpon>201902251115444_ResultatInfoGenerale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251450004_Alter table Info.resx">
+      <DependentUpon>201902251450004_Alter table Info.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

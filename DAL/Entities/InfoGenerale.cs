@@ -9,7 +9,11 @@ namespace DAL
     [Table("InfoGenerale")]
     public partial class InfoGenerale
     {
-       
+        public InfoGenerale()
+        {
+            TypeCheckList = new HashSet<TypeCheckList>();
+            ResultatInfoGenerale = new HashSet<ResultatInfoGenerale>();
+        }
         public long Id { get; set; }
 
         public long InfoGeneralRubriqueId { get; set; }
@@ -27,6 +31,8 @@ namespace DAL
         public virtual InfoGeneralRubrique InfoGeneralRubrique { get; set; }
 
         public virtual ICollection<TypeCheckList> TypeCheckList { get; set; }
+
+        public virtual ICollection<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
 
     }
 }

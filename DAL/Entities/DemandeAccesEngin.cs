@@ -13,6 +13,7 @@ namespace DAL
         public DemandeAccesEngin()
         {
             ResultatExigence = new HashSet<ResultatExigence>();
+            ResultatInfoGenerale = new HashSet<ResultatInfoGenerale>();
         }
 
         public long Id { get; set; }
@@ -33,5 +34,6 @@ namespace DAL
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResultatExigence> ResultatExigence { get; set; }
+        public virtual ICollection<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
     }
 }
