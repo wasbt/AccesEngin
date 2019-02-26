@@ -17,9 +17,8 @@ namespace DAL
 
         public bool IsConform { get; set; }
 
-        public DateTime Date { get; set; }
+        public System.Nullable<DateTime> Date { get; set; }
 
-        [Required]
         public string Observation { get; set; }
 
         public DateTime CreatedOn { get; set; }

@@ -15,7 +15,37 @@
     <div class="col-sm-12">
         <div class="card-box">
             <div class="row">
+                <table id="" class="table table-bordered col-6">
+                    <thead>
 
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+                            {
+                                <tr>
+                                    <td class="alert alert-success" colspan="12" style="text-align:center">
+                                        @group.Key
+                                    </td>
+                                </tr>
+                                foreach (var rebricInfo in group)
+                                {
+
+                                    var info = Model.controle.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+
+                                    if (info == null)
+                                    {
+                                        continue;
+                                    }
+                                    <tr>
+                                        <td>@rebricInfo.Name</td>
+                                        <td>@info.ValueInfo</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
                 <table id="" class="table table-bordered">
                     <thead>
                         <tr>
@@ -27,6 +57,7 @@
                     </thead>
                     <tbody>
                         @{
+
                             foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
                             {
                                 <tr style="background-color:#9CCC65; color:white">
@@ -42,10 +73,10 @@
                                     }
                                     <tr>
                                         <td>@exigence.Name</td>
-                                        <td>@(data.IsConform ? "Conforme":"Non conforme")</td>
+                                        <td>@(data.IsConform ? "Conforme" : "Non conforme")</td>
                                         <td>@data.Observation</td>
                                         <td>@data.Date</td>
-                                     
+
                                     </tr>
 
                                 }

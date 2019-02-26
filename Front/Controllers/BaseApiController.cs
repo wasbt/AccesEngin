@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace Front.Controllers
 {
-    public class BaseApiController : Controller
+    [System.Web.Http.Authorize]
+    public class BaseApiController : ApiController
     {
         public EnginDbContext context = new EnginDbContext();
         private ApplicationSignInManager _signInManager;
@@ -20,58 +22,23 @@ namespace Front.Controllers
 
         #region ContainerName - SourceName
 
-        public const string ContainerName = "globalhsesuite";
-        public const string SourceName = "RegulatoryTexts";
+        public const string ContainerName = "";
+        public const string SourceName = "";
 
         #endregion
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
         public string CurrentUserId
         {
             get { return User.Identity.GetUserId(); }
             set { CurrentUserId = value; }
         }
 
-        public string CurrentFullName
-        {
-            get { return Session[ConstsAccesEngin.SESSION_FullName] == null ? string.Empty : (string)Session[ConstsAccesEngin.SESSION_FullName]; }
-            set { CurrentFullName = value; }
-        }
-
+      
         public Profile CurrentUserProfile
         {
             get { return context.Profile.Where(u => u.Id == CurrentUserId).SingleOrDefault(); }
 
         }
 
-
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            base.OnException(filterContext);
-
-            if (filterContext.ExceptionHandled)
-            {
-                return;
-            }
-
-            // LOG4NET
-            MvcApplication.log.Error(filterContext.Exception.Message + "User: " + User?.Identity?.Name, filterContext.Exception);
-            TempData[ConstsAccesEngin.MESSAGE_ERROR] = string.Format("Une erreur s'est produite, veuillez réessayer.");
-
-            filterContext.Result = new RedirectResult("~/Home/Index/?error=true&msg=" + filterContext.Exception.Message);
-
-            filterContext.ExceptionHandled = true;
-        }
 
         protected string GetModelStateErrors(ModelStateDictionary modelState)
         {
@@ -88,4 +55,4 @@ namespace Front.Controllers
         }
 
     }
-}}
+}

@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201902251450004_Alter table Info.Designer.cs">
       <DependentUpon>201902251450004_Alter table Info.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902261717200_Nullable.cs" />
+    <Compile Include="Migrations\201902261717200_Nullable.Designer.cs">
+      <DependentUpon>201902261717200_Nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -142,7 +146,15 @@
     <EmbeddedResource Include="Migrations\201902251450004_Alter table Info.resx">
       <DependentUpon>201902251450004_Alter table Info.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902261717200_Nullable.resx">
+      <DependentUpon>201902261717200_Nullable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{637B4990-5383-476F-8CFF-D9DA909BC92C}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

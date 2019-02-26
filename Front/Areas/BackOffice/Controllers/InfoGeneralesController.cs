@@ -96,6 +96,8 @@ namespace Front.Areas.BackOffice.Controllers
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", infoGenerale.CreatedBy);
             ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
+            ViewBag.TypeCheckListIds = new SelectList(context.TypeCheckList, "Id", "Name");
+
             return View(infoGenerale);
         }
 
@@ -106,6 +108,20 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            //var ListTypeCheckList = new SelectList(context.TypeCheckList, "Id", "Name");
+            var selectedlist = context.InfoGenerale.SelectMany(x => x.TypeCheckList).Select(t => t.Id).ToList();
+            ViewData["TypeCheckListIds"] = new MultiSelectList(
+
+               items: context.TypeCheckList.OrderBy(o => o.Name),
+
+               dataValueField: "Id",
+
+               dataTextField: "Name",
+
+               selectedValues: selectedlist );
+            //ViewBag. = new MultiSelectList(ListTypeCheckList, "Id", "Name", selectedlist);
+
             InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
             if (infoGenerale == null)
             {
@@ -121,14 +137,24 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(InfoGenerale infoGenerale)
+        public async Task<ActionResult> Edit(InfoGenerale infoGenerale,long[] TypeCheckListIds)
         {
             if (ModelState.IsValid)
             {
                 infoGenerale.CreatedBy = CurrentUserId;
                 infoGenerale.CreatedOn = DateTime.Now;
                 context.Entry(infoGenerale).State = EntityState.Modified;
+                //Removed && Added All TypeCheckList for this infoGenerale
+                var TypeCheckLists = context.InfoGenerale.Include(w => w.TypeCheckList).Where(x => x.Id == infoGenerale.Id).SingleOrDefault().TypeCheckList;
+                TypeCheckLists.Clear();
+
+                foreach (var item in TypeCheckListIds)
+                {
+                    var TypeCheckList = await context.TypeCheckList.FindAsync(item);
+                    infoGenerale.TypeCheckList.Add(TypeCheckList);
+                }
                 await context.SaveChangesAsync();
+               
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }

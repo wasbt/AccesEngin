@@ -121,7 +121,7 @@ namespace Front.Controllers
                     DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
                     CheckListExigenceId = resultatEx.CheckListExigenceId,
                     IsConform = resultatEx.IsConform,
-                    Date = resultatEx.Date,
+                    Date = resultatEx.Date == DateTime.MinValue ? (DateTime ?)null : resultatEx.Date,
                     Observation = resultatEx.Observation,
                     CreatedOn = DateTime.Now
                 };

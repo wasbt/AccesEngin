@@ -104,8 +104,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Biz\InfoGeneraleBiz.cs" />
     <Compile Include="Common\CommonBiz.cs" />
-    <Compile Include="Common\InfoGeneraleBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

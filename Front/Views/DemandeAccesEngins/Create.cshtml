@@ -17,7 +17,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("TypeCheckListId", null, "-- choisis votre formulaire --", htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -25,11 +25,13 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Observation,new { @class = "form-control" } )
+                            @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div id="InfosGeneralId" >
 
+                    </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
@@ -42,3 +44,50 @@
         </div>
     </div>
 </div>
+@section scripts{
+
+    <script type="text/javascript">
+        function GetInfosGenerals() {
+            var selectedTypeCheckListId = $("#TypeCheckListId").val();
+            var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+            var posting = $.post('/AccesEnginapi/GetInfoGrneralesByTypeCheckList', jsonObject, function (response) {
+                if (response.success) {
+
+                    $("#InfosGeneralId").html("");
+
+                    var listInfosGeneralsLenght = $(response.data).length;
+
+                    $.each(response.data, function (index) {
+
+                        var currentInfosGeneral = response.data[index];
+                        console.log(currentInfosGeneral);
+
+                        var infoGeneral_html_content =
+                            '<input name="ResultatInfoGeneral.Index" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
+                            '<input name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].GeneralInfoId" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
+                            '<div class="form-group">' +
+                            '<label class="control-label col-md-2" for="">' + currentInfosGeneral.Name + '</label>' +
+                            ' <div class="col-md-10">'+
+                            '<input class="form-control ValueInfo" name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].ValueInfo" type="text">' +
+                            '</div>' +
+                            '</div>'
+                            ;
+
+                        $(infoGeneral_html_content).appendTo("#InfosGeneralId")
+
+                    });
+
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+            $('#TypeCheckListId').change(function () {
+                GetInfosGenerals();
+            })
+        });
+    </script>
+}

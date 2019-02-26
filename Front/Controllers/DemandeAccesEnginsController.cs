@@ -13,6 +13,7 @@ using Front.Models;
 using Front.Controllers;
 using Shared;
 using Front.AGUtils;
+using Shared.API.IN;
 
 namespace Front.Controllers
 {
@@ -76,7 +77,7 @@ namespace Front.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DemandeAccesEngin demandeAccesEngin)
+        public async Task<ActionResult> Create(DemandeAccesEngin demandeAccesEngin, ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral)
         {
             if (ModelState.IsValid)
             {
@@ -84,6 +85,22 @@ namespace Front.Controllers
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
+
+                foreach (var item in ResultatInfoGeneral)
+                {
+                    var resultatInfoGeneral = new ResultatInfoGenerale()
+                    {
+                        DemandeAccesEnginId = demandeAccesEngin.Id,
+                        InfoGeneraleId = item.GeneralInfoId,
+                        ValueInfo = item.ValueInfo,
+                        CreatedOn = DateTime.Now,
+                    };
+
+                    var addeResultatIinfoGenerale = context.ResultatInfoGenerale.Add(resultatInfoGeneral);
+                }
+
+                await context.SaveChangesAsync();
+
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("NewControleResultatCheckList", "Home", new { Id = demandeAccesEngin.Id });
             }
