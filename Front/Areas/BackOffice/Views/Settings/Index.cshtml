@@ -3,42 +3,69 @@
     ViewBag.Title = "Administration";
 }
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h5>Exigences</h5>
-            </div>
-            <!-- List group -->
-            <ul class="list-group">
-                <li class="list-group-item"><a href="@Url.Action("Index","TypeCheckLists", new { area = "BackOffice" }, null)">Gestion des Type demande d'acces</a></li>
-                <li class="list-group-item"><a href="@Url.Action("Index","CheckListRubriques", new { area = "BackOffice" }, null)">Gestion des rubriques</a></li>
-                <li class="list-group-item"><a href="@Url.Action("Index","CheckListExigences", new { area = "BackOffice" }, null)">Gestion des exigences</a></li>
 
-            </ul>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h5>Exigences</h5>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="@Url.Action("Index","TypeCheckLists", new { area = "BackOffice" }, null)">Gestion des Type demande d'acces</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("Index","CheckListRubriques", new { area = "BackOffice" }, null)">Gestion des rubriques</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("Index","CheckListExigences", new { area = "BackOffice" }, null)">Gestion des exigences</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h5>Utilisateurs</h5>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="@Url.Action("Index","Profiles", new { area = "BackOffice" }, null)">Gestion des utilisateurs</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("AffectationRoles", "Users", new { area = "BackOffice" }, null)">Affectation des rôles aux utilisateurs</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("UsersAndRolesList", "Users", new { area = "BackOffice" }, null)">Liste des utilisateurs / rôles</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h5>Infos generales</h5>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="@Url.Action("Index","InfoGeneralRubriques", new { area = "BackOffice" }, null)">Gestion des rubriques</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("Index","InfoGenerales", new { area = "BackOffice" }, null)">Gestion des Infos generales</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("Index","TypeEngins", new { area = "BackOffice" }, null)">Gestion des Type d'engins</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h5>Activité </h5>
+                        </div>
+                        <!-- List group -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="@Url.Action("Index","Sites", new { area = "BackOffice" }, null)">Gestion des sites</a></li>
+                            <li class="list-group-item"><a href="@Url.Action("Index","Entities", new { area = "BackOffice" }, null)">Gestion des entités</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h5>Utilisateurs</h5>
-            </div>
-            <!-- List group -->
-            <ul class="list-group">
-                <li class="list-group-item"><a href="@Url.Action("Index","Profiles", new { area = "BackOffice" }, null)">Gestion des utilisateurs</a></li>
-            </ul>
-        </div>
-    </div> 
-    <div class="col-md-4">
-        <div class="card card-primary">
-            <div class="card-header">
-                <h5>Infos generales</h5>
-            </div>
-            <!-- List group -->
-            <ul class="list-group">
-                <li class="list-group-item"><a href="@Url.Action("Index","InfoGeneralRubriques", new { area = "BackOffice" }, null)">Gestion des rubriques</a></li>
-                <li class="list-group-item"><a href="@Url.Action("Index","InfoGenerales", new { area = "BackOffice" }, null)">Gestion des Infos generales</a></li>
-            </ul>
-        </div>
-    </div>
-</div>

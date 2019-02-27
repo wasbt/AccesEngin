@@ -41,19 +41,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\IN\GetEntityBySiteModel.cs" />
     <Compile Include="API\IN\GetInfoGeneraleByTypeCheckList.cs" />
+    <Compile Include="API\IN\GetUserRolesModel.cs" />
     <Compile Include="API\IN\SaveNewResultatInfoGenerale.cs" />
     <Compile Include="API\IN\SaveNewResultatExigence.cs" />
+    <Compile Include="API\IN\SaveUserRolesModel.cs" />
     <Compile Include="ConstsAccesEngin.cs" />
+    <Compile Include="DTO\EntityDTO.cs" />
     <Compile Include="DTO\InfoGeneraleDTO.cs" />
+    <Compile Include="DTO\TypeEnginDTO.cs" />
     <Compile Include="MailHelper.cs" />
+    <Compile Include="Models\RoleElement.cs" />
+    <Compile Include="Models\UsersAndRolesElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RESTServiceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\OUT\" />
     <Folder Include="ENUMS\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

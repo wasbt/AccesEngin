@@ -1,0 +1,148 @@
+﻿@using Shared.Models
+@model RoleElement
+@{
+    ViewBag.Title = "AffectationRoles";
+
+    var AllRoles = ViewData["AllRoles"] as List<RoleElement>;
+}
+
+<h2>Affectation des Rôles</h2>
+
+<div class="form-group" id="affectations">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="col-2">Utilisateur</label>
+                <div class="col-12">
+                    @Html.DropDownList("UsersList", null, htmlAttributes: new { @class = "form-control select2" })
+                    <div class="spinner-border text-primary m-2" id="loader" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <button id="btn-save" class="btn btn-success waves-effect w-md waves-light m-b-5" type="button">Enregistrer</button>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="div-roles">
+
+            </div>
+            @*@foreach (var role in AllRoles)
+                {
+                    <div class="m-t-15">
+                        <input type="checkbox" name="@role.Name" id="@role.Id" value="@role.Id" />
+                        @role.Name
+                    </div>
+                }*@
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    div.checkbox-custom {
+        float: left;
+        position: relative;
+        margin-top: 0px;
+    }
+</style>
+
+
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $("#loader").hide();
+
+            $(".select2").select2();
+
+            $("#UsersList").change(function () {
+
+                var selectedUserId = $(this).val();
+
+                if (selectedUserId == '')
+                    return;
+
+                var jsonObject = {
+                    userId: selectedUserId
+                }
+
+                $("#loader").show();
+
+                var posting = $.post('/AccesEnginapi/GetUserRoles', jsonObject, function (response) {
+
+                    if (response.success) {
+
+                        $("#div-roles").html("");
+
+                        var listRolesLenght = $(response.data).length;
+
+                        $.each(response.data, function (index) {
+
+                            var currentRole = response.data[index];
+
+                            var checkedAttr = currentRole.IsSelected ? ' checked="checked" ' : "";
+
+                            var role_html_content =
+                                '<div id="role-' + currentRole.Id + '" class="role-text" >' +
+                                '<label>' + '<input type="checkbox" class="checkbox-circle" name="role_' + currentRole.Id + '" value="' + currentRole.Id + '" ' + checkedAttr + ' />' +
+                                currentRole.Name +
+                                '</label>'
+                            '</div>';
+
+
+                            $(role_html_content).appendTo("#div-roles").hide().delay(index * 400 / listRolesLenght).fadeIn(1000);
+
+                        });
+
+                    }
+
+                });
+
+                posting.always(function () {
+                    $("#loader").hide();
+                });
+
+            });
+
+            $("#btn-save").click(function () {
+                var rolesList = [];
+
+                $("input:checked").each(function () {
+                    rolesList.push(this.value);
+                });
+
+                var jsonObject = {
+                    userId: $("#UsersList").val(),
+                    rolesList: rolesList
+                }
+
+                var posting = $.post('/AccesEnginapi/SaveUserRoles', jsonObject, function (response) {
+
+                    if (response.success) {
+                        swal("Changement efféctué avec succès !", "", "success");
+
+                    } else {
+                        swal("Erreur, veuillez réessayer!", "", "error");
+                    }
+
+                });
+
+                posting.always(function () {
+                    $("#loader").hide();
+                });
+            });
+
+            $("#UsersList").change();
+
+        });
+    </script>
+}

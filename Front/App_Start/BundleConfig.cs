@@ -29,7 +29,8 @@ namespace Front
                     "~/assets/css/style.css",
                     "~/Content/ocp-overrides.css",
                     "~/assets/plugins/sweet-alert/sweetalert2.min.css",
-                    "~/assets/plugins/select2/css/select2.min.css"
+                    "~/assets/plugins/select2/css/select2.min.css",
+                    "~/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/templateJS").Include(
@@ -40,7 +41,8 @@ namespace Front
                             "~/assets/js/jquery.slimscroll.js",
                             "~/assets/plugins/sweet-alert/sweetalert2.min.js",
                             "~/assets/pages/jquery.sweet-alert.init.js",
-                            "~/assets/plugins/select2/js/select2.min.js"
+                            "~/assets/plugins/select2/js/select2.min.js",
+                            "~/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
                         ));
 
 

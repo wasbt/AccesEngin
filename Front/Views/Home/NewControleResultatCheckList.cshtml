@@ -49,9 +49,27 @@
                                         </tr>
                                         <tr>
                                             <td>@exigence.Name</td>
-                                            <td><input type="checkbox" name="ResultatExigenceList['@exigence.Id'].IsConform" value="true" /></td>
+                                            <td>
+                                                <div class="checkbox checkbox-primary">
+                                                    <input id="checkbox_@exigence.Id" type="checkbox" name="ResultatExigenceList['@exigence.Id'].IsConform" value="true" />
+                                                    <label for="checkbox_@exigence.Id">
+
+                                                    </label>
+                                                </div>
+
+
+                                            </td>
                                             <td><input class="form-control TextComment" name="ResultatExigenceList['@exigence.Id'].Observation" type="text"></td>
-                                            <td><input type="date" name="ResultatExigenceList['@exigence.Id'].Date" /></td>
+                                            <td>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control datepicker-autoclose" name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text"><i class="ti-calendar"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
 
                                         </tr>
 
@@ -66,3 +84,20 @@
         </div>
     </div>
 </div>
+@section scripts{
+    <script>
+
+            jQuery(document).ready(function() {
+
+                     // Date Picker
+                jQuery('.datepicker-autoclose').datepicker({
+                    format: "yyyy/mm/dd",
+                     autoclose: true,
+                     todayHighlight: true,
+                });
+        });
+    </script>
+
+
+
+}

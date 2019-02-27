@@ -58,12 +58,22 @@ namespace Front.Controllers
             }
             #endregion
 
+            #region get & Type Engin
+            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+
+            if (typeEngin == null)
+            {
+                return HttpNotFound();
+            }
+            #endregion
+
             #region MyRegion
             //To Model
             var ResultatViewModel = new ResultatsVM
             {
                 TypeCheckList = checkList,
                 controle = controle,
+                TypeEngin = typeEngin
             };
 
             #endregion
@@ -90,11 +100,13 @@ namespace Front.Controllers
 
             #region get & check checklist
             var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+
             if (checkList == null)
             {
                 return HttpNotFound();
             }
-            #endregion
+            #endregion 
+
 
             #region MyRegion
 
@@ -121,7 +133,7 @@ namespace Front.Controllers
                     DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
                     CheckListExigenceId = resultatEx.CheckListExigenceId,
                     IsConform = resultatEx.IsConform,
-                    Date = resultatEx.Date == DateTime.MinValue ? (DateTime ?)null : resultatEx.Date,
+                    Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime ?)null : Convert.ToDateTime(resultatEx.Date),
                     Observation = resultatEx.Observation,
                     CreatedOn = DateTime.Now
                 };

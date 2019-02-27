@@ -1,0 +1,89 @@
+﻿@model Front.Models.StandardModel<DAL.Entity>
+@using X.PagedList
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Bootstrap4
+
+@{
+    ViewBag.Title = "Gestion des XXX";
+}
+
+
+<div class="row">
+<div class="col-sm-12">
+<div class="card-box">
+<div class="row">
+    <div id="search" class="col-md-10 form-inline pull-left">
+		@using (Html.BeginForm())
+		{
+            @Html.EditorFor(model => model.content, new { htmlAttributes = new { @class = "form-control", placeholder = ".." } })
+			@Html.DropDownList("columnName", UIHelper.GetSelectList("DAL.Entity"), new { @class = "form-control" })
+			@Html.Hidden("newSearch",1)
+			<input class="btn btn-default btn-search" type="submit" value="Filtrer" />
+		}
+	</div>
+    <div class="col-md-2 text-right">
+        <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
+        </a>
+    </div>
+</div>
+
+<table class="@UIHelper.CrudTableCss">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().AspNetUsers.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Site.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedOn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.resultList) {
+    <tr class="line">
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Site.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedOn)
+        </td>
+        <td class="AdminListButtons">
+			@Html.Partial("_AdminListButtons", item.Id)
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+
+Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }),Bootstrap4PagedListRenderOptions.Default)
+</div>
+</div>
+</div>
+
+
+@section scripts{
+    <link href="~/Content/admin-crud.css" rel="stylesheet" />
+    <script src="~/Scripts/admin.crud.js"></script>
+}
+
+

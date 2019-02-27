@@ -20,6 +20,10 @@ namespace DAL
 
         public int TypeCheckListId { get; set; }
 
+        public long TypeEnginId { get; set; }
+
+        public long EntityId { get; set; }
+
         [Required]
         public string Observation { get; set; }
 
@@ -31,6 +35,10 @@ namespace DAL
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual TypeCheckList TypeCheckList { get; set; }
+
+        public virtual TypeEngin TypeEngin { get; set; }
+
+        public virtual Entity Entity { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ResultatExigence> ResultatExigence { get; set; }

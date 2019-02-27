@@ -8,6 +8,11 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
+            <div class="row ">
+                <div class="col-md-12 text-right">
+                    <button class="btn  btn-primary waves-effect   btn-xs waves-light m-b-5 "><i class="fa fa-send"></i>  soumettre</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -15,37 +20,59 @@
     <div class="col-sm-12">
         <div class="card-box">
             <div class="row">
-                <table id="" class="table table-bordered col-6">
-                    <thead>
+                <div class="col-md-6">
 
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
-                            {
+                    <table id="" class="table table-bordered ">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            @{
                                 <tr>
                                     <td class="alert alert-success" colspan="12" style="text-align:center">
-                                        @group.Key
+                                        Type d'engin
                                     </td>
                                 </tr>
-                                foreach (var rebricInfo in group)
+                                <tr>
+                                    <td colspan="12">@Model.TypeEngin.Name</td>
+                                </tr>
+                                foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
                                 {
-
-                                    var info = Model.controle.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
-
-                                    if (info == null)
-                                    {
-                                        continue;
-                                    }
                                     <tr>
-                                        <td>@rebricInfo.Name</td>
-                                        <td>@info.ValueInfo</td>
+                                        <td class="alert alert-success" colspan="12" style="text-align:center">
+                                            @group.Key
+                                        </td>
                                     </tr>
+                                    foreach (var rebricInfo in group)
+                                    {
+
+                                        var info = Model.controle.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+
+                                        if (info == null)
+                                        {
+                                            continue;
+                                        }
+                                        <tr>
+                                            <td>@rebricInfo.Name</td>
+                                            <td>@info.ValueInfo</td>
+                                        </tr>
+                                    }
                                 }
+
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+
                 <table id="" class="table table-bordered">
                     <thead>
                         <tr>

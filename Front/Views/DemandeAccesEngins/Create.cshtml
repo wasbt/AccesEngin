@@ -11,33 +11,50 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("TypeCheckListId", null, "-- choisis votre formulaire --", htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div id="InfosGeneralId" >
-
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
-                        </div>
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-2">Site</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Entité</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="EntityId" name="EntityId"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TypeCheckListId", null, "-- choisis votre formulaire --", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Type d'engin</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="TypeEnginId" name="TypeEnginId"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="InfosGeneralId">
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
+                    </div>
+                </div>
+            </div>
             }
 
             @Html.Partial("_BackToList")
@@ -47,6 +64,40 @@
 @section scripts{
 
     <script type="text/javascript">
+
+          //GET INFO TYPE ENGIN
+           function FillTypeEnginDDL() {
+            var selectedTypeCheckListId = $('#TypeCheckListId').val();
+             var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+            var posting = $.post('/AccesEnginapi/GetTypeEnginByTypeCheckList', jsonObject, function (response) {
+                $("#TypeEnginId").html("");
+                $.each(response.data, function (i,typeEngin) {
+                    $("#TypeEnginId").append($('<option>', {
+                        value: typeEngin.Id,
+                        text: typeEngin.Name
+                    }));
+                });
+            });
+        }
+        //GET Entitis
+         function FillEnitiesDDL() {
+            var selectedSiteId = $('#SiteId').val();
+             var jsonObject = {
+                SiteId : selectedSiteId
+            }
+            var posting = $.post('/AccesEnginapi/GetEntityBySite', jsonObject, function (response) {
+                $("#EntityId").html("");
+                $.each(response.data, function (i,entity) {
+                    $("#EntityId").append($('<option>', {
+                        value: entity.Id,
+                        text: entity.Name
+                    }));
+                });
+            });
+        }
+        //GET INFO GENERAL
         function GetInfosGenerals() {
             var selectedTypeCheckListId = $("#TypeCheckListId").val();
             var jsonObject = {
@@ -62,7 +113,6 @@
                     $.each(response.data, function (index) {
 
                         var currentInfosGeneral = response.data[index];
-                        console.log(currentInfosGeneral);
 
                         var infoGeneral_html_content =
                             '<input name="ResultatInfoGeneral.Index" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
@@ -87,6 +137,10 @@
         $(document).ready(function () {
             $('#TypeCheckListId').change(function () {
                 GetInfosGenerals();
+                FillTypeEnginDDL();
+            })
+            $('#SiteId').change(function () {
+                FillEnitiesDDL();
             })
         });
     </script>

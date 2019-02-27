@@ -1,0 +1,58 @@
+﻿@model DAL.Entity
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <h2 class="header">Détails de XXX #@Model.Name</h2>
+
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUsers.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Site.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Site.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.Partial("_BackToList")
+    @Html.Partial("_BtnAdminEdit", Model.Id)
+</p>
+</div>
+</div>
+</div>

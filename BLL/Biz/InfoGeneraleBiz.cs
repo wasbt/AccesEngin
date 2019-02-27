@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BLL.Common;
+using DAL;
 using log4net;
 using Shared.API.IN;
 using Shared.DTO;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Common.Biz
+namespace BLL.Biz
 {
     public class InfoGeneraleBiz : CommonBiz
     {
@@ -23,6 +24,15 @@ namespace BLL.Common.Biz
             var infoGeneralsDto = infoGenerales.Select(info => info.InfoGeneraleToDTO()).ToList();
 
             return infoGeneralsDto;
+        }
+
+        public List<TypeEnginDTO> GetTypeEnginByTypeCheckList(GetInfoGeneraleByTypeCheckList generaleByTypeCheckList)
+        {
+            var typeEngins = context.TypeEngin.Where(i => i.TypeCheckListId == generaleByTypeCheckList.TypeCheckListId).ToList();
+
+            var TypeEnginDto = typeEngins.Select(te => te.TypeEnginToDTO()).ToList();
+
+            return TypeEnginDto;
         }
     }
 }

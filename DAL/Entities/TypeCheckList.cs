@@ -13,6 +13,7 @@ namespace DAL
         public TypeCheckList()
         {
             CheckListRubrique = new HashSet<CheckListRubrique>();
+            TypeEngin = new HashSet<TypeEngin>();
             DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
             InfoGenerale = new HashSet<InfoGenerale>();
         }
@@ -31,6 +32,7 @@ namespace DAL
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckListRubrique> CheckListRubrique { get; set; }
+        public virtual ICollection<TypeEngin> TypeEngin { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeAccesEngin> DemandeAccesEngin { get; set; }

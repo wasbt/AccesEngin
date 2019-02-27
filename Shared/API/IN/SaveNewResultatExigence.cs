@@ -20,7 +20,7 @@ namespace Shared.API.IN
 
         public bool IsConform { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public string Observation { get; set; }
     }

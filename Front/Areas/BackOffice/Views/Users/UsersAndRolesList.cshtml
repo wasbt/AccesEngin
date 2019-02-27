@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Shared.Models.UsersAndRolesElement>
+
+@{
+    ViewBag.Title = "Liste des utilisateurs de l'application";
+}
+
+<h2>Liste des utilisateurs de l'application</h2>
+
+<br />
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <table class="table  table-striped" id="myTable">
+                <tr>
+                    <th>
+                        Utilisateur
+                    </th>
+                    <th>
+                        Rôles actuels
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.OrderByDescending(o => o.RolesNames.Count()))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName) <br />
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <span class="badge badge-primary badge-pill">@item.RolesNames.Count()</span> @string.Join(" / ", item.RolesNames)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

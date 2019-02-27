@@ -4,6 +4,7 @@ namespace DAL
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using DAL.Configurations;
 
     public partial class EnginDbContext : DbContext
     {
@@ -26,6 +27,9 @@ namespace DAL
         public virtual DbSet<InfoGenerale> InfoGenerale { get; set; }
         public virtual DbSet<InfoGeneralRubrique> InfoGeneralRubrique { get; set; }
         public virtual DbSet<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
+        public virtual DbSet<TypeEngin> TypeEngin { get; set; }
+        public virtual DbSet<Site> Site { get; set; }
+        public virtual DbSet<Entity> Entity { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,6 +39,7 @@ namespace DAL
                 .Map(m => m.ToTable("MAP_InfoGenerale_TypeCheckList").MapLeftKey("InfoGeneraleId").MapRightKey("TypeCheckListId"));
 
             #region AspNetRoles
+
             modelBuilder.Entity<AspNetRoles>()
                .HasMany(e => e.AspNetUsers)
                .WithMany(e => e.AspNetRoles)
@@ -71,6 +76,12 @@ namespace DAL
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.TypeEngin)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.CreatedBy)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.InfoGeneralRubrique)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.CreatedBy)
@@ -91,6 +102,21 @@ namespace DAL
             modelBuilder.Entity<AspNetUsers>()
                 .HasOptional(e => e.Profile)
                 .WithRequired(e => e.AspNetUsers);
+
+            // CreateBy Site
+            modelBuilder.Entity<AspNetUsers>()
+               .HasMany(e => e.Site)
+               .WithRequired(e => e.AspNetUsers)
+               .HasForeignKey(e => e.CreatedBy)
+               .WillCascadeOnDelete(false);
+
+            // CreateBy Entity
+            modelBuilder.Entity<AspNetUsers>()
+               .HasMany(e => e.Entity)
+               .WithRequired(e => e.AspNetUsers)
+               .HasForeignKey(e => e.CreatedBy)
+               .WillCascadeOnDelete(false);
+
             #endregion
 
 
@@ -133,6 +159,23 @@ namespace DAL
                 .HasMany(e => e.DemandeAccesEngin)
                 .WithRequired(e => e.TypeCheckList)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TypeEngin>()
+                .HasMany(e => e.DemandeAccesEngin)
+                .WithRequired(e => e.TypeEngin)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TypeCheckList>()
+                .HasMany(e => e.TypeEngin)
+                .WithRequired(e => e.TypeCheckList)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Site>()
+                .HasMany(e => e.Entity)
+                .WithRequired(e => e.Site)
+                .WillCascadeOnDelete(false);
+
+
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Front.Controllers
         // GET: DemandeAccesEngins/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
+            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
             ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name");
             return View();
         }
@@ -105,7 +105,7 @@ namespace Front.Controllers
                 return RedirectToAction("NewControleResultatCheckList", "Home", new { Id = demandeAccesEngin.Id });
             }
 
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", demandeAccesEngin.CreatedBy);
+            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
             ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
             return View(demandeAccesEngin);
         }

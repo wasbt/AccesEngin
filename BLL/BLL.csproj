@@ -105,6 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Biz\InfoGeneraleBiz.cs" />
+    <Compile Include="Biz\ProfileBiz.cs" />
+    <Compile Include="Biz\SitesEntitiesBiz.cs" />
     <Compile Include="Common\CommonBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
