@@ -12,6 +12,7 @@ namespace Front.ViewModels
         public DemandeAccesEngin controle { get; set; }
         public TypeCheckList TypeCheckList { get; set; }
         public TypeEngin TypeEngin { get; set; }
-
+        public long exigencesNonApplicable { get; set; }
+        public long exigencesApplicable { get; set; }
     }
 }

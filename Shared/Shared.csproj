@@ -52,6 +52,7 @@
     <Compile Include="DTO\InfoGeneraleDTO.cs" />
     <Compile Include="DTO\TypeEnginDTO.cs" />
     <Compile Include="MailHelper.cs" />
+    <Compile Include="Models\ExportExcelModel.cs" />
     <Compile Include="Models\RoleElement.cs" />
     <Compile Include="Models\UsersAndRolesElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

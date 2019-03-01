@@ -67,13 +67,30 @@ namespace Front.Controllers
             }
             #endregion
 
-            #region MyRegion
+            #region Conformité
+            var resultatExigenceDetail = controle.ResultatExigence.ToList();
+            var exigences = controle.ResultatExigence.ToList();
+            var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
+            var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
+            var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
+            var exigencesApplicableCount = exigenceApplicable.LongCount();
+
+            var Total = (exigencesApplicableCount + exigencesNonApplicableCount);
+
+            var exigencesApplicable = (exigencesApplicableCount * 100) / Total;
+            var exigencesNonApplicable = (exigencesNonApplicableCount * 100) / Total;
+
+            #endregion
+
+            #region Resultats Model
             //To Model
             var ResultatViewModel = new ResultatsVM
             {
                 TypeCheckList = checkList,
                 controle = controle,
-                TypeEngin = typeEngin
+                TypeEngin = typeEngin,
+                exigencesApplicable = exigencesApplicable,
+                exigencesNonApplicable = exigencesNonApplicable
             };
 
             #endregion
@@ -108,12 +125,13 @@ namespace Front.Controllers
             #endregion 
 
 
-            #region MyRegion
+            #region Model New Controle
 
-            var controleCheckListVM = new ControleCheckListVM
+            var controleCheckListVM = new ResultatsVM
             {
                 TypeCheckList = checkList,
                 controle = controle,
+                TypeEngin = controle.TypeEngin
             };
 
             #endregion
@@ -133,7 +151,7 @@ namespace Front.Controllers
                     DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
                     CheckListExigenceId = resultatEx.CheckListExigenceId,
                     IsConform = resultatEx.IsConform,
-                    Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime ?)null : Convert.ToDateTime(resultatEx.Date),
+                    Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date),
                     Observation = resultatEx.Observation,
                     CreatedOn = DateTime.Now
                 };
@@ -145,5 +163,11 @@ namespace Front.Controllers
             return RedirectToAction("Index", "DemandeAccesEngins");
         }
         #endregion
+
+        [ActionName("DownloadExcel")]
+        public async Task<ActionResult> DownloadExcelAsync(int? id)
+        {
+           
+        }
     }
 }

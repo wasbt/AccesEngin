@@ -1564,13 +1564,14 @@
     <Content Include="Views\DemandeAccesEngins\Index.cshtml" />
     <Content Include="Views\Home\Resultats.cshtml" />
     <Content Include="Views\Home\NewControleResultatCheckList.cshtml" />
+    <Content Include="Views\Shared\_Table_ResultatExigence.cshtml" />
+    <Content Include="Views\Shared\_Table_ResultatInfoGenerale.cshtml" />
+    <Content Include="Views\Shared\_Table_SaveNewExigence.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BackOffice\Models\" />
     <Folder Include="assets\plugins\jstree\themes\default\" />
-    <Folder Include="Views\BaseApi\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

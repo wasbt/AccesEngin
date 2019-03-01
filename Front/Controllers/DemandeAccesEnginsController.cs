@@ -23,6 +23,8 @@ namespace Front.Controllers
         public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model)
         {
             var demandeAccesEngin = context.DemandeAccesEngin.Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
+
+
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
@@ -102,7 +104,7 @@ namespace Front.Controllers
                 await context.SaveChangesAsync();
 
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
-                return RedirectToAction("NewControleResultatCheckList", "Home", new { Id = demandeAccesEngin.Id });
+                return RedirectToAction("Index");
             }
 
             ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");

@@ -1,6 +1,6 @@
-﻿@model Front.ViewModels.ControleCheckListVM
+﻿@model Front.ViewModels.ResultatsVM
 @{
-    ViewBag.Title = "Résultats";
+    ViewBag.Title = "Contrôle";
 }
 
 <h2>@Model.TypeCheckList.Name</h2>
@@ -8,6 +8,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
+            @Html.Partial("_Table_ResultatInfoGenerale")
         </div>
     </div>
 </div>
@@ -18,68 +19,12 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.Hidden("DemandeAccesEnginId", Model.controle.Id)
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
-                        </div>
-                    </div>
-                    <table id="" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Exigences</th>
-                                <th>Conforme</th>
-                                <th>Observation</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
-                                {
-                                    <tr style="background-color:#9CCC65; color:white">
-                                        <td colspan="4"><b>@rubric.Name</b></td>
-                                    </tr>
-                                    foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
-                                    {
-                                        <tr style="display:none;">
-                                            <td><input name="ResultatExigenceList.Index" type="hidden" value="'@exigence.Id'" /></td>
-                                            @* add indicator id hidden field hidden for*@
-                                            @Html.Hidden($"ResultatExigenceList['{exigence.Id}'].CheckListExigenceId", exigence.Id)
-                                        </tr>
-                                        <tr>
-                                            <td>@exigence.Name</td>
-                                            <td>
-                                                <div class="checkbox checkbox-primary">
-                                                    <input id="checkbox_@exigence.Id" type="checkbox" name="ResultatExigenceList['@exigence.Id'].IsConform" value="true" />
-                                                    <label for="checkbox_@exigence.Id">
-
-                                                    </label>
-                                                </div>
-
-
-                                            </td>
-                                            <td><input class="form-control TextComment" name="ResultatExigenceList['@exigence.Id'].Observation" type="text"></td>
-                                            <td>
-                                                <div class="col-sm-8">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control datepicker-autoclose" name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text"><i class="ti-calendar"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                    }
-                                }
-                            }
-
-                        </tbody>
-                    </table>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Sauvegarder</button>
                 </div>
+                @Html.Partial("_Table_SaveNewExigence")
+            </div>
             }
         </div>
     </div>

@@ -1,0 +1,43 @@
+﻿@model Front.ViewModels.ResultatsVM
+
+
+<table id="" class="table table-bordered ">
+    <thead>
+
+    </thead>
+    <tbody>
+        @{
+            <tr>
+                <td class="alert alert-success" colspan="12" style="text-align:center">
+                    Type d'engin
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12">@Model.TypeEngin.Name</td>
+            </tr>
+            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+            {
+                <tr>
+                    <td class="alert alert-success" colspan="12" style="text-align:center">
+                        @group.Key
+                    </td>
+                </tr>
+                foreach (var rebricInfo in group)
+                {
+
+                    var info = Model.controle.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+
+                    if (info == null)
+                    {
+                        continue;
+                    }
+                    <tr>
+                        <td>@rebricInfo.Name</td>
+                        <td>@info.ValueInfo</td>
+                    </tr>
+                }
+            }
+
+        }
+    </tbody>
+</table>

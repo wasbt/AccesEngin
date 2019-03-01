@@ -1,0 +1,59 @@
+﻿@model Front.ViewModels.ResultatsVM
+
+<table id="" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Exigences</th>
+            <th>Conforme</th>
+            <th>Observation</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+
+            foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
+            {
+                <tr style="background-color:#9CCC65; color:white">
+                    <td colspan="4"><b>@rubric.Name</b></td>
+                </tr>
+                foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
+                {
+                    var data = Model.controle.ResultatExigence.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
+
+                    if (data == null)
+                    {
+                        continue;
+                    }
+                    <tr>
+                        <td>@exigence.Name</td>
+                        <td>@(data.IsConform ? "Conforme" : "Non conforme")</td>
+                        <td>@data.Observation</td>
+                        <td>@data.Date</td>
+
+                    </tr>
+
+                }
+            }
+
+        }
+        <tr style="background-color:#21AFDA; color:white">
+            <td colspan="4"><b>TAUX DE CONFORMITE</b></td>
+        </tr>
+        <tr>
+            <td><b>Exigence applicable&nbsp;&nbsp;</b></td>
+            <td nowrap>
+                @{if (Model.exigencesApplicable > 0 || Model.exigencesApplicable == 0)
+                    { @Model.exigencesApplicable.ToString("F2") <text>%</text>} }
+            </td>
+        </tr>
+        <tr>
+            <td><b>Exigence non applicable&nbsp;&nbsp;</b></td>
+            <td nowrap>
+                @{if (Model.exigencesNonApplicable > 0 || Model.exigencesNonApplicable == 0)
+                    { @Model.exigencesNonApplicable.ToString("F2") <text>%</text>} }
+            </td>
+        </tr>
+
+    </tbody>
+</table>

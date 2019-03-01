@@ -4,8 +4,8 @@
 @using X.PagedList.Mvc.Bootstrap4
 
 @{
-                /**/
-                ViewBag.Title = "Mes contrôles";
+    /**/
+    ViewBag.Title = "Mes contrôles";
 }
 
 
@@ -49,35 +49,49 @@
                     </th>
                     <th></th>
                 </tr>
+                @{
+                    foreach (var item in Model.resultList)
+                    {
+                        var isControled = Model.resultList.Any(x => x.ResultatExigence.Any(r => r.DemandeAccesEnginId == item.Id));
 
-                @foreach (var item in Model.resultList)
-                {
-    <tr class="line">
+                        <tr class="line">
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Observation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
-        </td>
-        <td class="AdminListButtons">
-            @*@Html.Partial("_AdminListButtons", item.Id)*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Observation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td class="AdminListButtons">
+                                @*@Html.Partial("_AdminListButtons", item.Id)*@
+                                @if (isControled)
+                                {
+                                    /**/
+                                    <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
+                                        <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
+                                        <span class="fa fa-check"></span>&nbsp;Contrôler
+                                    </a>
 
-            <a href="@Url.Action("Resultats","Home", new {  id = item.Id.ToString() })" class="btn btn-info waves-effect w-md waves-light m-b-5">
-                <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
-            </a>
-        </td>
-    </tr>
-}
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
 
             </table>
             <br />

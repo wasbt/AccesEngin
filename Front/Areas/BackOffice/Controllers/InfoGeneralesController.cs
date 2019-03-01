@@ -110,7 +110,14 @@ namespace Front.Areas.BackOffice.Controllers
             }
 
             //var ListTypeCheckList = new SelectList(context.TypeCheckList, "Id", "Name");
-            var selectedlist = context.InfoGenerale.SelectMany(x => x.TypeCheckList).Select(t => t.Id).ToList();
+            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
+            if (infoGenerale == null)
+            {
+                return HttpNotFound();
+            }
+
+            var typeChckListSelected = infoGenerale.TypeCheckList;
+            var selectedlist = typeChckListSelected.Select(t => t.Id).ToList();
             ViewData["TypeCheckListIds"] = new MultiSelectList(
 
                items: context.TypeCheckList.OrderBy(o => o.Name),
@@ -122,11 +129,8 @@ namespace Front.Areas.BackOffice.Controllers
                selectedValues: selectedlist );
             //ViewBag. = new MultiSelectList(ListTypeCheckList, "Id", "Name", selectedlist);
 
-            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
-            if (infoGenerale == null)
-            {
-                return HttpNotFound();
-            }
+            
+         
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", infoGenerale.CreatedBy);
             ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
             return View(infoGenerale);
