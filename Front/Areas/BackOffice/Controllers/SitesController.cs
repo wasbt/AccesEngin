@@ -16,7 +16,7 @@ using Front.AGUtils;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class SitesController : BaseController
+    public class SitesController : BackOfficeController
     {
         // GET: BackOffice/Sites
         public async Task<ActionResult> Index(StandardModel<Site> model)

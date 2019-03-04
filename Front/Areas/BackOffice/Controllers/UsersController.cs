@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class UsersController : BaseController
+    public class UsersController : BackOfficeController
     {
         // GET: BackOffice/Users
         // GET: Admin/AuthManager

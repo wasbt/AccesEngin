@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DAL;
+using BLL.Biz;
+using Shared;
+
 namespace Front.Controllers
 {
     public class HomeController : BaseController
@@ -167,7 +170,20 @@ namespace Front.Controllers
         [ActionName("DownloadExcel")]
         public async Task<ActionResult> DownloadExcelAsync(int? id)
         {
+            var cc = new DownloadResultatsToExcel(context, log);
+            var toto = await cc.GetResultatToExcelAsync(id); ;
            
+            if (toto != null)
+            {
+                byte[] filecontent = toto;
+                return File(filecontent,cc.ExcelContentType, $"Textes.xlsx");
+            }
+            else
+            {
+                TempData[ConstsAccesEngin.MESSAGE_ERROR] = "Erreur telechargement fichier Excel.";
+                return RedirectToAction("Index");
+            }
+
         }
     }
 }

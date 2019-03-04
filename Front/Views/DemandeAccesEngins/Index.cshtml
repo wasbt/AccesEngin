@@ -2,10 +2,11 @@
 @using X.PagedList
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Bootstrap4
-
+@using Shared;
 @{
     /**/
     ViewBag.Title = "Mes contrôles";
+    var IsContoler = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
 }
 
 
@@ -82,9 +83,16 @@
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
-                                        <span class="fa fa-check"></span>&nbsp;Contrôler
-                                    </a>
+                                    if (Request.IsAuthenticated && IsContoler)
+                                    {
+                                        <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
+                                            <span class="fa fa-check"></span>&nbsp;Contrôler
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="badge badge-warning">N'est pas encore contrôlée</h4>
+                                    }
 
                                 }
 

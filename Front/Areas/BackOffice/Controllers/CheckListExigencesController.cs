@@ -16,7 +16,7 @@ using Front.AGUtils;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class CheckListExigencesController : BaseController
+    public class CheckListExigencesController : BackOfficeController
     {
         // GET: BackOffice/CheckListExigences
         public async Task<ActionResult> Index(StandardModel<CheckListExigence> model)

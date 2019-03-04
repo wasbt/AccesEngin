@@ -18,7 +18,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class ProfilesController : BaseController
+    public class ProfilesController : BackOfficeController
     {
         // GET: BackOffice/Profiles
         public async Task<ActionResult> Index(StandardModel<Profile> model)

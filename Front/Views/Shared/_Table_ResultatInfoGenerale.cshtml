@@ -8,7 +8,7 @@
     <tbody>
         @{
             <tr>
-                <td class="alert alert-success" colspan="12" style="text-align:center">
+                <td class="alert alert-info" colspan="12" style="text-align:center">
                     Type d'engin
                 </td>
             </tr>
@@ -18,7 +18,7 @@
             foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
             {
                 <tr>
-                    <td class="alert alert-success" colspan="12" style="text-align:center">
+                    <td class="alert alert-info" colspan="12" style="text-align:center">
                         @group.Key
                     </td>
                 </tr>

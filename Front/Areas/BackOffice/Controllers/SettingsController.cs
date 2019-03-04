@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class SettingsController : Controller
+    public class SettingsController : BackOfficeController
     {
         // GET: BackOffice/Settings
         public ActionResult Index()

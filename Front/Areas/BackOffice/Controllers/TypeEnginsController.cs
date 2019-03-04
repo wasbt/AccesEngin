@@ -16,7 +16,7 @@ using Front.AGUtils;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class TypeEnginsController : BaseController
+    public class TypeEnginsController : BackOfficeController
     {
         // GET: BackOffice/TypeEngins
         public async Task<ActionResult> Index(StandardModel<TypeEngin> model)

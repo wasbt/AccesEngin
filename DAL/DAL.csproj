@@ -123,6 +123,10 @@
     <Compile Include="Migrations\201902271512595_add table site entity.Designer.cs">
       <DependentUpon>201902271512595_add table site entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903041440102_databasetoazur.cs" />
+    <Compile Include="Migrations\201903041440102_databasetoazur.Designer.cs">
+      <DependentUpon>201903041440102_databasetoazur.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -177,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902271512595_add table site entity.resx">
       <DependentUpon>201902271512595_add table site entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903041440102_databasetoazur.resx">
+      <DependentUpon>201903041440102_databasetoazur.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

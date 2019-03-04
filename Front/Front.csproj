@@ -63,6 +63,8 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -227,6 +229,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
     <Compile Include="Areas\BackOffice\Controllers\AccesEnginAPIController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\BackOfficeController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\CheckListExigencesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\CheckListRubriquesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\EntitiesController.cs" />
@@ -1504,6 +1507,8 @@
     <Content Include="Areas\BackOffice\Views\Entities\Details.cshtml" />
     <Content Include="Areas\BackOffice\Views\Entities\Edit.cshtml" />
     <Content Include="Areas\BackOffice\Views\Entities\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\ocpaccesengins - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\ocpaccesengins - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1571,6 +1576,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BackOffice\Models\" />
+    <Folder Include="Areas\BackOffice\Views\BackOffice\" />
     <Folder Include="assets\plugins\jstree\themes\default\" />
   </ItemGroup>
   <ItemGroup>
@@ -1595,6 +1601,9 @@
       <Project>{637b4990-5383-476f-8cff-d9da909bc92c}</Project>
       <Name>Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
