@@ -10,7 +10,7 @@ namespace Shared.API.IN
     {
         public ICollection<ControlResultatExigence> ResultatExigenceList { get; set; }
         public long DemandeAccesEnginId { get; set; }
-
+        public bool Autorise { get; set; }
     }
     public class ControlResultatExigence
     {

@@ -24,9 +24,15 @@
                     }
                 </div>
                 <div class="col-md-2 text-right">
-                    <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
-                        <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
-                    </a>
+                    @{
+                        if (!ViewBag.ShowButton)
+                        {
+                            <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
+                            </a>
+                        }
+                    }
+
                 </div>
             </div>
 
@@ -48,6 +54,8 @@
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedOn)
                     </th>
+                    <th>Statut</th>
+                    <th>Autorisé</th>
                     <th></th>
                 </tr>
                 @{
@@ -71,6 +79,26 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @if (isControled)
+                                {
+                                    <span class="badge badge-success">Contrôlé</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non contrôlé</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Autorise.HasValue == true)
+                                {
+                                    <span class="badge badge-success">Autorisé</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non autorisé</span>
+                                }
                             </td>
                             <td class="AdminListButtons">
                                 @*@Html.Partial("_AdminListButtons", item.Id)*@

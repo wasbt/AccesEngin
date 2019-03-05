@@ -14,6 +14,7 @@ using Front.Controllers;
 using Shared;
 using Front.AGUtils;
 using Shared.API.IN;
+using Shared.ENUMS;
 
 namespace Front.Controllers
 {
@@ -22,7 +23,28 @@ namespace Front.Controllers
         // GET: DemandeAccesEngins
         public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model)
         {
+            ViewBag.ShowButton = false;
+
             var demandeAccesEngin = context.DemandeAccesEngin.Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
+
+            #region Calculer durée approximative du contrôle par type d’engin
+
+            var dateNow = DateTime.Now.Date;
+            var demandeAccesEnginToDay = demandeAccesEngin.Where(x => DbFunctions.TruncateTime(x.CreatedOn) == dateNow).ToList();
+            var listTypeCheckList = demandeAccesEnginToDay.Select(x => x.TypeCheckList).ToList();
+            var getCountTypeEngin = listTypeCheckList.SelectMany(x => x.TypeEngin);
+            var selecDureeEstimativeToDay = getCountTypeEngin.Select(x => double.Parse(x.DureeEstimative));
+            var sumDuree = selecDureeEstimativeToDay.Sum();
+
+
+            if (sumDuree >= (long)DureeEstimativeEnums.MaxDuree)
+            {
+                ViewBag.ShowButton = true;
+            }
+
+            #endregion
+
+
 
 
             int pageSize = 10;
@@ -38,7 +60,7 @@ namespace Front.Controllers
                 query = (IQueryable<DemandeAccesEngin>)query.ProcessWhere(model.columnName, model.content);
             }
 
-            query = query.OrderBy(x => x.Id);
+            query = query.OrderByDescending(x => x.Id);
 
 			model.resultList = query.ToPagedList(pageNumber, pageSize);
             

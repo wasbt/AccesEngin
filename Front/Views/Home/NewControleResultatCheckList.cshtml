@@ -21,9 +21,24 @@
                 @Html.Hidden("DemandeAccesEnginId", Model.controle.Id)
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Sauvegarder</button>
+                    <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Soumettre</button>
                 </div>
                 @Html.Partial("_Table_SaveNewExigence")
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <strong>Autorisé</strong>
+                        </td>
+                        <td>
+                            <div class="checkbox checkbox-primary">
+                                <input id="AutoriseId" type="checkbox" name="Autorise" value="true" />
+                                <label for="AutoriseId">
+
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
             }
         </div>

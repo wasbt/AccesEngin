@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201903041440102_databasetoazur.Designer.cs">
       <DependentUpon>201903041440102_databasetoazur.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903051004427_add column             await context.SaveChangesAsync%28%29%3b.cs" />
+    <Compile Include="Migrations\201903051004427_add column             await context.SaveChangesAsync%28%29%3b.Designer.cs">
+      <DependentUpon>201903051004427_add column             await context.SaveChangesAsync%28%29%3b.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -184,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903041440102_databasetoazur.resx">
       <DependentUpon>201903041440102_databasetoazur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903051004427_add column             await context.SaveChangesAsync%28%29%3b.resx">
+      <DependentUpon>201903051004427_add column             await context.SaveChangesAsync%28%29%3b.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

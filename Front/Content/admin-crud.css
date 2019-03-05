@@ -1,10 +1,11 @@
-﻿.AdminListButtons{
-    visibility:hidden
+﻿.AdminListButtons {
+    opacity: 0;
 }
 
-.admin-hide{
-    visibility:hidden
+.admin-hide {
+    opacity: 0;
 }
-.admin-show{
-    visibility:visible
+
+.admin-show {
+    opacity: 1;
 }

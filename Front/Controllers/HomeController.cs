@@ -147,6 +147,7 @@ namespace Front.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewControleResultatCheckList(SaveNewResultatExigence ResultatExigence)
         {
+            #region Save resultat Exigence
             foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
             {
                 var controlResultatExigence = new ResultatExigence()
@@ -159,9 +160,26 @@ namespace Front.Controllers
                     CreatedOn = DateTime.Now
                 };
 
-                var addedMissionResultatExigence = context.ResultatExigence.Add(controlResultatExigence);
+                var addedResultatExigence = context.ResultatExigence.Add(controlResultatExigence);
             }
+            #endregion
+
+            #region Get Demande acces 
+            DemandeAccesEngin demandeAccesEngin = await context.DemandeAccesEngin.FindAsync(ResultatExigence.DemandeAccesEnginId);
+            demandeAccesEngin.Autorise = ResultatExigence.Autorise;
+            context.Entry(demandeAccesEngin).State = EntityState.Modified;
+            #endregion
+
             await context.SaveChangesAsync();
+
+            #region Send Mail To Chef project
+
+            var Email = demandeAccesEngin.AspNetUsers.Email;
+            var Subject = demandeAccesEngin.TypeCheckList.Name;
+            var lettre = $@"";
+           // await MailHelper.SendEmailGHSE(new List<string> { Email }, lettre, Subject);
+            #endregion
+
 
             return RedirectToAction("Index", "DemandeAccesEngins");
         }
@@ -176,7 +194,7 @@ namespace Front.Controllers
             if (toto != null)
             {
                 byte[] filecontent = toto;
-                return File(filecontent,cc.ExcelContentType, $"Textes.xlsx");
+                return File(filecontent,cc.ExcelContentType, $"Resultats.xlsx");
             }
             else
             {

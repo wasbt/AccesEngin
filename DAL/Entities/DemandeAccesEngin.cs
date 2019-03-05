@@ -27,6 +27,10 @@ namespace DAL
         [Required]
         public string Observation { get; set; }
 
+        public bool? Autorise { get; set; }
+
+        public DateTime DatePlannification { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         [StringLength(128)]
