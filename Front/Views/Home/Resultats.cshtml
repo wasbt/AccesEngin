@@ -9,9 +9,22 @@
     <div class="col-sm-12">
         <div class="card-box">
             <div class="row ">
-                <div class="col-md-12 text-right">
-                    <div class="btn  btn-secondary waves-effect   btn-xs waves-light m-b-5" onclick="location.href='@Url.Action("DownloadExcel", "Home",new { id = Model.controle.Id })'"><span class="fa fa-download"></span> Exporter Vers Excel</div>
+                <div class="col-md-8 float-left">
+                    @if (Model.controle.Autorise ?? true)
+                    {
+                        <h4> <span class="badge col-2 btn badge-success ">Autorisé</span></h4>
+                    }
+                    else
+                    {
+                        <h4> <span class="badge col-2 btn badge-danger">Non autorisé</span></h4>
+
+                    }
                 </div>
+                    <div class="col-4 text-right">
+                        <a class="btn  btn-custom waves-effect     btn-xs waves-light m-b-5" href="/Home/PrintResultatsViewToPdf/@Model.controle.Id"><span class="fa fa-download"></span>  Exporter Vers PDF</a>
+
+                        <div class="btn  btn-secondary waves-effect   btn-xs waves-light m-b-5" onclick="location.href='@Url.Action("DownloadExcel", "Home",new { id = Model.controle.Id })'"><span class="fa fa-download"></span> Exporter Vers Excel</div>
+                    </div>
             </div>
         </div>
     </div>

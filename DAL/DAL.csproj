@@ -73,6 +73,8 @@
     <Compile Include="Metadata\EntityMetadata.cs" />
     <Compile Include="Metadata\InfoGeneraleMetadata.cs" />
     <Compile Include="Metadata\ProfileMetadata.cs" />
+    <Compile Include="Metadata\ResultatExigence.cs" />
+    <Compile Include="Metadata\ResultatExigenceMetadata.cs" />
     <Compile Include="Metadata\TypeCheckListMetadata.cs" />
     <Compile Include="Metadata\TypeEnginMetadata.cs" />
     <Compile Include="Migrations\201902121050394_add AppFileTbale.cs" />
@@ -131,6 +133,18 @@
     <Compile Include="Migrations\201903051004427_add column             await context.SaveChangesAsync%28%29%3b.Designer.cs">
       <DependentUpon>201903051004427_add column             await context.SaveChangesAsync%28%29%3b.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903070936000_add coluumn.cs" />
+    <Compile Include="Migrations\201903070936000_add coluumn.Designer.cs">
+      <DependentUpon>201903070936000_add coluumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903071048140_remove required from observation.cs" />
+    <Compile Include="Migrations\201903071048140_remove required from observation.Designer.cs">
+      <DependentUpon>201903071048140_remove required from observation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903071110342_make DatePlannification nullable.cs" />
+    <Compile Include="Migrations\201903071110342_make DatePlannification nullable.Designer.cs">
+      <DependentUpon>201903071110342_make DatePlannification nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -146,7 +160,9 @@
     <Compile Include="Entities\TypeCheckList.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +207,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903051004427_add column             await context.SaveChangesAsync%28%29%3b.resx">
       <DependentUpon>201903051004427_add column             await context.SaveChangesAsync%28%29%3b.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903070936000_add coluumn.resx">
+      <DependentUpon>201903070936000_add coluumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903071048140_remove required from observation.resx">
+      <DependentUpon>201903071048140_remove required from observation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903071110342_make DatePlannification nullable.resx">
+      <DependentUpon>201903071110342_make DatePlannification nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using DAL;
 using BLL.Biz;
 using Shared;
+using Rotativa;
 
 namespace Front.Controllers
 {
@@ -201,6 +202,78 @@ namespace Front.Controllers
                 TempData[ConstsAccesEngin.MESSAGE_ERROR] = "Erreur telechargement fichier Excel.";
                 return RedirectToAction("Index");
             }
+
+        }
+        public async Task<ActionResult> PrintResultatsViewToPdf(int id)
+        {
+
+
+            #region Check Controle id & find it
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var controle = await context.DemandeAccesEngin.FindAsync(id);
+            if (controle == null)
+            {
+                return HttpNotFound();
+            }
+
+            #endregion
+
+            #region get & check checklist
+            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            if (checkList == null)
+            {
+                return HttpNotFound();
+            }
+            #endregion
+
+            #region get & Type Engin
+            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+
+            if (typeEngin == null)
+            {
+                return HttpNotFound();
+            }
+            #endregion
+
+            #region Conformité
+            var resultatExigenceDetail = controle.ResultatExigence.ToList();
+            var exigences = controle.ResultatExigence.ToList();
+            var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
+            var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
+            var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
+            var exigencesApplicableCount = exigenceApplicable.LongCount();
+
+            var Total = (exigencesApplicableCount + exigencesNonApplicableCount);
+
+            var exigencesApplicable = (exigencesApplicableCount * 100) / Total;
+            var exigencesNonApplicable = (exigencesNonApplicableCount * 100) / Total;
+
+            #endregion
+
+            #region Resultats Model
+            //To Model
+            var ResultatViewModel = new ResultatsVM
+            {
+                TypeCheckList = checkList,
+                controle = controle,
+                TypeEngin = typeEngin,
+                exigencesApplicable = exigencesApplicable,
+                exigencesNonApplicable = exigencesNonApplicable
+            };
+
+            #endregion
+
+
+
+
+
+            var syntese = new PartialViewAsPdf("/Views/Shared/ResultatsPDF.cshtml", ResultatViewModel);
+            return syntese;
+
 
         }
     }

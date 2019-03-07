@@ -29,7 +29,7 @@
                         <td>@exigence.Name</td>
                         <td>@(data.IsConform ? "Conforme" : "Non conforme")</td>
                         <td>@data.Observation</td>
-                        <td>@data.Date</td>
+                        <td>@(data.Date?.ToString("dd/MM/yyyy"))</td>
 
                     </tr>
 

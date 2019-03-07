@@ -91,14 +91,17 @@
                                 }
                             </td>
                             <td>
-                                @if (item.Autorise.HasValue == true)
-                                {
-                                    <span class="badge badge-success">Autorisé</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-warning">Non autorisé</span>
-                                }
+                               
+                                    @if (item.Autorise ?? true)
+                                    {
+                                        <span class="badge badge-success">Autorisé</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">Non autorisé</span>
+                                    }
+                                
+
                             </td>
                             <td class="AdminListButtons">
                                 @*@Html.Partial("_AdminListButtons", item.Id)*@

@@ -7,6 +7,7 @@ using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,15 +49,39 @@ namespace BLL.Biz
             var exigences = typeCheckList.CheckListRubrique.SelectMany(x => x.CheckListExigence).ToList(); // all checklist exigences
             #endregion
 
+            #region Conformité
+
+            var resultatExigenceDetail = demandeAcces.ResultatExigence.ToList();
+            var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
+            var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
+            var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
+            var exigencesApplicableCount = exigenceApplicable.LongCount();
+
+            var Total = (exigencesApplicableCount + exigencesNonApplicableCount);
+
+            var exigencesApplicable = (exigencesApplicableCount * 100) / Total;
+            var exigencesNonApplicable = (exigencesNonApplicableCount * 100) / Total;
+            #endregion
+
+
+
+
             var heading = "si";
             var minColumn = 2;
             var maxColumnInfoG = 7;
             var maxColumn = 14;
-            var startingRow = 2;
-            var showSrNo = true;
+            var startingRowHeadr = 2;
+            var startingRow = 5;
             var ExigenceColumn = 2;
             var ResultatColumnInfoG = 5;
             var ResultatColumn = 8;
+            var blue = ColorTranslator.FromHtml("#42bde2");
+            var green = ColorTranslator.FromHtml("#9ccc65");
+            var orange = ColorTranslator.FromHtml("#F9C851");
+            var succes = ColorTranslator.FromHtml("#10C469");
+            var alert = ColorTranslator.FromHtml("#EA4335");
+
+            #region Generatre Excel
 
             using (ExcelPackage package = new ExcelPackage())
             {
@@ -66,6 +91,28 @@ namespace BLL.Biz
                 workSheet.InsertRow(workSheet.Cells[startingRow + 1, minColumn, startingRow, maxColumnInfoG].Start.Row, 1, copyStylesFromRow: 1);
 
 
+                if (demandeAcces.Autorise ?? true)
+                {
+                    DrawnRubrique(minColumn, minColumn, startingRowHeadr, workSheet, succes);
+                    workSheet.Cells[startingRowHeadr, minColumn].Value = $"Autorisé";
+                }
+                else
+                {
+                    DrawnRubrique(minColumn, minColumn, startingRowHeadr, workSheet, alert);
+                    workSheet.Cells[startingRowHeadr, minColumn].Value = $"Non Autorisé";
+                }
+
+                DrawnRubrique(minColumn, maxColumnInfoG, startingRow, workSheet, blue);
+
+                workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Value = $"Type d'engin";
+                startingRow++;
+
+                workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG].Merge = true;
+                workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].Style.WrapText = true;
+                workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].AutoFitColumns();
+                workSheet.Cells[startingRow, minColumn].Value = $"{demandeAcces.TypeEngin.Name}";
+                startingRow++;
                 foreach (var infoRubriqueGroup in typeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
                 {
                     startingRow++;
@@ -79,13 +126,8 @@ namespace BLL.Biz
 
                     //always insert a row after this one!
                     workSheet.InsertRow(workSheet.Cells[startingRow + 1, 1].Start.Row, 1);
+                    DrawnRubrique(minColumn, maxColumnInfoG, startingRow, workSheet, blue);
 
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Merge = true;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Font.Bold = true;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Fill.BackgroundColor.SetColor(1, 66, 189, 226);
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Indent = 1;
                     workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Value = $"{infoRubriqueGroup.Key}";
                     #endregion
 
@@ -117,7 +159,7 @@ namespace BLL.Biz
                     }
                 }
 
-                startingRow+=2;
+                startingRow += 2;
 
                 #region Header
                 workSheet.Cells[startingRow, ExigenceColumn, startingRow, ExigenceColumn + 5].Merge = true;
@@ -142,12 +184,8 @@ namespace BLL.Biz
                     //always insert a row after this one!
                     workSheet.InsertRow(workSheet.Cells[startingRow + 1, 1].Start.Row, 1);
 
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Merge = true;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Style.Font.Bold = true;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Style.Fill.BackgroundColor.SetColor(1, 156, 204, 101);
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                    workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Style.Indent = 1;
+                    DrawnRubrique(minColumn, maxColumn, startingRow, workSheet, green);
+
                     workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Value = $"{rubrique.Name}";
                     #endregion
                     foreach (var checkListExigence in rubrique.CheckListExigence.Where(x => x.IsActif == true))
@@ -169,7 +207,7 @@ namespace BLL.Biz
 
 
                         #region Resultat
-                        workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn+1].Merge = true;
+                        workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn + 1].Merge = true;
                         workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                         workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn + 1].Style.WrapText = true;
                         workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn + 1].AutoFitColumns();
@@ -181,13 +219,45 @@ namespace BLL.Biz
 
                     }
                 }
+                startingRow++;
+                DrawnRubrique(minColumn, maxColumn, startingRow, workSheet, orange);
+                workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Value = $"TAUX DE CONFORMITE";
+
+                startingRow++;
+                workSheet.Cells[startingRow, ExigenceColumn].Value = $"Conforme";
+                workSheet.Cells[startingRow, ResultatColumn].Value = $"{exigencesApplicable} %";
+
+                startingRow++;
+                workSheet.Cells[startingRow, ExigenceColumn].Value = $"Non conforme";
+                workSheet.Cells[startingRow, ResultatColumn].Value = $"{exigencesNonApplicable} %";
+
+
+
+
                 result = package.GetAsByteArray();
             }
+
+            #endregion
 
             return result;
 
 
 
+        }
+
+        private static void DrawnRubrique(int minColumn, int maxColumnInfoG, int startingRow, ExcelWorksheet workSheet, Color? color = null)
+        {
+
+
+            workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Merge = true;
+            workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Font.Bold = true;
+            workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            if (color.HasValue)
+            {
+                workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Fill.BackgroundColor.SetColor(color.Value);
+            }
+            workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            workSheet.Cells[startingRow, minColumn, startingRow, maxColumnInfoG].Style.Indent = 1;
         }
 
         public string ExcelContentType

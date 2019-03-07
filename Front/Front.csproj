@@ -49,6 +49,9 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -1311,6 +1314,10 @@
     <Content Include="images\logo.png" />
     <Content Include="images\ocp.png" />
     <Content Include="images\veille.jpg" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\admin.crud.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1507,6 +1514,8 @@
     <Content Include="Areas\BackOffice\Views\Entities\Details.cshtml" />
     <Content Include="Areas\BackOffice\Views\Entities\Edit.cshtml" />
     <Content Include="Areas\BackOffice\Views\Entities\Index.cshtml" />
+    <Content Include="Log4Net.config" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\ocpaccesengins - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ocpaccesengins - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -1523,7 +1532,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1572,6 +1583,7 @@
     <Content Include="Views\Shared\_Table_ResultatExigence.cshtml" />
     <Content Include="Views\Shared\_Table_ResultatInfoGenerale.cshtml" />
     <Content Include="Views\Shared\_Table_SaveNewExigence.cshtml" />
+    <Content Include="Views\Shared\ResultatsPDF.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
