@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobile.View;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +12,7 @@ namespace Mobile
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Login();
         }
 
         protected override void OnStart()

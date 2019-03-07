@@ -1,12 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Mobile.ViewModel"
              x:Class="Mobile.View.Login">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:LoginVM x:Key="vm"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BindingContext="{Binding Source={StaticResource vm}}" Orientation="Vertical"
+                 VerticalOptions="Center"
+                 Spacing="20"
+                 Padding="20">
+
+            <Entry Text="{Binding Username}" 
+               Placeholder="username"/>
+
+            <Entry Text="{Binding Password}"
+               Placeholder="password"
+               IsPassword="True"/>
+
+            <Button Command="{Binding Source={StaticResource vm}, Path=LoginCommand}" 
+                Text="Signin"
+                TextColor="White"
+                FontSize="30"
+                BackgroundColor="DeepSkyBlue"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

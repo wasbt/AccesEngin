@@ -12,9 +12,12 @@ namespace Mobile.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Login : ContentPage
     {
+        public Action DisplayInvalidLoginPrompt;
+        //public static LoginView loginView;
         public Login()
         {
             InitializeComponent();
         }
+
     }
 }
