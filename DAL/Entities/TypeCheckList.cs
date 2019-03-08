@@ -16,9 +16,10 @@ namespace DAL
             TypeEngin = new HashSet<TypeEngin>();
             DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
             InfoGenerale = new HashSet<InfoGenerale>();
+            NatureMatiere = new HashSet<NatureMatiere>();
         }
 
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -33,6 +34,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckListRubrique> CheckListRubrique { get; set; }
         public virtual ICollection<TypeEngin> TypeEngin { get; set; }
+        public virtual ICollection<NatureMatiere> NatureMatiere { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeAccesEngin> DemandeAccesEngin { get; set; }

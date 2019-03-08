@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[CheckListRubrique] (
     [Id]              BIGINT         IDENTITY (1, 1) NOT NULL,
-    [TypeCheckListId] INT            NOT NULL,
+    [TypeCheckListId] BIGINT         NOT NULL,
     [Name]            NVARCHAR (MAX) NOT NULL,
     [ShowOrder]       INT            NOT NULL,
     [IsActif]         BIT            NOT NULL,
@@ -10,6 +10,8 @@
     CONSTRAINT [FK_dbo.CheckListRubrique_dbo.AspNetUsers_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
     CONSTRAINT [FK_dbo.CheckListRubrique_dbo.TypeCheckList_TypeCheckListId] FOREIGN KEY ([TypeCheckListId]) REFERENCES [dbo].[TypeCheckList] ([Id])
 );
+
+
 
 
 

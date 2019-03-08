@@ -91,16 +91,16 @@
                                 }
                             </td>
                             <td>
-                               
-                                    @if (item.Autorise ?? true)
-                                    {
-                                        <span class="badge badge-success">Autorisé</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-warning">Non autorisé</span>
-                                    }
-                                
+
+                                @if (item.Autorise)
+                                {
+                                    <span class="badge badge-success">Autorisé</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non autorisé</span>
+                                }
+
 
                             </td>
                             <td class="AdminListButtons">

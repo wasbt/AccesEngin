@@ -107,6 +107,7 @@ namespace Front.Controllers
             {
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
+                demandeAccesEngin.Autorise = false;
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
 

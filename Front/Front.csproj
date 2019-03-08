@@ -238,12 +238,14 @@
     <Compile Include="Areas\BackOffice\Controllers\EntitiesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\InfoGeneralesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\InfoGeneralRubriquesController.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\NatureMatieresController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\ProfilesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\SettingsController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\SitesController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\TypeCheckListsController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\TypeEnginsController.cs" />
     <Compile Include="Areas\BackOffice\Controllers\UsersController.cs" />
+    <Compile Include="Areas\BackOffice\Models\InfoGeneraleVM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -1516,6 +1518,11 @@
     <Content Include="Areas\BackOffice\Views\Entities\Index.cshtml" />
     <Content Include="Log4Net.config" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Areas\BackOffice\Views\NatureMatieres\Create.cshtml" />
+    <Content Include="Areas\BackOffice\Views\NatureMatieres\Delete.cshtml" />
+    <Content Include="Areas\BackOffice\Views\NatureMatieres\Details.cshtml" />
+    <Content Include="Areas\BackOffice\Views\NatureMatieres\Edit.cshtml" />
+    <Content Include="Areas\BackOffice\Views\NatureMatieres\Index.cshtml" />
     <None Include="Properties\PublishProfiles\ocpaccesengins - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\ocpaccesengins - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -1587,7 +1594,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\BackOffice\Models\" />
     <Folder Include="Areas\BackOffice\Views\BackOffice\" />
     <Folder Include="assets\plugins\jstree\themes\default\" />
   </ItemGroup>

@@ -17,7 +17,7 @@ namespace DAL
 
         public long Id { get; set; }
 
-        public int TypeCheckListId { get; set; }
+        public long TypeCheckListId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -29,7 +29,7 @@ namespace DAL
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; } 
 
         public virtual TypeCheckList TypeCheckList { get; set; }
 

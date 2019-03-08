@@ -5,31 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Front.Areas.BackOffice.Models
 {
-    public class CheckListRubriqueMetadata
+    public class InfoGeneraleVM
     {
         [Display(Name = "#")]
         public long Id { get; set; }
 
-        [Display(Name = "Type demande d'acces")]
-        public long TypeCheckListId { get; set; }
+        [Display(Name = "Rubrique d'info generale")]
+        public string InfoGeneralRubriqueName { get; set; }
 
-        [Display(Name = "Rubrique")]
+        [Display(Name = "Titre")]
         public string Name { get; set; }
 
-        [Display(Name = "Order")]
-        public int ShowOrder { get; set; }
-
-        [Display(Name = "Activer")]
-        public bool IsActif { get; set; }
-
-        [Display(Name = "Date de création")]
+        [Display(Name = "Date de créarion")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedOn { get; set; }
 
-        [Display(Name = "Crée par")]
+        [Display(Name = "Ajputer par")]
         public string CreatedBy { get; set; }
 
+        [Display(Name = "Type demande d'acces")]
+        public IEnumerable<string> TypeCheckListNames { get; set; }
     }
 }
+
+
+

@@ -71,6 +71,11 @@ namespace Front.Controllers
             }
             #endregion
 
+            #region get & Nature de la Matiere
+            var natureMatiere = await context.NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
+          
+            #endregion
+
             #region Conformité
             var resultatExigenceDetail = controle.ResultatExigence.ToList();
             var exigences = controle.ResultatExigence.ToList();
@@ -93,6 +98,7 @@ namespace Front.Controllers
                 TypeCheckList = checkList,
                 controle = controle,
                 TypeEngin = typeEngin,
+                NatureMatiere = natureMatiere,
                 exigencesApplicable = exigencesApplicable,
                 exigencesNonApplicable = exigencesNonApplicable
             };
@@ -127,7 +133,7 @@ namespace Front.Controllers
                 return HttpNotFound();
             }
             #endregion 
-
+           
 
             #region Model New Controle
 
@@ -135,7 +141,8 @@ namespace Front.Controllers
             {
                 TypeCheckList = checkList,
                 controle = controle,
-                TypeEngin = controle.TypeEngin
+                TypeEngin = controle.TypeEngin,
+                NatureMatiere = controle.NatureMatiere,
             };
 
             #endregion

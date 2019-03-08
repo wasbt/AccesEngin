@@ -91,7 +91,7 @@ namespace BLL.Biz
                 workSheet.InsertRow(workSheet.Cells[startingRow + 1, minColumn, startingRow, maxColumnInfoG].Start.Row, 1, copyStylesFromRow: 1);
 
 
-                if (demandeAcces.Autorise ?? true)
+                if (demandeAcces.Autorise)
                 {
                     DrawnRubrique(minColumn, minColumn, startingRowHeadr, workSheet, succes);
                     workSheet.Cells[startingRowHeadr, minColumn].Value = $"Autorisé";

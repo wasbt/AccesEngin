@@ -50,6 +50,7 @@
     <Compile Include="ConstsAccesEngin.cs" />
     <Compile Include="DTO\EntityDTO.cs" />
     <Compile Include="DTO\InfoGeneraleDTO.cs" />
+    <Compile Include="DTO\NatureMatiereDTO.cs" />
     <Compile Include="DTO\TypeEnginDTO.cs" />
     <Compile Include="ENUMS\DureeEstimativeEnums.cs" />
     <Compile Include="MailHelper.cs" />

@@ -13,7 +13,7 @@ namespace DAL
         public long Id { get; set; }
 
         [Display(Name = "Type demande d'acces")]
-        public int TypeCheckListId { get; set; }
+        public long TypeCheckListId { get; set; }
 
         [Display(Name = "Oservation")]
         public string Observation { get; set; }

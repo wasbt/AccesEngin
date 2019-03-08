@@ -34,7 +34,7 @@ namespace Front.Areas.BackOffice.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        //GET INFO GENERALE BY TYPECHECKLIST
+        //GET INFO GENERALE BY TYPE ENGIN
         [HttpPost]
         [Route("AccesEnginapi/GetTypeEnginByTypeCheckList")]
         public async Task<HttpResponseMessage> GetTypeEnginByTypeCheckList(GetInfoGeneraleByTypeCheckList model)
@@ -44,6 +44,20 @@ namespace Front.Areas.BackOffice.Controllers
             var list = biz.GetTypeEnginByTypeCheckList(model);
 
             var result = new RESTServiceResponse<List<TypeEnginDTO>>(true, list);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        
+        //GET INFO GENERALE BY NATUTRE DE LA MATIRE
+        [HttpPost]
+        [Route("AccesEnginapi/GetNatureMatiereByTypeCheckList")]
+        public async Task<HttpResponseMessage> GetNatureMatiereByTypeCheckList(GetInfoGeneraleByTypeCheckList model)
+        {
+            var biz = new InfoGeneraleBiz(context, MvcApplication.log);
+
+            var list = biz.GetNatureMatiereByTypeCheckList(model);
+
+            var result = new RESTServiceResponse<List<NatureMatiereDTO>>(true, list);
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }

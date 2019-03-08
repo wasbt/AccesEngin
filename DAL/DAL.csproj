@@ -58,6 +58,7 @@
     <Compile Include="Entities\AspNetUserLogins.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\NatureMatiere.cs" />
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\TypeEngin.cs" />
     <Compile Include="Entities\InfoGenerale.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Metadata\DemandeAccesEnginMetadata.cs" />
     <Compile Include="Metadata\EntityMetadata.cs" />
     <Compile Include="Metadata\InfoGeneraleMetadata.cs" />
+    <Compile Include="Metadata\NatureMatiereMetadata.cs" />
     <Compile Include="Metadata\ProfileMetadata.cs" />
     <Compile Include="Metadata\ResultatExigence.cs" />
     <Compile Include="Metadata\ResultatExigenceMetadata.cs" />
@@ -145,6 +147,18 @@
     <Compile Include="Migrations\201903071110342_make DatePlannification nullable.Designer.cs">
       <DependentUpon>201903071110342_make DatePlannification nullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903081135083_add table nature matire.cs" />
+    <Compile Include="Migrations\201903081135083_add table nature matire.Designer.cs">
+      <DependentUpon>201903081135083_add table nature matire.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903081214019_change Id to long.cs" />
+    <Compile Include="Migrations\201903081214019_change Id to long.Designer.cs">
+      <DependentUpon>201903081214019_change Id to long.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903081529509_change autoraze.cs" />
+    <Compile Include="Migrations\201903081529509_change autoraze.Designer.cs">
+      <DependentUpon>201903081529509_change autoraze.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -152,6 +166,7 @@
     <Compile Include="PartialClasses\DemandeAccesEngin.cs" />
     <Compile Include="PartialClasses\Entity.cs" />
     <Compile Include="PartialClasses\InfoGenerale.cs" />
+    <Compile Include="PartialClasses\NatureMatiere.cs" />
     <Compile Include="PartialClasses\Profile.cs" />
     <Compile Include="PartialClasses\TypeCheckList.cs" />
     <Compile Include="PartialClasses\TypeEngin.cs" />
@@ -216,6 +231,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903071110342_make DatePlannification nullable.resx">
       <DependentUpon>201903071110342_make DatePlannification nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903081135083_add table nature matire.resx">
+      <DependentUpon>201903081135083_add table nature matire.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903081214019_change Id to long.resx">
+      <DependentUpon>201903081214019_change Id to long.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903081529509_change autoraze.resx">
+      <DependentUpon>201903081529509_change autoraze.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

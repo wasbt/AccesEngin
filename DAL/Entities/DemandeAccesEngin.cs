@@ -18,15 +18,17 @@ namespace DAL
 
         public long Id { get; set; }
 
-        public int TypeCheckListId { get; set; }
+        public long TypeCheckListId { get; set; }
 
         public long TypeEnginId { get; set; }
+
+        public long? NatureMatiereId { get; set; }
 
         public long EntityId { get; set; }
 
         public string Observation { get; set; }
 
-        public bool? Autorise { get; set; }
+        public bool Autorise { get; set; }
 
         public Nullable<DateTime>  DatePlannification { get; set; }
 
@@ -38,6 +40,8 @@ namespace DAL
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual TypeCheckList TypeCheckList { get; set; }
+
+        public virtual NatureMatiere NatureMatiere { get; set; }
 
         public virtual TypeEngin TypeEngin { get; set; }
 

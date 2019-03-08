@@ -38,6 +38,12 @@
                     <div class="col-md-10">
                         <select class="form-control" id="TypeEnginId" name="TypeEnginId"></select>
                     </div>
+                </div>  
+                <div class="form-group">
+                    <label class="control-label col-md-2">Type d'engin</label>
+                    <div class="col-md-10">
+                        <select class="form-control" id="NatureMatiereId" name="NatureMatiereId"></select>
+                    </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -81,6 +87,26 @@
                 });
             });
         }
+         //GET INFO Nature de la Matiere
+        function FillNatureMatiereDDL() {
+            var selectedTypeCheckListId = $('#TypeCheckListId').val();
+             var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+               var posting = $.post('/AccesEnginapi/GetNatureMatiereByTypeCheckList', jsonObject, function (response) {
+                $("#NatureMatiereId").html("");
+                $.each(response.data, function (i,typeEngin) {
+                    $("#NatureMatiereId").append($('<option>', {
+                        value: typeEngin.Id,
+                        text: typeEngin.Name
+                    }));
+                });
+            });
+        }
+
+
+
+
         //GET Entitis
          function FillEnitiesDDL() {
             var selectedSiteId = $('#SiteId').val();
@@ -138,6 +164,7 @@
             $('#TypeCheckListId').change(function () {
                 GetInfosGenerals();
                 FillTypeEnginDDL();
+                FillNatureMatiereDDL();
             })
             $('#SiteId').change(function () {
                 FillEnitiesDDL();

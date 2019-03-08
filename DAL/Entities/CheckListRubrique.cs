@@ -17,7 +17,7 @@ namespace DAL
 
         public long Id { get; set; }
 
-        public int TypeCheckListId { get; set; }
+        public long TypeCheckListId { get; set; }
 
         [Required]
         public string Name { get; set; }

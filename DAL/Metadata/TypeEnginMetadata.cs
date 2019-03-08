@@ -13,7 +13,7 @@ namespace DAL
         public long Id { get; set; }
 
         [Display(Name = "Nature")]
-        public int TypeCheckListId { get; set; }
+        public long TypeCheckListId { get; set; }
 
         [Display(Name = "Type d'engin")]
         public string Name { get; set; }

@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shared.DTO
 {
-    public class TypeEnginDTO
+    public class NatureMatiereDTO
     {
         public long Id { get; set; }
 
         public long TypeCheckListId { get; set; }
 
         public string Name { get; set; }
-
-        public string DureeEstimative { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

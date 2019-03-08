@@ -13,13 +13,14 @@ using Front.Models;
 using Front.Controllers;
 using Shared;
 using Front.AGUtils;
+using Front.Areas.BackOffice.Models;
 
 namespace Front.Areas.BackOffice.Controllers
 {
     public class InfoGeneralesController : BackOfficeController
     {
         // GET: BackOffice/InfoGenerales
-        public async Task<ActionResult> Index(StandardModel<InfoGenerale> model)
+        public async Task<ActionResult> Index(StandardModel<InfoGeneraleVM> model)
         {
             var infoGenerale = context.InfoGenerale.Include(i => i.AspNetUsers).Include(i => i.InfoGeneralRubrique);
             int pageSize = 10;
@@ -35,9 +36,18 @@ namespace Front.Areas.BackOffice.Controllers
                 query = (IQueryable<InfoGenerale>)query.ProcessWhere(model.columnName, model.content);
             }
 
-            query = query.OrderBy(x => x.Id);
+            var infoGeneraleQuery = query.Select(x => new InfoGeneraleVM
+            {
+                Id = x.Id,
+                Name = x.Name,
+                InfoGeneralRubriqueName = x.InfoGeneralRubrique.Name,
+                CreatedBy = x.AspNetUsers.Email,
+                CreatedOn = x.CreatedOn,
+                TypeCheckListNames = x.TypeCheckList.Select(t => t.Name)
+            });
+            infoGeneraleQuery = infoGeneraleQuery.OrderBy(x => x.Id);
 
-			model.resultList = query.ToPagedList(pageNumber, pageSize);
+			model.resultList = infoGeneraleQuery.ToPagedList(pageNumber, pageSize);
             
 			ViewBag.Log = query.ToString();
 
@@ -188,6 +198,7 @@ namespace Front.Areas.BackOffice.Controllers
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
             InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
+            infoGenerale.TypeCheckList.Clear();
             context.InfoGenerale.Remove(infoGenerale);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";

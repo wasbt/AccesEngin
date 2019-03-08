@@ -23,6 +23,7 @@ namespace DAL
             TypeEngin = new HashSet<TypeEngin>();
             Site = new HashSet<Site>();
             Entity = new HashSet<Entity>();
+            NatureMatiere = new HashSet<NatureMatiere>();
         }
 
         public string Id { get; set; }
@@ -84,6 +85,7 @@ namespace DAL
         public virtual ICollection<Site> Site { get; set; }
 
         public virtual ICollection<Entity> Entity { get; set; }
+        public virtual ICollection<NatureMatiere> NatureMatiere { get; set; }
 
 
     }

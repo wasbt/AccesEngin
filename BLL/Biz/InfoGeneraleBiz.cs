@@ -34,5 +34,14 @@ namespace BLL.Biz
 
             return TypeEnginDto;
         }
+
+        public List<NatureMatiereDTO> GetNatureMatiereByTypeCheckList(GetInfoGeneraleByTypeCheckList generaleByTypeCheckList)
+        {
+            var natureMatieres = context.NatureMatiere.Where(i => i.TypeCheckListId == generaleByTypeCheckList.TypeCheckListId).ToList();
+
+            var natureMatieresDto = natureMatieres.Select(te => te.NatureMatiereToDTO()).ToList();
+
+            return natureMatieresDto;
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace DAL
         public virtual DbSet<InfoGeneralRubrique> InfoGeneralRubrique { get; set; }
         public virtual DbSet<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
         public virtual DbSet<TypeEngin> TypeEngin { get; set; }
+        public virtual DbSet<NatureMatiere> NatureMatiere { get; set; }
         public virtual DbSet<Site> Site { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
 
@@ -117,6 +118,12 @@ namespace DAL
                .HasForeignKey(e => e.CreatedBy)
                .WillCascadeOnDelete(false);
 
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.NatureMatiere)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.CreatedBy)
+                .WillCascadeOnDelete(false);
             #endregion
 
 
@@ -175,6 +182,19 @@ namespace DAL
                 .WithRequired(e => e.Site)
                 .WillCascadeOnDelete(false);
 
+            #region NatureMatiere
+
+            modelBuilder.Entity<NatureMatiere>()
+               .HasMany(e => e.DemandeAccesEngin)
+               .WithOptional(e => e.NatureMatiere)
+               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TypeCheckList>()
+               .HasMany(e => e.NatureMatiere)
+               .WithRequired(e => e.TypeCheckList)
+               .WillCascadeOnDelete(false);
+
+            #endregion
 
         }
     }
