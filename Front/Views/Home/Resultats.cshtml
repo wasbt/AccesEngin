@@ -3,7 +3,7 @@
     ViewBag.Title = "Résultats";
 }
 
-<h2>@Model.TypeCheckList.Name</h2>
+<h2>Resultats de vérifiication des véhicules @Model.TypeCheckList.Name</h2>
 
 <div class="row">
     <div class="col-sm-12">
@@ -35,6 +35,9 @@
             <div class="row">
                 <div class="col-md-6">
                     @Html.Partial("_Table_ResultatInfoGenerale")
+                </div>
+                <div class="col-md-6">
+                    @Html.Partial("_Table_ResultatsEntete")
                 </div>
 
             </div>

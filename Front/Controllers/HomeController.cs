@@ -62,6 +62,14 @@ namespace Front.Controllers
             }
             #endregion
 
+            #region get & check resultat entete 
+            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
+            if (resultatEntete == null)
+            {
+                return null;
+            }
+            #endregion
+
             #region get & Type Engin
             var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
 
@@ -73,12 +81,12 @@ namespace Front.Controllers
 
             #region get & Nature de la Matiere
             var natureMatiere = await context.NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
-          
+
             #endregion
 
             #region Conformité
-            var resultatExigenceDetail = controle.ResultatExigence.ToList();
-            var exigences = controle.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
+            var exigences = resultatEntete.ResultatExigence.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -97,6 +105,7 @@ namespace Front.Controllers
             {
                 TypeCheckList = checkList,
                 controle = controle,
+                DemandeResultat = resultatEntete,
                 TypeEngin = typeEngin,
                 NatureMatiere = natureMatiere,
                 exigencesApplicable = exigencesApplicable,
@@ -132,8 +141,8 @@ namespace Front.Controllers
             {
                 return HttpNotFound();
             }
-            #endregion 
-           
+            #endregion
+
 
             #region Model New Controle
 
@@ -155,27 +164,37 @@ namespace Front.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> NewControleResultatCheckList(SaveNewResultatExigence ResultatExigence)
         {
+
+            #region Save entete resultat Exigence 
+            var resultatEntete = new DemandeResultatEntete()
+            {
+                DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
+                CreatedBy = CurrentUserId,
+                CreatedOn = DateTime.Now,
+            };
+            #endregion
+
+            context.DemandeResultatEntete.Add(resultatEntete);
+
             #region Save resultat Exigence
             foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
             {
                 var controlResultatExigence = new ResultatExigence()
                 {
-                    DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
+                    DemandeResultatEnteteId = resultatEntete.Id,
                     CheckListExigenceId = resultatEx.CheckListExigenceId,
                     IsConform = resultatEx.IsConform,
                     Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date),
                     Observation = resultatEx.Observation,
-                    CreatedOn = DateTime.Now
                 };
 
-                var addedResultatExigence = context.ResultatExigence.Add(controlResultatExigence);
+                context.ResultatExigence.Add(controlResultatExigence);
             }
             #endregion
 
             #region Get Demande acces 
             DemandeAccesEngin demandeAccesEngin = await context.DemandeAccesEngin.FindAsync(ResultatExigence.DemandeAccesEnginId);
             demandeAccesEngin.Autorise = ResultatExigence.Autorise;
-            context.Entry(demandeAccesEngin).State = EntityState.Modified;
             #endregion
 
             await context.SaveChangesAsync();
@@ -185,7 +204,7 @@ namespace Front.Controllers
             var Email = demandeAccesEngin.AspNetUsers.Email;
             var Subject = demandeAccesEngin.TypeCheckList.Name;
             var lettre = $@"";
-           // await MailHelper.SendEmailGHSE(new List<string> { Email }, lettre, Subject);
+            // await MailHelper.SendEmailGHSE(new List<string> { Email }, lettre, Subject);
             #endregion
 
 
@@ -198,11 +217,11 @@ namespace Front.Controllers
         {
             var cc = new DownloadResultatsToExcel(context, log);
             var toto = await cc.GetResultatToExcelAsync(id); ;
-           
+
             if (toto != null)
             {
                 byte[] filecontent = toto;
-                return File(filecontent,cc.ExcelContentType, $"Resultats.xlsx");
+                return File(filecontent, cc.ExcelContentType, $"Resultats.xlsx");
             }
             else
             {
@@ -211,6 +230,7 @@ namespace Front.Controllers
             }
 
         }
+
         public async Task<ActionResult> PrintResultatsViewToPdf(int id)
         {
 
@@ -228,6 +248,16 @@ namespace Front.Controllers
             }
 
             #endregion
+
+
+            #region get & check resultat entete 
+            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
+            if (resultatEntete == null)
+            {
+                return null;
+            }
+            #endregion
+
 
             #region get & check checklist
             var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
@@ -247,8 +277,8 @@ namespace Front.Controllers
             #endregion
 
             #region Conformité
-            var resultatExigenceDetail = controle.ResultatExigence.ToList();
-            var exigences = controle.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
+            var exigences = resultatEntete.ResultatExigence.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -267,6 +297,7 @@ namespace Front.Controllers
             {
                 TypeCheckList = checkList,
                 controle = controle,
+                DemandeResultat = resultatEntete,
                 TypeEngin = typeEngin,
                 exigencesApplicable = exigencesApplicable,
                 exigencesNonApplicable = exigencesNonApplicable
@@ -278,7 +309,11 @@ namespace Front.Controllers
 
 
 
-            var syntese = new PartialViewAsPdf("/Views/Shared/ResultatsPDF.cshtml", ResultatViewModel);
+
+            var syntese = new PartialViewAsPdf("/Views/Shared/ResultatsPDF.cshtml", ResultatViewModel)
+            {
+                PageSize = Rotativa.Options.Size.A3
+            };
             return syntese;
 
 

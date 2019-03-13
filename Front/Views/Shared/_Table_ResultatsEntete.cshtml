@@ -1,0 +1,26 @@
+﻿@model Front.ViewModels.ResultatsVM
+
+
+<table id="" class="table table-bordered ">
+    <thead>
+
+    </thead>
+    <tbody>
+        @{
+            <tr>
+                <td class="alert alert-info" colspan="12" style="text-align:center">
+                Information
+                </td>
+            </tr>
+            <tr>
+                <td>Contrôlé par</td>
+                <td colspan="12">@Model.DemandeResultat.AspNetUsers.Email</td>
+            </tr>
+            <tr>
+                <td>Date de Contrôle</td>
+                <td colspan="12">@Model.DemandeResultat.CreatedOn</td>
+            </tr>
+           
+        }
+    </tbody>
+</table>

@@ -45,13 +45,22 @@ namespace BLL.Biz
             }
             #endregion
 
+            #region get & check resultat entete 
+            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == demandeAcces.Id).FirstOrDefaultAsync();
+            if (resultatEntete == null)
+            {
+                return null;
+            }
+            #endregion
+
             #region get exigence
             var exigences = typeCheckList.CheckListRubrique.SelectMany(x => x.CheckListExigence).ToList(); // all checklist exigences
             #endregion
 
+
             #region Conformité
 
-            var resultatExigenceDetail = demandeAcces.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -190,7 +199,7 @@ namespace BLL.Biz
                     #endregion
                     foreach (var checkListExigence in rubrique.CheckListExigence.Where(x => x.IsActif == true))
                     {
-                        var data = demandeAcces.ResultatExigence.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
+                        var data = resultatEntete.ResultatExigence.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
 
                         if (data == null)
                         {

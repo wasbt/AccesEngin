@@ -38,22 +38,41 @@
 
         }
         <tr style="background-color:#21AFDA; color:white">
-            <td colspan="4"><b>TAUX DE CONFORMITE</b></td>
+            <td colspan="4" class="text-center"><b>Le représentant de l'entité HSE site</b></td>
         </tr>
         <tr>
-            <td><b>Exigence applicable&nbsp;&nbsp;</b></td>
-            <td nowrap>
-                @{if (Model.exigencesApplicable > 0 || Model.exigencesApplicable == 0)
-                    { @Model.exigencesApplicable.ToString("F2") <text>%</text>} }
+            <td colspan="2">
+                <b>Nom et prénom :&nbsp;&nbsp;</b> @Model.controle.AspNetUsers.Profile.FullName <br /><br />
+                <b>Mle :&nbsp;&nbsp;</b> <br /><br />
+                <b>Visa :&nbsp;&nbsp;</b>
             </td>
-        </tr>
-        <tr>
-            <td><b>Exigence non applicable&nbsp;&nbsp;</b></td>
-            <td nowrap>
-                @{if (Model.exigencesNonApplicable > 0 || Model.exigencesNonApplicable == 0)
-                    { @Model.exigencesNonApplicable.ToString("F2") <text>%</text>} }
+            <td colspan="2" nowrap>
+                <table  class="tblborder">
+                    <tr>
+
+                    <td  style="border:none !important" colspan="2">sur le base données actuelles, le véhicule en question est : <br /><br /></td>
+                    </tr>
+                    <tr  style="">
+
+                        <td><b>Autorisé</b> à accéder le Site OCP <br /> @Model.controle.Entity.Site.Name pour <b>déchargement</b> ou <b>chargement</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td >
+                            @if (Model.controle.Autorise)
+                            {
+                                <h4> <span class="badge  btn badge-success ">OUI</span></h4>
+                            }
+                            else
+                            {
+                                <h4> <span class="badge  btn badge-danger ">NON</span></h4>
+                            }
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
 
+
     </tbody>
 </table>
+
+
+

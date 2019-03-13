@@ -7,7 +7,7 @@
     [TypeEnginId]        BIGINT         NOT NULL,
     [EntityId]           BIGINT         DEFAULT ((0)) NOT NULL,
     [Autorise]           BIT            NOT NULL,
-    [DatePlannification] DATETIME       NULL,
+    [DatePlannification] DATETIME       NOT NULL,
     [NatureMatiereId]    BIGINT         NULL,
     CONSTRAINT [PK_dbo.DemandeAccesEngin] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_dbo.DemandeAccesEngin_dbo.AspNetUsers_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
@@ -16,6 +16,8 @@
     CONSTRAINT [FK_dbo.DemandeAccesEngin_dbo.TypeCheckList_TypeCheckListId] FOREIGN KEY ([TypeCheckListId]) REFERENCES [dbo].[TypeCheckList] ([Id]),
     CONSTRAINT [FK_dbo.DemandeAccesEngin_dbo.TypeEngin_TypeEngin_Id] FOREIGN KEY ([TypeEnginId]) REFERENCES [dbo].[TypeEngin] ([Id])
 );
+
+
 
 
 

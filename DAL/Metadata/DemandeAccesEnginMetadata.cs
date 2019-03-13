@@ -18,6 +18,10 @@ namespace DAL
         [Display(Name = "Oservation")]
         public string Observation { get; set; }
 
+        [Display(Name = "Date de plannification")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime DatePlannification { get; set; }
+
         [Display(Name = "Date de création")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedOn { get; set; }

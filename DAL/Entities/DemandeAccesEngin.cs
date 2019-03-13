@@ -12,7 +12,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DemandeAccesEngin()
         {
-            ResultatExigence = new HashSet<ResultatExigence>();
+            DemandeResultatEntete = new HashSet<DemandeResultatEntete>();
             ResultatInfoGenerale = new HashSet<ResultatInfoGenerale>();
         }
 
@@ -30,7 +30,7 @@ namespace DAL
 
         public bool Autorise { get; set; }
 
-        public Nullable<DateTime>  DatePlannification { get; set; }
+        public DateTime DatePlannification { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -48,7 +48,7 @@ namespace DAL
         public virtual Entity Entity { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResultatExigence> ResultatExigence { get; set; }
+        public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
         public virtual ICollection<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
     }
 }

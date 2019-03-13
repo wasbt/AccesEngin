@@ -18,6 +18,7 @@ using Shared.ENUMS;
 
 namespace Front.Controllers
 {
+    [Authorize(Roles = ConstsAccesEngin.ROLE_CHEFPROJET +","+ ConstsAccesEngin.ROLE_CONTROLEUR)]
     public class DemandeAccesEnginsController : BaseController
     {
         // GET: DemandeAccesEngins
@@ -26,34 +27,22 @@ namespace Front.Controllers
             ViewBag.ShowButton = false;
 
             var demandeAccesEngin = context.DemandeAccesEngin.Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
+            var query = context.DemandeAccesEngin.AsQueryable();
 
-            #region Calculer durée approximative du contrôle par type d’engin
-
-            var dateNow = DateTime.Now.Date;
-            var demandeAccesEnginToDay = demandeAccesEngin.Where(x => DbFunctions.TruncateTime(x.CreatedOn) == dateNow).ToList();
-            var listTypeCheckList = demandeAccesEnginToDay.Select(x => x.TypeCheckList).ToList();
-            var getCountTypeEngin = listTypeCheckList.SelectMany(x => x.TypeEngin);
-            var selecDureeEstimativeToDay = getCountTypeEngin.Select(x => double.Parse(x.DureeEstimative));
-            var sumDuree = selecDureeEstimativeToDay.Sum();
-
-
-            if (sumDuree >= (long)DureeEstimativeEnums.MaxDuree)
+            if (IsChefProjet)
             {
-                ViewBag.ShowButton = true;
+                query = query.Where(x => x.CreatedBy == CurrentUserId);
             }
-
-            #endregion
-
-
-
-
+            if (IsConroleur)
+            {
+                query = query.Where(x => !x.DemandeResultatEntete.Any());
+            }
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.DemandeAccesEngin.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
@@ -88,6 +77,7 @@ namespace Front.Controllers
             return View(demandeAccesEngin);
         }
 
+        [Authorize(Roles = ConstsAccesEngin.ROLE_CHEFPROJET)]
         // GET: DemandeAccesEngins/Create
         public ActionResult Create()
         {
@@ -105,6 +95,31 @@ namespace Front.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                #region Calculer durée approximative du contrôle par type d’engin
+
+                var demandeAccesEnginQuery = context.DemandeAccesEngin;
+                var dateNow = DateTime.Now.Date;
+                var tomorrow = dateNow.AddDays(1);
+                var demandeAccesEnginPlannig = demandeAccesEnginQuery.Where(x => DbFunctions.TruncateTime(x.DatePlannification) == demandeAccesEngin.DatePlannification).ToList();
+                var listTypeCheckList = demandeAccesEnginPlannig.Select(x => x.TypeCheckList).ToList();
+                var getCountTypeEngin = listTypeCheckList.SelectMany(x => x.TypeEngin);
+                var selecDureeEstimativeToDay = getCountTypeEngin.Select(x => double.Parse(x.DureeEstimative));
+                var sumDuree = selecDureeEstimativeToDay.Sum();
+
+
+                if (sumDuree >= (long)DureeEstimativeEnums.MaxDuree)
+                {
+                    TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "s'il vous plaît choisir une autre date de planification!";
+                    ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
+                    ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+                    return View(demandeAccesEngin);
+                }
+
+                #endregion
+
+
+
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 demandeAccesEngin.Autorise = false;
@@ -198,6 +213,45 @@ namespace Front.Controllers
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> MyDemande(StandardModel<DemandeAccesEngin> model)
+        {
+            ViewBag.ShowButton = false;
+
+            var query = context.DemandeAccesEngin.AsQueryable();
+
+            if (IsChefProjet)
+            {
+                query = query.Where(x => x.CreatedBy == CurrentUserId);
+            }
+            if (IsConroleur)
+            {
+                query = query.Where(x => x.DemandeResultatEntete.Any(re => re.CreatedBy == CurrentUserId && re.ResultatExigence.Any()));
+            }
+            int pageSize = 10;
+
+            int pageNumber = (model.page ?? 1);
+
+            pageNumber = (model.newSearch ?? pageNumber);
+
+
+            if (!String.IsNullOrEmpty(model.content))
+            {
+                query = (IQueryable<DemandeAccesEngin>)query.ProcessWhere(model.columnName, model.content);
+            }
+
+            query = query.OrderByDescending(x => x.Id);
+
+            model.resultList = query.ToPagedList(pageNumber, pageSize);
+
+            ViewBag.Log = query.ToString();
+
+            return View(model);
+
+            // V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
+            // V1: return View(await Task.Run(()=>demandeAccesEngin.OrderBy(x=>x.Id).ToPagedList(pageNumber,pageSize)));
+            // V0: return View(await demandeAccesEngin.ToListAsync());
         }
 
         protected override void Dispose(bool disposing)

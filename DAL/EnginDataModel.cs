@@ -31,6 +31,7 @@ namespace DAL
         public virtual DbSet<NatureMatiere> NatureMatiere { get; set; }
         public virtual DbSet<Site> Site { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
+        public virtual DbSet<DemandeResultatEntete> DemandeResultatEntete { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -78,6 +79,12 @@ namespace DAL
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.TypeEngin)
+                .WithRequired(e => e.AspNetUsers)
+                .HasForeignKey(e => e.CreatedBy)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.DemandeResultatEntete)
                 .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.CreatedBy)
                 .WillCascadeOnDelete(false);
@@ -148,8 +155,13 @@ namespace DAL
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DemandeAccesEngin>()
-                .HasMany(e => e.ResultatExigence)
+                .HasMany(e => e.DemandeResultatEntete)
                 .WithRequired(e => e.DemandeAccesEngin)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<DemandeResultatEntete>()
+                .HasMany(e => e.ResultatExigence)
+                .WithRequired(e => e.DemandeResultatEntete)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<DemandeAccesEngin>()

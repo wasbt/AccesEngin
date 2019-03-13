@@ -88,5 +88,23 @@ namespace Front.Controllers
             }
         }
 
+        public bool IsChefProjet
+        {
+            get
+            {
+                return User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET);
+            }
+        }
+
+        public bool IsConroleur
+        {
+            get
+            {
+                return User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
+            }
+        }
+
+
+
     }
 }

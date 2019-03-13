@@ -10,6 +10,7 @@ namespace Front.ViewModels
     public class ResultatsVM
     {
         public DemandeAccesEngin controle { get; set; }
+        public DemandeResultatEntete DemandeResultat { get; set; }
         public TypeCheckList TypeCheckList { get; set; }
         public TypeEngin TypeEngin { get; set; }
         public NatureMatiere NatureMatiere { get; set; }

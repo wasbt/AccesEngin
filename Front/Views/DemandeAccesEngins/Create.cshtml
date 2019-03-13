@@ -40,7 +40,7 @@
                     </div>
                 </div>  
                 <div class="form-group">
-                    <label class="control-label col-md-2">Type d'engin</label>
+                    <label class="control-label col-md-2">Nature de la matiere</label>
                     <div class="col-md-10">
                         <select class="form-control" id="NatureMatiereId" name="NatureMatiereId"></select>
                     </div>
@@ -50,6 +50,13 @@
                     <div class="col-md-10">
                         @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                    </div>
+                </div> 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.DatePlannification, new { @class = "form-control datepicker-autoclose" })
+                        @Html.ValidationMessageFor(model => model.DatePlannification, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div id="InfosGeneralId">
@@ -161,6 +168,12 @@
         }
 
         $(document).ready(function () {
+        // Date Picker
+                jQuery('.datepicker-autoclose').datepicker({
+                    format: "yyyy/mm/dd",
+                     autoclose: true,
+                     todayHighlight: true,
+                });
             $('#TypeCheckListId').change(function () {
                 GetInfosGenerals();
                 FillTypeEnginDDL();

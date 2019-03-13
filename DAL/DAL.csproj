@@ -57,6 +57,7 @@
     <Compile Include="Entities\AspNetUserClaims.cs" />
     <Compile Include="Entities\AspNetUserLogins.cs" />
     <Compile Include="Entities\AspNetUsers.cs" />
+    <Compile Include="Entities\DemandeResultatEntete.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\NatureMatiere.cs" />
     <Compile Include="Entities\Site.cs" />
@@ -159,6 +160,18 @@
     <Compile Include="Migrations\201903081529509_change autoraze.Designer.cs">
       <DependentUpon>201903081529509_change autoraze.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903121605174_DatePlannification delete nullable.cs" />
+    <Compile Include="Migrations\201903121605174_DatePlannification delete nullable.Designer.cs">
+      <DependentUpon>201903121605174_DatePlannification delete nullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903131101103_add createdby to ResultatExigence.cs" />
+    <Compile Include="Migrations\201903131101103_add createdby to ResultatExigence.Designer.cs">
+      <DependentUpon>201903131101103_add createdby to ResultatExigence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903131408548_add table entete.cs" />
+    <Compile Include="Migrations\201903131408548_add table entete.Designer.cs">
+      <DependentUpon>201903131408548_add table entete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -240,6 +253,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903081529509_change autoraze.resx">
       <DependentUpon>201903081529509_change autoraze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903121605174_DatePlannification delete nullable.resx">
+      <DependentUpon>201903121605174_DatePlannification delete nullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131101103_add createdby to ResultatExigence.resx">
+      <DependentUpon>201903131101103_add createdby to ResultatExigence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131408548_add table entete.resx">
+      <DependentUpon>201903131408548_add table entete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

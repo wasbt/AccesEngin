@@ -1,35 +1,57 @@
-﻿@model Front.ViewModels.ResultatsVM
+﻿
+@model Front.ViewModels.ResultatsVM
 @{
     ViewBag.Title = "Résultats";
 }
-<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
-<link href="~/assets/css/style.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Fiche de vérifiication des véhicules @Model.TypeCheckList.Name</title>
 <style>
     tr {
         page-break-inside: avoid;
     }
+
+    .tblborder tr td {
+        border: none !important;
+    }
 </style>
-<div class="col-12">
-    <h2 class="float-left">@Model.TypeCheckList.Name</h2>
-    @if (Model.controle.Autorise ?? true)
-    {
-        <h4> <span class="badge col-2 btn badge-success float-right">Autorisé</span></h4>
-    }
-    else
-    {
-        <h4> <span class="badge col-2 btn badge-danger float-right">Non autorisé</span></h4>
-    }
-</div>
+</head>
+
+
 <body>
     <div class="container body-content">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <div class="row">
+                        <table class="table tblborder">
+                            <tr>
+                                <td scope="col"><img src="@Server.MapPath("~/images/logo-ocp.png")" width="70" height="70" /></td>
+
+                                <td scope="col" class="text-center">   <h4>Fiche de vérifiication des véhicules @Model.TypeCheckList.Name</h4></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-md-6">
                             @Html.Partial("_Table_ResultatInfoGenerale")
+                        </div>
+                        <div class="col-md-6">
+                            @Html.Partial("_Table_ResultatsEntete")
                         </div>
 
                     </div>
@@ -40,14 +62,13 @@
             <div class="col-sm-12">
                 <div class="card-box">
                     <div class="row">
-                        @Html.Partial("_Table_ResultatExigence")
+                        @Html.Partial("_Table_ResultatExigencePDF")
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/assets/js/popper.min.js"></script>
-    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    
 </body>

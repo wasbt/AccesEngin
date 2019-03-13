@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Shared
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -119,14 +120,23 @@
         </div>
         <!-- end topbar-main -->
 
+
         <div class="navbar-custom">
             <div class="container-fluid">
                 <div id="navigation">
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
+                        @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
+                        {
                         <li class="has-submenu">
-                            <a href="@Url.Action("Index", "DemandeAccesEngins",new { area = "" })">
+                            <a href="@Url.Action("Index", "DemandeAccesEngins", new { area = "" })">
                                 <i class="fa fa-cog"></i>Contrôle
+                            </a>
+                        </li>
+                        }
+                        <li class="has-submenu">
+                            <a href="@Url.Action("MyDemande", "DemandeAccesEngins", new { area = "" })">
+                                <i class="fa fa-cog"></i>Mes Demandes
                             </a>
                         </li>
                         <li class="has-submenu">
@@ -181,11 +191,12 @@
             </div>
         </div>
     </footer>
-
     @Scripts.Render("~/bundles/templateJS")
     @*@Html.Partial("_FooterAllScripts")*@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-
+    <!-- App js -->
     @RenderSection("scripts", required: false)
+    <script src="~/assets/js/jquery.core.js"></script>
+    <script src="~/assets/js/jquery.app.js"></script>
 </body>
 </html>

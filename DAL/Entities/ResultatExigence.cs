@@ -11,7 +11,7 @@ namespace DAL
     {
         public long Id { get; set; }
 
-        public long DemandeAccesEnginId { get; set; }
+        public long DemandeResultatEnteteId { get; set; }
 
         public long CheckListExigenceId { get; set; }
 
@@ -21,10 +21,9 @@ namespace DAL
 
         public string Observation { get; set; }
 
-        public DateTime CreatedOn { get; set; }
-
         public virtual CheckListExigence CheckListExigence { get; set; }
 
-        public virtual DemandeAccesEngin DemandeAccesEngin { get; set; }
+        public virtual DemandeResultatEntete DemandeResultatEntete { get; set; }
+
     }
 }
