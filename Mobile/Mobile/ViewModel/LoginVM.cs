@@ -1,5 +1,6 @@
 ﻿using Mobile.Helpers;
 using Mobile.Services;
+using Mobile.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace Mobile.ViewModel
                         var accesstoken = await _apiServices.LoginAsync(Username, Password);
 
                         Settings.AccessToken = accesstoken;
+                        Application.Current.MainPage = new ListDemandeView();
+
                     });
                 }
             }

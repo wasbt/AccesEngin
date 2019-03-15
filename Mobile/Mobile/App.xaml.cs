@@ -12,7 +12,7 @@ namespace Mobile
         {
             InitializeComponent();
 
-            MainPage = new Login();
+            MainPage = new ListDemandeView();
         }
 
         protected override void OnStart()
