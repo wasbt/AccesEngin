@@ -38,7 +38,7 @@
                     <div class="col-md-10">
                         <select class="form-control" id="TypeEnginId" name="TypeEnginId"></select>
                     </div>
-                </div>  
+                </div>
                 <div class="form-group">
                     <label class="control-label col-md-2">Nature de la matiere</label>
                     <div class="col-md-10">
@@ -51,7 +51,7 @@
                         @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
                     </div>
-                </div> 
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -61,6 +61,12 @@
                 </div>
                 <div id="InfosGeneralId">
 
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Pièce jointe</label>
+                    <div class="col-md-10">
+                        <input class="form-control" id="FileId" name="FileId"/>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">

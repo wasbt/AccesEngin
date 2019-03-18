@@ -1,4 +1,5 @@
 ﻿using Mobile.View;
+using Mobile.View.Menu;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,8 +12,8 @@ namespace Mobile
         public App()
         {
             InitializeComponent();
+            MainPage = new Login();
 
-            MainPage = new ListDemandeView();
         }
 
         protected override void OnStart()

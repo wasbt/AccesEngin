@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Mobile.Helpers;
+using Mobile.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -43,6 +44,19 @@ namespace Mobile.Services
             Debug.WriteLine(content);
 
             return accessToken;
+        }
+
+        public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", accessToken);
+
+            var json = await client.GetStringAsync(Constants.BaseApiAddress + "api/DemandeAccesList");
+
+            var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(json);
+
+            return demandeAcces;
         }
     }
 }

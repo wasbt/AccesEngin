@@ -109,6 +109,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Biz\DemandeAccesBiz.cs" />
     <Compile Include="Biz\DownloadResultatsToExcel.cs" />
     <Compile Include="Biz\InfoGeneraleBiz.cs" />
     <Compile Include="Biz\ProfileBiz.cs" />

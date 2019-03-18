@@ -18,6 +18,7 @@ namespace Mobile.ViewModel
 
             public string Username { get; set; }
             public string Password { get; set; }
+
             public ICommand LoginCommand
             {
                 get
@@ -27,7 +28,7 @@ namespace Mobile.ViewModel
                         var accesstoken = await _apiServices.LoginAsync(Username, Password);
 
                         Settings.AccessToken = accesstoken;
-                        Application.Current.MainPage = new ListDemandeView();
+                        Application.Current.MainPage = new MainPage();
 
                     });
                 }

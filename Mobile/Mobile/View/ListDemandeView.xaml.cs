@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobile.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,13 @@ namespace Mobile.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ListDemandeView : ContentPage
 	{
-		public ListDemandeView ()
+        DemandeAccesVM ViewModel;
+
+        public ListDemandeView ()
 		{
 			InitializeComponent ();
-            ListCC.ItemsSource = new List<Car>() {
-                new Car(),
-            };
-
+            ViewModel = Resources["vm"] as DemandeAccesVM;
         }
-	}
-    public class Car
-    {
-
-        public int CarID { get; set; }
-        public string Make { get; set; }
-        public int YearOfModel { get; set; }
-
     }
+   
 }
