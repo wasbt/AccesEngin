@@ -28,5 +28,6 @@ namespace Mobile.Model
         public DateTime CreatedOn { get; set; }
 
         public string CreatedBy { get; set; }
+        public string Icon { get; set; } = "icon.png";
     }
 }

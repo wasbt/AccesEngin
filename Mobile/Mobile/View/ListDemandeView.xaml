@@ -12,7 +12,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
+        <!--<ListView ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
             <ListView.Behaviors>
                 <behaviors:ListViewBehavior/>
             </ListView.Behaviors>
@@ -21,6 +21,46 @@
                     <TextCell Text="{Binding TypeCheckListName}"
                               StyleId="disclosure"
                               Detail="{Binding TypeEnginName}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+        <ListView x:Name="listView" ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}" HasUnevenRows="True">
+            <ListView.Behaviors>
+                <behaviors:ListViewBehavior/>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+
+                        <Frame Padding="0,0,0,3">
+                            <Frame.Content>
+                                <Frame Padding="15,15,15,15"   OutlineColor="Gray" BackgroundColor="White">
+                                    <Frame.Content>
+                                        <StackLayout Padding="0,0,0,0"  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+
+                                            <Image Source="{Binding Icon}"
+                         WidthRequest="40"
+                         HeightRequest="40"
+                         VerticalOptions="Center" />
+                                            
+                                            <Label Text="{Binding TypeCheckListName}"
+                           FontFamily="OpenSans-Light"
+                           FontSize="11"
+                           TextColor="#69add1"/>
+                                            <Label Text="{Binding TypeCheckListName}"
+                           FontFamily="OpenSans-Light"
+                           FontSize="9"
+                           TextColor="#69add1"/>
+                                        </StackLayout>
+
+                                    </Frame.Content>
+
+                                </Frame>
+                            </Frame.Content>
+
+                        </Frame>
+
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
