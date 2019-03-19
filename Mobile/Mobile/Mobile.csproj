@@ -17,6 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="View\Menu\MasterDetailPageNavigationMenuItem.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +28,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="View\DemandeAccesDetailsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\DemandeCheckListAdd.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\ListDemandeView.xaml">

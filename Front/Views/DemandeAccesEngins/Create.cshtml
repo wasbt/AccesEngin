@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Create", "DemandeAccesEngins", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">Pièce jointe</label>
                     <div class="col-md-10">
-                        <input class="form-control" id="FileId" name="FileId"/>
+                        <input type="file" class="form-control" id="file" name="file"/>
                     </div>
                 </div>
                 <div class="form-group">

@@ -15,6 +15,8 @@ using Shared;
 using Front.AGUtils;
 using Shared.API.IN;
 using Shared.ENUMS;
+using BLL.Common;
+using System.IO;
 
 namespace Front.Controllers
 {
@@ -91,10 +93,14 @@ namespace Front.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DemandeAccesEngin demandeAccesEngin, ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral)
+        public async Task<ActionResult> Create(DemandeAccesEngin demandeAccesEngin, ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral, HttpPostedFileBase file)
         {
+            long fileId = 0;
+            var biz = new CommonBiz(context, log);
             if (ModelState.IsValid)
             {
+
+                
 
                 #region Calculer durée approximative du contrôle par type d’engin
 
@@ -124,6 +130,22 @@ namespace Front.Controllers
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 demandeAccesEngin.Autorise = false;
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
+                await context.SaveChangesAsync();
+                #region case row has file
+                if (file != null)
+                {
+                    //add file to database
+                    fileId = await biz.SaveOCPFile(file, ContainerName, demandeAccesEngin.Id, SourceName);
+
+                    //verify if file was added
+                    if (fileId == 0)
+                    {
+                        return HttpNotFound();
+                    }
+                }
+                #endregion
+                demandeAccesEngin.AppFileId = fileId;
+
                 await context.SaveChangesAsync();
 
                 foreach (var item in ResultatInfoGeneral)
@@ -252,6 +274,20 @@ namespace Front.Controllers
             // V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
             // V1: return View(await Task.Run(()=>demandeAccesEngin.OrderBy(x=>x.Id).ToPagedList(pageNumber,pageSize)));
             // V0: return View(await demandeAccesEngin.ToListAsync());
+        }
+        public async Task<ActionResult> GetFileAzure(long? id)
+        {
+            var biz = new CommonBiz(context, log);
+
+            var file = await context.AppFile.FindAsync(id);
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            // var filePath = file.SystemFileName;
+            //  var tt = biz.GetBlobBytes(file.SystemFileName,ContainerName);
+            byte[] fileBytes = await biz.GetBlobBytes(file.SystemFileName, ContainerName);
+            return File(fileBytes, MimeMapping.GetMimeMapping(file.OriginalFileName), Path.GetFileName(file.OriginalFileName));
         }
 
         protected override void Dispose(bool disposing)

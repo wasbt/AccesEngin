@@ -28,5 +28,6 @@ namespace Shared.DTO
         public DateTime CreatedOn { get; set; }
 
         public string CreatedBy { get; set; }
+
     }
 }

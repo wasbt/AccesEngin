@@ -208,6 +208,15 @@ namespace DAL
 
             #endregion
 
+            #region AppFile
+
+            modelBuilder.Entity<AppFile>()
+              .HasMany(e => e.DemandeAccesEngin)
+              .WithOptional(e => e.AppFile)
+              .WillCascadeOnDelete(false);
+
+            #endregion
+
         }
     }
 }

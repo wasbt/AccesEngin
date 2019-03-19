@@ -8,6 +8,10 @@ namespace DAL
 {
     public class AppFile
     {
+        public AppFile()
+        {
+            DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
+        }
         public long Id { get; set; }
         public string SourceName { get; set; }
         public string SourceId { get; set; }
@@ -16,5 +20,8 @@ namespace DAL
         public string SystemFileName { get; set; }
         public long FileSize { get; set; }
         public System.DateTime CreatedOn { get; set; }
+
+        public virtual ICollection<DemandeAccesEngin> DemandeAccesEngin { get; set; }
+
     }
 }

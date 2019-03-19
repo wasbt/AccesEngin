@@ -24,7 +24,8 @@ namespace Mobile.Behaviors
         {
             DemandeAcces selectedDemande = (listView.SelectedItem) as DemandeAcces;
             //Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
-            Application.Current.MainPage = new DemandeAccesDetailsView(selectedDemande);
+            var mdp = Application.Current.MainPage as MasterDetailPage;
+             mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
         }
 
         protected override void OnDetachingFrom(ListView bindable)

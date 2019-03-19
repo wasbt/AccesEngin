@@ -172,11 +172,16 @@
     <Compile Include="Migrations\201903131408548_add table entete.Designer.cs">
       <DependentUpon>201903131408548_add table entete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903190913113_add relation demandetoappfile.cs" />
+    <Compile Include="Migrations\201903190913113_add relation demandetoappfile.Designer.cs">
+      <DependentUpon>201903190913113_add relation demandetoappfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
     <Compile Include="PartialClasses\CheckListRubrique.cs" />
     <Compile Include="PartialClasses\DemandeAccesEngin.cs" />
+    <Compile Include="PartialClasses\DemandeResultatEntete.cs" />
     <Compile Include="PartialClasses\Entity.cs" />
     <Compile Include="PartialClasses\InfoGenerale.cs" />
     <Compile Include="PartialClasses\NatureMatiere.cs" />
@@ -262,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903131408548_add table entete.resx">
       <DependentUpon>201903131408548_add table entete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903190913113_add relation demandetoappfile.resx">
+      <DependentUpon>201903190913113_add relation demandetoappfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -13,32 +13,33 @@ namespace Mobile.ViewModel
 {
     public class LoginVM
     {
-   
-            private readonly ApiServices _apiServices = new ApiServices();
 
-            public string Username { get; set; }
-            public string Password { get; set; }
+        private readonly ApiServices _apiServices = new ApiServices();
 
-            public ICommand LoginCommand
+        public string Username { get; set; } 
+        public string Password { get; set; } 
+
+        public ICommand LoginCommand
+        {
+            get
             {
-                get
+                return new Command(async () =>
                 {
-                    return new Command(async () =>
-                    {
-                        var accesstoken = await _apiServices.LoginAsync(Username, Password);
+                    //var accesstoken = await _apiServices.LoginAsync(Username, Password);
+                    var accesstoken = await _apiServices.LoginAsync("admin@gmail.com", "AZERTY123456");
 
-                        Settings.AccessToken = accesstoken;
-                        Application.Current.MainPage = new MainPage();
+                    Settings.AccessToken = accesstoken;
+                    Application.Current.MainPage = new MainPage();
 
-                    });
-                }
+                });
             }
+        }
 
-            public LoginVM()
-            {
-                Username = Settings.Username;
-                Password = Settings.Password;
-            }
-        
+        public LoginVM()
+        {
+            Username = Settings.Username;
+            Password = Settings.Password;
+        }
+
     }
 }

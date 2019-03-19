@@ -1,25 +1,20 @@
 ﻿using Shared.DTO;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL
 {
-    [MetadataType(typeof(CheckListExigenceMetadata))]
-    public partial class CheckListExigence
+    public partial class DemandeResultatEntete
     {
-        public CheckListExigenceDTO CheckListExigenceToDTO()
+        public DemandeResultatEnteteDTO DemandeResultatEnteteToDTO()
         {
             var model = this;
-            var dto = new CheckListExigenceDTO()
+            var dto = new DemandeResultatEnteteDTO()
             {
                 Id = model.Id,
-                Name = model.Name,
-                IsActif = model.IsActif,
-                ShowOrder = model.ShowOrder,
                 CreatedBy = model.CreatedBy,
                 CreatedOn = model.CreatedOn,
             };

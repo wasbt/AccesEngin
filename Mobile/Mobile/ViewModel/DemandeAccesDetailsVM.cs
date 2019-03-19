@@ -1,10 +1,13 @@
 ﻿using Mobile.Model;
+using Mobile.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Mobile.ViewModel
 {
@@ -24,6 +27,18 @@ namespace Mobile.ViewModel
         public DemandeAccesDetailsVM()
         {
         }
+
+        public ICommand GoToControleCommand
+        {
+            get
+            {
+                return new Command<object>(async (key) =>
+                {
+                     await Application.Current.MainPage.Navigation.PushAsync(new DemandeCheckListAdd(key.ToString()));
+                });
+            }
+        }
+      
 
         public event PropertyChangedEventHandler PropertyChanged;
 

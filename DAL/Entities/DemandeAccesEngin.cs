@@ -26,6 +26,8 @@ namespace DAL
 
         public long EntityId { get; set; }
 
+        public long? AppFileId { get; set; }
+
         public string Observation { get; set; }
 
         public bool Autorise { get; set; }
@@ -47,8 +49,11 @@ namespace DAL
 
         public virtual Entity Entity { get; set; }
 
+        public virtual AppFile AppFile { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
         public virtual ICollection<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
+
     }
 }

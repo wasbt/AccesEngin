@@ -8,11 +8,18 @@ using Mobile.Helpers;
 using Mobile.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Shared.DTO;
 
 namespace Mobile.Services
 {
     internal class ApiServices
     {
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public async Task<string> LoginAsync(string userName, string password)
         {
             var keyValues = new List<KeyValuePair<string, string>>
@@ -46,6 +53,12 @@ namespace Mobile.Services
             return accessToken;
         }
 
+
+        /// <summary>
+        /// Get List Demande
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns>DemandeAcces</returns>
         public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken)
         {
             var client = new HttpClient();
@@ -57,6 +70,26 @@ namespace Mobile.Services
             var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(json);
 
             return demandeAcces;
+        }
+
+        /// <summary>
+        /// Get Check List By Id 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="accessToken"></param>
+        /// <returns>TypeCheckListDTO</returns>
+        public async Task<TypeCheckList> GetCheckListByIdAsync(string Id, string accessToken)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer", accessToken);
+
+            var json = await client.GetStringAsync(
+                Constants.BaseApiAddress + "api/GetCheckList/" + Id);
+
+            var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
+
+            return typeCheckList;
         }
     }
 }

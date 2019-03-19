@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DAL
 {
     [Table("DemandeResultatEntete")]
-    public class DemandeResultatEntete
+    public partial class DemandeResultatEntete
     {
         public DemandeResultatEntete()
         {

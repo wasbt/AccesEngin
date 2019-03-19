@@ -25,7 +25,7 @@ namespace DAL
                 Autorise = model.Autorise,
                 Observation = model.Observation,
                 CreatedBy = model.CreatedBy,
-                CreatedOn = model.CreatedOn
+                CreatedOn = model.CreatedOn,
             };
             return dto;
         }

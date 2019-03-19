@@ -204,7 +204,7 @@ namespace BLL.Common
         }
 
 
-        public async Task<long> SaveGHSEFile(HttpPostedFileBase uploadedFile, string ContainerName, long SourceId, string SourceName)
+        public async Task<long> SaveOCPFile(HttpPostedFileBase uploadedFile, string ContainerName, long SourceId, string SourceName)
         {
             try
             {
@@ -259,7 +259,7 @@ namespace BLL.Common
 
             var blobs = container.ListBlobs(useFlatBlobListing: true);
 
-            var blob = blobs.OfType<CloudBlob>().Where(x => x.Uri == new Uri(uri)).FirstOrDefault();
+            var blob = blobs.OfType<CloudBlob>().Where(x => x.Uri == new Uri(uri)).FirstOrDefault(); ;
 
 
             // CloudBlockBlob blob = container.GetBlockBlobReference(uri);
