@@ -17,5 +17,11 @@ namespace Mobile.Model
         public string CreatedBy { get; set; }
         public long RubriqueId { get; set; }
         public string RubriqueName { get; set; }
+
+        public CheckListExigence(string name, int Id)
+        {
+            Name = name;
+            Id = Id;
+        }
     }
 }
