@@ -80,16 +80,26 @@ namespace Mobile.Services
         /// <returns>TypeCheckListDTO</returns>
         public async Task<TypeCheckList> GetCheckListByIdAsync(string Id, string accessToken)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                "Bearer", accessToken);
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
 
-            var json = await client.GetStringAsync(
-                Constants.BaseApiAddress + "api/GetCheckList/" + Id);
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/GetCheckList/" + Id);
 
-            var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
+                var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
+                return typeCheckList;
 
-            return typeCheckList;
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Mobile.Model
 
         public long Id { get; set; }
 
+        public long TypeCheckListId { get; set; }
+
         public string TypeCheckListName { get; set; }
 
         public string TypeEnginName { get; set; }
@@ -28,6 +30,6 @@ namespace Mobile.Model
         public DateTime CreatedOn { get; set; }
 
         public string CreatedBy { get; set; }
-        public string Icon { get; set; } = "icon.png";
+        public string Icon { get; set; } = "itemIcon1.png";
     }
 }

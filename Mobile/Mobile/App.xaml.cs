@@ -1,5 +1,4 @@
 ﻿using Mobile.View;
-using Mobile.View.Menu;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

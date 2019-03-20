@@ -3,6 +3,7 @@ using Mobile.Model;
 using Mobile.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,24 +18,40 @@ namespace Mobile.ViewModel
     {
         private readonly ApiServices _apiServices = new ApiServices();
 
-        private TypeCheckList typeCheckList;
+        private List<CheckListRubrique> rubriques;
+
+        public List<CheckListRubrique> Rubriques
+        {
+            get { return rubriques; }
+            set
+            {
+            rubriques = value;
+                OnPropertyChanged();
+            }
+        }
 
         public TypeCheckListVM()
         {
 
         }
+        public TypeCheckListVM(string id)
+        {
+            this.GetCheckListByIdCommand.Execute(id);
+        }
+
+        private TypeCheckList typeCheckList;
 
         public TypeCheckList TypeCheckList
         {
-            get { return TypeCheckList; }
+            get { return typeCheckList; }
             set
             {
-                TypeCheckList = value;
+                typeCheckList = value;
                 OnPropertyChanged();
             }
         }
 
-        public ICommand GetDemandeAccesCommand
+        public ICommand GetCheckListByIdCommand
         {
             get
             {
@@ -42,6 +59,7 @@ namespace Mobile.ViewModel
                 {
                     var accessToken = Settings.AccessToken;
                     TypeCheckList = await _apiServices.GetCheckListByIdAsync(key.ToString(),accessToken);
+                    Rubriques = TypeCheckList.Rubriques;
                 });
             }
         }

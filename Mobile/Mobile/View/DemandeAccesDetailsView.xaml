@@ -39,7 +39,7 @@
                        Style="{StaticResource categoryLabel}"/>
             </StackLayout>
             <Label Text="{Binding DemandeAcces.Observation}"/>
-            <Button Command="{Binding Source={StaticResource vm}, Path=GoToControleCommand}" CommandParameter="{Binding DemandeAcces.Id}" 
+            <Button Command="{Binding Source={StaticResource vm}, Path=GoToControleCommand}" 
                 Text="Controler"
                 TextColor="Black"
                 FontSize="10"

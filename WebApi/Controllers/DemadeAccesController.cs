@@ -53,7 +53,7 @@ namespace WebApi.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = biz.GetCheckListAsync(Id);
+            var result = await biz.GetCheckListAsync(Id);
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);

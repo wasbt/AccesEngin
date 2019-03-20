@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobile.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +13,18 @@ namespace Mobile.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DemandeCheckListAdd : ContentPage
 	{
-		public DemandeCheckListAdd ()
+        TypeCheckListVM ViewModel;
+
+        public DemandeCheckListAdd ()
 		{
 			InitializeComponent ();
-		}
+        }
 
         public DemandeCheckListAdd(string id)
         {
             InitializeComponent();
+          BindingContext = new TypeCheckListVM(id);
 
-            var cc = id;
         }
     }
 }

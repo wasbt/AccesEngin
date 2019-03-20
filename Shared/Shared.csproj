@@ -58,6 +58,7 @@
     <Compile Include="DTO\TypeCheckListDTO.cs" />
     <Compile Include="DTO\TypeEnginDTO.cs" />
     <Compile Include="ENUMS\DureeEstimativeEnums.cs" />
+    <Compile Include="Grouping.cs" />
     <Compile Include="MailHelper.cs" />
     <Compile Include="Models\ExportExcelModel.cs" />
     <Compile Include="Models\RoleElement.cs" />

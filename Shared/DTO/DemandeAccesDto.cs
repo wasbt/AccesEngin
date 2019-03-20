@@ -11,6 +11,8 @@ namespace Shared.DTO
 
         public long Id { get; set; }
 
+        public long TypeCheckListId { get; set; }
+
         public string TypeCheckListName { get; set; }
 
         public string TypeEnginName { get; set; }

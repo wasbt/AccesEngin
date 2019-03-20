@@ -17,6 +17,7 @@ namespace DAL
             var dto = new DemandeAccesDto()
             {
                 Id = model.Id,
+                TypeCheckListId = model.TypeCheckListId,
                 TypeEnginName = model.TypeEngin.Name,
                 TypeCheckListName = model.TypeCheckList.Name,
                 NatureMatiereName = model.NatureMatiere.Name,

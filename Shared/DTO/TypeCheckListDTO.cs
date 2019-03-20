@@ -13,5 +13,6 @@ namespace Shared.DTO
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public List<CheckListRubriqueDTO> Rubriques { get; set; }
-    }
+        public IEnumerable<Grouping<string, CheckListRubriqueDTO>> RubriquesGrouping { get; set; }
+    } 
 }

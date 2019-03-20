@@ -32,9 +32,10 @@ namespace Mobile.ViewModel
         {
             get
             {
-                return new Command<object>(async (key) =>
+                return new Command(async () =>
                 {
-                     await Application.Current.MainPage.Navigation.PushAsync(new DemandeCheckListAdd(key.ToString()));
+                    var mdp = Application.Current.MainPage as MasterDetailPage;
+                    await    mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeAcces.TypeCheckListId.ToString()));
                 });
             }
         }
