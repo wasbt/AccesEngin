@@ -139,5 +139,21 @@ namespace Mobile.ViewModel
 
             set => SetProperty(ref rubriques, value);
         }
+
+        public ICommand AddCommand
+        {
+            get
+            {
+                return new Command<object>((checkList) =>
+                {
+                    var data = checkList;
+                    //await _apiServices.PostIdeaAsync(idea, Settings.AccessToken);
+                });
+            }
+        }
+        public List<bool> IsConforme { get; set; }
+        public List<DateTime> Date { get; set; }
+        public List<string> Observation { get; set; }
     }
+
 }

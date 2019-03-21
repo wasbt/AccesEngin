@@ -51,9 +51,9 @@
                                             </Grid>
 
                                             <Grid>
-                                                <Entry Grid.Column="0"  Placeholder="Observation" />
+                                                <Entry Grid.Column="0" Text="{Binding .Observation}"  Placeholder="Observation" />
 
-                                                <DatePicker Grid.Column="1" Date="{Binding ExpenseDate, Mode=TwoWay}"
+                                                <DatePicker Grid.Column="1" Date="{Binding .Date, Mode=TwoWay}"
                                                                     VerticalOptions="CenterAndExpand"
                                                                     HorizontalOptions="FillAndExpand"/>
 
@@ -69,22 +69,22 @@
                             <ViewCell >
                                 <Grid Margin="0, 20, 15, 5">
                                     <Label
+                                                BackgroundColor="#9CCC65"
                                                 FontAttributes="Bold"
                                                 FontSize="Small"
                                                 Text="{Binding Name}"
                                                 TextColor="Gray"
                                                 VerticalTextAlignment="Center" />
-                                    <Image x:Name="ImgA" Source="{Binding StateIcon}"  Margin="0,0,5,0" HeightRequest="20" WidthRequest="20" HorizontalOptions="End"/>
-                                    <Grid.GestureRecognizers>
+                                    <!--<Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference currentPage}, Path=BindingContext.RefreshItemsCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
+                                    </Grid.GestureRecognizers>-->
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.GroupHeaderTemplate>
                     <ListView.Footer>
                         <StackLayout Padding="10">
-                            <Button VerticalOptions="Center" BorderRadius="5" BackgroundColor="Green" TextColor="White" Text=" Soumettre " />
+                            <Button Command="{Binding AddCommand}"  VerticalOptions="Center" BorderRadius="5" BackgroundColor="Green" TextColor="White" Text=" Soumettre " CommandParameter="{Binding Items}" />  
                         </StackLayout>
                     </ListView.Footer>
                 </ListView>

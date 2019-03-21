@@ -17,7 +17,14 @@ namespace Mobile.Model
         public string CreatedBy { get; set; }
         public long RubriqueId { get; set; }
         public string RubriqueName { get; set; }
+
+        #region For Post
+
         public bool IsConforme { get; set; }
+        public System.Nullable<DateTime> Date { get; set; }
+        public string Observation { get; set; }
+
+        #endregion
 
         public CheckListExigence(string name, int id)
         {
