@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Mobile.ViewModel"
-             xmlns:local="clr-namespace:ListViewWithSubListView.Views"
+             xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
              x:Name="currentPage"
              x:Class="Mobile.View.DemandeCheckListAdd">
 
@@ -15,30 +15,59 @@
                     x:Name="HotelsList"
                     BackgroundColor="White"
                     IsGroupingEnabled="True"
-                    IsPullToRefreshEnabled="true"
-                    IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     ItemsSource="{Binding Items}"
-                    RefreshCommand="{Binding LoadCheckListRubriqueCommand}"
+                     HasUnevenRows="True"
                     >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal"  VerticalOptions="Center">
-                                    <Label
-                                            VerticalOptions="Center"
-                                            FontAttributes="Bold"
-                                            FontSize="Medium"
-                                            Text="{Binding .Name}"
-                                            TextColor="Black"
-                                            VerticalTextAlignment="Center" />
-                                </StackLayout>
+                                <ContentView Padding="5,10" >
+                                    <Frame Padding="10,15" OutlineColor="Gray" BackgroundColor="White">
+                                        <StackLayout>
+                                            <Grid Grid.Column="0" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="20"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Grid.Column="0" 
+                                                        FontAttributes="Bold"
+                                                        FontSize="Medium"
+                                                        Text="{Binding .Name}"
+                                                        TextColor="Black"
+                                                        VerticalTextAlignment="Center" />
+                                                <ia:Checkbox x:Name="AwesomeCheckbox"
+                                                             IsChecked="{Binding .IsConforme}"
+                                                                Grid.Column="1"
+                                                                OutlineColor="Green"
+                                                                FillColor="Green"
+                                                                CheckColor="White"
+                                                                Shape="Rectangle"
+                                                                HeightRequest="20" 
+                                                                WidthRequest="20"
+                                                                HorizontalOptions="Start"
+                                                                VerticalOptions="Start"
+                                                                 />
+                                            </Grid>
+
+                                            <Grid>
+                                                <Entry Grid.Column="0"  Placeholder="Observation" />
+
+                                                <DatePicker Grid.Column="1" Date="{Binding ExpenseDate, Mode=TwoWay}"
+                                                                    VerticalOptions="CenterAndExpand"
+                                                                    HorizontalOptions="FillAndExpand"/>
+
+                                            </Grid>
+                                        </StackLayout>
+                                    </Frame>
+                                </ContentView>
                             </ViewCell>
                         </DataTemplate>
-                    </ListView.ItemTemplate>    
+                    </ListView.ItemTemplate>
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Grid >
+                            <ViewCell >
+                                <Grid Margin="0, 20, 15, 5">
                                     <Label
                                                 FontAttributes="Bold"
                                                 FontSize="Small"
@@ -53,6 +82,11 @@
                             </ViewCell>
                         </DataTemplate>
                     </ListView.GroupHeaderTemplate>
+                    <ListView.Footer>
+                        <StackLayout Padding="10">
+                            <Button VerticalOptions="Center" BorderRadius="5" BackgroundColor="Green" TextColor="White" Text=" Soumettre " />
+                        </StackLayout>
+                    </ListView.Footer>
                 </ListView>
             </StackLayout>
         </Grid>

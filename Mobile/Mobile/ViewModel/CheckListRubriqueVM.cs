@@ -18,7 +18,7 @@ namespace Mobile.ViewModel
         public string Name { get { return CheckListRubrique.Name; } }
 
 
-        public CheckListRubriqueVM(CheckListRubrique checkListRubrique, bool expanded = false)
+        public CheckListRubriqueVM(CheckListRubrique checkListRubrique, bool expanded = true)
         {
             this.CheckListRubrique = checkListRubrique;
             this._expanded = expanded;

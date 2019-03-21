@@ -18,6 +18,8 @@ namespace Mobile.ViewModel
 
         public string Name { get { return checkListExigence.Name; } }
         public long Id { get { return checkListExigence.Id; } }
+        public bool IsConforme { get { return checkListExigence.IsConforme; } }
+
 
         public CheckListExigence CheckListExigence
         {

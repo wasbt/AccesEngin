@@ -38,8 +38,7 @@ namespace Mobile.View
                 if (ViewModel.Items.Count == 0)
                 {
                     //BindingContext = new CheckListRubriqueGroupVM("1");
-
-                    ViewModel.LoadCheckListRubriqueCommand.Execute(null);
+                    //ViewModel.LoadCheckListRubriqueCommand.Execute(null);
                 }
             }
             catch (Exception Ex)
@@ -58,7 +57,6 @@ namespace Mobile.View
         {
             InitializeComponent();
             ViewModel = new CheckListRubriqueGroupVM(id);
-
         }
     }
 }

@@ -16,15 +16,13 @@ namespace Mobile.ViewModel
     public class CheckListRubriqueGroupVM : BaseViewModel
     {
 
-
-       
-        private CheckListRubriqueVM _oldCheckListRubrique;
         private readonly ApiServices _apiServices = new ApiServices();
+
+        private CheckListRubriqueVM _oldCheckListRubrique;
+
         public CheckListRubriqueGroupVM()
         {
-           
-
-
+         
         }
 
         public ICommand GetCheckListByIdCommand
@@ -36,6 +34,7 @@ namespace Mobile.ViewModel
                     var accessToken = Settings.AccessToken;
                     TypeCheckList = await _apiServices.GetCheckListByIdAsync(key.ToString(), accessToken);
                     Rubriques = TypeCheckList.Rubriques;
+                     await ExecuteLoadItemsCommandAsync();
                 });
             }
         }
@@ -53,36 +52,47 @@ namespace Mobile.ViewModel
 
         public CheckListRubriqueGroupVM(string Id)
         {
+      
             this.GetCheckListByIdCommand.Execute(Id);
             items = new ObservableCollection<CheckListRubriqueVM>();
             Items = new ObservableCollection<CheckListRubriqueVM>();
             LoadCheckListRubriqueCommand = new Command(async () => await ExecuteLoadItemsCommandAsync());
             RefreshItemsCommand = new Command<CheckListRubriqueVM>((item) => ExecuteRefreshItemsCommand(item));
+
         }
-        public bool isExpanded = false;
+        public bool isExpanded = true;
 
         private void ExecuteRefreshItemsCommand(CheckListRubriqueVM item)
         {
-            if (_oldCheckListRubrique == item)
-            {
-                // click twice on the same item will hide it
-                item.Expanded = !item.Expanded;
-            }
-            else
-            {
-                if (_oldCheckListRubrique != null)
-                {
-                    // hide previous selected item
-                    _oldCheckListRubrique.Expanded = false;
-                }
-                // show selected item
-                item.Expanded = true;
-            }
+            //if (_oldCheckListRubrique == item)
+            //{
+            //    // click twice on the same item will hide it
+            //    item.Expanded = !item.Expanded;
+            //}
+            //else
+            //{
+                //if (_oldCheckListRubrique != null)
+                //{
+                //    // hide previous selected item
+                //    _oldCheckListRubrique.Expanded = false;
 
-            _oldCheckListRubrique = item;
+                //}
+                // show selected item
+                if (item.Expanded)
+                {
+                    item.Expanded = false;
+                }
+                else
+                {
+
+                item.Expanded = true;
+                }
+            //}
+
+            //_oldCheckListRubrique = item;
         }
 
-        async System.Threading.Tasks.Task ExecuteLoadItemsCommandAsync()
+        async Task ExecuteLoadItemsCommandAsync()
         {
             try
             {
@@ -115,24 +125,19 @@ namespace Mobile.ViewModel
 
         public TypeCheckList TypeCheckList
         {
-            get { return typeCheckList; }
-            set
-            {
-                typeCheckList = value;
-                OnPropertyChanged();
-            }
+            get => typeCheckList;
+
+            set => SetProperty(ref typeCheckList, value);
+            
         }
 
         private List<CheckListRubrique> rubriques;
 
         public List<CheckListRubrique> Rubriques
         {
-            get { return rubriques; }
-            set
-            {
-                rubriques = value;
-                OnPropertyChanged();
-            }
+            get => rubriques;
+
+            set => SetProperty(ref rubriques, value);
         }
     }
 }

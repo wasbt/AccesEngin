@@ -17,11 +17,12 @@ namespace Mobile.Model
         public string CreatedBy { get; set; }
         public long RubriqueId { get; set; }
         public string RubriqueName { get; set; }
+        public bool IsConforme { get; set; }
 
-        public CheckListExigence(string name, int Id)
+        public CheckListExigence(string name, int id)
         {
             Name = name;
-            Id = Id;
+            Id = id;
         }
     }
 }
