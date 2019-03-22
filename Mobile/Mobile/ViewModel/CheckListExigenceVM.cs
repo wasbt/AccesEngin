@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mobile.ViewModel
 {
-    public class CheckListExigenceVM
+    public class CheckListExigenceVM 
     {
         private CheckListExigence checkListExigence;
 
@@ -17,8 +17,20 @@ namespace Mobile.ViewModel
         }
 
         public string Name { get { return checkListExigence.Name; } }
+        public string Observation
+        {
+            get
+            {
+                return checkListExigence.Observation;
+            }
+            set
+            {
+                checkListExigence.Observation = value;
+            }
+        }
         public long Id { get { return checkListExigence.Id; } }
-        public bool IsConforme { get { return checkListExigence.IsConforme; } }
+        public bool IsConforme { get { return checkListExigence.IsConforme; } set { checkListExigence.IsConforme = value; } }
+        public System.Nullable<DateTime> Date { get { return checkListExigence.Date; } set { checkListExigence.Date = value; } }
 
 
         public CheckListExigence CheckListExigence

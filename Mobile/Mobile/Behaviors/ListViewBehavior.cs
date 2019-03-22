@@ -34,4 +34,30 @@ namespace Mobile.Behaviors
             listView.ItemSelected -= ListView_ItemSelected;
         }
     }
+
+    public class ListViewBehaviorCheckBox : Behavior<ListView>
+    {
+        ListView listView;
+        protected override void OnAttachedTo(ListView bindable)
+        {
+            base.OnAttachedTo(bindable);
+
+            listView = bindable;
+            listView.ItemSelected += ListView_ItemSelected;
+        }
+
+        void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            DemandeAcces selectedDemande = (listView.SelectedItem) as DemandeAcces;
+            //Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
+            var mdp = Application.Current.MainPage as MasterDetailPage;
+             mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
+        }
+
+        protected override void OnDetachingFrom(ListView bindable)
+        {
+            base.OnDetachingFrom(bindable);
+            listView.ItemSelected -= ListView_ItemSelected;
+        }
+    }
 }

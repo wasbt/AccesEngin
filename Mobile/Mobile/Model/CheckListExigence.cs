@@ -23,6 +23,7 @@ namespace Mobile.Model
         public bool IsConforme { get; set; }
         public System.Nullable<DateTime> Date { get; set; }
         public string Observation { get; set; }
+        
 
         #endregion
 

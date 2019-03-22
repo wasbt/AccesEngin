@@ -142,9 +142,9 @@ namespace Front.Controllers
                     {
                         return HttpNotFound();
                     }
+                    demandeAccesEngin.AppFileId = fileId;
                 }
                 #endregion
-                demandeAccesEngin.AppFileId = fileId;
 
                 await context.SaveChangesAsync();
 

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Mobile.ViewModel"
              xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
+             xmlns:local="clr-namespace:Mobile.Controls"
              x:Name="currentPage"
              x:Class="Mobile.View.DemandeCheckListAdd">
 
@@ -18,6 +19,7 @@
                     ItemsSource="{Binding Items}"
                      HasUnevenRows="True"
                     >
+                    
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -31,13 +33,13 @@
                                                 </Grid.ColumnDefinitions>
 
                                                 <Label Grid.Column="0" 
-                                                        FontAttributes="Bold"
-                                                        FontSize="Medium"
-                                                        Text="{Binding .Name}"
+                                                        FontAttributes="None"
+                                                        FontSize="Small"
+                                                        Text="{Binding Name}"
                                                         TextColor="Black"
                                                         VerticalTextAlignment="Center" />
                                                 <ia:Checkbox x:Name="AwesomeCheckbox"
-                                                             IsChecked="{Binding .IsConforme}"
+                                                             IsChecked="{Binding IsConforme}"
                                                                 Grid.Column="1"
                                                                 OutlineColor="Green"
                                                                 FillColor="Green"
@@ -51,11 +53,11 @@
                                             </Grid>
 
                                             <Grid>
-                                                <Entry Grid.Column="0" Text="{Binding .Observation}"  Placeholder="Observation" />
-
-                                                <DatePicker Grid.Column="1" Date="{Binding .Date, Mode=TwoWay}"
-                                                                    VerticalOptions="CenterAndExpand"
+                                                <Entry Grid.Column="0" Text="{Binding Observation, Mode=TwoWay}"  Placeholder="Observation" />
+                         
+                                                <local:NullableRoundedDatePicker  Grid.Column="1" NullableDate="{Binding Date}"  VerticalOptions="CenterAndExpand"
                                                                     HorizontalOptions="FillAndExpand"/>
+
 
                                             </Grid>
                                         </StackLayout>
@@ -67,14 +69,16 @@
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
                             <ViewCell >
-                                <Grid Margin="0, 20, 15, 5">
+                                <Grid Padding="10, 10, 10, 10" BackgroundColor="#9CCC65">
                                     <Label
                                                 BackgroundColor="#9CCC65"
                                                 FontAttributes="Bold"
-                                                FontSize="Small"
+                                                FontSize="Medium"
                                                 Text="{Binding Name}"
-                                                TextColor="Gray"
-                                                VerticalTextAlignment="Center" />
+                                                TextColor="White"
+                                                VerticalTextAlignment="Center" 
+                                                HorizontalOptions="FillAndExpand"
+                                        />
                                     <!--<Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference currentPage}, Path=BindingContext.RefreshItemsCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>-->

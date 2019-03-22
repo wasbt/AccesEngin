@@ -53,7 +53,7 @@ namespace Mobile.View
             this.ViewModel = viewModel;
         }
 
-        public DemandeCheckListAdd(string id)
+        public DemandeCheckListAdd(long id)
         {
             InitializeComponent();
             ViewModel = new CheckListRubriqueGroupVM(id);

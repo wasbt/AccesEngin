@@ -19,10 +19,12 @@ namespace Mobile.ViewModel
         private readonly ApiServices _apiServices = new ApiServices();
 
         private CheckListRubriqueVM _oldCheckListRubrique;
+        public long DemandeAccesEnginId { get; set; }
+
 
         public CheckListRubriqueGroupVM()
         {
-         
+
         }
 
         public ICommand GetCheckListByIdCommand
@@ -34,7 +36,7 @@ namespace Mobile.ViewModel
                     var accessToken = Settings.AccessToken;
                     TypeCheckList = await _apiServices.GetCheckListByIdAsync(key.ToString(), accessToken);
                     Rubriques = TypeCheckList.Rubriques;
-                     await ExecuteLoadItemsCommandAsync();
+                    await ExecuteLoadItemsCommandAsync();
                 });
             }
         }
@@ -50,9 +52,9 @@ namespace Mobile.ViewModel
         public Command LoadCheckListRubriqueCommand { get; set; }
         public Command<CheckListRubriqueVM> RefreshItemsCommand { get; set; }
 
-        public CheckListRubriqueGroupVM(string Id)
+        public CheckListRubriqueGroupVM(long Id)
         {
-      
+            DemandeAccesEnginId = Id;
             this.GetCheckListByIdCommand.Execute(Id);
             items = new ObservableCollection<CheckListRubriqueVM>();
             Items = new ObservableCollection<CheckListRubriqueVM>();
@@ -71,22 +73,22 @@ namespace Mobile.ViewModel
             //}
             //else
             //{
-                //if (_oldCheckListRubrique != null)
-                //{
-                //    // hide previous selected item
-                //    _oldCheckListRubrique.Expanded = false;
+            //if (_oldCheckListRubrique != null)
+            //{
+            //    // hide previous selected item
+            //    _oldCheckListRubrique.Expanded = false;
 
-                //}
-                // show selected item
-                if (item.Expanded)
-                {
-                    item.Expanded = false;
-                }
-                else
-                {
+            //}
+            // show selected item
+            if (item.Expanded)
+            {
+                item.Expanded = false;
+            }
+            else
+            {
 
                 item.Expanded = true;
-                }
+            }
             //}
 
             //_oldCheckListRubrique = item;
@@ -99,12 +101,12 @@ namespace Mobile.ViewModel
                 if (IsBusy)
                     return;
                 IsBusy = true;
-               Items.Clear();
+                Items.Clear();
 
-              
+
                 if (rubriques != null && rubriques.Count > 0)
                 {
-                    foreach (var checkListRubrique in rubriques)
+                    foreach (var checkListRubrique in TypeCheckList.Rubriques)
                         Items.Add(new CheckListRubriqueVM(checkListRubrique));
                 }
                 else { IsEmpty = true; }
@@ -128,7 +130,7 @@ namespace Mobile.ViewModel
             get => typeCheckList;
 
             set => SetProperty(ref typeCheckList, value);
-            
+
         }
 
         private List<CheckListRubrique> rubriques;
@@ -139,21 +141,42 @@ namespace Mobile.ViewModel
 
             set => SetProperty(ref rubriques, value);
         }
+        private ResultatCheckList ResultatCheckList;
 
         public ICommand AddCommand
         {
             get
             {
-                return new Command<object>((checkList) =>
+                return new Command<ObservableCollection<CheckListRubriqueVM>>((Rubrique) =>
                 {
-                    var data = checkList;
+                    ResultatCheckList = new ResultatCheckList();
+                    ResultatCheckList.ResultatsList = new List<Resultats>();
+                    var data = Rubrique;
+                    ResultatCheckList.DemandeAccesEnginId = DemandeAccesEnginId;
+                    ResultatCheckList.CreatedBy = Settings.Username;
+                    ResultatCheckList.CreatedOn = DateTime.Now;
+
+                    foreach (var rubrique in Rubrique)
+                    {
+                        foreach (var exigence in rubrique)
+                        {
+                            var ex = new Resultats()
+                            {
+                                CheckListExigenceId = exigence.Id,
+                                IsConform = exigence.IsConforme,
+                                Date = exigence.Date,
+                                Observation = exigence.Observation,
+                            };
+                            ResultatCheckList.ResultatsList.Add(ex);
+                        }
+
+                    }
+
                     //await _apiServices.PostIdeaAsync(idea, Settings.AccessToken);
                 });
             }
         }
-        public List<bool> IsConforme { get; set; }
-        public List<DateTime> Date { get; set; }
-        public List<string> Observation { get; set; }
+
     }
 
 }

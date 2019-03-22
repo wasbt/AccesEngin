@@ -18,8 +18,9 @@ namespace Mobile.Model
         public string ChecklistName { get; set; }
         public int ChecklistId { get; set; }
 
-        public CheckListRubrique(string name, List<CheckListExigence> checkListExigences)
+        public CheckListRubrique(long id,string name, List<CheckListExigence> checkListExigences)
         {
+            Id = id;
             Name = name;
             Exigences = checkListExigences;
         }
