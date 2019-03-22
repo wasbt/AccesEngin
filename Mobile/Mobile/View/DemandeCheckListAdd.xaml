@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:Mobile.ViewModel"
              xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
              xmlns:local="clr-namespace:Mobile.Controls"
+             xmlns:behaviors="clr-namespace:Mobile.Behaviors"
              x:Name="currentPage"
              x:Class="Mobile.View.DemandeCheckListAdd">
 
@@ -19,17 +20,20 @@
                     ItemsSource="{Binding Items}"
                      HasUnevenRows="True"
                     >
-                    
+                    <ListView.Behaviors>
+                        <behaviors:ListViewBehaviorCheckBox/>
+                    </ListView.Behaviors>
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <ContentView Padding="5,10" >
+                                <ContentView Padding="5,10" BackgroundColor="White" >
                                     <Frame Padding="10,15" OutlineColor="Gray" BackgroundColor="White">
                                         <StackLayout>
                                             <Grid Grid.Column="0" >
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="60"/>
                                                 </Grid.ColumnDefinitions>
 
                                                 <Label Grid.Column="0" 
@@ -38,7 +42,8 @@
                                                         Text="{Binding Name}"
                                                         TextColor="Black"
                                                         VerticalTextAlignment="Center" />
-                                                <ia:Checkbox x:Name="AwesomeCheckbox"
+                                                
+                                                <!--<ia:Checkbox x:Name="AwesomeCheckbox"
                                                              IsChecked="{Binding IsConforme}"
                                                                 Grid.Column="1"
                                                                 OutlineColor="Green"
@@ -49,7 +54,15 @@
                                                                 WidthRequest="20"
                                                                 HorizontalOptions="Start"
                                                                 VerticalOptions="Start"
-                                                                 />
+                                                                 />-->
+                                                <local:CustomSwitch SwitchOnColor="Red"
+                                                IsToggled="{Binding IsConforme}"  
+                                                         Grid.Column="1"
+                                                         HeightRequest="20" 
+                                                         WidthRequest="60"
+                                                         HorizontalOptions="Start"
+                                                         VerticalOptions="Start"   />
+                                                
                                             </Grid>
 
                                             <Grid>

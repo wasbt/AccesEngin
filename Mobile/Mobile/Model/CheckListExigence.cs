@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Mobile.Model
 {
-    public class CheckListExigence
+    public class CheckListExigence : BindableObject
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -20,10 +21,20 @@ namespace Mobile.Model
 
         #region For Post
 
-        public bool IsConforme { get; set; }
+        private bool isConforme = true;
+        public bool IsConforme
+        {
+            get { return isConforme; }
+            set
+            {
+                isConforme = value;
+                OnPropertyChanged();
+
+            }
+        }
         public System.Nullable<DateTime> Date { get; set; }
         public string Observation { get; set; }
-        
+
 
         #endregion
 
