@@ -29,7 +29,7 @@
                         <td>
                             <strong>Autorisé</strong>
                         </td>
-                        <td>
+                        <td >
                             <div class="checkbox checkbox-primary">
                                 <input id="AutoriseId" type="checkbox" name="Autorise" value="true" />
                                 <label for="AutoriseId">
@@ -55,6 +55,13 @@
                      autoclose: true,
                      todayHighlight: true,
                 });
+
+        $(".markerDiv").click(function () { 
+        debugger;
+            var checkBox = $('input[Type=checkbox]', this);
+
+            $(checkBox).prop('checked', !checkBox.is(':checked'));
+        });
         });
     </script>
 

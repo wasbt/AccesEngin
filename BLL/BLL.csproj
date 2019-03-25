@@ -112,6 +112,7 @@
     <Compile Include="Biz\DemandeAccesBiz.cs" />
     <Compile Include="Biz\DownloadResultatsToExcel.cs" />
     <Compile Include="Biz\InfoGeneraleBiz.cs" />
+    <Compile Include="Biz\KpiBiz.cs" />
     <Compile Include="Biz\ProfileBiz.cs" />
     <Compile Include="Biz\SitesEntitiesBiz.cs" />
     <Compile Include="Common\CommonBiz.cs" />

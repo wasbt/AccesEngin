@@ -45,38 +45,47 @@ namespace BLL.Biz
         }
          public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat)
         {
-            #region Save entete resultat Exigence 
-            var resultatEntete = new DemandeResultatEntete()
+            try
             {
-                DemandeAccesEnginId = resultat.DemandeAccesEnginId,
-                CreatedBy = resultat.CreatedBy,
-                CreatedOn = resultat.CreatedOn
-            };
-            #endregion
-
-            context.DemandeResultatEntete.Add(resultatEntete);
-        var cc =    await context.SaveChangesAsync();
-
-            #region Save resultat Exigence
-            foreach (var resultatEx in resultat.ResultatsList)
-            {
-                var controlResultatExigence = new ResultatExigence()
+                #region Save entete resultat Exigence 
+                var resultatEntete = new DemandeResultatEntete()
                 {
-                    DemandeResultatEnteteId = resultatEntete.Id,
-                    CheckListExigenceId = resultatEx.CheckListExigenceId,
-                    IsConform = resultatEx.IsConform,
-                    Date = resultatEx.Date,
-                    Observation = resultatEx.Observation,
+                    DemandeAccesEnginId = resultat.DemandeAccesEnginId,
+                    CreatedBy = resultat.CreatedBy,
+                    CreatedOn = resultat.CreatedOn
                 };
+                #endregion
 
-                context.ResultatExigence.Add(controlResultatExigence);
+                context.DemandeResultatEntete.Add(resultatEntete);
+                var cc = await context.SaveChangesAsync();
 
+                #region Save resultat Exigence
+                foreach (var resultatEx in resultat.ResultatsList)
+                {
+                    var controlResultatExigence = new ResultatExigence()
+                    {
+                        DemandeResultatEnteteId = resultatEntete.Id,
+                        CheckListExigenceId = resultatEx.CheckListExigenceId,
+                        IsConform = resultatEx.IsConform,
+                        Date = resultatEx.Date,
+                        Observation = resultatEx.Observation,
+                    };
+
+                    context.ResultatExigence.Add(controlResultatExigence);
+
+
+                }
+                var tt = await context.SaveChangesAsync();
+                #endregion
+                return true;
 
             }
-           var tt =  await context.SaveChangesAsync();
-            #endregion
+            catch (Exception)
+            {
+                return false;
+            }
 
-            return true;
+
 
         }
 

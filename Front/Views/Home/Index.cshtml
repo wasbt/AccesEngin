@@ -2,30 +2,104 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <h4 class="header-title m-t-0 m-b-30">Mes Demande</h4>
+
+        <canvas id="pie" height="300"></canvas>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+
 </div>
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/waves.js"></script>
+    <script src="~/assets/js/jquery.slimscroll.js"></script>
+    <script src="~/assets/plugins/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/assets/pages/jquery.chartjs.init.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/jquery.core.js"></script>
+    <script src="~/assets/js/jquery.app.js"></script>
+    <script>
+
+!function($) {
+    "use strict";
+
+    var ChartJs = function() {};
+
+    ChartJs.prototype.respChart = function(selector,type,data, options) {
+        var canvas = document.getElementById("pie");
+
+        // get selector by context
+        var ctx = selector.get(0).getContext("2d");
+        // pointing parent container to make chart js inherit its width
+        var container = $(selector).parent();
+
+        // enable resizing matter
+        $(window).resize( generateChart );
+
+        // this function produce the responsive Chart JS
+        function generateChart(){
+            // make chart width fit with its container
+            var ww = selector.attr('width', $(container).width() );
+            switch('Pie'){
+
+                case 'Pie':
+                    new Chart(ctx, {type: 'pie', data: data, options: options});
+                    break;
+
+            }
+            // Initiate new chart or Redraw
+
+        };
+        // run function - render chart at first load
+        generateChart();
+    },
+    //init
+    ChartJs.prototype.init = function() {
+        //creating lineChart
+  
+
+        //Pie chart
+        var pieChart = {
+            labels: [
+                "Controller",
+                "Non conroller",
+            ],
+            datasets: [
+                {
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        "#ff8acc",
+                        "#5b69bc",
+                        "#f9c851"
+                    ],
+                    hoverBackgroundColor: [
+                        "#ff8acc",
+                        "#5b69bc",
+                        "#f9c851"
+                    ],
+                    hoverBorderColor: "#fff"
+                }]
+        };
+        this.respChart($("#pie"),'Pie',pieChart);
+
+    },
+    $.ChartJs = new ChartJs, $.ChartJs.Constructor = ChartJs
+
+}(window.jQuery),
+
+//initializing
+function($) {
+    "use strict";
+    $.ChartJs.init()
+}(window.jQuery);
+
+    </script>
+
+
+

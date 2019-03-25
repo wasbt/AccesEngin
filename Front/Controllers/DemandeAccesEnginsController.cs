@@ -26,7 +26,6 @@ namespace Front.Controllers
         // GET: DemandeAccesEngins
         public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model)
         {
-            ViewBag.ShowButton = false;
 
             var demandeAccesEngin = context.DemandeAccesEngin.Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
             var query = context.DemandeAccesEngin.AsQueryable();
