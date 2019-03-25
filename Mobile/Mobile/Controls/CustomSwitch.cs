@@ -32,15 +32,25 @@ namespace Mobile.Controls
             set { SetValue(SwitchOnColorProperty, value); }
         }
 
-        public static readonly BindableProperty SwitchThumbColorProperty =
-          BindableProperty.Create(nameof(SwitchThumbColor),
+        public static readonly BindableProperty SwitchOnThumbColorProperty =
+          BindableProperty.Create(nameof(SwitchOnThumbColor),
               typeof(Color), typeof(CustomSwitch),
               Color.Default);
 
-        public Color SwitchThumbColor
+        public Color SwitchOnThumbColor
         {
-            get { return (Color)GetValue(SwitchThumbColorProperty); }
-            set { SetValue(SwitchThumbColorProperty, value); }
+            get { return (Color)GetValue(SwitchOnThumbColorProperty); }
+            set { SetValue(SwitchOnThumbColorProperty, value); }
+        }
+           public static readonly BindableProperty SwitchOffThumbColorProperty =
+          BindableProperty.Create(nameof(SwitchOffThumbColor),
+              typeof(Color), typeof(CustomSwitch),
+              Color.Default);
+
+        public Color SwitchOffThumbColor
+        {
+            get { return (Color)GetValue(SwitchOffThumbColorProperty); }
+            set { SetValue(SwitchOffThumbColorProperty, value); }
         }
 
         public static readonly BindableProperty SwitchThumbImageProperty =

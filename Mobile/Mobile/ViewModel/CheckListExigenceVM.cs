@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Mobile.ViewModel
 {
-    public class CheckListExigenceVM 
+    public class CheckListExigenceVM : BindableObject
     {
         private CheckListExigence checkListExigence;
 
@@ -29,7 +30,8 @@ namespace Mobile.ViewModel
             }
         }
         public long Id { get { return checkListExigence.Id; } }
-        public bool IsConforme { get { return checkListExigence.IsConforme; } set { checkListExigence.IsConforme = value; } }
+        public bool IsConforme { get { return checkListExigence.IsConforme; } set { checkListExigence.IsConforme = value; OnPropertyChanged();}
+        }
         public System.Nullable<DateTime> Date { get { return checkListExigence.Date; } set { checkListExigence.Date = value; } }
 
 

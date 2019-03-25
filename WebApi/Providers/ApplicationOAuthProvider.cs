@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -44,7 +45,7 @@ namespace WebApi.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.UserName);
+            AuthenticationProperties properties = CreateProperties(user.Id);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -86,13 +87,27 @@ namespace WebApi.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userId)
         {
-            IDictionary<string, string> data = new Dictionary<string, string>
+            using (var context = new EnginDbContext())
             {
-                { "userName", userName }
+                var profile = context.Profile.Find(userId);
+                profile.DtLastConnection = DateTime.Now;
+                context.SaveChanges();
+
+                var userRoles = string.Join("|", profile.AspNetUsers.AspNetRoles.Select(r => r.Name).ToList());
+
+                var fullName = profile.FullName;
+
+                IDictionary<string, string> data = new Dictionary<string, string>
+            {
+                   { "UserId", userId },
+                   { "fullName", fullName },
+                   { "UserRoles", userRoles },
+                   { "FullName", fullName },
             };
-            return new AuthenticationProperties(data);
+                return new AuthenticationProperties(data);
+            }
         }
     }
 }

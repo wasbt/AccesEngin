@@ -35,10 +35,14 @@ namespace Mobile.Droid.Renderers
                     if (this.Control.Checked)
                     {
                         this.Control.TrackDrawable.SetColorFilter(view.SwitchOnColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+                        Control.ThumbDrawable.SetColorFilter(view.SwitchOnThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+
                     }
                     else
                     {
                         this.Control.TrackDrawable.SetColorFilter(view.SwitchOffColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+                        Control.ThumbDrawable.SetColorFilter(view.SwitchOffThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+
                     }
                     this.Control.CheckedChange += this.OnCheckedChange;
                     UpdateSwitchThumbImage(view);
@@ -56,7 +60,7 @@ namespace Mobile.Droid.Renderers
             }
             else
             {
-                Control.ThumbDrawable.SetColorFilter(view.SwitchThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                Control.ThumbDrawable.SetColorFilter(view.SwitchOffThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
                 // Control.SetTrackResource(Resource.Drawable.track);  
             }
         }
@@ -65,10 +69,14 @@ namespace Mobile.Droid.Renderers
             if (this.Control.Checked)
             {
                 this.Control.TrackDrawable.SetColorFilter(view.SwitchOnColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+                Control.ThumbDrawable.SetColorFilter(view.SwitchOnThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+
             }
             else
             {
                 this.Control.TrackDrawable.SetColorFilter(view.SwitchOffColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+                Control.ThumbDrawable.SetColorFilter(view.SwitchOffThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+
             }
         }
         protected override void Dispose(bool disposing)

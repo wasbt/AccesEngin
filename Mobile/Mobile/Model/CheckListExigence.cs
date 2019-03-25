@@ -21,7 +21,7 @@ namespace Mobile.Model
 
         #region For Post
 
-        private bool isConforme = true;
+        private bool isConforme;
         public bool IsConforme
         {
             get { return isConforme; }

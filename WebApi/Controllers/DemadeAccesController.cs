@@ -1,4 +1,5 @@
 ﻿using BLL.Biz;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.Results;
 
 namespace WebApi.Controllers
@@ -56,6 +58,31 @@ namespace WebApi.Controllers
             var result = await biz.GetCheckListAsync(Id);
 
             if (result != null)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
+
+
+        #endregion
+
+        #region get CheckList For controller
+
+        [ResponseType(typeof(ResultatCheckList))]
+        [Route("api/PostResultatExigences")]
+        public async Task<HttpResponseMessage> PostResultatExigencesAsync(ResultatCheckList resultat)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
+
+            var result = await biz.PostResultatExigencesAsync(resultat);
+
+            if (result)
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);

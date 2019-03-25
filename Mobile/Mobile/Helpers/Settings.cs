@@ -10,15 +10,38 @@ namespace Mobile.Helpers
     public class Settings
     {
 
-        public static string Username
+        public static string FullName
         {
             get
             {
-                return Preferences.Get("Username", "");
+                return Preferences.Get("fullName", "");
             }
             set
             {
-                Preferences.Set("Username", value);
+                Preferences.Set("fullName", value);
+            }
+        }
+        public static string UserRoles
+        {
+            get
+            {
+                return Preferences.Get("UserRoles", "");
+            }
+            set
+            {
+                Preferences.Set("UserRoles", value);
+            }
+        }
+
+        public static string UserId
+        {
+            get
+            {
+                return Preferences.Get("UserId", "");
+            }
+            set
+            {
+                Preferences.Set("UserId", value);
             }
         }
         public static string Password

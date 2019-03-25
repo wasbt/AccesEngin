@@ -9,6 +9,7 @@ using Mobile.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shared.DTO;
+using Shared.Models;
 
 namespace Mobile.Services
 {
@@ -43,7 +44,8 @@ namespace Mobile.Services
 
             var accessTokenExpiration = jwtDynamic.Value<DateTime>(".expires");
             var accessToken = jwtDynamic.Value<string>("access_token");
-
+            Settings.UserId = jwtDynamic.Value<string>("UserId");
+            Settings.UserRoles = jwtDynamic.Value<string>("UserRoles");
             Settings.AccessTokenExpirationDate = accessTokenExpiration;
 
             Debug.WriteLine(accessTokenExpiration);
@@ -100,6 +102,24 @@ namespace Mobile.Services
                 throw;
             }
         
+        }
+
+        /// <summary>
+        /// Post Check List 
+        /// </summary>
+        /// <param name="resultat"></param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, string accessToken)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var json = JsonConvert.SerializeObject(resultat);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await client.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", content);
         }
     }
 }

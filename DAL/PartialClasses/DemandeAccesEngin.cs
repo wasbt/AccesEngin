@@ -20,11 +20,11 @@ namespace DAL
                 TypeCheckListId = model.TypeCheckListId,
                 TypeEnginName = model.TypeEngin.Name,
                 TypeCheckListName = model.TypeCheckList.Name,
-                NatureMatiereName = model.NatureMatiere.Name,
+                NatureMatiereName = model?.NatureMatiere?.Name,
                 EntityName = model.Entity.Name,
                 DatePlannification = model.DatePlannification,
                 Autorise = model.Autorise,
-                Observation = model.Observation,
+                Observation = model?.Observation,
                 CreatedBy = model.CreatedBy,
                 CreatedOn = model.CreatedOn,
             };

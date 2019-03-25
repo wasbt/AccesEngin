@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mobile.Model
+namespace Shared.Models
 {
     public class ResultatCheckList
     {

@@ -37,7 +37,7 @@ namespace Mobile.ViewModel
 
         public LoginVM()
         {
-            Username = Settings.Username;
+            Username = Settings.FullName;
             Password = Settings.Password;
         }
 

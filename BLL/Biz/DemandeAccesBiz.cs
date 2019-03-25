@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Shared;
+using Shared.Models;
 
 namespace BLL.Biz
 {
@@ -22,7 +23,8 @@ namespace BLL.Biz
         public List<DemandeAccesDto> DemandeAccesList()
         {
             var demandeAccesList =  context.DemandeAccesEngin.ToList();
-            return demandeAccesList.Select(x => x.DemandeAccesToDTO()).ToList();
+            var Demendes = demandeAccesList.Select(x => x.DemandeAccesToDTO()).ToList();
+            return Demendes;
         }
 
         public async Task<TypeCheckListDTO> GetCheckListAsync(int id)
@@ -40,6 +42,42 @@ namespace BLL.Biz
            // typeCheckListDTO.RubriquesGrouping = tt;
 
             return typeCheckListDTO;
+        }
+         public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat)
+        {
+            #region Save entete resultat Exigence 
+            var resultatEntete = new DemandeResultatEntete()
+            {
+                DemandeAccesEnginId = resultat.DemandeAccesEnginId,
+                CreatedBy = resultat.CreatedBy,
+                CreatedOn = resultat.CreatedOn
+            };
+            #endregion
+
+            context.DemandeResultatEntete.Add(resultatEntete);
+        var cc =    await context.SaveChangesAsync();
+
+            #region Save resultat Exigence
+            foreach (var resultatEx in resultat.ResultatsList)
+            {
+                var controlResultatExigence = new ResultatExigence()
+                {
+                    DemandeResultatEnteteId = resultatEntete.Id,
+                    CheckListExigenceId = resultatEx.CheckListExigenceId,
+                    IsConform = resultatEx.IsConform,
+                    Date = resultatEx.Date,
+                    Observation = resultatEx.Observation,
+                };
+
+                context.ResultatExigence.Add(controlResultatExigence);
+
+
+            }
+           var tt =  await context.SaveChangesAsync();
+            #endregion
+
+            return true;
+
         }
 
 

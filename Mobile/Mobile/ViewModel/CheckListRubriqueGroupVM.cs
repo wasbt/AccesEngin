@@ -1,6 +1,7 @@
 ﻿using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -147,13 +148,13 @@ namespace Mobile.ViewModel
         {
             get
             {
-                return new Command<ObservableCollection<CheckListRubriqueVM>>((Rubrique) =>
+                return new Command<ObservableCollection<CheckListRubriqueVM>>(async (Rubrique) =>
                 {
                     ResultatCheckList = new ResultatCheckList();
                     ResultatCheckList.ResultatsList = new List<Resultats>();
                     var data = Rubrique;
                     ResultatCheckList.DemandeAccesEnginId = DemandeAccesEnginId;
-                    ResultatCheckList.CreatedBy = Settings.Username;
+                    ResultatCheckList.CreatedBy = Settings.UserId;
                     ResultatCheckList.CreatedOn = DateTime.Now;
 
                     foreach (var rubrique in Rubrique)
@@ -172,7 +173,7 @@ namespace Mobile.ViewModel
 
                     }
 
-                    //await _apiServices.PostIdeaAsync(idea, Settings.AccessToken);
+                    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, Settings.AccessToken);
                 });
             }
         }

@@ -52,9 +52,13 @@ namespace Mobile.Behaviors
             //var item = (e.SelectedItem) as CheckListExigence;
             var item = ((ListView)sender).SelectedItem as CheckListExigenceVM;
             if (item == null)
-                return;
+            {
+                ((ListView)sender).SelectedItem = null;
+                return; 
+            }
 
             item.IsConforme =! item.IsConforme;
+            ((ListView)sender).SelectedItem = null;
         }
 
         protected override void OnDetachingFrom(ListView bindable)

@@ -46,6 +46,12 @@
     <None Update="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="View\DemandeAccesDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="View\DemandeCheckListAdd.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="View\ListDemandeView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
