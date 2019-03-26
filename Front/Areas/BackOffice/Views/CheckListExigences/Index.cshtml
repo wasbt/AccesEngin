@@ -45,6 +45,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().IsActif)
+        </th> 
+        <th>
+            @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().IsHasDate)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().AspNetUsers.Email)
@@ -72,6 +75,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsActif)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.IsHasDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AspNetUsers.Email)

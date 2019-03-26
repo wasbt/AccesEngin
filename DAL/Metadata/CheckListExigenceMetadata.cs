@@ -24,6 +24,9 @@ namespace DAL
         [Display(Name = "Activer")]
         public bool IsActif { get; set; }
 
+        [Display(Name = "Date obligatoire")]
+        public bool IsHasDate { get; set; }
+
         [Display(Name = "Date de création")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreatedOn { get; set; }

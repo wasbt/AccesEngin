@@ -18,6 +18,8 @@ namespace DAL
 
         public long DemandeAccesEnginId { get; set; }
 
+        public long? AppFileId { get; set; }
+
         public string CreatedBy { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -27,6 +29,9 @@ namespace DAL
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual ICollection<ResultatExigence> ResultatExigence { get; set; }
+
+        public virtual AppFile AppFile { get; set; }
+
 
     }
 }

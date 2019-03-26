@@ -35,15 +35,18 @@
 
 
                         </td>
-                        <td><input class="form-control TextComment" name="ResultatExigenceList['@exigence.Id'].Observation" type="text"></td>
+                        <td><input class="form-control TextComment" name="ResultatExigenceList['@exigence.Id'].Observation" value="" type="text"></td>
                         <td>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control datepicker-autoclose" name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
+                                    <input style=" width: 10%;" type="text" class="form-control datepicker-autoclose" @(exigence.IsHasDate ? "required" : "") name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="ti-calendar"></i></span>
                                     </div>
+
+                                    @(exigence.IsHasDate ? Html.Raw("<span class='fa fa-asterisk d-inline p-2' style='color:red'></span>") : null)
                                 </div>
+                               
                             </div>
                         </td>
 

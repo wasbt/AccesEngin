@@ -26,7 +26,7 @@ namespace DAL
 
         public bool IsActif { get; set; }
 
-        //public string Observation { get; set; }
+        public bool IsHasDate { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

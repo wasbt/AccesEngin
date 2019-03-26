@@ -8,8 +8,8 @@ namespace Mobile
 {
     public class Constants
     {
-        //public static string BaseApiAddress => "http://controleacceswebapi.azurewebsites.net/";
-        public static string BaseApiAddress => "http://192.168.137.1:37369/";
+        public static string BaseApiAddress => "http://controleacceswebapi.azurewebsites.net/";
+        //public static string BaseApiAddress => "http://192.168.137.1:37369/";
 
     }
 }

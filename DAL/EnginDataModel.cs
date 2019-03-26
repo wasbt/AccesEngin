@@ -215,6 +215,11 @@ namespace DAL
               .WithOptional(e => e.AppFile)
               .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<AppFile>()
+              .HasMany(e => e.DemandeResultatEntete)
+              .WithOptional(e => e.AppFile)
+              .WillCascadeOnDelete(false);
+
             #endregion
 
         }

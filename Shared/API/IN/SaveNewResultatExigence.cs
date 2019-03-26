@@ -14,8 +14,7 @@ namespace Shared.API.IN
     }
     public class ControlResultatExigence
     {
-
-
+        public string Name { get; set; }
         public long CheckListExigenceId { get; set; }
 
         public bool IsConform { get; set; }

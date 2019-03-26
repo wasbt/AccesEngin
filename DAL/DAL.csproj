@@ -176,6 +176,10 @@
     <Compile Include="Migrations\201903190913113_add relation demandetoappfile.Designer.cs">
       <DependentUpon>201903190913113_add relation demandetoappfile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903261005031_add file to resultat.cs" />
+    <Compile Include="Migrations\201903261005031_add file to resultat.Designer.cs">
+      <DependentUpon>201903261005031_add file to resultat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -270,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903190913113_add relation demandetoappfile.resx">
       <DependentUpon>201903190913113_add relation demandetoappfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903261005031_add file to resultat.resx">
+      <DependentUpon>201903261005031_add file to resultat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

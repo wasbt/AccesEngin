@@ -1,6 +1,7 @@
 ﻿using BLL.Common;
 using DAL;
-using ExcelDataReader.Log;
+using log4net;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,18 @@ namespace BLL.Biz
         {
         }
 
-        public List<int> MesDemande(string CurrentUser)
+
+        public async Task<KpiModel> MesDemande(string CurrentUser)
         {
-            var model = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser).Select(x => 
-            new ModelKpi()
+            var CountController = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser && x.DemandeResultatEntete.Any()).LongCount();
+            var CountNonController = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser &&  !x.DemandeResultatEntete.Any()).LongCount();
+           var result = new KpiModel()
             {
-                CountController = x
+                CountController = CountController,
+                CountNonController = CountNonController,
 
             };
-            return null;
+            return result;
         }
     }
 }

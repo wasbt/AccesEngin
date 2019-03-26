@@ -12,6 +12,10 @@ using DAL;
 using BLL.Biz;
 using Shared;
 using Rotativa;
+using BLL.Common;
+using System.IO;
+using System.Diagnostics;
+using System.Web.Routing;
 
 namespace Front.Controllers
 {
@@ -114,11 +118,13 @@ namespace Front.Controllers
 
             #endregion
 
+
             return View(ResultatViewModel);
         }
 
         public async Task<ActionResult> NewControleResultatCheckList(int id)
         {
+
 
             #region Check Controle id & find it
             if (id == null)
@@ -162,53 +168,114 @@ namespace Front.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> NewControleResultatCheckList(SaveNewResultatExigence ResultatExigence)
+        public async Task<ActionResult> NewControleResultatCheckList(ResultatsVM ResultatExigence, HttpPostedFileBase file)
         {
-
-            #region Save entete resultat Exigence 
-            var resultatEntete = new DemandeResultatEntete()
+            //ResultatsVM importData = SessionBag.Current.ImportData;
+            int line = 0;
+            using (DbContextTransaction transaction = context.Database.BeginTransaction())
             {
-                DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
-                CreatedBy = CurrentUserId,
-                CreatedOn = DateTime.Now,
-            };
-            #endregion
-
-            context.DemandeResultatEntete.Add(resultatEntete);
-
-            #region Save resultat Exigence
-            foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
-            {
-                var controlResultatExigence = new ResultatExigence()
+                try
                 {
-                    DemandeResultatEnteteId = resultatEntete.Id,
-                    CheckListExigenceId = resultatEx.CheckListExigenceId,
-                    IsConform = resultatEx.IsConform,
-                    Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date),
-                    Observation = resultatEx.Observation,
-                };
+                    long fileId = 0;
+                    var biz = new CommonBiz(context, log);
 
-                context.ResultatExigence.Add(controlResultatExigence);
+                    #region Save entete resultat Exigence 
+                    var resultatEntete = new DemandeResultatEntete()
+                    {
+                        DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
+                        CreatedBy = CurrentUserId,
+                        CreatedOn = DateTime.Now,
+                    };
+                    #endregion
+
+                    context.DemandeResultatEntete.Add(resultatEntete);
+
+                    #region case row has file
+                    if (file != null)
+                    {
+                        //add file to database
+                        fileId = await biz.SaveOCPFile(file, ContainerName, resultatEntete.Id, SourceName);
+
+                        //verify if file was added
+                        if (fileId == 0)
+                        {
+                            return HttpNotFound();
+                        }
+                        resultatEntete.AppFileId = fileId;
+                    }
+                    #endregion
+
+
+                    #region GET CHECKLISTEXIIGENCE ISHASDATE
+                    var listExigenceHasDate = context.CheckListExigence.Where(x => x.IsHasDate).Select(c => c.Id).ToList();
+                    #endregion
+
+
+                    #region Save resultat Exigence
+                    foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
+                    {
+                        line++;
+                        var controlResultatExigence = new ResultatExigence()
+                        {
+                            DemandeResultatEnteteId = resultatEntete.Id,
+                            CheckListExigenceId = resultatEx.CheckListExigenceId,
+                            IsConform = resultatEx.IsConform,
+                            Observation = resultatEx.Observation,
+                        };
+
+                        if (listExigenceHasDate.Contains(resultatEx.CheckListExigenceId))
+                        {
+                            if (!string.IsNullOrEmpty(resultatEx.Date))
+                            {
+                                controlResultatExigence.Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
+
+                            }
+                            else
+                            {
+                                TempData[ConstsAccesEngin.MESSAGE_ERROR] = "s'il vous plaît vérifier les dates obligatoire! " + line;
+
+
+                                return RedirectToAction("NewControleResultatCheckList", "Home", new { @id = ResultatExigence.DemandeAccesEnginId });
+
+                            }
+                        }
+                        else
+                        {
+                            controlResultatExigence.Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
+                        }
+
+                        context.ResultatExigence.Add(controlResultatExigence);
+
+                    }
+                    #endregion
+
+                    #region Get Demande acces 
+                    DemandeAccesEngin demandeAccesEngin = await context.DemandeAccesEngin.FindAsync(ResultatExigence.DemandeAccesEnginId);
+                    demandeAccesEngin.Autorise = ResultatExigence.Autorise;
+                    #endregion
+
+                    await context.SaveChangesAsync();
+
+                    #region Send Mail To Chef project
+
+                    var Email = demandeAccesEngin.AspNetUsers.Email;
+                    var Subject = demandeAccesEngin.TypeCheckList.Name;
+                    var lettre = $@"";
+                    // await MailHelper.SendEmailGHSE(new List<string> { Email }, lettre, Subject);
+                    #endregion
+
+
+                    transaction.Commit();
+                    return RedirectToAction("Index", "DemandeAccesEngins");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Debug.WriteLine(ex.Message);
+                    TempData[ConstsAccesEngin.MESSAGE_ERROR] = "s'il vous plaît vérifier les dates obligatoire!";
+                    return View();
+                }
             }
-            #endregion
-
-            #region Get Demande acces 
-            DemandeAccesEngin demandeAccesEngin = await context.DemandeAccesEngin.FindAsync(ResultatExigence.DemandeAccesEnginId);
-            demandeAccesEngin.Autorise = ResultatExigence.Autorise;
-            #endregion
-
-            await context.SaveChangesAsync();
-
-            #region Send Mail To Chef project
-
-            var Email = demandeAccesEngin.AspNetUsers.Email;
-            var Subject = demandeAccesEngin.TypeCheckList.Name;
-            var lettre = $@"";
-            // await MailHelper.SendEmailGHSE(new List<string> { Email }, lettre, Subject);
-            #endregion
-
-
-            return RedirectToAction("Index", "DemandeAccesEngins");
         }
         #endregion
 
@@ -318,5 +385,26 @@ namespace Front.Controllers
 
 
         }
+
+        #region GET FILE FROM AZURE
+
+        public async Task<ActionResult> GetFileAzure(long? id)
+        {
+            var biz = new CommonBiz(context, log);
+
+            var file = await context.AppFile.FindAsync(id);
+            if (file == null)
+            {
+                return HttpNotFound();
+            }
+            // var filePath = file.SystemFileName;
+            //  var tt = biz.GetBlobBytes(file.SystemFileName,ContainerName);
+            byte[] fileBytes = await biz.GetBlobBytes(file.SystemFileName, ContainerName);
+            return File(fileBytes, MimeMapping.GetMimeMapping(file.OriginalFileName), Path.GetFileName(file.OriginalFileName));
+        }
+
+        #endregion
+
+
     }
 }

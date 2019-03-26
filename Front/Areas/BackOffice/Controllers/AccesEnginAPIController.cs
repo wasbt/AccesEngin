@@ -112,5 +112,23 @@ namespace Front.Areas.BackOffice.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
         #endregion
+
+
+        #region KPIS
+
+        //FILL CHART (CONTROLLER && NONCONTROLLER)
+        [HttpPost]
+        [Route("AccesEnginapi/FillChartPieMyDemande")]
+        public async Task<HttpResponseMessage> MesDemande()
+        {
+            var biz = new KpiBiz(context, MvcApplication.log);
+
+            var Resultat = await biz.MesDemande(CurrentUserId);
+
+            var result = new RESTServiceResponse<KpiModel>(true, Resultat);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        #endregion
     }
 }

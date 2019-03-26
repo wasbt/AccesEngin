@@ -20,6 +20,20 @@
                 <td>Date de Contrôle</td>
                 <td colspan="12">@Model.DemandeResultat.CreatedOn</td>
             </tr>
+            <tr>
+                <td>Pièce jointe</td>
+                <td colspan="12">
+                    @if (Model.DemandeResultat.AppFileId.HasValue)
+                    {
+                        @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "Home", new { id = Model.DemandeResultat.AppFileId }, null)
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+             
+            </tr>
            
         }
     </tbody>

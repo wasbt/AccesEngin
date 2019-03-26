@@ -39,6 +39,7 @@ namespace Front
                             "~/assets/js/bootstrap.min.js",
                             "~/assets/js/waves.js",
                             "~/assets/js/jquery.slimscroll.js",
+                            "~/Scripts/canvasjs.min.js",
                             "~/assets/plugins/sweet-alert/sweetalert2.min.js",
                             "~/assets/pages/jquery.sweet-alert.init.js",
                             "~/assets/plugins/select2/js/select2.min.js",

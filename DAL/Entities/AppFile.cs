@@ -11,6 +11,7 @@ namespace DAL
         public AppFile()
         {
             DemandeAccesEngin = new HashSet<DemandeAccesEngin>();
+            DemandeResultatEntete = new HashSet<DemandeResultatEntete>();
         }
         public long Id { get; set; }
         public string SourceName { get; set; }
@@ -22,6 +23,7 @@ namespace DAL
         public System.DateTime CreatedOn { get; set; }
 
         public virtual ICollection<DemandeAccesEngin> DemandeAccesEngin { get; set; }
+        public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
 
     }
 }
