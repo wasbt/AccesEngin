@@ -21,6 +21,7 @@ namespace Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             LoadApplication(new App());
+            Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
         }
     }
 }

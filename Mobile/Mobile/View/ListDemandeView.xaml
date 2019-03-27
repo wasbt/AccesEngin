@@ -1,65 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:vm="clr-namespace:Mobile.ViewModel"
-             xmlns:behaviors="clr-namespace:Mobile.Behaviors"
-             x:Class="Mobile.View.ListDemandeView">
+<ContentPage
+    x:Class="Mobile.View.ListDemandeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Mobile.Behaviors"
+    xmlns:vm="clr-namespace:Mobile.ViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <vm:DemandeAccesVM x:Key="vm"/>
+            <vm:DemandeAccesVM x:Key="vm" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <!--<ListView ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
+        <ListView
+            x:Name="listView"
+            HasUnevenRows="True"
+            ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
             <ListView.Behaviors>
-                <behaviors:ListViewBehavior/>
-            </ListView.Behaviors>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding TypeCheckListName}"
-                              StyleId="disclosure"
-                              Detail="{Binding TypeEnginName}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-        <ListView x:Name="listView" ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}" HasUnevenRows="True">
-            <ListView.Behaviors>
-                <behaviors:ListViewBehavior/>
+                <behaviors:ListViewBehavior />
             </ListView.Behaviors>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <ContentView Padding="5,10" BackgroundColor="White">
+                            <Frame
+                                Padding="10,15"
+                                BackgroundColor="White"
+                                HasShadow="False">
+                                <StackLayout>
+                                    <Grid Grid.Column="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                            Grid.Column="0"
+                                            FontAttributes="Bold"
+                                            FontFamily="SemiBold"
+                                            FontSize="14"
+                                            Text="{Binding TypeCheckListName}"
+                                            TextColor="Black" />
+                                    </Grid>
+                                    <Grid>
+                                        <Label
+                                            Grid.Column="0"
+                                            FontFamily="SemiBold"
+                                            FontSize="10"
+                                            Text="{Binding TypeCheckListName}"
+                                            TextColor="Gray" />
 
-                        <Frame Padding="0,0,0,3">
-                            <Frame.Content>
-                                <Frame Padding="15,15,15,15"   OutlineColor="Gray" BackgroundColor="White">
-                                    <Frame.Content>
-                                        <StackLayout Padding="0,0,0,0"  Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                        <Label
+                                            Grid.Column="1"
+                                            FontAttributes="None"
+                                            FontSize="Default"
+                                            HorizontalOptions="EndAndExpand"
+                                            Text="{Binding DatePlannification}"
+                                            TextColor="Gray"
+                                            VerticalOptions="CenterAndExpand" />
 
-                                            <Image Source="{Binding Icon}"
-                         WidthRequest="40"
-                         HeightRequest="40"
-                         VerticalOptions="Center" />
-                                            
-                                            <Label Text="{Binding TypeCheckListName}"
-                           FontFamily="OpenSans-Light"
-                           FontSize="11"
-                           TextColor="#69add1"/>
-                                            <Label Text="{Binding TypeCheckListName}"
-                           FontFamily="OpenSans-Light"
-                           FontSize="9"
-                           TextColor="#69add1"/>
-                                        </StackLayout>
 
-                                    </Frame.Content>
 
-                                </Frame>
-                            </Frame.Content>
-
-                        </Frame>
-
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

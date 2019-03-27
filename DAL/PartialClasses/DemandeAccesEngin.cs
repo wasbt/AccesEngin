@@ -27,6 +27,7 @@ namespace DAL
                 Observation = model?.Observation,
                 CreatedBy = model.CreatedBy,
                 CreatedOn = model.CreatedOn,
+                CreatedEmail = model.AspNetUsers.Email               
             };
             return dto;
         }

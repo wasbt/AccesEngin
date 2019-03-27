@@ -1,14 +1,28 @@
-﻿@{
+﻿@using Shared
+@{
     ViewBag.Title = "Home Page";
 }
 
 
 
 <div class="row">
-    <div class="col-md-6">
-        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    </div>
+    @{
 
+        if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET))
+        {
+            <div class="col-md-6">
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
+        }
+        if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET) || HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
+        {
+            <div class="col-md-6">
+                <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+            </div>
+        }
+
+
+    }
 </div>
 
 
@@ -16,31 +30,80 @@
 @section scripts{
 
     <script src="~/Scripts/canvasjs.min.js"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            var posting = $.post('/AccesEnginapi/FillChartPieMyDemande', function (response) {
-                console.log(response.data);
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    title: {
-                        text: "Mes Demande"
-                    },
-                    data: [{
-                        type: "pie",
-                        startAngle: 240,
-                        yValueFormatString: "##0.00\"%\"",
-                        indexLabel: "{label} {y}",
-                        dataPoints: [
-                            { y: response.data.CountController, label: "Demande controller" },
-                            { y: response.data.CountNonController, label: "Demande non controller" },
+    @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET))
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                var posting = $.post('/AccesEnginapi/FillChartPieMyDemande', function (response) {
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        animationEnabled: true,
+                        title: {
+                            text: "Mes Demandes controller / non controller"
+                        },
+                        data: [{
+                            type: "pie",
+                            startAngle: 240,
+                            yValueFormatString: "##0.00\"%\"",
+                            indexLabel: "{label} {y}",
+                            dataPoints: [
+                                { y: response.data.CountController, label: "Demande controller" },
+                                { y: response.data.CountNonController, label: "Demande non controller" },
 
-                        ]
-                    }]
+                            ]
+                        }]
+                    });
+                    chart.render();
                 });
-                chart.render();
-            });
-        }
-    </script>
+                var posting = $.post('/AccesEnginapi/FillChartPieMyDemandeAutorise', function (response) {
+                    var chart = new CanvasJS.Chart("chartContainer1", {
+                        animationEnabled: true,
+                        title: {
+                            text: "Mes Demandes autorisé / non autorisé"
+                        },
+                        data: [{
+                            type: "pie",
+                            startAngle: 240,
+                            yValueFormatString: "##0.00\"%\"",
+                            indexLabel: "{label} {y}",
+                            dataPoints: [
+                                { y: response.data.CountController, label: "Demande autorisé" },
+                                { y: response.data.CountNonController, label: "Demande non autorisé" },
+
+                            ]
+                        }]
+                    });
+                    chart.render();
+                });
+            }
+        </script>
+    }
+    @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                var posting = $.post('/AccesEnginapi/FillChartPieMyDemandeAutorise', function (response) {
+                    var chart = new CanvasJS.Chart("chartContainer1", {
+                        animationEnabled: true,
+                        title: {
+                            text: "Mes Demandes autorisé / non autorisé"
+                        },
+                        data: [{
+                            type: "pie",
+                            startAngle: 240,
+                            yValueFormatString: "##0.00\"%\"",
+                            indexLabel: "{label} {y}",
+                            dataPoints: [
+                                { y: response.data.CountController, label: "Demande autorisé" },
+                                { y: response.data.CountNonController, label: "Demande non autorisé" },
+
+                            ]
+                        }]
+                    });
+                    chart.render();
+                });
+            }
+        </script>
+    }
 
 
 

@@ -31,5 +31,7 @@ namespace Shared.DTO
 
         public string CreatedBy { get; set; }
 
+        public string CreatedEmail { get; set; }
+
     }
 }

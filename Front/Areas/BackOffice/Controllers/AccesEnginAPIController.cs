@@ -47,7 +47,7 @@ namespace Front.Areas.BackOffice.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-        
+
         //GET INFO GENERALE BY NATUTRE DE LA MATIRE
         [HttpPost]
         [Route("AccesEnginapi/GetNatureMatiereByTypeCheckList")]
@@ -129,6 +129,26 @@ namespace Front.Areas.BackOffice.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        //FILL CHART (AUTORISE && NONAUTORISE)
+        [HttpPost]
+        [Route("AccesEnginapi/FillChartPieMyDemandeAutorise")]
+        public async Task<HttpResponseMessage> MesDemandeAutorise()
+        {
+            var biz = new KpiBiz(context, MvcApplication.log);
+            var Resultat = new KpiModel();
+            if (IsChefProjet)
+                Resultat = await biz.MesDemandeAutorise(CurrentUserId);
+            else if (IsControleur)
+                Resultat = await biz.DemandeAutoriseByControlleur(CurrentUserId);
+
+            var result = new RESTServiceResponse<KpiModel>(true, Resultat);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+
         #endregion
     }
 }

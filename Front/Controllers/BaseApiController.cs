@@ -53,6 +53,20 @@ namespace Front.Controllers
                 return User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE);
             }
         }
+        public bool IsControleur
+        {
+            get
+            {
+                return User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
+            }
+        }
+        public bool IsChefProjet
+        {
+            get
+            {
+                return User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET);
+            }
+        }
 
     }
 }

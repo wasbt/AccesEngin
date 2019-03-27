@@ -1,33 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Mobile.ViewModel"
-             x:Class="Mobile.View.Login">
+<ContentPage
+    x:Class="Mobile.View.Login"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Mobile.Controls"
+    xmlns:vm="clr-namespace:Mobile.ViewModel"
+    BackgroundColor="#289851">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <vm:LoginVM x:Key="vm"/>
+            <vm:LoginVM x:Key="vm" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
-        <StackLayout BindingContext="{Binding Source={StaticResource vm}}" Orientation="Vertical"
-                 VerticalOptions="Center"
-                 Spacing="20"
-                 Padding="20">
+        <StackLayout
+            Padding="20"
+            BackgroundColor="#289851"
+            BindingContext="{Binding Source={StaticResource vm}}"
+            Orientation="Vertical"
+            Spacing="20"
+            VerticalOptions="Center">
 
-            <Entry Text="{Binding Username}" 
-               Placeholder="username"/>
+            <local:CustomEntryRenderer
+                EntryLineButtomColor="White"
+                Placeholder="Email"
+                PlaceholderColor="White"
+                Text="{Binding Username}" />
 
-            <Entry Text="{Binding Password}"
-               Placeholder="password"
-               IsPassword="True"/>
+            <local:CustomEntryRenderer
+                EntryLineButtomColor="White"
+                IsPassword="True"
+                Placeholder="Password"
+                PlaceholderColor="White"
+                Text="{Binding Password}" />
 
-            <Button Command="{Binding Source={StaticResource vm}, Path=LoginCommand}" 
-                Text="Signin"
-                TextColor="White"
+            <Button
+                BackgroundColor="White"
+                Command="{Binding Source={StaticResource vm}, Path=LoginCommand}"
                 FontSize="10"
-                BackgroundColor="DeepSkyBlue"/>
+                Text="Connexion"
+                TextColor="#289851" />
 
         </StackLayout>
     </ContentPage.Content>

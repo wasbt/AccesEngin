@@ -1,49 +1,119 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Mobile.ViewModel"
-             x:Class="Mobile.View.DemandeAccesDetailsView">
-    
+<ContentPage
+    x:Class="Mobile.View.DemandeAccesDetailsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Mobile.ViewModel">
+
     <ContentPage.Resources>
         <ResourceDictionary>
-            <vm:DemandeAccesDetailsVM x:Key="vm"/>
-            <Style TargetType="Label" x:Key="nameLabel">
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="FontSize" Value="30"/>
+            <vm:DemandeAccesDetailsVM x:Key="vm" />
+            <Style x:Key="nameLabel" TargetType="Label">
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="Poppins" />
             </Style>
-            <Style TargetType="Label" x:Key="ammountLabel">
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="TextColor" Value="#05A8AA"/>
+            <Style x:Key="valueLabel" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="Poppins" />
             </Style>
-            <Style TargetType="Label" x:Key="dateLabel">
-                <Setter Property="FontAttributes" Value="Bold"/>
+            <Style x:Key="TitreLabel" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="TextColor" Value="Black" />
             </Style>
-            <Style TargetType="Label" x:Key="categoryLabel">
-                <Setter Property="TextColor" Value="#05A8AA"/>
-                <Setter Property="FontAttributes" Value="Italic"/>
+            <Style x:Key="dateLabel" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style x:Key="categoryLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="#05A8AA" />
+                <Setter Property="FontAttributes" Value="Italic" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Margin="16,16,16,0"
-                     BindingContext="{StaticResource vm}">
-            <Label Text="{Binding DemandeAcces.TypeCheckListName}"
-                   Style="{StaticResource ammountLabel}"/>
-            <Label Text="{Binding DemandeAcces.TypeEnginName}"
-                   Style="{StaticResource nameLabel}"/>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding DemandeAcces.DatePlannification, StringFormat='{0:MM/dd/yyyy}'}"
-                       Style="{StaticResource dateLabel}"/>
-                <Label Text="{Binding DemandeAcces.EntityName}"
-                       Style="{StaticResource categoryLabel}"/>
-            </StackLayout>
-            <Label Text="{Binding DemandeAcces.Observation}"/>
-            <Button Command="{Binding Source={StaticResource vm}, Path=GoToControleCommand}" 
-                Text="Controler"
-                TextColor="Black"
-                FontSize="10"
-                BackgroundColor="GreenYellow"/>
-        </StackLayout>
+        <ContentView Padding="5,10" BackgroundColor="White">
+            <Frame
+                Padding="10,15"
+                BackgroundColor="White"
+                BindingContext="{StaticResource vm}"
+                HasShadow="True">
+                <StackLayout
+                    Margin="0,0,0,0"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <StackLayout
+                        Orientation="Vertical"
+                        Spacing="10"
+                        VerticalOptions="Start">
+                        <StackLayout>
+                            <Label Style="{StaticResource TitreLabel}" Text="{Binding DemandeAcces.TypeCheckListName}" />
+                        </StackLayout>
+                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
+                            <Label
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource nameLabel}"
+                                Text="Type d'engin" />
+                            <Label
+                                HorizontalOptions="EndAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeAcces.TypeEnginName}" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
+                            <Label
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource nameLabel}"
+                                Text="Date de plannification" />
+                            <Label
+                                HorizontalOptions="EndAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeAcces.DatePlannification}" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
+                            <Label
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource nameLabel}"
+                                Text="Crée par" />
+                            <Label
+                                HorizontalOptions="EndAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeAcces.CreatedEmail}" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+
+                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
+                            <Label
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource nameLabel}"
+                                Text="Date de création" />
+                            <Label
+                                HorizontalOptions="EndAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeAcces.CreatedOn}" />
+                        </StackLayout>
+                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="CenterAndExpand">
+                        <Label
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource valueLabel}"
+                            Text="{Binding DemandeAcces.Observation}" />
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" VerticalOptions="End">
+                        <Button
+                            BackgroundColor="#FFC107"
+                            Command="{Binding Source={StaticResource vm}, Path=GoToControleCommand}"
+                            FontSize="10"
+                            Text="Controler"
+                            TextColor="Black" />
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+
+        </ContentView>
     </ContentPage.Content>
 </ContentPage>

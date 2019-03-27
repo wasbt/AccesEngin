@@ -11,6 +11,11 @@ namespace Mobile
         public App()
         {
             InitializeComponent();
+           // MainPage = new Login();
+
+#if DEBUG
+            HotReloader.Current.Start(this);
+#endif
             MainPage = new Login();
 
         }

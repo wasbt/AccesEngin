@@ -1,53 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Mobile"
-             x:Class="Mobile.MainPage">
+<MasterDetailPage
+    x:Class="Mobile.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Mobile">
     <MasterDetailPage.Master>
-        <ContentPage Title="Menu"
-                 BackgroundColor="#e8e8e8">
+        <ContentPage Title="Menu" BackgroundColor="#289851">
 
             <StackLayout Orientation="Vertical">
 
-                <!-- 
-             This StackLayout you can use for other
-             data that you want to have in your menu drawer
-        -->
-                <StackLayout BackgroundColor="#b6c804"
-                     HeightRequest="75">
+                <!--
+                    This StackLayout you can use for other
+                    data that you want to have in your menu drawer
+                -->
+                <StackLayout BackgroundColor="#289851" HeightRequest="75">
 
-                    <Label Text="Some Text title"
-                 FontSize="20"
-                 VerticalOptions="CenterAndExpand"
-                 TextColor="White"
-                 HorizontalOptions="Center"/>
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="Demande accés engins"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" />
                 </StackLayout>
 
-                <ListView x:Name="navigationDrawerList"
-                  RowHeight="60"
-                  SeparatorVisibility="None"
-                  BackgroundColor="#e8e8e8"
-                  ItemSelected="OnMenuItemSelected">
+                <ListView
+                    x:Name="navigationDrawerList"
+                    BackgroundColor="#e8e8e8"
+                    ItemSelected="OnMenuItemSelected"
+                    RowHeight="60"
+                    SeparatorVisibility="None">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
 
-                                <!-- Main design for our menu items -->
-                                <StackLayout VerticalOptions="FillAndExpand"
-                             Orientation="Horizontal"
-                             Padding="20,10,0,10"
-                             Spacing="20">
+                                <!--  Main design for our menu items  -->
+                                <StackLayout
+                                    Padding="20,10,0,10"
+                                    Orientation="Horizontal"
+                                    Spacing="20"
+                                    VerticalOptions="FillAndExpand">
 
-                                    <Image Source="{Binding Icon}"
-                         WidthRequest="40"
-                         HeightRequest="40"
-                         VerticalOptions="Center" />
+                                    <Image
+                                        HeightRequest="40"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="40" />
 
-                                    <Label Text="{Binding Title}"
-                         FontSize="Medium"
-                         VerticalOptions="Center"
-                         TextColor="Black"/>
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="{Binding Title}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
@@ -59,8 +63,6 @@
     </MasterDetailPage.Master>
 
     <MasterDetailPage.Detail>
-        <NavigationPage>
-
-        </NavigationPage>
+        <NavigationPage />
     </MasterDetailPage.Detail>
-    </MasterDetailPage>
+</MasterDetailPage>

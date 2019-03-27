@@ -23,7 +23,7 @@ namespace BLL.Biz
         public List<DemandeAccesDto> DemandeAccesList()
         {
             var demandeAccesList =  context.DemandeAccesEngin.ToList();
-            var Demendes = demandeAccesList.Select(x => x.DemandeAccesToDTO()).ToList();
+            var Demendes = demandeAccesList.Where(x => !x.DemandeResultatEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
             return Demendes;
         }
 

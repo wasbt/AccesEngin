@@ -1,48 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Mobile.ViewModel"
-             xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
-             xmlns:local="clr-namespace:Mobile.Controls"
-             xmlns:behaviors="clr-namespace:Mobile.Behaviors"
-             x:Name="currentPage"
-             x:Class="Mobile.View.DemandeCheckListAdd">
+<ContentPage
+    x:Class="Mobile.View.DemandeCheckListAdd"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Mobile.Behaviors"
+    xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
+    xmlns:local="clr-namespace:Mobile.Controls"
+    xmlns:vm="clr-namespace:Mobile.ViewModel"
+    x:Name="currentPage">
 
 
     <ContentPage.Content>
-        <Grid >
+        <Grid>
 
-            <StackLayout x:Name="hotelStack" Padding="1,0,1,0" >
+            <StackLayout x:Name="hotelStack" Padding="1,0,1,0">
                 <ListView
                     x:Name="HotelsList"
                     BackgroundColor="White"
+                    HasUnevenRows="True"
                     IsGroupingEnabled="True"
                     ItemsSource="{Binding Items}"
-                     HasUnevenRows="True"
-                    >
+                    SeparatorVisibility="None">
+
                     <ListView.Behaviors>
-                        <behaviors:ListViewBehaviorCheckBox/>
+                        <behaviors:ListViewBehaviorCheckBox />
                     </ListView.Behaviors>
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <ContentView Padding="5,10" BackgroundColor="White" >
-                                    <Frame Padding="10,15" OutlineColor="Gray" BackgroundColor="White">
+                                <ContentView Padding="5,5" BackgroundColor="White">
+                                    <Frame
+                                        Padding="10,15"
+                                        BackgroundColor="White"
+                                        OutlineColor="#AFAEAE">
                                         <StackLayout>
-                                            <Grid Grid.Column="0" >
+                                            <Grid Grid.Column="0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="60"/>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="60" />
                                                 </Grid.ColumnDefinitions>
 
-                                                <Label Grid.Column="0" 
-                                                        FontAttributes="None"
-                                                        FontSize="Small"
-                                                        Text="{Binding Name}"
-                                                        TextColor="Black"
-                                                        VerticalTextAlignment="Center" />
-                                                
+                                                <Label
+                                                    Grid.Column="0"
+                                                    FontAttributes="None"
+                                                    FontSize="Small"
+                                                    Text="{Binding Name}"
+                                                    TextColor="Black"
+                                                    VerticalTextAlignment="Center" />
+
                                                 <!--<ia:Checkbox x:Name="AwesomeCheckbox"
                                                              IsChecked="{Binding IsConforme}"
                                                                 Grid.Column="1"
@@ -50,29 +56,36 @@
                                                                 FillColor="Green"
                                                                 CheckColor="White"
                                                                 Shape="Rectangle"
-                                                                HeightRequest="20" 
+                                                                HeightRequest="20"
                                                                 WidthRequest="20"
                                                                 HorizontalOptions="Start"
                                                                 VerticalOptions="Start"
                                                                  />-->
-                                                <local:CustomSwitch SwitchOnColor="#9CCC65"
-                                                                    SwitchOnThumbColor="#9CCC65"
-                                                                    SwitchOffThumbColor="Gray"
-                                                                    SwitchOffColor="Gray"
-                                                                    IsToggled="{Binding IsConforme}"  
-                                                                     Grid.Column="1"
-                                                                     HeightRequest="20" 
-                                                                     WidthRequest="60"
-                                                                     HorizontalOptions="Start"
-                                                                     VerticalOptions="Start"   />           
+                                                <local:CustomSwitch
+                                                    Grid.Column="1"
+                                                    HeightRequest="20"
+                                                    HorizontalOptions="Start"
+                                                    IsToggled="{Binding IsConforme}"
+                                                    SwitchOffColor="Gray"
+                                                    SwitchOffThumbColor="Gray"
+                                                    SwitchOnColor="#9CCC65"
+                                                    SwitchOnThumbColor="#9CCC65"
+                                                    VerticalOptions="Start"
+                                                    WidthRequest="60" />
 
                                             </Grid>
 
                                             <Grid>
-                                                <Entry Grid.Column="0" Text="{Binding Observation, Mode=TwoWay}"  Placeholder="Observation" />
-                         
-                                                <local:NullableRoundedDatePicker  Grid.Column="1" NullableDate="{Binding Date}"  VerticalOptions="CenterAndExpand"
-                                                                    HorizontalOptions="FillAndExpand"/>
+                                                <Entry
+                                                    Grid.Column="0"
+                                                    Placeholder="Observation"
+                                                    Text="{Binding Observation, Mode=TwoWay}" />
+
+                                                <local:NullableRoundedDatePicker
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    NullableDate="{Binding Date}"
+                                                    VerticalOptions="CenterAndExpand" />
 
 
                                             </Grid>
@@ -84,17 +97,16 @@
                     </ListView.ItemTemplate>
                     <ListView.GroupHeaderTemplate>
                         <DataTemplate>
-                            <ViewCell >
-                                <Grid Padding="10, 10, 10, 10" BackgroundColor="#9CCC65">
+                            <ViewCell>
+                                <Grid Padding="10,10,10,10" BackgroundColor="#FFC107">
                                     <Label
-                                                BackgroundColor="#9CCC65"
-                                                FontAttributes="Bold"
-                                                FontSize="Medium"
-                                                Text="{Binding Name}"
-                                                TextColor="White"
-                                                VerticalTextAlignment="Center" 
-                                                HorizontalOptions="FillAndExpand"
-                                        />
+                                        FontAttributes="Bold"
+                                        FontFamily="Poppins"
+                                        FontSize="Medium"
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding Name}"
+                                        TextColor="Black"
+                                        VerticalTextAlignment="Center" />
                                     <!--<Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference currentPage}, Path=BindingContext.RefreshItemsCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>-->
@@ -104,7 +116,14 @@
                     </ListView.GroupHeaderTemplate>
                     <ListView.Footer>
                         <StackLayout Padding="10">
-                            <Button Command="{Binding AddCommand}"  VerticalOptions="Center" BorderRadius="5" BackgroundColor="Green" TextColor="White" Text=" Soumettre " CommandParameter="{Binding Items}" />  
+                            <Button
+                                BackgroundColor="Green"
+                                BorderRadius="5"
+                                Command="{Binding AddCommand}"
+                                CommandParameter="{Binding Items}"
+                                Text=" Soumettre "
+                                TextColor="White"
+                                VerticalOptions="Center" />
                         </StackLayout>
                     </ListView.Footer>
                 </ListView>
@@ -136,7 +155,7 @@
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>
-                        
+
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
