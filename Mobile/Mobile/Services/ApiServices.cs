@@ -61,13 +61,13 @@ namespace Mobile.Services
         /// </summary>
         /// <param name="accessToken"></param>
         /// <returns>DemandeAcces</returns>
-        public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken)
+        public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken, int pageIndex, int pageSize)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Bearer", accessToken);
 
-            var json = await client.GetStringAsync(Constants.BaseApiAddress + "api/DemandeAccesList");
+            var json = await client.GetStringAsync(Constants.BaseApiAddress + "api/DemandeAccesList?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
 
             var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(json);
 
@@ -101,7 +101,7 @@ namespace Mobile.Services
 
                 throw;
             }
-        
+
         }
 
         /// <summary>

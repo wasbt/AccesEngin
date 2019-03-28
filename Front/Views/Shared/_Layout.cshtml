@@ -126,6 +126,11 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
+                        <li class="has-submenu">
+                            <a href="@Url.Action("Index", "Home", new { area = "" })">
+                                <i class="fa fa-cog"></i>Accueil
+                            </a>
+                        </li>
                         @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
                         {
                             <li class="has-submenu">

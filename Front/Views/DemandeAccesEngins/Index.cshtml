@@ -67,81 +67,83 @@
                     {
                         var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
-                <tr class="line">
+                        <tr class="line">
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Observation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatePlannification)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @if (isControled)
-                        {
-                            <span class="badge badge-info">Contrôlé</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-warning">Non contrôlé</span>
-                        }
-                    </td>
-                    <td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Observation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatePlannification)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @if (isControled)
+                                {
+                                    <span class="badge badge-info">Contrôlé</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non contrôlé</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!isControled)
+                                {
+                                    if (item.Autorise)
+                                    {
+                                        <span class="badge badge-success">Autorisé</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Non autorisé</span>
+                                    }
+                                }
 
-                        @if (item.Autorise)
-                        {
-                            <span class="badge badge-success">Autorisé</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-danger">Non autorisé</span>
-                        }
+                            </td>
+                            <td>
+                                @if (item.AppFileId.HasValue)
+                                {
+                                    @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
+                                }
+                                else
+                                {
 
-                    </td>
-                    <td>
-                        @if (item.AppFileId.HasValue)
-                        {
-                            @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
-                        }
-                        else
-                        {
-                            
-                        }
-                    </td>
-                    <td class="AdminListButtons">
-                        @*@Html.Partial("_AdminListButtons", item.Id)*@
-                        @if (isControled)
-                        {
-                            /**/
-                            <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
-                                <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
-                            </a>
-                        }
-                        else
-                        {
-                            if (Request.IsAuthenticated && IsContoler)
-                            {
-                                <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
-                                    <span class="fa fa-check"></span>&nbsp;Contrôler
-                                </a>
-                            }
+                                }
+                            </td>
+                            <td class="AdminListButtons">
+                                @*@Html.Partial("_AdminListButtons", item.Id)*@
+                                @if (isControled)
+                                {
+                                    /**/
+                                    <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
+                                        <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
+                                    </a>
+                                }
+                                else
+                                {
+                                    if (Request.IsAuthenticated && IsContoler)
+                                    {
+                                        <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
+                                            <span class="fa fa-check"></span>&nbsp;Contrôler
+                                        </a>
+                                    }
 
-                        }
+                                }
 
-                    </td>
+                            </td>
 
-                </tr>
+                        </tr>
                     }
                 }
 

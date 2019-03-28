@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         // GET: DemadeAcces
         [HttpGet]
         [Route("api/demandeAccesList")]
-        public async Task<HttpResponseMessage> DemandeAccesList()
+        public async Task<HttpResponseMessage> DemandeAccesList(int pageIndex ,int pageSize)
         {
 
             if (!ModelState.IsValid)
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = biz.DemandeAccesList();
+            var result = biz.DemandeAccesList( pageIndex ,pageSize);
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);

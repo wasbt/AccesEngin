@@ -20,11 +20,12 @@ namespace BLL.Biz
         {
         }
 
-        public List<DemandeAccesDto> DemandeAccesList()
+        public List<DemandeAccesDto> DemandeAccesList(int pageIndex, int pageSize)
         {
             var demandeAccesList =  context.DemandeAccesEngin.ToList();
             var Demendes = demandeAccesList.Where(x => !x.DemandeResultatEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
-            return Demendes;
+            var demandeAcces = Demendes.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+            return demandeAcces;
         }
 
         public async Task<TypeCheckListDTO> GetCheckListAsync(int id)
