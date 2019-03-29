@@ -267,6 +267,7 @@
   <ItemGroup>
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\icons.css" />
+    <Content Include="assets\css\ouverrid_style.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\fonts\dripicons-v2.svg" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
@@ -1312,7 +1313,10 @@
     <Content Include="images\info.png" />
     <Content Include="images\loader.gif" />
     <Content Include="images\login-bg.jpg" />
+    <Content Include="images\login-bg2.png" />
+    <Content Include="images\login-bg3.png" />
     <Content Include="images\logo-ocp.png" />
+    <Content Include="images\logo-salamti.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\ocp.png" />
     <Content Include="images\veille.jpg" />
