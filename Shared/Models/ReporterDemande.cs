@@ -9,6 +9,7 @@ namespace Shared.Models
     public class ReporterDemande
     {
         public long DemandeAccesEnginId { get; set; }
+        public long StatutDemandeId { get; set; }
         public string Motif { get; set; }
     }
 }

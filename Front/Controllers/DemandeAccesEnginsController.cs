@@ -17,6 +17,7 @@ using Shared.API.IN;
 using Shared.ENUMS;
 using BLL.Common;
 using System.IO;
+using BLL.Biz;
 
 namespace Front.Controllers
 {
@@ -184,8 +185,12 @@ namespace Front.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", demandeAccesEngin.CreatedBy);
+            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", demandeAccesEngin.Entity.SiteId);
+            ViewBag.EntityId = new SelectList(context.Entity.Where(e => e.SiteId == demandeAccesEngin.Entity.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+
             ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+            ViewBag.TypeEnginId = new SelectList(context.TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
+            ViewBag.NatureMatiereId = new SelectList(context.NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
             return View(demandeAccesEngin);
         }
 
@@ -194,19 +199,53 @@ namespace Front.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(DemandeAccesEngin demandeAccesEngin)
+        public async Task<ActionResult> Edit(DemandeAccesEngin demandeAccesEngin , ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral, HttpPostedFileBase file)
         {
+            var biz = new DemandeAccesBiz(context,log);
             if (ModelState.IsValid)
             {
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 context.Entry(demandeAccesEngin).State = EntityState.Modified;
+                demandeAccesEngin.ResultatInfoGenerale.Clear();
+
+                foreach (var item in ResultatInfoGeneral)
+                {
+                    var resultatInfoGeneral = new ResultatInfoGenerale()
+                    {
+                        DemandeAccesEnginId = demandeAccesEngin.Id,
+                        InfoGeneraleId = item.GeneralInfoId,
+                        ValueInfo = item.ValueInfo,
+                        CreatedOn = DateTime.Now,
+                    };
+
+                    var addeResultatIinfoGenerale = context.ResultatInfoGenerale.Add(resultatInfoGeneral);
+                }
                 await context.SaveChangesAsync();
-				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
+                #region case row has file
+                if (file != null)
+                {
+                    long fileId = await biz.removeOldFile(demandeAccesEngin, file, ContainerName, demandeAccesEngin.Id.ToString());
+
+                    //verify if file was added
+                    if (fileId == 0)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    //add fileId to data
+                    demandeAccesEngin.AppFileId = fileId;
+                }
+                #endregion
+                TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", demandeAccesEngin.CreatedBy);
+            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", demandeAccesEngin.Entity.SiteId);
+            ViewBag.EntityId = new SelectList(context.Entity.Where(e => e.SiteId == demandeAccesEngin.Entity.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+
             ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+            ViewBag.TypeEnginId = new SelectList(context.TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
+            ViewBag.NatureMatiereId = new SelectList(context.NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
             return View(demandeAccesEngin);
         }
 

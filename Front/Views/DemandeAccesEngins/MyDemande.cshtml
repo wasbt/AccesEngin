@@ -38,7 +38,7 @@
 
             <table class="@UIHelper.CrudTableCss">
                 <tr>
-
+                    <th></th>
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
                     </th>
@@ -57,9 +57,10 @@
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().CreatedOn)
                     </th>
-                    <th>Statut</th>
+                    <th>Contrôler</th>
                     <th>Autorisé</th>
                     <th>Pièce jointe</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
                 @{
@@ -67,80 +68,124 @@
                     {
                         var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
-                <tr class="line">
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Observation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatePlannification)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedOn)
-                    </td>
-                    <td>
-                        @if (isControled)
-                        {
-                            <span class="badge badge-info">Contrôlé</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-warning">Non contrôlé</span>
-                        }
-                    </td>
-                    <td>
-
-                        @if (item.Autorise)
-                        {
-                            <span class="badge badge-success">Autorisé</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-danger">Non autorisé</span>
-                        }
-
-                    </td>
-                    <td>
-                        @if (item.AppFileId.HasValue)
-                        {
-                            @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
-                        }
-                        else
-                        {
-
-                        }
-                    </td>
-                    <td class="AdminListButtons">
-                        @*@Html.Partial("_AdminListButtons", item.Id)*@
-                        @if (isControled)
-                        {
-                            /**/
-                            <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
-                                <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
-                            </a>
-                        }
-                        else
-                        {
-                            if (Request.IsAuthenticated && IsContoler)
-                            {
-                                <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
-                                    <span class="fa fa-check"></span>&nbsp;Contrôler
+                        <tr class="line">
+                            <td>
+                                <a href="@Url.Action("Edit", "DemandeAccesEngins", new { id = item.Id.ToString() })" class="">
+                                    <span class="fa fa-edit"></span>
                                 </a>
-                            }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Observation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DatePlannification)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedOn)
+                            </td>
+                            <td>
+                                @if (isControled)
+                                {
+                                    <span class="badge badge-info">Contrôlée</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Non contrôlée</span>
+                                }
+                            </td>
+                            <td>
+                                @if (isControled)
+                                {
+                                    if (item.Autorise)
+                                    {
+                                        <span class="badge badge-success">Autorisée</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Non autorisée</span>
+                                    }
+                                }
 
-                        }
+                            </td>
+                            <td>
+                                @if (item.AppFileId.HasValue)
+                                {
+                                    @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
+                                }
+                                else
+                                {
 
-                    </td>
-                </tr>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (!item.StatutDemandeId.HasValue)
+                                    {
+                                    }
+                                    else
+                                    {
+                                        if (item.StatutDemandeId != 2) //2 => refuser
+                                        {
+                                            <span class="badge badge-success">Acceptée</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Refusée</span>
+                                            if (item.Report.ToList().Count() > 0)
+                                            {
+                                                <text>
+                                                    <div>
+                                                        <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
+                                                        <div class="d-none">
+                                                            <small> @Html.Raw(string.Join(" <br/> ", item.Report.Where(r => r.DemandeAccesEnginId == item.Id).SingleOrDefault().MotifReport))</small>
+                                                        </div>
+                                                    </div>
+
+                                                </text>
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                            </td>
+                            <td class="AdminListButtons">
+                                @{
+                                    if (item.StatutDemandeId != 2 && item.StatutDemandeId.HasValue) //2 => refuser
+                                    {
+                                        @*@Html.Partial("_AdminListButtons", item.Id)*@
+                                        if (isControled)
+                                        {
+                                            /**/
+                                            <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
+                                                <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            if (Request.IsAuthenticated && IsContoler)
+                                            {
+                                                <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
+                                                    <span class="fa fa-check"></span>&nbsp;Contrôler
+                                                </a>
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                            </td>
+
+                        </tr>
                     }
                 }
 
@@ -154,9 +199,107 @@
 </div>
 
 
+<div id="modalReporterAction" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title mt-0" id="myModalLabel">Valider la demande</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <br />
+                        <div class="radio radio-success form-check-inline">
+                            <input id="radio1" type="radio" value="1" name="statutDemande" />
+                            <label for="radio1">
+                                Accepter
+                            </label>
+                        </div>
+                        <div class="radio radio-danger form-check-inline">
+                            <input id="radio2" type="radio" value="2" name="statutDemande" />
+                            <label for="radio2">
+                                Refuser
+                            </label>
+                        </div>
+                    </div>
+                    <div id="divMotif" class="col-md-12 d-none">
+                        Motif du report: <br />
+                        <textarea class="form-control " id="motif-report"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btn-reporter-action" class="btn btn-danger">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <link href="~/Content/admin-crud.css" rel="stylesheet" />
     <script src="~/Scripts/admin.crud.js"></script>
+    <script>
+        var DemandeAccesEnginId;
+        $(document).ready(function () {
+            $('input[name=statutDemande]', this).change(function () {
+                var radioValue = $("input[name='statutDemande']:checked").val();
+                if (radioValue == 1) {
+                    $("#divMotif").addClass("d-none");
+                    $("#motif-report").val("");
+                } else {
+                    $("#divMotif").removeClass("d-none");
+
+                }
+            });
+            $("#btn-reporter-action").click(function () {
+
+                var r = confirm("Êtes vous sûr de vouloir reporter ce demande?");
+                if (r == false) {
+                    return;
+                }
+
+                var jsonObject = {
+                    DemandeAccesEnginId: DemandeAccesEnginId,
+                    Motif: $("#motif-report").val(),
+                    StatutDemandeId: $("input[name='statutDemande']:checked").val()
+                };
+                debugger;
+                $.ajax({
+                    url: "/AccesEnginapi/reporteraction",
+                    method: 'POST',
+                    data: jsonObject
+                }).done(function () {
+                    swal("Action reportée avec succès!");
+                    location.reload(true);
+                    updateUI();
+                }).fail(function () {
+                    swal("Erreur lors du report de l'action!");
+                })
+            });
+
+        });
+        function reporterDemande(demandeAccesEnginId) {
+            DemandeAccesEnginId = demandeAccesEnginId;
+        }
+        function showDetails(el) {
+            var ico = $(el);
+            var nextDiv = $(el).next("div");
+            if (nextDiv.hasClass("d-none")) {
+                ico.prop("class", "fa  fa-toggle-up ");
+                nextDiv.addClass("d-none");
+
+            } else {
+                ico.prop("class", "fa  fa-toggle-down");
+                nextDiv.removeClass("d-none");
+            }
+            $(el).next("div").toggleClass("d-none");
+        }
+
+    </script>
 }
 
 

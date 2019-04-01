@@ -62,6 +62,7 @@
     <Compile Include="Entities\NatureMatiere.cs" />
     <Compile Include="Entities\Report.cs" />
     <Compile Include="Entities\Site.cs" />
+    <Compile Include="Entities\StatutDemande.cs" />
     <Compile Include="Entities\TypeEngin.cs" />
     <Compile Include="Entities\InfoGenerale.cs" />
     <Compile Include="Entities\CheckListExigence.cs" />
@@ -189,6 +190,10 @@
     <Compile Include="Migrations\201904011101300_edit table report.Designer.cs">
       <DependentUpon>201904011101300_edit table report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011419525_add table status.cs" />
+    <Compile Include="Migrations\201904011419525_add table status.Designer.cs">
+      <DependentUpon>201904011419525_add table status.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -292,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011101300_edit table report.resx">
       <DependentUpon>201904011101300_edit table report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011419525_add table status.resx">
+      <DependentUpon>201904011419525_add table status.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

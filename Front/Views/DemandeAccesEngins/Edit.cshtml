@@ -9,41 +9,201 @@
         <div class="card-box">
             <h2 class="header">Mise à jour de contrôle #@Model.Id</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TypeCheckListId,  htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Site</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Entité</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("EntityId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Observation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Type d'engin</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeEnginId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Nature de la matiere</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("NatureMatiereId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
 
+                        </div>
+                    </div>
+                    <div id="InfosGeneralId">
+                        @{
+                            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+                            {
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-              <button type="submit" class="btn btn-success waves-effect w-md waves-light m-b-5"> Mettre à jour</button>
-            </div>
+                                foreach (var rebricInfo in group)
+                                {
+
+                                    var info = Model.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                                    if (info == null)
+                                    {
+                                        continue;
+                                    }
+                                    <input name="ResultatInfoGeneral.Index" type="hidden" value="'@rebricInfo.Id'" />
+                                    <input name="ResultatInfoGeneral['@rebricInfo.Id'].GeneralInfoId" type="hidden" value="@rebricInfo.Id" />
+                                    <div class="form-group">
+                                        <label class="control-label col-md-2" for=""> @rebricInfo.Name </label>
+                                        <div class="col-md-10">
+                                            <input class="form-control ValueInfo" value="@info.ValueInfo" name="ResultatInfoGeneral['@rebricInfo.Id'].ValueInfo" type="text">
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-success waves-effect w-md waves-light m-b-5"> Mettre à jour</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @Html.Partial("_BackToList")
         </div>
     </div>
-}
-
-@Html.Partial("_BackToList")
 </div>
-        </div>
-    </div>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+          //GET INFO TYPE ENGIN
+           function FillTypeEnginDDL() {
+            var selectedTypeCheckListId = $('#TypeCheckListId').val();
+             var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+            var posting = $.post('/AccesEnginapi/GetTypeEnginByTypeCheckList', jsonObject, function (response) {
+                $("#TypeEnginId").html("");
+                $.each(response.data, function (i,typeEngin) {
+                    $("#TypeEnginId").append($('<option>', {
+                        value: typeEngin.Id,
+                        text: typeEngin.Name
+                    }));
+                });
+            });
+        }
+         //GET INFO Nature de la Matiere
+        function FillNatureMatiereDDL() {
+            var selectedTypeCheckListId = $('#TypeCheckListId').val();
+             var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+               var posting = $.post('/AccesEnginapi/GetNatureMatiereByTypeCheckList', jsonObject, function (response) {
+                $("#NatureMatiereId").html("");
+                $.each(response.data, function (i,typeEngin) {
+                    $("#NatureMatiereId").append($('<option>', {
+                        value: typeEngin.Id,
+                        text: typeEngin.Name
+                    }));
+                });
+            });
+        }
+
+
+
+
+        //GET Entitis
+         function FillEnitiesDDL() {
+            var selectedSiteId = $('#SiteId').val();
+             var jsonObject = {
+                SiteId : selectedSiteId
+            }
+            var posting = $.post('/AccesEnginapi/GetEntityBySite', jsonObject, function (response) {
+                $("#EntityId").html("");
+                $.each(response.data, function (i,entity) {
+                    $("#EntityId").append($('<option>', {
+                        value: entity.Id,
+                        text: entity.Name
+                    }));
+                });
+            });
+        }
+        //GET INFO GENERAL
+        function GetInfosGenerals() {
+            var selectedTypeCheckListId = $("#TypeCheckListId").val();
+            var jsonObject = {
+                TypeCheckListId: selectedTypeCheckListId
+            }
+            var posting = $.post('/AccesEnginapi/GetInfoGrneralesByTypeCheckList', jsonObject, function (response) {
+                if (response.success) {
+
+                    $("#InfosGeneralId").html("");
+
+                    var listInfosGeneralsLenght = $(response.data).length;
+
+                    $.each(response.data, function (index) {
+
+                        var currentInfosGeneral = response.data[index];
+
+                        var infoGeneral_html_content =
+                            '<input name="ResultatInfoGeneral.Index" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
+                            '<input name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].GeneralInfoId" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
+                            '<div class="form-group">' +
+                            '<label class="control-label col-md-2" for="">' + currentInfosGeneral.Name + '</label>' +
+                            ' <div class="col-md-10">'+
+                            '<input class="form-control ValueInfo" name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].ValueInfo" type="text">' +
+                            '</div>' +
+                            '</div>'
+                            ;
+
+                        $(infoGeneral_html_content).appendTo("#InfosGeneralId")
+
+                    });
+
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+        // Date Picker
+                jQuery('.datepicker-autoclose').datepicker({
+                    format: "yyyy/mm/dd",
+                     autoclose: true,
+                     todayHighlight: true,
+                });
+            $('#TypeCheckListId').change(function () {
+                GetInfosGenerals();
+                FillTypeEnginDDL();
+                FillNatureMatiereDDL();
+            })
+            $('#SiteId').change(function () {
+                FillEnitiesDDL();
+            })
+        });
+    </script>
+}

@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Shared;
 using Shared.Models;
+using System.Web;
+using System.Diagnostics;
 
 namespace BLL.Biz
 {
@@ -91,15 +93,23 @@ namespace BLL.Biz
 
         }
 
-        public async Task<bool> ReporterAction(ReporterDemande reporterDemande , string currentUserId)
+        public async Task<bool> ReporterAction(ReporterDemande reporterDemande, string currentUserId)
         {
-            context.Report.Add(new Report()
+
+            var demande = await context.DemandeAccesEngin.FindAsync(reporterDemande.DemandeAccesEnginId);
+
+            demande.StatutDemandeId = reporterDemande.StatutDemandeId;
+
+            if (!string.IsNullOrEmpty(reporterDemande.Motif) && reporterDemande.StatutDemandeId == 2)
             {
-                DemandeAccesEnginId = reporterDemande.DemandeAccesEnginId,
-                MotifReport = reporterDemande.Motif,
-                CreatedBy = currentUserId,
-                CreatedOn = DateTime.Now,
-            });
+                context.Report.Add(new Report()
+                {
+                    DemandeAccesEnginId = reporterDemande.DemandeAccesEnginId,
+                    MotifReport = reporterDemande.Motif,
+                    CreatedBy = currentUserId,
+                    CreatedOn = DateTime.Now,
+                });
+            }
             var verifier = await context.SaveChangesAsync();
             if (verifier > 0)
             {
@@ -111,6 +121,36 @@ namespace BLL.Biz
             }
         }
 
+        public async Task<long> removeOldFile(DemandeAccesEngin demandeAccesEngin, HttpPostedFileBase fileBase, string ContainerName, string SourceName)
+        {
+            using (DbContextTransaction transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    //   var existFile =  context.RegulatoryText.Where(r => r.RegulatoryTextId == regulatoryText.RegulatoryTextId);
+                    if (demandeAccesEngin.AppFileId.HasValue)
+                    {
+                        var oldFile = await context.AppFile.FindAsync(demandeAccesEngin.AppFileId);
+                        context.AppFile.Remove(oldFile);
+                        await context.SaveChangesAsync();
+                    }
+                    //add file to database & Azure
+                    var fileId = await SaveOCPFile(fileBase, ContainerName, demandeAccesEngin.Id, SourceName);
+                    if (fileId != 0)
+                    {
+                        transaction.Commit();
+                        return fileId;
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+            return 0;
+        }
     }
 
 }

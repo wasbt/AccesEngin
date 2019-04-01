@@ -33,6 +33,7 @@ namespace DAL
         public virtual DbSet<Entity> Entity { get; set; }
         public virtual DbSet<DemandeResultatEntete> DemandeResultatEntete { get; set; }
         public virtual DbSet<Report> Report { get; set; }
+        public virtual DbSet<StatutDemande> StatutDemande { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -228,6 +229,13 @@ namespace DAL
                .HasMany(e => e.Report)
                .WithRequired(e => e.DemandeAccesEngin)
                .WillCascadeOnDelete(false);
+            #endregion
+
+            #region StatutDemande
+            modelBuilder.Entity<DemandeAccesEngin>()
+                  .HasOptional(e => e.StatutDemande)
+                  .WithMany(e => e.DemandeAccesEngin)
+                  .WillCascadeOnDelete(false);
             #endregion
         }
     }

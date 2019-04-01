@@ -40,6 +40,8 @@ namespace DAL
         [StringLength(128)]
         public string CreatedBy { get; set; }
 
+        public Nullable<long> StatutDemandeId { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual TypeCheckList TypeCheckList { get; set; }
@@ -51,6 +53,9 @@ namespace DAL
         public virtual Entity Entity { get; set; }
 
         public virtual AppFile AppFile { get; set; }
+
+        public virtual StatutDemande StatutDemande { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
