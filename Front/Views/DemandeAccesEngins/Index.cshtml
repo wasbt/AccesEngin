@@ -60,6 +60,7 @@
                     <th>Statut</th>
                     <th>Autorisé</th>
                     <th>Pièce jointe</th>
+                    <th>Reporter</th>
                     <th></th>
                 </tr>
                 @{
@@ -98,7 +99,7 @@
                                 }
                             </td>
                             <td>
-                                @if (!isControled)
+                                @if (isControled)
                                 {
                                     if (item.Autorise)
                                     {
@@ -119,6 +120,21 @@
                                 else
                                 {
 
+                                }
+                            </td>
+                            <td>
+                                <button onclick="reporterDemande(@(item.Id))" data-target="#modalReporterAction" data-toggle="modal" class="btn btn-primary waves-effect w-lg waves-light m-b-5">Reporter</button>
+                                @if (item.Report.ToList().Count() > 0)
+                                {
+                                    <text>
+                                <div>
+                                    <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
+                                    <div class="d-none">
+                                        <small> @Html.Raw(string.Join(" <br/> ", item.Report.Where(r => r.DemandeAccesEnginId == item.Id).SingleOrDefault().MotifReport))</small>
+                                    </div>
+                                </div>
+                                        
+                                    </text>
                                 }
                             </td>
                             <td class="AdminListButtons">
@@ -157,9 +173,83 @@
 </div>
 
 
-@section scripts{
-    <link href="~/Content/admin-crud.css" rel="stylesheet" />
-    <script src="~/Scripts/admin.crud.js"></script>
-}
+<div id="modalReporterAction" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title mt-0" id="myModalLabel">Reporter le demande</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        Motif du report: <br />
+                        <textarea class="form-control" id="motif-report"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btn-reporter-action" class="btn btn-danger">Reporter</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section scripts{
+        <link href="~/Content/admin-crud.css" rel="stylesheet" />
+        <script src="~/Scripts/admin.crud.js"></script>
+        <script>
+            var DemandeAccesEnginId;
+            $(document).ready(function () {
+
+                $("#btn-reporter-action").click(function () {
+
+                    var r = confirm("Êtes vous sûr de vouloir reporter ce demande?");
+                    if (r == false) {
+                        return;
+                    }
+
+                    var jsonObject = {
+                        DemandeAccesEnginId: DemandeAccesEnginId,
+                        Motif: $("#motif-report").val()
+                    };
+
+                    debugger;
+                    $.ajax({
+                        url: "/AccesEnginapi/reporteraction",
+                        method: 'POST',
+                        data: jsonObject
+                    }).done(function () {
+                        swal("Action reportée avec succès!");
+                        updateUI();
+                    }).fail(function () {
+                        swal("Erreur lors du report de l'action!");
+                    })
+                });
+
+            });
+            function reporterDemande(demandeAccesEnginId) {
+                debugger;
+                    DemandeAccesEnginId = demandeAccesEnginId;
+            }
+            function showDetails(el) {
+                var ico = $(el);
+                var nextDiv = $(el).next("div");
+                if (nextDiv.hasClass("d-none")) {
+                    ico.prop("class", "fa  fa-toggle-up ");
+                    nextDiv.addClass("d-none");
+
+                } else {
+                    ico.prop("class", "fa  fa-toggle-down");
+                    nextDiv.removeClass("d-none");
+                }
+                $(el).next("div").toggleClass("d-none");
+            }
+
+        </script>
+    }
 
 

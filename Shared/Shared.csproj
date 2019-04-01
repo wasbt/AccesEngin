@@ -62,6 +62,7 @@
     <Compile Include="MailHelper.cs" />
     <Compile Include="Models\ExportExcelModel.cs" />
     <Compile Include="Models\KpiModel.cs" />
+    <Compile Include="Models\ReporterDemande.cs" />
     <Compile Include="Models\ResultatCheckList.cs" />
     <Compile Include="Models\RoleElement.cs" />
     <Compile Include="Models\UsersAndRolesElement.cs" />

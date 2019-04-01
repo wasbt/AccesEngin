@@ -14,6 +14,7 @@ namespace DAL
         {
             DemandeResultatEntete = new HashSet<DemandeResultatEntete>();
             ResultatInfoGenerale = new HashSet<ResultatInfoGenerale>();
+            Report = new HashSet<Report>();
         }
 
         public long Id { get; set; }
@@ -54,6 +55,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
         public virtual ICollection<ResultatInfoGenerale> ResultatInfoGenerale { get; set; }
+        public virtual ICollection<Report> Report { get; set; }
 
     }
 }

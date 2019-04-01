@@ -32,20 +32,20 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body style="background-image:url('/images/login-bg3.png');background-position: center center;height:100vh">
+<body style="background-image:url('/images/login-bg.jpg');background-position: center center;height:100vh">
 
     <div class="clearfix"></div>
     <div class="row">
 
-        <div class="col-4 text-center" style="height:100%;margin-top:30vh">
+        <div class="offset-sm-1 col-4 text-center" style="height:100%;margin-top:45vh">
             <img src="/images/ocp.png" style="background-color:#F7F7F7; padding:15px 20px; border-radius:10px;height:30%;width:30%" />
+            <img src="~/images/logo-salamti.png" style="background-color:; padding:15px 20px; border-radius:10px;height:50%;width:50%" />
         </div>
-        <div class="col-4 text-center hidden-xs-down" style="padding-top:10vh">
-            @*<img src="/images/info.png" class="rounded-circle" style="cursor:pointer" />*@
-            <h2 style="color:white" class="text-center">
-                MACHINE
-                CONTROL
-            </h2>
+        <div class="col-2 text-center hidden-xs-down" style="padding-top:49vh">
+            <img src="/images/info.png" class="rounded-circle" style="cursor:pointer" />
+        </div>
+        <div class="col-md-4" style="background-color:; margin-top:100px">
+            <h2 style="color:#B6C804" class="text-center">DIGI CONTROL</h2>
             <div class="m-t-40 card-box">
                 <div class="text-center">
                     <h4 class="text-uppercase font-bold m-b-0">Authentification</h4>
@@ -105,9 +105,6 @@
                     <p class="text-muted">@DateTime.Now.Year &copy; OCP</p>
                 </div>
             </div>
-        </div>
-        <div class="col-4  text-center" style="margin-top:25vh">
-            <img src="/images/logo-salamti.png" style="padding:15px 20px; border-radius:10px;height:65%;width:50%" />
         </div>
     </div>
     <!-- end wrapper page -->

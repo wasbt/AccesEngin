@@ -19,40 +19,40 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.Hidden("DemandeAccesEnginId", Model.controle.Id)
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Soumettre</button>
-                </div>
-                @Html.Partial("_Table_SaveNewExigence")
-                <table class="table table-bordered">
-                    <tr>
-                        <td>
-                            <strong>Autorisé</strong>
-                        </td>
-                        <td >
-                            <div class="checkbox checkbox-primary">
-                                <input id="AutoriseId" type="checkbox" name="Autorise" value="true" />
-                                <label for="AutoriseId">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5 soumettre">Soumettre</button>
+                    </div>
+                    @Html.Partial("_Table_SaveNewExigence")
+                    <table class="table table-bordered">
+                        <tr>
+                            <td>
+                                <strong>Autorisé</strong>
+                            </td>
+                            <td>
+                                <div class="checkbox checkbox-primary">
+                                    <input id="AutoriseId" type="checkbox" name="Autorise" value="true" />
+                                    <label for="AutoriseId">
 
-                                </label>
-                            </div>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>
-                            <label class="control-label col-md-2">Pièce jointe</label>
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                
-                                <div class="col-md-10">
-                                    <input type="file" class="form-control" id="file" name="file" />
+                                    </label>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="control-label col-md-2">Pièce jointe</label>
+                            </td>
+                            <td>
+                                <div class="form-group">
+
+                                    <div class="col-md-10">
+                                        <input type="file" class="form-control" id="file" name="file" />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             }
         </div>
     </div>
@@ -69,12 +69,47 @@
                      todayHighlight: true,
                 });
 
-        $(".markerDiv").click(function () { 
+        $(".markerDiv").click(function () {
         debugger;
-            var checkBox = $('input[Type=checkbox]', this);
+            var checkBox = $('input[Type=radio]', this);
 
             $(checkBox).prop('checked', !checkBox.is(':checked'));
         });
+
+
+        jQuery(function(){
+                //   jQuery('.soumettre').bind('click',checkRadio);
+                   $("#myform").submit(function(e){
+                   return  checkRadio();
+                });
+                })
+                  function checkRadio()
+                {
+                     var check = true;
+        $("input:radio").each(function(){
+            var name = $(this).attr("id");
+            if($("input:radio[id="+name+"]:checked").length == 0){
+                check = false;
+            }
+        });
+
+        if(check){
+            return true;
+        }else{
+            swal(
+                {
+                    title: 'Alerte!',
+                    text: 's\'il vous plaît vérifier les cases a cocher',
+                     type: 'warning',
+                    confirmButtonColor: '#4fa7f3'
+                }
+            )
+            return false;
+        }
+                }
+
+
+
         });
     </script>
 

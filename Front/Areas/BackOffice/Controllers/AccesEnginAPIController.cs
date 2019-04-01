@@ -113,7 +113,6 @@ namespace Front.Areas.BackOffice.Controllers
         }
         #endregion
 
-
         #region KPIS
 
         //FILL CHART (CONTROLLER && NONCONTROLLER)
@@ -148,6 +147,28 @@ namespace Front.Areas.BackOffice.Controllers
         }
 
 
+
+        #endregion
+
+        #region Reporter
+        [HttpPost]
+        [Route("AccesEnginapi/reporteraction")]
+        public async Task<HttpResponseMessage> ReporterAction(ReporterDemande reporterDemande)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, MvcApplication.log);
+
+            var ressult = await biz.ReporterAction(reporterDemande,CurrentUserId);
+
+            if (ressult)
+                return Request.CreateResponse(HttpStatusCode.OK);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
 
         #endregion
     }

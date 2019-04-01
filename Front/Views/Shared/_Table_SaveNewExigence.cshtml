@@ -5,6 +5,7 @@
         <tr>
             <th>Exigences</th>
             <th>Conforme</th>
+            <th>Non conforme</th>
             <th>Observation</th>
             <th>Date</th>
         </tr>
@@ -14,7 +15,7 @@
             foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
             {
                 <tr style="background-color:#9CCC65; color:white">
-                    <td colspan="4"><b>@rubric.Name</b></td>
+                    <td colspan="5"><b>@rubric.Name</b></td>
                 </tr>
                 foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
                 {
@@ -25,9 +26,19 @@
                     </tr>
                     <tr>
                         <td>@exigence.Name</td>
-                        <td  class="markerDiv">
-                            <div class="checkbox checkbox-primary">
-                                <input id="checkbox_@exigence.Id" type="checkbox" name="ResultatExigenceList['@exigence.Id'].IsConform" value="true" />
+                        <td class="markerDiv">
+                            <div class="radio radio-primary">
+                                <input id="checkbox_@exigence.Id" type="radio" name="ResultatExigenceList['@exigence.Id'].IsConform" value="true" />
+                                <label for="checkbox_@exigence.Id">
+
+                                </label>
+                            </div>
+
+
+                        </td>     
+                        <td class="markerDiv">
+                            <div class="radio radio-primary">
+                                <input id="checkbox_@exigence.Id" type="radio" name="ResultatExigenceList['@exigence.Id'].IsConform" value="false" />
                                 <label for="checkbox_@exigence.Id">
 
                                 </label>
@@ -37,17 +48,23 @@
                         </td>
                         <td><input class="form-control TextComment" name="ResultatExigenceList['@exigence.Id'].Observation" value="" type="text"></td>
                         <td>
-                            <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input style=" width: 10%;" type="text" class="form-control datepicker-autoclose" @(exigence.IsHasDate ? "required" : "") name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="ti-calendar"></i></span>
-                                    </div>
+                            @{
+                                if (exigence.IsHasDate)
+                                {
+                                    <div class="col-sm-8">
+                                        <div class="input-group">
+                                            <input style=" width: 10%;" type="text" class="form-control datepicker-autoclose" @(exigence.IsHasDate ? "required" : "") name="ResultatExigenceList['@exigence.Id'].Date" placeholder="yyyy/mm/dd">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="ti-calendar"></i></span>
+                                            </div>
 
-                                    @(exigence.IsHasDate ? Html.Raw("<span class='fa fa-asterisk d-inline p-2' style='color:red'></span>") : null)
-                                </div>
-                               
-                            </div>
+                                            @(exigence.IsHasDate ? Html.Raw("<span class='fa fa-asterisk d-inline p-2' style='color:red'></span>") : null)
+                                        </div>
+
+                                    </div>
+                                }
+                            }
+
                         </td>
 
                     </tr>

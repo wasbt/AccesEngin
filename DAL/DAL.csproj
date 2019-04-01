@@ -60,6 +60,7 @@
     <Compile Include="Entities\DemandeResultatEntete.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\NatureMatiere.cs" />
+    <Compile Include="Entities\Report.cs" />
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\TypeEngin.cs" />
     <Compile Include="Entities\InfoGenerale.cs" />
@@ -180,6 +181,14 @@
     <Compile Include="Migrations\201903261005031_add file to resultat.Designer.cs">
       <DependentUpon>201903261005031_add file to resultat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011005136_add table report.cs" />
+    <Compile Include="Migrations\201904011005136_add table report.Designer.cs">
+      <DependentUpon>201904011005136_add table report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904011101300_edit table report.cs" />
+    <Compile Include="Migrations\201904011101300_edit table report.Designer.cs">
+      <DependentUpon>201904011101300_edit table report.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -277,6 +286,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903261005031_add file to resultat.resx">
       <DependentUpon>201903261005031_add file to resultat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011005136_add table report.resx">
+      <DependentUpon>201904011005136_add table report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011101300_edit table report.resx">
+      <DependentUpon>201904011101300_edit table report.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

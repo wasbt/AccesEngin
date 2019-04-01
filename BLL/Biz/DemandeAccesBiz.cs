@@ -22,7 +22,7 @@ namespace BLL.Biz
 
         public List<DemandeAccesDto> DemandeAccesList(int pageIndex, int pageSize)
         {
-            var demandeAccesList =  context.DemandeAccesEngin.ToList();
+            var demandeAccesList = context.DemandeAccesEngin.ToList();
             var Demendes = demandeAccesList.Where(x => !x.DemandeResultatEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
             var demandeAcces = Demendes.Skip(pageIndex * pageSize).Take(pageSize).ToList();
             return demandeAcces;
@@ -38,13 +38,14 @@ namespace BLL.Biz
 
             var typeCheckListDTO = typeCheckList.TypeCheckListToDTO();
 
-          //  var tt = typeCheckListDTO.Rubriques.GroupBy(r => r.Name).Select(x => new Grouping<string, CheckListRubriqueDTO>(x.Key, x)).ToList();
+            //  var tt = typeCheckListDTO.Rubriques.GroupBy(r => r.Name).Select(x => new Grouping<string, CheckListRubriqueDTO>(x.Key, x)).ToList();
             #endregion
-           // typeCheckListDTO.RubriquesGrouping = tt;
+            // typeCheckListDTO.RubriquesGrouping = tt;
 
             return typeCheckListDTO;
         }
-         public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat)
+
+        public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat)
         {
             try
             {
@@ -90,8 +91,26 @@ namespace BLL.Biz
 
         }
 
-
+        public async Task<bool> ReporterAction(ReporterDemande reporterDemande , string currentUserId)
+        {
+            context.Report.Add(new Report()
+            {
+                DemandeAccesEnginId = reporterDemande.DemandeAccesEnginId,
+                MotifReport = reporterDemande.Motif,
+                CreatedBy = currentUserId,
+                CreatedOn = DateTime.Now,
+            });
+            var verifier = await context.SaveChangesAsync();
+            if (verifier > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
     }
-    
+
 }
