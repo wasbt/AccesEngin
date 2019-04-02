@@ -13,82 +13,95 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Id)
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Site</label>
-                        <div class="col-md-10">
-                            @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Entité</label>
-                        <div class="col-md-10">
-                            @Html.DropDownList("EntityId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Type d'engin</label>
-                        <div class="col-md-10">
-                            @Html.DropDownList("TypeEnginId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Nature de la matiere</label>
-                        <div class="col-md-10">
-                            @Html.DropDownList("NatureMatiereId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
-
-                        </div>
-                    </div>
-                    <div id="InfosGeneralId">
-                        @{
-                            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
-                            {
-
-                                foreach (var rebricInfo in group)
-                                {
-
-                                    var info = Model.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
-                                    if (info == null)
-                                    {
-                                        continue;
-                                    }
-                                    <input name="ResultatInfoGeneral.Index" type="hidden" value="'@rebricInfo.Id'" />
-                                    <input name="ResultatInfoGeneral['@rebricInfo.Id'].GeneralInfoId" type="hidden" value="@rebricInfo.Id" />
-                                    <div class="form-group">
-                                        <label class="control-label col-md-2" for=""> @rebricInfo.Name </label>
-                                        <div class="col-md-10">
-                                            <input class="form-control ValueInfo" value="@info.ValueInfo" name="ResultatInfoGeneral['@rebricInfo.Id'].ValueInfo" type="text">
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        }
-
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-success waves-effect w-md waves-light m-b-5"> Mettre à jour</button>
-                        </div>
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                <div class="form-group">
+                    <label class="control-label col-md-2">Site</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Entité</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("EntityId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Type d'engin</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("TypeEnginId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Nature de la matiere</label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("NatureMatiereId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.DatePlannification, new { @class = "form-control datepicker-autoclose" })
+                        @Html.ValidationMessageFor(model => model.DatePlannification, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div id="InfosGeneralId">
+                    @{
+                        foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+                        {
+
+                            foreach (var rebricInfo in group)
+                            {
+
+                                var info = Model.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                                if (info == null)
+                                {
+                                    continue;
+                                }
+                                <input name="ResultatInfoGeneral.Index" type="hidden" value="'@rebricInfo.Id'" />
+                                <input name="ResultatInfoGeneral['@rebricInfo.Id'].GeneralInfoId" type="hidden" value="@rebricInfo.Id" />
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for=""> @rebricInfo.Name </label>
+                                    <div class="col-md-10">
+                                        <input class="form-control ValueInfo" value="@info.ValueInfo" name="ResultatInfoGeneral['@rebricInfo.Id'].ValueInfo" type="text">
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Pièce jointe</label>
+                    <div class="col-md-10">
+                        <input type="file" class="form-control" id="file" name="file" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-success waves-effect w-md waves-light m-b-5"> Mettre à jour</button>
+                    </div>
+                </div>
+            </div>
             }
 
             @Html.Partial("_BackToList")

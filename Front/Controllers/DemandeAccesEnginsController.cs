@@ -205,6 +205,7 @@ namespace Front.Controllers
             if (ModelState.IsValid)
             {
                 demandeAccesEngin.CreatedBy = CurrentUserId;
+                demandeAccesEngin.StatutDemandeId = null;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 context.Entry(demandeAccesEngin).State = EntityState.Modified;
                 demandeAccesEngin.ResultatInfoGenerale.Clear();
