@@ -132,22 +132,7 @@ namespace Front.Controllers
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
 
-                #region case row has file
-                if (file != null)
-                {
-                    //add file to database
-                    fileId = await biz.SaveOCPFile(file, ContainerName, demandeAccesEngin.Id, SourceName);
-
-                    //verify if file was added
-                    if (fileId == 0)
-                    {
-                        return HttpNotFound();
-                    }
-                    demandeAccesEngin.AppFileId = fileId;
-                }
-                #endregion
-
-                await context.SaveChangesAsync();
+              
 
                 foreach (var item in ResultatInfoGeneral)
                 {
@@ -164,7 +149,23 @@ namespace Front.Controllers
 
                 await context.SaveChangesAsync();
 
-				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
+                #region case row has file
+                if (file != null)
+                {
+                    //add file to database
+                    fileId = await biz.SaveOCPFile(file, ContainerName, demandeAccesEngin.Id, SourceName);
+
+                    //verify if file was added
+                    if (fileId == 0)
+                    {
+                        return HttpNotFound();
+                    }
+                    demandeAccesEngin.AppFileId = fileId;
+                }
+                #endregion
+
+                await context.SaveChangesAsync();
+                TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 

@@ -1310,6 +1310,7 @@
     <Content Include="fonts\themify.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\bg11.jpeg" />
     <Content Include="images\info.png" />
     <Content Include="images\loader.gif" />
     <Content Include="images\login-bg.jpg" />

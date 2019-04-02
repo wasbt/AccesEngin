@@ -38,7 +38,7 @@
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
                         title: {
-                            text: "Mes Demandes controller / non controller"
+                            text: "Mes Demandes contrôlées / non contrôlées"
                         },
                         data: [{
                             type: "pie",
@@ -46,8 +46,8 @@
                             yValueFormatString: "##0.00\"%\"",
                             indexLabel: "{label} {y}",
                             dataPoints: [
-                                { y: response.data.CountController, label: "Demande controller" },
-                                { y: response.data.CountNonController, label: "Demande non controller" },
+                                { y: response.data.CountController, label: "Demandes contrôlées" },
+                                { y: response.data.CountNonController, label: "Demandes non contrôlées" },
 
                             ]
                         }]
@@ -58,7 +58,7 @@
                     var chart = new CanvasJS.Chart("chartContainer1", {
                         animationEnabled: true,
                         title: {
-                            text: "Mes Demandes autorisé / non autorisé"
+                            text: "Demandes autorisées / non autorisées"
                         },
                         data: [{
                             type: "pie",
@@ -66,8 +66,8 @@
                             yValueFormatString: "##0.00\"%\"",
                             indexLabel: "{label} {y}",
                             dataPoints: [
-                                { y: response.data.CountController, label: "Demande autorisé" },
-                                { y: response.data.CountNonController, label: "Demande non autorisé" },
+                                { y: response.data.CountController, label: "Demandes autorisées" },
+                                { y: response.data.CountNonController, label: "Demandes non autorisées" },
 
                             ]
                         }]
