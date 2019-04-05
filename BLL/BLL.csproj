@@ -114,6 +114,7 @@
     <Compile Include="Biz\InfoGeneraleBiz.cs" />
     <Compile Include="Biz\KpiBiz.cs" />
     <Compile Include="Biz\ProfileBiz.cs" />
+    <Compile Include="Biz\ResultatExigenceBiz.cs" />
     <Compile Include="Biz\SitesEntitiesBiz.cs" />
     <Compile Include="Common\CommonBiz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

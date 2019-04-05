@@ -135,26 +135,30 @@ namespace DAL
                 .WillCascadeOnDelete(false);
             #endregion
 
+            #region Profile 
+            // CreateBy Site
+            modelBuilder.Entity<Profile>()
+               .HasMany(e => e.Site)
+               .WithRequired(e => e.Profile)
+               .HasForeignKey(e => e.HSESiteId)
+               .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<CheckListExigence>()
-                .HasMany(e => e.ResultatExigence)
-                .WithRequired(e => e.CheckListExigence)
+            // CreateBy Entity
+            modelBuilder.Entity<Profile>()
+               .HasMany(e => e.Entities)
+               .WithRequired(e => e.Profile)
+               .HasForeignKey(e => e.HSEEntiteUserId)
+               .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Entity>()
+                .HasMany(e => e.Profiles)
+                .WithOptional(e => e.Entity)
+                .HasForeignKey(e => e.EntiteId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<InfoGenerale>()
-                .HasMany(e => e.ResultatInfoGenerale)
-                .WithRequired(e => e.InfoGenerale)
-                .WillCascadeOnDelete(false);
+            #endregion
 
-            modelBuilder.Entity<CheckListRubrique>()
-                .HasMany(e => e.CheckListExigence)
-                .WithRequired(e => e.CheckListRubrique)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<InfoGeneralRubrique>()
-                .HasMany(e => e.InfoGenerale)
-                .WithRequired(e => e.InfoGeneralRubrique)
-                .WillCascadeOnDelete(false);
+            #region DemandeAccesEngin & entete
 
             modelBuilder.Entity<DemandeAccesEngin>()
                 .HasMany(e => e.DemandeResultatEntete)
@@ -171,30 +175,27 @@ namespace DAL
                 .WithRequired(e => e.DemandeAccesEngin)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<TypeCheckList>()
-                .HasMany(e => e.CheckListRubrique)
-                .WithRequired(e => e.TypeCheckList)
-                .WillCascadeOnDelete(false);
+            #endregion
+
+            #region TypeCheckList
 
             modelBuilder.Entity<TypeCheckList>()
-                .HasMany(e => e.DemandeAccesEngin)
-                .WithRequired(e => e.TypeCheckList)
-                .WillCascadeOnDelete(false);
+                        .HasMany(e => e.CheckListRubrique)
+                        .WithRequired(e => e.TypeCheckList)
+                        .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<TypeEngin>()
-                .HasMany(e => e.DemandeAccesEngin)
-                .WithRequired(e => e.TypeEngin)
-                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<TypeCheckList>()
+              .HasMany(e => e.DemandeAccesEngin)
+              .WithRequired(e => e.TypeCheckList)
+              .WillCascadeOnDelete(false);
+
 
             modelBuilder.Entity<TypeCheckList>()
                 .HasMany(e => e.TypeEngin)
                 .WithRequired(e => e.TypeCheckList)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Site>()
-                .HasMany(e => e.Entity)
-                .WithRequired(e => e.Site)
-                .WillCascadeOnDelete(false);
+            #endregion
 
             #region NatureMatiere
 
@@ -236,6 +237,41 @@ namespace DAL
                   .HasOptional(e => e.StatutDemande)
                   .WithMany(e => e.DemandeAccesEngin)
                   .WillCascadeOnDelete(false);
+            #endregion
+
+            #region Other
+
+            modelBuilder.Entity<CheckListExigence>()
+            .HasMany(e => e.ResultatExigence)
+            .WithRequired(e => e.CheckListExigence)
+            .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InfoGenerale>()
+                .HasMany(e => e.ResultatInfoGenerale)
+                .WithRequired(e => e.InfoGenerale)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<CheckListRubrique>()
+                .HasMany(e => e.CheckListExigence)
+                .WithRequired(e => e.CheckListRubrique)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InfoGeneralRubrique>()
+                .HasMany(e => e.InfoGenerale)
+                .WithRequired(e => e.InfoGeneralRubrique)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<TypeEngin>()
+                .HasMany(e => e.DemandeAccesEngin)
+                .WithRequired(e => e.TypeEngin)
+                .WillCascadeOnDelete(false);
+
+
+            modelBuilder.Entity<Site>()
+                .HasMany(e => e.Entity)
+                .WithRequired(e => e.Site)
+                .WillCascadeOnDelete(false);
             #endregion
         }
     }

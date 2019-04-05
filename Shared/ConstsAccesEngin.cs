@@ -27,7 +27,7 @@ namespace Shared
         public const string MESSAGE_SUCCESS = "MESSAGE_SUCCESS";
 
         //app
-        public const string AppName = "Demande d'acces des engin";
+        public const string AppName = "Demande d'acces des engins";
         public const string AppEmail = "elmehdielmellali.mobile@gmail.com";
 
         //log

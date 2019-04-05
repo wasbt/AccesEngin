@@ -6,12 +6,21 @@
     [PhoneNumber2] NVARCHAR (MAX) NULL,
     [CreatedOn]    DATETIME       NOT NULL,
     [CreatedBy]    NVARCHAR (128) NOT NULL,
+    [HSESiteId]    NVARCHAR (128) DEFAULT ('') NOT NULL,
     CONSTRAINT [PK_dbo.Sites] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_dbo.Sites_dbo.AspNetUsers_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [dbo].[AspNetUsers] ([Id])
+    CONSTRAINT [FK_dbo.Sites_dbo.AspNetUsers_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    CONSTRAINT [FK_dbo.Sites_dbo.Profile_HSESiteId] FOREIGN KEY ([HSESiteId]) REFERENCES [dbo].[Profile] ([Id])
 );
+
+
 
 
 GO
 CREATE NONCLUSTERED INDEX [IX_CreatedBy]
     ON [dbo].[Sites]([CreatedBy] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_HSESiteId]
+    ON [dbo].[Sites]([HSESiteId] ASC);
 

@@ -19,6 +19,8 @@ namespace DAL
 
         public string Name { get; set; }
 
+        public string HSESiteId { get; set; }
+
         public string Address { get; set; }
 
         public string PhoneNumber1 { get; set; }
@@ -31,6 +33,8 @@ namespace DAL
         public string CreatedBy { get; set; }
 
         public virtual AspNetUsers AspNetUsers { get; set; }
+
+        public virtual Profile Profile { get; set; }
 
         public virtual ICollection<Entity> Entity { get; set; }
 

@@ -26,17 +26,17 @@ namespace Front.AGUtils
             using (var context = new EnginDbContext())
             {
                 // Sql Server
-            //#if DEBUG
+//#if DEBUG
 
-            //                var reqColumnsList = $@"select COLUMN_NAME 
-            //                                                        from LocalDbAuditEngin.INFORMATION_SCHEMA.COLUMNS IC
-            //                                                        where TABLE_NAME = '{tableName}'";
-            //#else
+//                var reqColumnsList = $@"select COLUMN_NAME 
+//                                                                        from LocalDbAuditEngin.INFORMATION_SCHEMA.COLUMNS IC
+//                                                                        where TABLE_NAME = '{tableName}'";
+//#else
 
-                            var reqColumnsList = $@"select COLUMN_NAME 
+                var reqColumnsList = $@"select COLUMN_NAME 
                                                     from ocpaccesengins_db_azure.INFORMATION_SCHEMA.COLUMNS IC
                                                     where TABLE_NAME = '{tableName}'";
-            //#endif
+//#endif
 
                 colsList = context.Database.SqlQuery<string>(reqColumnsList).ToList();
             }

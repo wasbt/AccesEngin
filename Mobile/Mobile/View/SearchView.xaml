@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.View.SearchView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Mobile.Behaviors"
+    xmlns:vm="clr-namespace:Mobile.ViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:SearchVM x:Key="vm" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <SearchBar
+                x:Name="SearchBar"
+                Placeholder="Search"
+                SearchCommand="{Binding Source={StaticResource vm}, Path=SearchCommand}"
+                SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"
+                Text="{Binding SearchText, Mode=TwoWay}">
+                <SearchBar.Behaviors>
+                    <local:TextChangedBehavior />
+                </SearchBar.Behaviors>
+            </SearchBar>
+            <ListView
+                x:Name="ListViewItems"
+                IsPullToRefreshEnabled="True"
+                ItemsSource="{Binding Source={StaticResource vm}, Path=Items}" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

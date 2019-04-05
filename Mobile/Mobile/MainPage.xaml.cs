@@ -24,11 +24,13 @@ namespace Mobile
             // Creating our pages for menu navigation
             // Here you can define title for item, 
             // icon on the left side, and page that you want to open after selection
-            var page1 = new MasterPageItem() { Title = "List des Contrôle", Icon = "itemIcon1.png", TargetType = typeof(ListDemandeView) };
+            var page1 = new MasterPageItem() { Title = "Demandes non controleés", Icon = "itemIcon1.png", TargetType = typeof(ListDemandeView) };
+            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "itemIcon1.png", TargetType = typeof(SearchView) };
 
 
             // Adding menu items to menuList
             menuList.Add(page1);
+            menuList.Add(page2);
         
 
             // Setting our list to be ItemSource for ListView in MainPage.xaml

@@ -66,7 +66,7 @@ namespace Front.Areas.BackOffice.Controllers
         // GET: BackOffice/Entities/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
+            ViewBag.HSEEntiteUserId = new SelectList(context.AspNetUsers, "Id", "Email");
             ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
             return View();
         }
@@ -105,7 +105,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", entity.CreatedBy);
+            ViewBag.HSEEntiteUserId = new SelectList(context.AspNetUsers, "Id", "Email", entity.CreatedBy);
             ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", entity.SiteId);
             return View(entity);
         }

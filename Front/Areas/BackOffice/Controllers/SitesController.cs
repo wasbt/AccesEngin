@@ -23,12 +23,12 @@ namespace Front.Areas.BackOffice.Controllers
         {
             var site = context.Site.Include(s => s.AspNetUsers);
             int pageSize = 10;
-            
-			int pageNumber = (model.page ?? 1);
+
+            int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.Site.AsQueryable();
+            var query = context.Site.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
@@ -37,13 +37,13 @@ namespace Front.Areas.BackOffice.Controllers
 
             query = query.OrderBy(x => x.Id);
 
-			model.resultList = query.ToPagedList(pageNumber, pageSize);
-            
-			ViewBag.Log = query.ToString();
+            model.resultList = query.ToPagedList(pageNumber, pageSize);
+
+            ViewBag.Log = query.ToString();
 
             return View(model);
 
-			// V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
+            // V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
             // V1: return View(await Task.Run(()=>site.OrderBy(x=>x.Id).ToPagedList(pageNumber,pageSize)));
             // V0: return View(await site.ToListAsync());
         }
@@ -66,7 +66,7 @@ namespace Front.Areas.BackOffice.Controllers
         // GET: BackOffice/Sites/Create
         public ActionResult Create()
         {
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
+            ViewBag.HSESiteId = new SelectList(context.AspNetUsers, "Id", "Email");
             return View();
         }
 
@@ -83,11 +83,11 @@ namespace Front.Areas.BackOffice.Controllers
                 site.CreatedOn = DateTime.Now;
                 context.Site.Add(site);
                 await context.SaveChangesAsync();
-				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
+                TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", site.CreatedBy);
+            ViewBag.HSESiteId = new SelectList(context.AspNetUsers, "Id", "Email", site.HSESiteId);
             return View(site);
         }
 
@@ -120,7 +120,7 @@ namespace Front.Areas.BackOffice.Controllers
                 site.CreatedOn = DateTime.Now;
                 context.Entry(site).State = EntityState.Modified;
                 await context.SaveChangesAsync();
-				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
+                TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", site.CreatedBy);

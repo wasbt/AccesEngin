@@ -21,7 +21,7 @@ namespace WebApi.Controllers
         // GET: DemadeAcces
         [HttpGet]
         [Route("api/demandeAccesList")]
-        public async Task<HttpResponseMessage> DemandeAccesList(int pageIndex ,int pageSize)
+        public async Task<HttpResponseMessage> DemandeAccesList(int pageIndex, int pageSize)
         {
 
             if (!ModelState.IsValid)
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = biz.DemandeAccesList( pageIndex ,pageSize);
+            var result = biz.DemandeAccesList(pageIndex, pageSize);
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -66,6 +66,46 @@ namespace WebApi.Controllers
 
 
         #endregion
+
+        [HttpGet]
+        [Route("api/DemandeAccesById/{Id}")]
+        public async Task<HttpResponseMessage> DemandeAccesById(int Id)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            ResultatExigenceBiz biz = new ResultatExigenceBiz(context, WebApiApplication.log);
+
+            var result = await biz.DemandeAccesById(Id);
+
+            if (result != null)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
+
+        [HttpGet]
+        [Route("api/DemandeAccesByMatricule/{Matricule}")]
+        public async Task<HttpResponseMessage> DemandeAccesByMatricule(string Matricule)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
+
+            var result = await biz.DemandeAccesByMatricule(Matricule);
+
+            if (result != null)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
 
         #region get CheckList For controller
 

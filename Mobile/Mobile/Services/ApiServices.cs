@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -93,6 +94,35 @@ namespace Mobile.Services
 
                 var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
                 return typeCheckList;
+
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+        }
+        /// <summary>
+        /// Get Demande By Matricule
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="accessToken"></param>
+        /// <returns>TypeCheckListDTO</returns>
+        public async Task<ObservableCollection<DemandeAcces>> DemandeAccesByMatricule(string Matricule, string accessToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
+
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/DemandeAccesByMatricule/" + Matricule);
+
+                var demandeAcces = JsonConvert.DeserializeObject<ObservableCollection<DemandeAcces>>(json);
+                return demandeAcces;
 
 
             }

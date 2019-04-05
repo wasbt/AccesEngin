@@ -64,6 +64,7 @@
     <Compile Include="Models\KpiModel.cs" />
     <Compile Include="Models\ReporterDemande.cs" />
     <Compile Include="Models\ResultatCheckList.cs" />
+    <Compile Include="Models\ResultatExigenceModel.cs" />
     <Compile Include="Models\RoleElement.cs" />
     <Compile Include="Models\UsersAndRolesElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

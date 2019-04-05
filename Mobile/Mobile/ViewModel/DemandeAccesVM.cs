@@ -18,7 +18,7 @@ namespace Mobile.ViewModel
     public class DemandeAccesVM : INotifyPropertyChanged
     {
         private bool _isBusy;
-        private const int PageSize = 1;
+        private const int PageSize = 5;
         private readonly ApiServices _apiServices = new ApiServices();
         private InfiniteScrollCollection<DemandeAcces> demandeAcces;
 
@@ -83,7 +83,7 @@ namespace Mobile.ViewModel
                 },
                 OnCanLoadMore = () =>
                 {
-                    return DemandeAcces.Count < 44;
+                    return DemandeAcces.Count <= 100;
                 }
             };
 

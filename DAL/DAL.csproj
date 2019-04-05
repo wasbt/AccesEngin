@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201904011419525_add table status.Designer.cs">
       <DependentUpon>201904011419525_add table status.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904031606596_maj_site_entite_profil.cs" />
+    <Compile Include="Migrations\201904031606596_maj_site_entite_profil.Designer.cs">
+      <DependentUpon>201904031606596_maj_site_entite_profil.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -300,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011419525_add table status.resx">
       <DependentUpon>201904011419525_add table status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904031606596_maj_site_entite_profil.resx">
+      <DependentUpon>201904031606596_maj_site_entite_profil.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

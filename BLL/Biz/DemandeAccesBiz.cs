@@ -151,6 +151,23 @@ namespace BLL.Biz
             }
             return 0;
         }
+
+        public async Task<DemandeAccesDto> DemandeAccesByMatricule(string Matricule)
+        {
+            #region Check demand acces id & find it
+            if (string.IsNullOrWhiteSpace(Matricule))
+            {
+                return null;
+            }
+            var demandeAcces = await context.DemandeAccesEngin.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(Matricule))).FirstOrDefaultAsync();
+            if (demandeAcces == null)
+            {
+                return null;
+            }
+            #endregion
+            var DemendesDto = demandeAcces.DemandeAccesToDTO();
+            return DemendesDto;
+        }
     }
 
 }
