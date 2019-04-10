@@ -16,6 +16,8 @@ using BLL.Common;
 using System.IO;
 using System.Diagnostics;
 using System.Web.Routing;
+using Front.Models;
+using X.PagedList;
 
 namespace Front.Controllers
 {
@@ -40,6 +42,54 @@ namespace Front.Controllers
             return View();
         }
 
+
+        public async Task<ActionResult> DemandeExpired(StandardModel<DemandeAccesEngin> model, int interval = 15)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "15j",
+                Value = "15"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "7j",
+                Value = "7",
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "1j",
+                Value = "1"
+            });
+
+            ViewBag.Interval = listItems;
+
+            int pageSize = 10;
+
+            int pageNumber = (model.page ?? 1);
+
+            pageNumber = (model.newSearch ?? pageNumber);
+
+
+            // add interval to today
+            var expiryDate = DateTime.Now.Date.AddDays(interval);
+
+            var demandes = context
+                .DemandeAccesEngin
+                .Where(x =>
+                x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= interval)));
+
+
+            ViewBag.Param = interval;
+
+
+            demandes = demandes.OrderByDescending(x => x.CreatedOn);
+
+
+            model.resultList = demandes.ToPagedList(pageNumber, pageSize);
+
+            return View(model);
+        }
 
         #region Resultats
         public async Task<ActionResult> Resultats(int id)
@@ -263,10 +313,10 @@ namespace Front.Controllers
                     #region Send Mail To Chef project
 
                     var Email = demandeAccesEngin.AspNetUsers.Email;
-                    var Subject = "contôle de "+demandeAccesEngin.TypeCheckList.Name;
-                 //   var lettre = $@"";
-                    var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée "+ demandeAccesEngin.Id+ " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.Autorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id+ " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
-                     await MailHelper.SendEmailGHSE(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
+                    var Subject = "contôle de " + demandeAccesEngin.TypeCheckList.Name;
+                    //   var lettre = $@"";
+                    var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + demandeAccesEngin.Id + " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.Autorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
+                    await MailHelper.SendEmailGHSE(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
                     #endregion
 
 

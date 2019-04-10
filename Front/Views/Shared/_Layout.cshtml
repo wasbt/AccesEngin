@@ -146,6 +146,11 @@
                                     <i class="fa fa-cog"></i>Mes Demandes
                                 </a>
                             </li>
+                        <li class="has-submenu">
+                            <a href="@Url.Action("DemandeExpired", "Home", new { area = "" })">
+                                <i class="fa fa-cog"></i>Demandes expirées
+                            </a>
+                            </li>
                         }   @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE))
                         {
                             <li class="has-submenu">

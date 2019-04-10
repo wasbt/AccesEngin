@@ -1599,6 +1599,7 @@
     <Content Include="Views\DemandeAccesEngins\MyDemande.cshtml" />
     <Content Include="Views\Shared\_Table_ResultatsEntete.cshtml" />
     <Content Include="Views\Shared\_Table_ResultatExigencePDF.cshtml" />
+    <Content Include="Views\Home\DemandeExpired.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
