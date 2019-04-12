@@ -188,7 +188,7 @@ namespace Shared
 
                 #endregion
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("ghsesuite@global-safety.ma", "GHSEsuite2018");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("elmehdielmellali.mobile@gmail.com", "A1Z2E3R4");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
@@ -205,15 +205,15 @@ namespace Shared
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("cloud1346.adk-media.com");
-
-                mail.From = new MailAddress("ghsesuite@global-safety.ma");
+                SmtpClient SmtpServer = new SmtpClient();
+                SmtpServer.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                mail.From = new MailAddress("elmehdielmellali.mobile@gmail.com");
                 mail.To.Add("elmehdielmellali.mobile@gmail.com");
                 mail.Subject = "Test Mail";
                 mail.Body = "This is for testing SMTP mail from GMAIL";
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("ghsesuite@global-safety.ma", "GHSEsuite2018");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("elmehdielmellali.mobile@gmail.com", "A1Z2E3R4");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
