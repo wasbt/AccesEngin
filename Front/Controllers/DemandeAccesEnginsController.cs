@@ -21,7 +21,7 @@ using BLL.Biz;
 
 namespace Front.Controllers
 {
-    [Authorize(Roles = ConstsAccesEngin.ROLE_CHEFPROJET +","+ ConstsAccesEngin.ROLE_CONTROLEUR)]
+    [Authorize(Roles = ConstsAccesEngin.ROLE_CHEFPROJET + "," + ConstsAccesEngin.ROLE_CONTROLEUR)]
     public class DemandeAccesEnginsController : BaseController
     {
         // GET: DemandeAccesEngins
@@ -40,8 +40,8 @@ namespace Front.Controllers
                 query = query.Where(x => !x.DemandeResultatEntete.Any());
             }
             int pageSize = 10;
-            
-			int pageNumber = (model.page ?? 1);
+
+            int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
@@ -53,13 +53,13 @@ namespace Front.Controllers
 
             query = query.OrderByDescending(x => x.Id);
 
-			model.resultList = query.ToPagedList(pageNumber, pageSize);
-            
-			ViewBag.Log = query.ToString();
+            model.resultList = query.ToPagedList(pageNumber, pageSize);
+
+            ViewBag.Log = query.ToString();
 
             return View(model);
 
-			// V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
+            // V2: return View(await Task.Run(() => query.ToPagedList(pageNumber, pageSize)));
             // V1: return View(await Task.Run(()=>demandeAccesEngin.OrderBy(x=>x.Id).ToPagedList(pageNumber,pageSize)));
             // V0: return View(await demandeAccesEngin.ToListAsync());
         }
@@ -100,7 +100,7 @@ namespace Front.Controllers
             if (ModelState.IsValid)
             {
 
-                
+
 
                 #region Calculer durée approximative du contrôle par type d’engin
 
@@ -132,7 +132,7 @@ namespace Front.Controllers
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
 
-              
+
 
                 foreach (var item in ResultatInfoGeneral)
                 {
@@ -200,16 +200,21 @@ namespace Front.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(DemandeAccesEngin demandeAccesEngin , ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral, HttpPostedFileBase file)
+        public async Task<ActionResult> Edit(DemandeAccesEngin demandeAccesEngin, ICollection<ResultatInfoGeneraleModel> ResultatInfoGeneral, HttpPostedFileBase file)
         {
-            var biz = new DemandeAccesBiz(context,log);
+            var biz = new DemandeAccesBiz(context, log);
             if (ModelState.IsValid)
             {
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.StatutDemandeId = null;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 context.Entry(demandeAccesEngin).State = EntityState.Modified;
-                demandeAccesEngin.ResultatInfoGenerale.Clear();
+               var oldResultatInfoGenerale = context.ResultatInfoGenerale.Where(x => x.DemandeAccesEnginId == demandeAccesEngin.Id);
+
+                foreach (var olditem in oldResultatInfoGenerale)
+                {
+                    context.ResultatInfoGenerale.Remove(olditem);
+                }
 
                 foreach (var item in ResultatInfoGeneral)
                 {
@@ -224,6 +229,7 @@ namespace Front.Controllers
                     var addeResultatIinfoGenerale = context.ResultatInfoGenerale.Add(resultatInfoGeneral);
                 }
                 await context.SaveChangesAsync();
+
                 #region case row has file
                 if (file != null)
                 {

@@ -60,6 +60,7 @@
     <Compile Include="Entities\DemandeResultatEntete.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\NatureMatiere.cs" />
+    <Compile Include="Entities\REF_MailingList.cs" />
     <Compile Include="Entities\Report.cs" />
     <Compile Include="Entities\Site.cs" />
     <Compile Include="Entities\StatutDemande.cs" />
@@ -198,6 +199,10 @@
     <Compile Include="Migrations\201904031606596_maj_site_entite_profil.Designer.cs">
       <DependentUpon>201904031606596_maj_site_entite_profil.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904121412053_table REF_Mailing.cs" />
+    <Compile Include="Migrations\201904121412053_table REF_Mailing.Designer.cs">
+      <DependentUpon>201904121412053_table REF_Mailing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -307,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904031606596_maj_site_entite_profil.resx">
       <DependentUpon>201904031606596_maj_site_entite_profil.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121412053_table REF_Mailing.resx">
+      <DependentUpon>201904121412053_table REF_Mailing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

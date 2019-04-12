@@ -34,6 +34,7 @@ namespace DAL
         public virtual DbSet<DemandeResultatEntete> DemandeResultatEntete { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<StatutDemande> StatutDemande { get; set; }
+        public virtual DbSet<REF_MailingList> REF_MailingList { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -42,9 +43,14 @@ namespace DAL
                 .WithMany(e => e.InfoGenerale)
                 .Map(m => m.ToTable("MAP_InfoGenerale_TypeCheckList").MapLeftKey("InfoGeneraleId").MapRightKey("TypeCheckListId"));
 
+            modelBuilder.Entity<REF_MailingList>()
+               .HasMany(e => e.AspNetUsers)
+               .WithMany(e => e.REF_MailingList)
+               .Map(m => m.ToTable("Map_REF_MailingListAspNetUsers").MapLeftKey("MailingListId").MapRightKey("UserId"));
+
             #region AspNetRoles
 
-            modelBuilder.Entity<AspNetRoles>()
+              modelBuilder.Entity<AspNetRoles>()
                .HasMany(e => e.AspNetUsers)
                .WithMany(e => e.AspNetRoles)
                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
@@ -271,6 +277,11 @@ namespace DAL
             modelBuilder.Entity<Site>()
                 .HasMany(e => e.Entity)
                 .WithRequired(e => e.Site)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Entity>()
+                .HasMany(e => e.REF_MailingList)
+                .WithRequired(e => e.Entity)
                 .WillCascadeOnDelete(false);
             #endregion
         }

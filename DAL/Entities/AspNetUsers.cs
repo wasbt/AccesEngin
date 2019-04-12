@@ -25,6 +25,7 @@ namespace DAL
             Entity = new HashSet<Entity>();
             NatureMatiere = new HashSet<NatureMatiere>();
             DemandeResultatEntete = new HashSet<DemandeResultatEntete>();
+            REF_MailingList = new HashSet<REF_MailingList>();
         }
 
         public string Id { get; set; }
@@ -89,6 +90,7 @@ namespace DAL
         public virtual ICollection<NatureMatiere> NatureMatiere { get; set; }
 
         public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
+        public virtual ICollection<REF_MailingList> REF_MailingList { get; set; }
 
 
     }

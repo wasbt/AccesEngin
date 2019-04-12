@@ -145,15 +145,19 @@
                                             <span class="badge badge-danger">Refusée</span>
                                             if (item.Report.ToList().Count() > 0)
                                             {
-                                                <text>
-                                                    <div>
-                                                        <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
-                                                        <div class="d-none">
-                                                            <small> @Html.Raw(string.Join(" <br/> ", item.Report.Where(r => r.DemandeAccesEnginId == item.Id).SingleOrDefault().MotifReport))</small>
+                                                foreach (var rp in item.Report.ToList())
+                                                {
+                                                    <text>
+                                                        <div>
+                                                            <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
+                                                            <div class="d-none">
+                                                                <small> @Html.Raw(string.Join(" <br/> ", rp.MotifReport))</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                </text>
+                                                    </text>
+                                                }
+
                                             }
                                         }
                                     }
