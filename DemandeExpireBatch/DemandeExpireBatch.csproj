@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49C6B34C-47A1-4B34-B4CB-B51A5ED8B9B9}</ProjectGuid>
+    <ProjectGuid>{0BE1D7C3-7C99-43AA-9249-E86A0970BB2C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>DemandeExpireBach</RootNamespace>
-    <AssemblyName>DemandeExpireBach</AssemblyName>
+    <RootNamespace>DemandeExpireBatch</RootNamespace>
+    <AssemblyName>DemandeExpireBatch</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -68,8 +68,8 @@ namespace WebApi.Controllers
         #endregion
 
         [HttpGet]
-        [Route("api/DemandeAccesById/{Id}")]
-        public async Task<HttpResponseMessage> DemandeAccesById(int Id)
+        [Route("api/GetResultatExigence/{Id}")]
+        public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(int Id)
         {
 
             if (!ModelState.IsValid)
@@ -78,7 +78,7 @@ namespace WebApi.Controllers
 
             ResultatExigenceBiz biz = new ResultatExigenceBiz(context, WebApiApplication.log);
 
-            var result = await biz.DemandeAccesById(Id);
+            var result = await biz.GetResultatExigenceByDemandeAccesId(Id);
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);

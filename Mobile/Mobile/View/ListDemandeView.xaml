@@ -84,7 +84,7 @@
                         FontSize="20"
                         HorizontalOptions="Center"
                         Text="Loading..."
-                        TextColor="DeepPink"
+                        TextColor="Black"
                         VerticalOptions="Center" />
                 </Grid>
             </ListView.Footer>

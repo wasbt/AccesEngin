@@ -42,6 +42,10 @@ namespace Mobile.ViewModel
                         var accessToken = Settings.AccessToken;
                         Items = await _apiServices.DemandeAccesByMatricule(text, accessToken);
                     }
+                    else
+                    {
+                        Items = new ObservableCollection<DemandeAcces>();
+                    }
                 }));
             }
         }

@@ -152,20 +152,21 @@ namespace BLL.Biz
             return 0;
         }
 
-        public async Task<DemandeAccesDto> DemandeAccesByMatricule(string Matricule)
+        public async Task<List<DemandeAccesDto>> DemandeAccesByMatricule(string Matricule)
         {
             #region Check demand acces id & find it
             if (string.IsNullOrWhiteSpace(Matricule))
             {
                 return null;
             }
-            var demandeAcces = await context.DemandeAccesEngin.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(Matricule))).FirstOrDefaultAsync();
+            var demandeAcces = context.DemandeAccesEngin.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(Matricule)));
             if (demandeAcces == null)
             {
                 return null;
             }
             #endregion
-            var DemendesDto = demandeAcces.DemandeAccesToDTO();
+            var DemendesList = await demandeAcces.ToListAsync();
+            var DemendesDto = DemendesList.Select(x => x.DemandeAccesToDTO()).ToList();
             return DemendesDto;
         }
     }

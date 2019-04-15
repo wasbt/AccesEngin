@@ -26,9 +26,61 @@
             </SearchBar>
             <ListView
                 x:Name="ListViewItems"
+                HasUnevenRows="True"
                 IsPullToRefreshEnabled="True"
-                ItemsSource="{Binding Source={StaticResource vm}, Path=Items}" />
+                ItemsSource="{Binding Source={StaticResource vm}, Path=Items}">
+                <ListView.Behaviors>
+                    <local:SearchListViewBehavior />
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView Padding="5,10" BackgroundColor="White">
+                                <Frame
+                                    Padding="10,15"
+                                    BackgroundColor="White"
+                                    HasShadow="False">
+                                    <StackLayout>
+                                        <Grid Grid.Column="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="60" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                FontFamily="SemiBold"
+                                                FontSize="14"
+                                                Text="{Binding TypeCheckListName}"
+                                                TextColor="Black" />
+                                        </Grid>
+                                        <Grid>
+                                            <Label
+                                                Grid.Column="0"
+                                                FontFamily="SemiBold"
+                                                FontSize="10"
+                                                Text="{Binding TypeCheckListName}"
+                                                TextColor="Gray" />
 
+                                            <Label
+                                                Grid.Column="1"
+                                                FontAttributes="None"
+                                                FontSize="Default"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{Binding DatePlannification}"
+                                                TextColor="Gray"
+                                                VerticalOptions="CenterAndExpand" />
+
+
+
+                                        </Grid>
+                                    </StackLayout>
+                                </Frame>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

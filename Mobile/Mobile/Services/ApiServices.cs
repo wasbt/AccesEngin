@@ -133,6 +133,29 @@ namespace Mobile.Services
             }
 
         }
+        public async Task<ResultatExigenceModel> GetResultatExigenceByDemandeAccesId(long DemandeAccesId, string accessToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
+
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/GetResultatExigence/" + DemandeAccesId);
+
+                var demandeAcces = JsonConvert.DeserializeObject<ResultatExigenceModel>(json);
+                return demandeAcces;
+
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+        }
 
         /// <summary>
         /// Post Check List 

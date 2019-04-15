@@ -19,7 +19,7 @@ namespace BLL.Biz
         }
 
 
-        public async Task<ResultatExigenceModel> DemandeAccesById(int Id)
+        public async Task<ResultatExigenceModel> GetResultatExigenceByDemandeAccesId(int Id)
         {
             var result = new ResultatExigenceModel();
             #region Check demand acces id & find it
