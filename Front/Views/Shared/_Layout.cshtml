@@ -134,24 +134,25 @@
                         @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
                         {
                             <li class="has-submenu">
-                                <a href="@Url.Action("Index", "DemandeAccesEngins", new { area = "" })">
-                                    <i class="fa fa-cog"></i>Contrôle
+                                <a href="@Url.Action("MyDemande", "DemandeAccesEngins", new { area = "" })">
+                                    <i class="fa fa-cog"></i>Mes Contrôles
                                 </a>
                             </li>
                         }
                         @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET) || HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
                         {
                             <li class="has-submenu">
-                                <a href="@Url.Action("MyDemande", "DemandeAccesEngins", new { area = "" })">
-                                    <i class="fa fa-cog"></i>Mes Demandes
+                                <a href="@Url.Action("Index", "DemandeAccesEngins", new { area = "" })">
+                                    <i class="fa fa-cog"></i>Demandes
                                 </a>
                             </li>
-                        <li class="has-submenu">
-                            <a href="@Url.Action("DemandeExpired", "Home", new { area = "" })">
-                                <i class="fa fa-cog"></i>Demandes expirées
-                            </a>
+                            <li class="has-submenu">
+                                <a href="@Url.Action("DemandeExpired", "Home", new { area = "" })">
+                                    <i class="fa fa-cog"></i>Demandes expirées
+                                </a>
                             </li>
-                        }   @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE))
+                        }  
+                        @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE))
                         {
                             <li class="has-submenu">
                                 <a href="@Url.Action("Index", "Settings", new { area = "BackOffice" })">

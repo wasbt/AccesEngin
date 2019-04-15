@@ -28,8 +28,8 @@ namespace Front.Controllers
         public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model)
         {
 
-            var demandeAccesEngin = context.DemandeAccesEngin.Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
-            var query = context.DemandeAccesEngin.AsQueryable();
+            var demandeAccesEngin = context.DemandeAccesEngin.Where(x => x.StatutDemandeId != 3).Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
+            var query = demandeAccesEngin.AsQueryable();
 
             if (IsChefProjet)
             {
@@ -244,6 +244,8 @@ namespace Front.Controllers
                     //add fileId to data
                     demandeAccesEngin.AppFileId = fileId;
                 }
+                await context.SaveChangesAsync();
+
                 #endregion
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");

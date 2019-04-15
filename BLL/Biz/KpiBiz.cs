@@ -19,8 +19,15 @@ namespace BLL.Biz
         #region KPIS FOR ROLE CHEF PROJET
         public async Task<KpiModel> MesDemande(string CurrentUser)
         {
-            var CountController = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser && x.DemandeResultatEntete.Any()).LongCount();
-            var CountNonController = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser && !x.DemandeResultatEntete.Any()).LongCount();
+            var CountController = context.DemandeAccesEngin.Where(x =>
+            x.StatutDemandeId != 3 &&
+            x.CreatedBy == CurrentUser &&
+            x.DemandeResultatEntete.Any()).LongCount();
+
+            var CountNonController = context.DemandeAccesEngin.Where(x =>
+             x.StatutDemandeId != 3 &&
+            x.CreatedBy == CurrentUser &&
+            !x.DemandeResultatEntete.Any()).LongCount();
             var result = new KpiModel()
             {
                 CountController = CountController,
@@ -32,8 +39,16 @@ namespace BLL.Biz
 
         public async Task<KpiModel> MesDemandeAutorise(string CurrentUser)
         {
-            var CountAutorise = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser && x.DemandeResultatEntete.Any() && x.Autorise).LongCount();
-            var CountNonAutorise = context.DemandeAccesEngin.Where(x => x.CreatedBy == CurrentUser && x.DemandeResultatEntete.Any() && !x.Autorise).LongCount();
+            var CountAutorise = context.DemandeAccesEngin.Where(x =>
+              x.StatutDemandeId != 3 &&
+            x.CreatedBy == CurrentUser &&
+            x.DemandeResultatEntete.Any() && x.Autorise).LongCount();
+
+            var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
+                  x.StatutDemandeId != 3 &&
+            x.CreatedBy == CurrentUser &&
+            x.DemandeResultatEntete.Any() && !x.Autorise).LongCount();
+
             var result = new KpiModel()
             {
                 CountController = CountAutorise,
@@ -49,8 +64,17 @@ namespace BLL.Biz
 
         public async Task<KpiModel> DemandeAutoriseByControlleur(string CurrentUser)
         {
-            var CountAutorise = context.DemandeAccesEngin.Where(x => x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) && x.Autorise).LongCount();
-            var CountNonAutorise = context.DemandeAccesEngin.Where(x => x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) && !x.Autorise).LongCount();
+            var CountAutorise = context.DemandeAccesEngin.Where(x =>
+                          x.StatutDemandeId == 3 &&
+            x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
+            x.Autorise).LongCount();
+
+
+            var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
+                                      x.StatutDemandeId == 3 &&
+            x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
+            !x.Autorise).LongCount();
+
             var result = new KpiModel()
             {
                 CountController = CountAutorise,
@@ -61,6 +85,34 @@ namespace BLL.Biz
         }
         #endregion
 
+        public async Task<KpiModel> MesDemandeExpire(string CurrentUser = null)
+        {
+            var QueryCountExpire = context.DemandeAccesEngin.AsQueryable();
+            var QueryCountNonExpire = context.DemandeAccesEngin.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(CurrentUser))
+            {
+                QueryCountExpire = QueryCountExpire.Where(x => x.CreatedBy == CurrentUser);
+                QueryCountNonExpire = QueryCountNonExpire.Where(x => x.CreatedBy == CurrentUser);
+
+            }
+
+            var CountExpire = QueryCountExpire.Where(x =>
+              x.StatutDemandeId == 3 &&
+              x.DemandeResultatEntete.Any()).LongCount();
+
+            var CountNonExpire =  QueryCountNonExpire.Where(x =>
+             x.StatutDemandeId != 3 &&
+            x.DemandeResultatEntete.Any()).LongCount();
+
+            var result = new KpiModel()
+            {
+                CountController = CountExpire,
+                CountNonController = CountNonExpire,
+
+            };
+            return result;
+        }
 
     }
 }

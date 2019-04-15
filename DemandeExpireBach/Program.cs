@@ -17,18 +17,28 @@ namespace DemandeExpireBach
         }
         static public async void DemandeExpire()
         {
+            try
+            {
             EnginDbContext context = new EnginDbContext();
             var demandes = context
             .DemandeAccesEngin
             .Where(x =>
-            x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 15))).ToList();
+            x.Autorise &&
+            x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 15)));
 
             foreach (var item in demandes)
             {
                 item.StatutDemandeId = (int)DemandeStatus.Expirer;
                 context.Entry(item).State = EntityState.Modified;
             }
-            var oo = await context.SaveChangesAsync();
+                context.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
         }
     }

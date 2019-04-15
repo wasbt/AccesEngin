@@ -43,26 +43,12 @@ namespace Front.Controllers
         }
 
 
-        public async Task<ActionResult> DemandeExpired(StandardModel<DemandeAccesEngin> model, int interval = 15)
+        public async Task<ActionResult> DemandeExpired(StandardModel<DemandeAccesEngin> model)
         {
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "15j",
-                Value = "15"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "7j",
-                Value = "7",
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "1j",
-                Value = "1"
-            });
 
-            ViewBag.Interval = listItems;
+            var demandes = context
+                .DemandeAccesEngin
+                .AsQueryable();
 
             int pageSize = 10;
 
@@ -72,15 +58,22 @@ namespace Front.Controllers
 
 
             // add interval to today
-            var expiryDate = DateTime.Now.Date.AddDays(interval);
+            if (IsChefProjet)
+            {
 
-            var demandes = context
-                .DemandeAccesEngin
-                .Where(x =>
-                x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= interval)));
+                demandes = demandes
+                     .Where(x => 
+                     x.StatutDemandeId == 3 &&  //==> expireé
+                     x.CreatedBy == CurrentUserProfile.Id);
+            }
+            if (IsConroleur)
+            {
+                demandes = demandes
+                     .Where(x => 
+                     x.StatutDemandeId == 3); //==> expireé
+            }
 
 
-            ViewBag.Param = interval;
 
 
             demandes = demandes.OrderByDescending(x => x.CreatedOn);

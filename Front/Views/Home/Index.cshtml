@@ -20,7 +20,9 @@
                 <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
             </div>
         }
-
+        <div class="col-md-6">
+            <div id="chartExpireId" style="height: 370px; width: 100%;"></div>
+        </div>
 
     }
 </div>
@@ -35,8 +37,14 @@
         <script type="text/javascript">
             window.onload = function () {
                 var posting = $.post('/AccesEnginapi/FillChartPieMyDemande', function (response) {
+                    CanvasJS.addColorSet("greenShades",
+                        [//colorSet Array
+                            "#81C5D7",
+                            "#F9B67F",
+                        ]);
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
+                        colorSet: "greenShades",
                         title: {
                             text: "Mes Demandes contrôlées / non contrôlées"
                         },
@@ -74,6 +82,7 @@
                     });
                     chart.render();
                 });
+            FileChartExpire()
             }
         </script>
     }
@@ -101,11 +110,42 @@
                     });
                     chart.render();
                 });
+                FileChartExpire()
             }
         </script>
     }
 
+    <script type="text/javascript">
+    function FileChartExpire() {
+        var posting = $.post('/AccesEnginapi/MesDemandeExpire', function (response) {
+            CanvasJS.addColorSet("greenShades",
+                [//colorSet Array
+                    "#DF7970",
+                    "#51CDA0",
+                ]);
 
+                var chart = new CanvasJS.Chart("chartExpireId", {
+                    animationEnabled: true,
+                    colorSet: "greenShades",
+                    title: {
+                        text: "Les Demandes expiré / non expiré"
+                    },
+                    data: [{
+                        type: "pie",
+                        startAngle: 240,
+                        yValueFormatString: "##0.00\"%\"",
+                        indexLabel: "{label} {y}",
+                        dataPoints: [
+                            { y: response.data.CountController, label: "Demande expiré" },
+                            { y: response.data.CountNonController, label: "Demande non expiré" },
+
+                        ]
+                    }]
+                });
+                chart.render();
+            });
+        }
+    </script>
 
 }
 

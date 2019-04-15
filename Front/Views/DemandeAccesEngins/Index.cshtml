@@ -6,7 +6,8 @@
 @{
     /**/
     ViewBag.Title = "Mes contrôles";
-    var IsContoler = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
+    var isController = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
+    var isChefProject = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET);
 }
 
 
@@ -25,7 +26,7 @@
                 </div>
                 <div class="col-md-2 text-right">
                     @{
-                        if (!IsContoler)
+                        if (!isController)
                         {
                             <a href="@Url.Action("Create")" class="btn btn-primary waves-effect w-md waves-light m-b-5">
                                 <span class="glyphicon glyphicon-plus"></span>&nbsp;Nouveau
@@ -38,7 +39,11 @@
 
             <table class="@UIHelper.CrudTableCss">
                 <tr>
-
+                    @if (isChefProject)
+                    {
+                        <th>
+                        </th>
+                    }
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
                     </th>
@@ -69,7 +74,19 @@
                         var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
                         <tr class="line">
-
+                            <td>
+                                @{
+                                    if (isChefProject)
+                                    {
+                                        if (item?.StatutDemandeId == 2) //2 => refuser
+                                        {
+                                            <a href="@Url.Action("Edit", "DemandeAccesEngins", new { id = item.Id.ToString() })" class="">
+                                                <span class="fa fa-edit"></span>
+                                            </a>
+                                        }
+                                    }
+                                }
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>
@@ -126,7 +143,7 @@
                                 @{
                                     if (!item.StatutDemandeId.HasValue)
                                     {
-                                        if (IsContoler)
+                                        if (isController)
                                         {
                                             <button onclick="reporterDemande(@(item.Id))" data-target="#modalReporterAction" data-toggle="modal" class="btn btn-primary waves-effect w-lg waves-light m-b-5">Valider</button>
                                         }
@@ -134,29 +151,24 @@
                                     }
                                     else
                                     {
-                                        if (item.StatutDemandeId != 2) //2 => refuser
+
+                                        <span class="badge" style="background-color:@(item.StatutDemande.Color)">@item.StatutDemande.Name</span>
+
+                                        if (item.Report.ToList().Count() > 0)
                                         {
-                                            <span class="badge badge-success">Acceptée</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-danger">Refusée</span>
-                                            if (item.Report.ToList().Count() > 0)
+                                            foreach (var rp in item.Report.ToList())
                                             {
-                                                foreach (var rp in item.Report.ToList())
-                                                {
-                                                    <text>
-                                                        <div>
-                                                            <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
-                                                            <div class="d-none">
-                                                                <small> @Html.Raw(string.Join(" <br/> ", rp.MotifReport))</small>
-                                                            </div>
+                                                <text>
+                                                    <div>
+                                                        <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
+                                                        <div class="d-none">
+                                                            <small> @Html.Raw(string.Join(" <br/> ", rp.MotifReport))</small>
                                                         </div>
+                                                    </div>
 
-                                                    </text>
-                                                }
-
+                                                </text>
                                             }
+
                                         }
                                     }
 
@@ -177,7 +189,7 @@
                                         }
                                         else
                                         {
-                                            if (Request.IsAuthenticated && IsContoler)
+                                            if (Request.IsAuthenticated && isController)
                                             {
                                                 <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
                                                     <span class="fa fa-check"></span>&nbsp;Contrôler

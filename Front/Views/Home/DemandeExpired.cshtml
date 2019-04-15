@@ -7,7 +7,6 @@
     /**/
     ViewBag.Title = "Mes contrôles";
     var IsContoler = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR);
-    var param = ViewBag.Param;
 }
 
 
@@ -18,9 +17,7 @@
                 <div id="search" class="col-md-10 form-inline pull-left">
                     @using (Html.BeginForm())
                     {
-                        @Html.DropDownList("interval", null, htmlAttributes: new { @class = "form-control col-2" })
 
-                        <input class="btn btn-primary btn-search" type="submit" value="Filtrer" />
                     }
                 </div>
                 <div class="col-md-2 text-right">
@@ -123,65 +120,19 @@
                                 }
                             </td>
                             <td>
-                                @{
-                                    if (!item.StatutDemandeId.HasValue)
-                                    {
-                                        if (IsContoler)
-                                        {
-                                            <button onclick="reporterDemande(@(item.Id))" data-target="#modalReporterAction" data-toggle="modal" class="btn btn-primary waves-effect w-lg waves-light m-b-5">Valider</button>
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        if (item.StatutDemandeId != 2) //2 => refuser
-                                        {
-                                            <span class="badge badge-success">Acceptée</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-danger">Refusée</span>
-                                            if (item.Report.ToList().Count() > 0)
-                                            {
-                                                <text>
-                                                    <div>
-                                                        <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
-                                                        <div class="d-none">
-                                                            <small> @Html.Raw(string.Join(" <br/> ", item.Report.Where(r => r.DemandeAccesEnginId == item.Id).SingleOrDefault().MotifReport))</small>
-                                                        </div>
-                                                    </div>
-
-                                                </text>
-                                            }
-                                        }
-                                    }
-
-                                }
-
+                                <span class="badge badge-danger">@item.StatutDemande.Name</span>
                             </td>
                             <td class="AdminListButtons">
                                 @{
-                                    if (item.StatutDemandeId != 2 && item.StatutDemandeId.HasValue) //2 => refuser
-                                    {
-                                        @*@Html.Partial("_AdminListButtons", item.Id)*@
-                                        if (isControled)
-                                        {
-                                            /**/
-                                            <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
-                                                <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            if (Request.IsAuthenticated && IsContoler)
-                                            {
-                                                <a href="@Url.Action("NewControleResultatCheckList", "Home", new { id = item.Id.ToString() })" class="btn btn-success waves-effect w-lg waves-light m-b-5">
-                                                    <span class="fa fa-check"></span>&nbsp;Contrôler
-                                                </a>
-                                            }
 
-                                        }
+                                    if (isControled)
+                                    {
+                                        /**/
+                                        <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
+                                            <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
+                                        </a>
                                     }
+
                                 }
 
                             </td>
@@ -194,7 +145,7 @@
             <br />
 
             Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("DemandeExpired","Home",new { page, Model.content, Model.columnName, interval = param }), Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("DemandeExpired", "Home", new { page, Model.content, Model.columnName}), Bootstrap4PagedListRenderOptions.Default)
         </div>
     </div>
 </div>
@@ -277,19 +228,19 @@
                     method: 'POST',
                     data: jsonObject
                 }).done(function () {
-                  //  swal("la demande "+statut+" avec succès!");
+                    //  swal("la demande "+statut+" avec succès!");
 
 
-                              swal(
-                {
-                    title:'la demande a été '+statut,
-                    type: 'success',
-                    confirmButtonColor: '#4fa7f3'
-                }
-            ).then(function () {
-                   location.reload(true);
-                                    updateUI();
-            })
+                    swal(
+                        {
+                            title: 'la demande a été ' + statut,
+                            type: 'success',
+                            confirmButtonColor: '#4fa7f3'
+                        }
+                    ).then(function () {
+                        location.reload(true);
+                        updateUI();
+                    })
 
                 }).fail(function () {
                     swal("Erreur lors du valider ce demande!");

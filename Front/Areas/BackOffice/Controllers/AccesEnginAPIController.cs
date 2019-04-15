@@ -146,6 +146,23 @@ namespace Front.Areas.BackOffice.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        //FILL CHART (Expire && non Expire)
+        [HttpPost]
+        [Route("AccesEnginapi/MesDemandeExpire")]
+        public async Task<HttpResponseMessage> MesDemandeExpire()
+        {
+            var biz = new KpiBiz(context, MvcApplication.log);
+            var Resultat = new KpiModel();
+            if (IsChefProjet)
+                Resultat = await biz.MesDemandeExpire(CurrentUserId);
+            else if (IsControleur)
+                Resultat = await biz.MesDemandeExpire();
+
+            var result = new RESTServiceResponse<KpiModel>(true, Resultat);
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
 
 
         #endregion
