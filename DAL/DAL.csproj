@@ -203,6 +203,10 @@
     <Compile Include="Migrations\201904121412053_table REF_Mailing.Designer.cs">
       <DependentUpon>201904121412053_table REF_Mailing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904160851524_column datesortie.cs" />
+    <Compile Include="Migrations\201904160851524_column datesortie.Designer.cs">
+      <DependentUpon>201904160851524_column datesortie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Entities\Profile.cs" />
     <Compile Include="PartialClasses\CheckListExigence.cs" />
@@ -315,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904121412053_table REF_Mailing.resx">
       <DependentUpon>201904121412053_table REF_Mailing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904160851524_column datesortie.resx">
+      <DependentUpon>201904160851524_column datesortie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

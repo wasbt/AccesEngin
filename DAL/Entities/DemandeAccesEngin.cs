@@ -56,6 +56,8 @@ namespace DAL
 
         public virtual StatutDemande StatutDemande { get; set; }
 
+        public Nullable<DateTime> DateSortie { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DemandeResultatEntete> DemandeResultatEntete { get; set; }
