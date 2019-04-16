@@ -74,19 +74,19 @@
                         var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
                         <tr class="line">
-                            <td>
-                                @{
-                                    if (isChefProject)
-                                    {
-                                        if (item?.StatutDemandeId == 2) //2 => refuser
+                            @{
+                                if (isChefProject)
+                                {
+                                    <td>
+                                        @if (item?.StatutDemandeId == 2) //2 => refuser
                                         {
-                                            <a href="@Url.Action("Edit", "DemandeAccesEngins", new { id = item.Id.ToString() })" class="">
-                                                <span class="fa fa-edit"></span>
-                                            </a>
+                                        <a href="@Url.Action("Edit", "DemandeAccesEngins", new { id = item.Id.ToString() })" class="">
+                                            <span class="fa fa-edit"></span>
+                                        </a>
                                         }
-                                    }
+                                    </td>
                                 }
-                            </td>
+                            }
                             <td>
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>

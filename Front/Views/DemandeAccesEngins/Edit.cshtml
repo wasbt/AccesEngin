@@ -47,23 +47,24 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Type d'engin</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("TypeEnginId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("TypeEnginId", null, "-- choisis Type d'engin --", htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Nature de la matiere</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("NatureMatiereId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("NatureMatiereId", null, "-- choisis Nature de la matiere --", htmlAttributes: new { @class = "form-control" })
 
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.DatePlannification, new { @class = "form-control datepicker-autoclose" })
+                            @Html.TextBoxFor(model => model.DatePlannification, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker-autoclose" })
                             @Html.ValidationMessageFor(model => model.DatePlannification, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                     <div id="InfosGeneralId">
                         @{
                             foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))

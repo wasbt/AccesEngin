@@ -1,4 +1,5 @@
 ﻿using DAL;
+using log4net;
 using Shared;
 using Shared.ENUMS;
 using System;
@@ -12,57 +13,62 @@ namespace DemandeExpireBatch
 {
     class Program
     {
-        static void Main(string[] args)
+        static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        static EnginDbContext context;
+        static async Task Main(string[] args)
         {
-            DemandeExpire();
-        }
-        static public async void DemandeExpire()
-        {
-            try
+            using (context = new EnginDbContext())
             {
-                EnginDbContext context = new EnginDbContext();
-
-                var demandes = context
-                .DemandeAccesEngin
-                .Where(x =>
-                x.Autorise &&
-                x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 15 && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) >= 0)));
-
-
-                foreach (var item in demandes)
+                try
                 {
-                    #region Send Mail To Chef project
-
-                    var Email = item.AspNetUsers.Email;
-                    var Subject = "contôle de " + item.TypeCheckList.Name;
-                    //   var lettre = $@"";
-                    var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + item.Id + " a été traité. </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + item.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
-                    await MailHelper.SendEmailDemandeEngin(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
+                    #region init logger
+                    log4net.Config.XmlConfigurator.Configure();
                     #endregion
+
+                    var a = 0;
+                    var tt = (int)(1 / a);
+
+                    var demandes = context
+                    .DemandeAccesEngin
+                    .Where(x =>
+                    x.Autorise &&
+                    x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 15 && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) >= 0)));
+
+
+                    foreach (var item in demandes)
+                    {
+                        #region Send Mail To Chef project
+
+                        var Email = item.AspNetUsers.Email;
+                        var Subject = "contôle de " + item.TypeCheckList.Name;
+                        //   var lettre = $@"";
+                        var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + item.Id + " a été traité. </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + item.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
+                        await MailHelper.SendEmailDemandeEngin(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
+                        #endregion
+                    }
+
+
+                    var demandesExpire = context
+                       .DemandeAccesEngin
+                       .Where(x =>
+                       x.Autorise &&
+                       x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 0)));
+
+
+                    foreach (var item in demandesExpire)
+                    {
+                        item.StatutDemandeId = (int)DemandeStatus.Expirer;
+                        context.Entry(item).State = EntityState.Modified;
+                    }
+                    await context.SaveChangesAsync();
+
                 }
-
-
-                var demandesExpire = context
-                   .DemandeAccesEngin
-                   .Where(x =>
-                   x.Autorise &&
-                   x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 0)));
-
-
-                foreach (var item in demandesExpire)
+                catch (Exception Ex)
                 {
-                    item.StatutDemandeId = (int)DemandeStatus.Expirer;
-                    context.Entry(item).State = EntityState.Modified;
+                    log.Error(Ex.Message + ": " + Ex);
                 }
-                context.SaveChanges();
-
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
         }
+    
     }
 }
