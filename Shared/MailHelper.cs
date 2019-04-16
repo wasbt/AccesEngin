@@ -104,13 +104,14 @@ namespace Shared
             }
 
         }
-        public static async Task SendEmailGHSE(List<string> To, string Body, string Subject, string mailFrom = ConstsAccesEngin.AppEmail, List<string> ccList = null, string mailFromName = null, List<string> BCCList = null, List<string> files = null)
+        public static async Task SendEmailDemandeEngin(List<string> To, string Body, string Subject, string mailFrom = ConstsAccesEngin.AppEmail, List<string> ccList = null, string mailFromName = null, List<string> BCCList = null, List<string> files = null)
         {
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("cloud1346.adk-media.com");
-
+                SmtpClient SmtpServer = new SmtpClient();
+                SmtpServer.Host = "smtp.gmail.com"; //Or Your SMTP Server Address
+                SmtpServer.Port = 587; 
                 mail.From = new MailAddress(mailFrom, ConstsAccesEngin.AppName);
                 mail.HeadersEncoding = Encoding.UTF8;
                 mail.SubjectEncoding = Encoding.UTF8;

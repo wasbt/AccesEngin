@@ -309,7 +309,7 @@ namespace Front.Controllers
                     var Subject = "contôle de " + demandeAccesEngin.TypeCheckList.Name;
                     //   var lettre = $@"";
                     var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + demandeAccesEngin.Id + " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.Autorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
-                    await MailHelper.SendEmailGHSE(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
+                    await MailHelper.SendEmailDemandeEngin(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
                     #endregion
 
 
