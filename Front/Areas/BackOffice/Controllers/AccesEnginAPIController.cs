@@ -167,10 +167,10 @@ namespace Front.Areas.BackOffice.Controllers
 
         #endregion
 
-        #region Reporter
+        #region Valider
         [HttpPost]
-        [Route("AccesEnginapi/reporteraction")]
-        public async Task<HttpResponseMessage> ReporterAction(ReporterDemande reporterDemande)
+        [Route("AccesEnginapi/validerDemande")]
+        public async Task<HttpResponseMessage> ValiderDemande(ValiderDemande reporterDemande)
         {
 
             if (!ModelState.IsValid)
@@ -179,7 +179,26 @@ namespace Front.Areas.BackOffice.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, MvcApplication.log);
 
-            var ressult = await biz.ReporterAction(reporterDemande,CurrentUserId);
+            var ressult = await biz.ValiderDemande(reporterDemande,CurrentUserId);
+
+            if (ressult)
+                return Request.CreateResponse(HttpStatusCode.OK);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPost]
+        [Route("AccesEnginapi/sortirEngin")]
+        public async Task<HttpResponseMessage> SortirEngin(ValiderDemande reporterDemande)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, MvcApplication.log);
+
+            var ressult = await biz.SortirEngin(reporterDemande,CurrentUserId);
 
             if (ressult)
                 return Request.CreateResponse(HttpStatusCode.OK);

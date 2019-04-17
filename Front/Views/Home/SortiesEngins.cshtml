@@ -1,0 +1,223 @@
+﻿@model  List<DAL.DemandeAccesEngin>
+@using X.PagedList
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Bootstrap4
+@using Shared;
+@{
+    /**/
+    ViewBag.Title = "Sorties d'engins";
+    var isSurete = HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET);
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div id="search" class="col-md-10 form-inline pull-left">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.Editor("Matricule", new { htmlAttributes = new { @class = "form-control", placeholder = ".." } })
+                        @Html.DropDownList("EntityId", null, "-- Entité --", htmlAttributes: new { @class = "form-control" })
+                        <input class="btn btn-success btn-search" type="submit" value="Filtrer" />
+                    }
+                </div>
+
+            </div>
+            <table class="@UIHelper.CrudTableCss">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().TypeCheckList.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Observation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DatePlannification)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedOn)
+                    </th>
+                    <th>Contrôler</th>
+                    <th>Autorisé</th>
+                    <th>Pièce jointe</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            var isControled = Model.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
+
+                            <tr class="line">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Observation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DatePlannification)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                                </td>
+                                <td>
+                                    @if (isControled)
+                                    {
+                                        <span class="badge badge-info">Contrôlée</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning">Non contrôlée</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (isControled)
+                                    {
+                                        if (item.Autorise)
+                                        {
+                                            <span class="badge badge-success">Autorisée</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Non autorisée</span>
+                                        }
+                                    }
+
+                                </td>
+                                <td>
+                                    @if (item.AppFileId.HasValue)
+                                    {
+                                        @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                </td>
+                                <td>
+                                    @{
+
+                                        <button onclick="SortiEngin(@(item.Id))" data-target="#modalReporterAction" data-toggle="modal" class="btn btn-warning waves-effect w-lg waves-light m-b-5">
+                                            Sortir
+                                        </button>
+
+
+                                    }
+
+                                </td>
+                                <td class="AdminListButtons">
+                                    @{
+                                        <a href="@Url.Action("Resultats", "Home", new { id = item.Id.ToString() })" class="btn btn-info waves-effect w-lg waves-light m-b-5">
+                                            <span class="fa fa-list-alt"></span>&nbsp;Voir Résultats
+                                        </a>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+                }
+
+            </table>
+            <br />
+
+        </div>
+    </div>
+</div>
+
+
+<div id="modalReporterAction" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title mt-0" id="myModalLabel">Valider la demande</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        Date de sortie: <br />
+                        <input type="text" class="form-control datepicker-autoclose" id="DateSortieId" name="DateSortie" autocomplete="off" placeholder="yyyy/mm/dd">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                <button type="button" id="btn-sortir-engin" class="btn btn-danger">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+     jQuery(document).ready(function() {
+
+                     // Date Picker
+                jQuery('.datepicker-autoclose').datepicker({
+                    format: "yyyy/mm/dd",
+                     autoclose: true,
+                     todayHighlight: true,
+                 });
+
+           $("#btn-sortir-engin").click(function () {
+
+                var r = confirm("Êtes-vous sûr de vouloir valider cette demande");
+                if (r == false) {
+                    return;
+                }
+
+
+                var jsonObject = {
+                    DemandeAccesEnginId: DemandeAccesEnginId,
+                    DateSortie: $("#DateSortieId").val(),
+                };
+                debugger;
+                $.ajax({
+                    url: "/AccesEnginapi/sortirEngin",
+                    method: 'POST',
+                    data: jsonObject
+                }).done(function () {
+                              swal(
+                {
+                    title:'l\'engin a été sorti',
+                    type: 'success',
+                    confirmButtonColor: '#4fa7f3'
+                }
+            ).then(function () {
+                   location.reload(true);
+                                    updateUI();
+            })
+
+                }).fail(function () {
+                    swal("Erreur lors du valider ce demande!");
+                })
+            });
+        });
+        function SortiEngin(demandeAccesEnginId) {
+            DemandeAccesEnginId = demandeAccesEnginId;
+        }
+    </script>
+}
+
+

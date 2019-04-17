@@ -126,40 +126,53 @@
                 <div id="navigation">
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
-                        <li class="has-submenu">
-                            <a href="@Url.Action("Index", "Home", new { area = "" })">
-                                <i class="fa fa-cog"></i>Accueil
-                            </a>
-                        </li>
-                        @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
-                        {
-                            <li class="has-submenu">
-                                <a href="@Url.Action("MyDemande", "DemandeAccesEngins", new { area = "" })">
-                                    <i class="fa fa-cog"></i>Mes Contrôles
-                                </a>
-                            </li>
+
+                        @{
+                            if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_SURETE))
+                            {
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("SotiesEngins", "Home", new { area = "" })">
+                                        <i class="fa fa-cog"></i>Sorties d'engins
+                                    </a>
+                                </li>
+                            }
+                            if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET) || HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
+                            {
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("Index", "Home", new { area = "" })">
+                                        <i class="fa fa-cog"></i>Accueil
+                                    </a>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("Index", "DemandeAccesEngins", new { area = "" })">
+                                        <i class="fa fa-cog"></i>Demandes
+                                    </a>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("DemandeExpired", "Home", new { area = "" })">
+                                        <i class="fa fa-cog"></i>Demandes expirées
+                                    </a>
+                                </li>
+                            }
+                            if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
+                            {
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("MyControl", "DemandeAccesEngins", new { area = "" })">
+                                        <i class="fa fa-cog"></i>Mes Contrôles
+                                    </a>
+                                </li>
+                            }
+                            if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE))
+                            {
+                                <li class="has-submenu">
+                                    <a href="@Url.Action("Index", "Settings", new { area = "BackOffice" })">
+                                        <i class="fa fa-cog"></i>Administration
+                                    </a>
+                                </li>
+                            }
                         }
-                        @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET) || HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CONTROLEUR))
-                        {
-                            <li class="has-submenu">
-                                <a href="@Url.Action("Index", "DemandeAccesEngins", new { area = "" })">
-                                    <i class="fa fa-cog"></i>Demandes
-                                </a>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="@Url.Action("DemandeExpired", "Home", new { area = "" })">
-                                    <i class="fa fa-cog"></i>Demandes expirées
-                                </a>
-                            </li>
-                        }  
-                        @if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_BACKOFFICE))
-                        {
-                            <li class="has-submenu">
-                                <a href="@Url.Action("Index", "Settings", new { area = "BackOffice" })">
-                                    <i class="fa fa-cog"></i>Administration
-                                </a>
-                            </li>
-                        }
+
+
                     </ul>
                     <!-- End navigation menu -->
                 </div> <!-- end #navigation -->

@@ -20,6 +20,7 @@ namespace Shared
         public const string ROLE_BACKOFFICE = "BACKOFFICE";
         public const string ROLE_CHEFPROJET = "CHEFPROJET";
         public const string ROLE_CONTROLEUR = "CONTROLEUR";
+        public const string ROLE_SURETE = "SURETE";
 
 
         /* MESSAGES */

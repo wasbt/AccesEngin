@@ -13,6 +13,7 @@ using Shared;
 using Shared.Models;
 using System.Web;
 using System.Diagnostics;
+using Shared.ENUMS;
 
 namespace BLL.Biz
 {
@@ -93,19 +94,19 @@ namespace BLL.Biz
 
         }
 
-        public async Task<bool> ReporterAction(ReporterDemande reporterDemande, string currentUserId)
+        public async Task<bool> ValiderDemande(ValiderDemande validerDemande, string currentUserId)
         {
 
-            var demande = await context.DemandeAccesEngin.FindAsync(reporterDemande.DemandeAccesEnginId);
+            var demande = await context.DemandeAccesEngin.FindAsync(validerDemande.DemandeAccesEnginId);
 
-            demande.StatutDemandeId = reporterDemande.StatutDemandeId;
+            demande.StatutDemandeId = validerDemande.StatutDemandeId;
 
-            if (!string.IsNullOrEmpty(reporterDemande.Motif) && reporterDemande.StatutDemandeId == 2)
+            if (!string.IsNullOrEmpty(validerDemande.Motif) && validerDemande.StatutDemandeId == 2)
             {
                 context.Report.Add(new Report()
                 {
-                    DemandeAccesEnginId = reporterDemande.DemandeAccesEnginId,
-                    MotifReport = reporterDemande.Motif,
+                    DemandeAccesEnginId = validerDemande.DemandeAccesEnginId,
+                    MotifReport = validerDemande.Motif,
                     CreatedBy = currentUserId,
                     CreatedOn = DateTime.Now,
                 });
@@ -159,7 +160,10 @@ namespace BLL.Biz
             {
                 return null;
             }
-            var demandeAcces = context.DemandeAccesEngin.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(Matricule)));
+            var demandeAcces = context.DemandeAccesEngin
+                .Where(x => x.ResultatInfoGenerale
+                .Any(i => i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) && 
+                          i.ValueInfo.Contains(Matricule)));
             if (demandeAcces == null)
             {
                 return null;
@@ -169,6 +173,58 @@ namespace BLL.Biz
             var DemendesDto = DemendesList.Select(x => x.DemandeAccesToDTO()).ToList();
             return DemendesDto;
         }
+
+        public async Task<List<DemandeAccesEngin>> DemandeAccesByEntityMatricule(SearchDemandeModel model)
+        {
+            var demandeAcces = context.DemandeAccesEngin.Where(x =>
+                                                                   x.Autorise && 
+                                                                   x.StatutDemandeId == (int)DemandeStatus.Accepter &&
+                                                                   x.DemandeResultatEntete.Any()) 
+                                                                   .AsQueryable();
+                
+            #region Check demand acces id & find it
+            if (!string.IsNullOrWhiteSpace(model.Matricule))
+            {
+                //demandeAcces = demandeAcces.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(model.Matricule)));
+                demandeAcces = demandeAcces
+                .Where(x =>
+                       x.ResultatInfoGenerale
+                .Any(i => 
+                     i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) && 
+                     i.ValueInfo.Equals(model.Matricule, StringComparison.OrdinalIgnoreCase)));
+            }
+            if (model.EntityId.HasValue)
+            {
+                demandeAcces = demandeAcces.Where(x => x.EntityId == model.EntityId);
+            }
+            #endregion
+
+            var DemendesList = await demandeAcces.ToListAsync();
+
+            return DemendesList;
+        }
+
+
+        public async Task<bool> SortirEngin(ValiderDemande validerDemande, string currentUserId)
+        {
+
+            var demande = await context.DemandeAccesEngin.FindAsync(validerDemande.DemandeAccesEnginId);
+
+            demande.StatutDemandeId = (int)DemandeStatus.Sortir;
+            demande.DateSortie = validerDemande.DateSortie;
+            demande.CreatedBy = currentUserId;
+
+            var verifier = await context.SaveChangesAsync();
+            if (verifier > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
     }
 
 }

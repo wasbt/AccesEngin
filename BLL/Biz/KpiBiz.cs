@@ -1,6 +1,7 @@
 ﻿using BLL.Common;
 using DAL;
 using log4net;
+using Shared.ENUMS;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -20,18 +21,18 @@ namespace BLL.Biz
         public async Task<KpiModel> MesDemande(string CurrentUser)
         {
             var CountController = context.DemandeAccesEngin.Where(x =>
-            x.StatutDemandeId != 3 &&
+            x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
             x.DemandeResultatEntete.Any()).LongCount();
 
             var CountNonController = context.DemandeAccesEngin.Where(x =>
-             x.StatutDemandeId != 3 &&
+             x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
             !x.DemandeResultatEntete.Any()).LongCount();
             var result = new KpiModel()
             {
-                CountController = CountController,
-                CountNonController = CountNonController,
+                Value1 = CountController,
+                Value2 = CountNonController,
 
             };
             return result;
@@ -40,19 +41,19 @@ namespace BLL.Biz
         public async Task<KpiModel> MesDemandeAutorise(string CurrentUser)
         {
             var CountAutorise = context.DemandeAccesEngin.Where(x =>
-              x.StatutDemandeId != 3 &&
+              x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
             x.DemandeResultatEntete.Any() && x.Autorise).LongCount();
 
             var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
-                  x.StatutDemandeId != 3 &&
+                  x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
             x.DemandeResultatEntete.Any() && !x.Autorise).LongCount();
 
             var result = new KpiModel()
             {
-                CountController = CountAutorise,
-                CountNonController = CountNonAutorise,
+                Value1 = CountAutorise,
+                Value2 = CountNonAutorise,
 
             };
             return result;
@@ -65,20 +66,20 @@ namespace BLL.Biz
         public async Task<KpiModel> DemandeAutoriseByControlleur(string CurrentUser)
         {
             var CountAutorise = context.DemandeAccesEngin.Where(x =>
-                          x.StatutDemandeId == 3 &&
+                          x.StatutDemandeId == (int)DemandeStatus.Expirer &&
             x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
             x.Autorise).LongCount();
 
 
             var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
-                                      x.StatutDemandeId == 3 &&
+                                      x.StatutDemandeId == (int)DemandeStatus.Expirer &&
             x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
             !x.Autorise).LongCount();
 
             var result = new KpiModel()
             {
-                CountController = CountAutorise,
-                CountNonController = CountNonAutorise,
+                Value1 = CountAutorise,
+                Value2 = CountNonAutorise,
 
             };
             return result;
@@ -98,17 +99,28 @@ namespace BLL.Biz
             }
 
             var CountExpire = QueryCountExpire.Where(x =>
-              x.StatutDemandeId == 3 &&
+              x.StatutDemandeId == (int)DemandeStatus.Expirer &&
               x.DemandeResultatEntete.Any()).LongCount();
 
-            var CountNonExpire =  QueryCountNonExpire.Where(x =>
-             x.StatutDemandeId != 3 &&
+            var CountSorti =  QueryCountNonExpire.Where(x =>
+             x.StatutDemandeId == (int)DemandeStatus.Sortir &&
+            x.DemandeResultatEntete.Any()).LongCount();
+
+            var CountAccepte =  QueryCountNonExpire.Where(x =>
+             x.StatutDemandeId == (int)DemandeStatus.Accepter &&
+            x.DemandeResultatEntete.Any()).LongCount();
+
+
+            var CountRefuse =  QueryCountNonExpire.Where(x =>
+             x.StatutDemandeId == (int)DemandeStatus.Refuser &&
             x.DemandeResultatEntete.Any()).LongCount();
 
             var result = new KpiModel()
             {
-                CountController = CountExpire,
-                CountNonController = CountNonExpire,
+                Value1 = CountExpire,
+                Value2 = CountSorti,
+                Value3 = CountAccepte,
+                Value4 = CountRefuse,
 
             };
             return result;

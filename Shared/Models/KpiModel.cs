@@ -8,7 +8,9 @@ namespace Shared.Models
 {
     public class KpiModel
     {
-        public long CountController   { get; set; }
-        public long CountNonController { get; set; }
+        public long Value1   { get; set; }
+        public long Value2 { get; set; }
+        public long Value3 { get; set; }
+        public long Value4 { get; set; }
     }
 }

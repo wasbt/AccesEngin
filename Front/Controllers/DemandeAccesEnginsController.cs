@@ -18,6 +18,7 @@ using Shared.ENUMS;
 using BLL.Common;
 using System.IO;
 using BLL.Biz;
+using Shared.Models;
 
 namespace Front.Controllers
 {
@@ -25,7 +26,7 @@ namespace Front.Controllers
     public class DemandeAccesEnginsController : BaseController
     {
         // GET: DemandeAccesEngins
-        public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model)
+        public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model, SearchDemandeModel Filter)
         {
 
             var demandeAccesEngin = context.DemandeAccesEngin.Where(x => x.StatutDemandeId != 3).Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
@@ -39,6 +40,43 @@ namespace Front.Controllers
             {
                 query = query.Where(x => !x.DemandeResultatEntete.Any());
             }
+
+            if (Filter.StatutDemandeId.HasValue)
+            {
+                query = query.Where(x => x.StatutDemandeId == Filter.StatutDemandeId);
+            }
+            if (Filter.TypeCheckListId.HasValue)
+            {
+                query = query.Where(x => x.TypeCheckListId == Filter.TypeCheckListId);
+            }
+            if (Filter.Autorise.HasValue)
+            {
+                query = query.Where(x => x.Autorise == Filter.Autorise);
+            }
+            if (Filter.DatePlannification.HasValue)
+            {
+                query = query.Where(x => x.DatePlannification.Day == Filter.DatePlannification.Value.Day &&
+                                         x.DatePlannification.Month == Filter.DatePlannification.Value.Month &&
+                                         x.DatePlannification.Year == Filter.DatePlannification.Value.Year);
+            }
+            if (Filter.Controle.HasValue)
+            {
+                if (Filter.Controle.Value)
+                {
+                    query = query.Where(x => x.DemandeResultatEntete.Any());
+                }
+                else
+                {
+                    query = query.Where(x => !x.DemandeResultatEntete.Any());
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(Filter.Content))
+            {
+                query = query.Where(x => x.Id.ToString().Contains(Filter.Content) ||
+                                         x.Observation.Contains(Filter.Content));
+            }
+
+
             int pageSize = 10;
 
             int pageNumber = (model.page ?? 1);
@@ -54,6 +92,12 @@ namespace Front.Controllers
             query = query.OrderByDescending(x => x.Id);
 
             model.resultList = query.ToPagedList(pageNumber, pageSize);
+
+            var statutDemandes = context.StatutDemande.Where(x => x.Id != (int)DemandeStatus.Expirer);
+            var typeCheckLists = context.TypeCheckList;
+
+            ViewBag.StatutDemandeId = new SelectList(statutDemandes, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(typeCheckLists, "Id", "Name");
 
             ViewBag.Log = query.ToString();
 
@@ -209,7 +253,7 @@ namespace Front.Controllers
                 demandeAccesEngin.StatutDemandeId = null;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
                 context.Entry(demandeAccesEngin).State = EntityState.Modified;
-               var oldResultatInfoGenerale = context.ResultatInfoGenerale.Where(x => x.DemandeAccesEnginId == demandeAccesEngin.Id);
+                var oldResultatInfoGenerale = context.ResultatInfoGenerale.Where(x => x.DemandeAccesEnginId == demandeAccesEngin.Id);
 
                 foreach (var olditem in oldResultatInfoGenerale)
                 {
@@ -286,20 +330,53 @@ namespace Front.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> MyDemande(StandardModel<DemandeAccesEngin> model)
+        [Authorize(Roles = ConstsAccesEngin.ROLE_CONTROLEUR)]
+        public async Task<ActionResult> MyControl(StandardModel<DemandeAccesEngin> model, SearchDemandeModel Filter)
         {
             ViewBag.ShowButton = false;
 
             var query = context.DemandeAccesEngin.AsQueryable();
 
-            if (IsChefProjet)
-            {
-                query = query.Where(x => x.CreatedBy == CurrentUserId);
-            }
+
             if (IsConroleur)
             {
                 query = query.Where(x => x.DemandeResultatEntete.Any(re => re.CreatedBy == CurrentUserId && re.ResultatExigence.Any()));
             }
+            if (Filter.StatutDemandeId.HasValue)
+            {
+                query = query.Where(x => x.StatutDemandeId == Filter.StatutDemandeId);
+            }
+            if (Filter.TypeCheckListId.HasValue)
+            {
+                query = query.Where(x => x.TypeCheckListId == Filter.TypeCheckListId);
+            }
+            if (Filter.Autorise.HasValue)
+            {
+                query = query.Where(x => x.Autorise == Filter.Autorise);
+            }
+            if (Filter.Controle.HasValue)
+            {
+                if (Filter.Controle.Value)
+                {
+                    query = query.Where(x => x.DemandeResultatEntete.Any());
+                }
+                else
+                {
+                    query = query.Where(x => !x.DemandeResultatEntete.Any());
+                }
+            }
+            if (Filter.DatePlannification.HasValue)
+            {
+                query = query.Where(x => x.DatePlannification.Day == Filter.DatePlannification.Value.Day &&
+                                         x.DatePlannification.Month == Filter.DatePlannification.Value.Month &&
+                                         x.DatePlannification.Year == Filter.DatePlannification.Value.Year);
+            }
+            if (!string.IsNullOrWhiteSpace(Filter.Content))
+            {
+                query = query.Where(x => x.Id.ToString().Contains(Filter.Content) ||
+                                         x.Observation.Contains(Filter.Content));
+            }
+
             int pageSize = 10;
 
             int pageNumber = (model.page ?? 1);
@@ -317,6 +394,11 @@ namespace Front.Controllers
             model.resultList = query.ToPagedList(pageNumber, pageSize);
 
             ViewBag.Log = query.ToString();
+            var statutDemandes = context.StatutDemande.Where(x => x.Id != (int)DemandeStatus.Expirer);
+            var typeCheckLists = context.TypeCheckList;
+
+            ViewBag.StatutDemandeId = new SelectList(statutDemandes, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(typeCheckLists, "Id", "Name");
 
             return View(model);
 

@@ -11,5 +11,6 @@ namespace Shared.ENUMS
         Accepter = 1,
         Refuser = 2,
         Expirer = 3,
+        Sortir = 4,
     }
 }

@@ -25,18 +25,18 @@ namespace DemandeExpireBatch
                     log4net.Config.XmlConfigurator.Configure();
                     #endregion
 
-                    var a = 0;
-                    var tt = (int)(1 / a);
-
                     var demandes = context
                     .DemandeAccesEngin
                     .Where(x =>
                     x.Autorise &&
+                    x.StatutDemandeId != (int)DemandeStatus.Sortir &&
+                    x.StatutDemandeId != (int)DemandeStatus.Expirer &&
                     x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 15 && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) >= 0)));
 
 
                     foreach (var item in demandes)
                     {
+                        var emails = context.REF_MailingList.Where(x => x.EntityId == item.EntityId).Select(m => m.AspNetUsers.Select(e => e.Email)).ToList();
                         #region Send Mail To Chef project
 
                         var Email = item.AspNetUsers.Email;
@@ -52,6 +52,8 @@ namespace DemandeExpireBatch
                        .DemandeAccesEngin
                        .Where(x =>
                        x.Autorise &&
+                       x.StatutDemandeId != (int)DemandeStatus.Sortir &&
+                       x.StatutDemandeId != (int)DemandeStatus.Expirer &&
                        x.DemandeResultatEntete.Any(y => y.ResultatExigence.Any(d => d.Date.HasValue && DbFunctions.DiffDays(DateTime.Now, d.Date.Value) <= 0)));
 
 
@@ -69,6 +71,6 @@ namespace DemandeExpireBatch
                 }
             }
         }
-    
+
     }
 }

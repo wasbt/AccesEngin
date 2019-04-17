@@ -18,11 +18,14 @@ using System.Diagnostics;
 using System.Web.Routing;
 using Front.Models;
 using X.PagedList;
+using Shared.Models;
 
 namespace Front.Controllers
 {
+    [Authorize(Roles = ConstsAccesEngin.ROLE_CHEFPROJET + "," + ConstsAccesEngin.ROLE_CONTROLEUR +","+ ConstsAccesEngin.ROLE_SURETE)]
     public class HomeController : BaseController
     {
+        [Authorize(Roles = ConstsAccesEngin.ROLE_CONTROLEUR + "," + ConstsAccesEngin.ROLE_CHEFPROJET)]
         public ActionResult Index()
         {
             return View();
@@ -42,7 +45,26 @@ namespace Front.Controllers
             return View();
         }
 
+        [Authorize(Roles = ConstsAccesEngin.ROLE_SURETE)]
+        public async Task<ActionResult> SortiesEngins(SearchDemandeModel model)
+        {
+            if (!model.EntityId.HasValue && string.IsNullOrWhiteSpace(model.Matricule))
+            {
+                model.EntityId = -1;
+                model.Matricule = "";
+            }
 
+            var entities = context.Entity.Where(x => x.SiteId == CurrentUserProfile.Entity.SiteId).ToList();
+
+            ViewBag.EntityId = new SelectList(entities, "Id", "Name");
+
+            var biz = new DemandeAccesBiz(context,log);
+
+            var demande = await biz.DemandeAccesByEntityMatricule(model);
+
+            return View(demande);
+        }
+        [Authorize(Roles = ConstsAccesEngin.ROLE_CONTROLEUR + "," + ConstsAccesEngin.ROLE_CHEFPROJET)]
         public async Task<ActionResult> DemandeExpired(StandardModel<DemandeAccesEngin> model)
         {
 

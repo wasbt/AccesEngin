@@ -104,6 +104,14 @@ namespace Front.Controllers
             }
         }
 
+        public bool IsSurete
+        {
+            get
+            {
+                return User.IsInRole(ConstsAccesEngin.ROLE_SURETE);
+            }
+        }
+
 
 
     }

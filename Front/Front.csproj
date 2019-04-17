@@ -1596,10 +1596,11 @@
     <Content Include="Views\Shared\_Table_ResultatInfoGenerale.cshtml" />
     <Content Include="Views\Shared\_Table_SaveNewExigence.cshtml" />
     <Content Include="Views\Shared\ResultatsPDF.cshtml" />
-    <Content Include="Views\DemandeAccesEngins\MyDemande.cshtml" />
+    <Content Include="Views\DemandeAccesEngins\MyControl.cshtml" />
     <Content Include="Views\Shared\_Table_ResultatsEntete.cshtml" />
     <Content Include="Views\Shared\_Table_ResultatExigencePDF.cshtml" />
     <Content Include="Views\Home\DemandeExpired.cshtml" />
+    <Content Include="Views\Home\SortiesEngins.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

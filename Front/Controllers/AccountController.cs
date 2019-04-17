@@ -78,15 +78,17 @@ namespace Front.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
                     FillSessionParamsFor(model.Email);
                     #region Save last connexion date
                     //UserProfile profil = new UserProfile();
+                    var profil = context.Profile.SingleOrDefault(u => u.Email == model.Email);
+                    var roles = await UserManager.GetRolesAsync(profil.Id);
                     try
                     {
-                        var profil = context.Profile.SingleOrDefault(u => u.Email == model.Email);
                         profil.DtLastConnection = DateTime.Now;
                         context.Entry(profil).State = EntityState.Modified;
                         await context.SaveChangesAsync();
@@ -109,8 +111,18 @@ namespace Front.Controllers
                         //throw raise;
                     }
                     #endregion
-
-                    return RedirectToLocal(returnUrl);
+                    if (roles.Contains(ConstsAccesEngin.ROLE_SURETE))
+                    {
+                        return RedirectToAction("SortiesEngins", "Home", new { area = "" });
+                    }
+                    else if (roles.Contains(ConstsAccesEngin.ROLE_BACKOFFICE))
+                    {
+                        return RedirectToAction("Index", "Settings", new { area = "BackOffice" });
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

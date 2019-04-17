@@ -1,6 +1,6 @@
 ﻿@using Shared
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Reporting";
 }
 
 
@@ -54,8 +54,8 @@
                             yValueFormatString: "##0.00\"%\"",
                             indexLabel: "{label} {y}",
                             dataPoints: [
-                                { y: response.data.CountController, label: "Demandes contrôlées" },
-                                { y: response.data.CountNonController, label: "Demandes non contrôlées" },
+                                { y: response.data.Value1, label: "Demandes contrôlées" },
+                                { y: response.data.Value2, label: "Demandes non contrôlées" },
 
                             ]
                         }]
@@ -74,8 +74,8 @@
                             yValueFormatString: "##0.00\"%\"",
                             indexLabel: "{label} {y}",
                             dataPoints: [
-                                { y: response.data.CountController, label: "Demandes autorisées" },
-                                { y: response.data.CountNonController, label: "Demandes non autorisées" },
+                                { y: response.data.Value1, label: "Demandes autorisées" },
+                                { y: response.data.Value2, label: "Demandes non autorisées" },
 
                             ]
                         }]
@@ -101,8 +101,8 @@
                             yValueFormatString: "##0.00\"%\"",
                             indexLabel: "{label} {y}",
                             dataPoints: [
-                                { y: response.data.CountController, label: "Demande autorisé" },
-                                { y: response.data.CountNonController, label: "Demande non autorisé" },
+                                { y: response.data.Value1, label: "Demande autorisé" },
+                                { y: response.data.Value2, label: "Demande non autorisé" },
 
                             ]
                         }]
@@ -119,15 +119,17 @@
         var posting = $.post('/AccesEnginapi/MesDemandeExpire', function (response) {
             CanvasJS.addColorSet("greenShades",
                 [//colorSet Array
-                    "#DF7970",
+                    "#D38583",
+                    "#4285f4",
                     "#51CDA0",
+                    "#FBCCA6",
                 ]);
 
                 var chart = new CanvasJS.Chart("chartExpireId", {
                     animationEnabled: true,
                     colorSet: "greenShades",
                     title: {
-                        text: "Les Demandes expirées / non expirées"
+                        text: "Les Demandes"
                     },
                     data: [{
                         type: "pie",
@@ -135,8 +137,10 @@
                         yValueFormatString: "##0.00\"%\"",
                         indexLabel: "{label} {y}",
                         dataPoints: [
-                            { y: response.data.CountController, label: "Demande expiré" },
-                            { y: response.data.CountNonController, label: "Demande non expiré" },
+                            { y: response.data.Value1, label: "Demandes expirées" },
+                            { y: response.data.Value2, label: "Demande sorties" },
+                            { y: response.data.Value3, label: "Demande acceptées" },
+                            { y: response.data.Value4, label: "Demande refusées" },
 
                         ]
                     }]
