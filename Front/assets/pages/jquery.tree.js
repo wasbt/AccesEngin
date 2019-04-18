@@ -14,10 +14,10 @@ $( document ).ready(function() {
 		},
         'types' : {
             'default' : {
-                'icon' : 'mdi mdi-folder-star'
+                'icon' : 'zmdi zmdi-folder-star'
             },
             'file' : {
-                'icon' : 'mdi mdi-file'
+                'icon' : 'zmdi zmdi-file'
             }
         },
         'plugins' : ['types']

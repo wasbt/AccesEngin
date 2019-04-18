@@ -1,0 +1,18 @@
+﻿@model Front.ViewModels.ResultatsVM
+@{
+    ViewBag.Title = "Détail";
+}
+
+<h2>Information General @Model.TypeCheckList.Name</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.Partial("_Table_ResultatInfoGenerale")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

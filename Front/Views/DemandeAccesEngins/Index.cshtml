@@ -175,11 +175,11 @@
                             <td>
                                 @if (isControled)
                                 {
-                                    <span class="badge badge-info">Contrôlée</span>
+                                    <span class="label  label-info">Contrôlée</span>
                                 }
                                 else
                                 {
-                                    <span class="badge badge-warning">Non contrôlée</span>
+                                    <span class="label  label-warning">Non contrôlée</span>
                                 }
                             </td>
                             <td>
@@ -187,11 +187,11 @@
                                 {
                                     if (item.Autorise)
                                     {
-                                        <span class="badge badge-success">Autorisée</span>
+                                        <span class="label  label-success">Autorisée</span>
                                     }
                                     else
                                     {
-                                        <span class="badge badge-danger">Non autorisée</span>
+                                        <span class="label  label-danger">Non autorisée</span>
                                     }
                                 }
 
@@ -228,7 +228,7 @@
                                                 <text>
                                                     <div>
                                                         <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
-                                                        <div class="d-none">
+                                                        <div class="hidden">
                                                             <small> @Html.Raw(string.Join(" <br/> ", rp.MotifReport))</small>
                                                         </div>
                                                     </div>
@@ -244,6 +244,15 @@
                             </td>
                             <td class="AdminListButtons">
                                 @{
+                                    if (!isControled)
+                                    {
+                                        if (item.StatutDemandeId != 1 && item.StatutDemandeId.HasValue) //1 => accepter
+                                        {
+                                            <a href="@Url.Action("ResultatsInfoGeneral", "Home", new { id = item.Id.ToString() })" class="btn btn-custom  waves-effect w-lg waves-light m-b-5">
+                                                <span class="fa fa-list-alt"></span>&nbsp;Voir Détail
+                                            </a>
+                                        }
+                                    }
                                     if (item.StatutDemandeId != 2 && item.StatutDemandeId.HasValue) //2 => refuser
                                     {
                                         @*@Html.Partial("_AdminListButtons", item.Id)*@
@@ -292,24 +301,24 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row ">
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 form-inline">
                         <br />
-                        <div class="radio radio-success form-check-inline">
+                        <div class="radio radio-success form-inline">
                             <input id="radio1" type="radio" value="1" name="statutDemande" />
                             <label for="radio1">
                                 Accepter
                             </label>
                         </div>
-                        <div class="radio radio-danger form-check-inline">
+                        <div class="radio radio-danger form-inline">
                             <input id="radio2" type="radio" value="2" name="statutDemande" />
                             <label for="radio2">
                                 Refuser
                             </label>
                         </div>
                     </div>
-                    <div id="divMotif" class="col-md-12 d-none">
+                    <div id="divMotif" class="col-md-12 hidden">
                         Motif: <br />
                         <textarea class="form-control " id="motif-report"></textarea>
                     </div>
@@ -338,11 +347,11 @@
             $('input[name=statutDemande]', this).change(function () {
                 var radioValue = $("input[name='statutDemande']:checked").val();
                 if (radioValue == 1) {
-                    $("#divMotif").addClass("d-none");
+                    $("#divMotif").addClass("hidden");
                     $("#motif-report").val("");
                     statut = "validée";
                 } else {
-                    $("#divMotif").removeClass("d-none");
+                    $("#divMotif").removeClass("hidden");
                     statut = "refusée";
                 }
             });
@@ -361,7 +370,7 @@
                 };
                 debugger;
                 $.ajax({
-                    url: "/AccesEnginapi/reporteraction",
+                    url: "/AccesEnginapi/validerDemande",
                     method: 'POST',
                     data: jsonObject
                 }).done(function () {
@@ -391,15 +400,15 @@
         function showDetails(el) {
             var ico = $(el);
             var nextDiv = $(el).next("div");
-            if (nextDiv.hasClass("d-none")) {
+            if (nextDiv.hasClass("hidden")) {
                 ico.prop("class", "fa  fa-toggle-up ");
-                nextDiv.addClass("d-none");
+                nextDiv.addClass("hidden");
 
             } else {
                 ico.prop("class", "fa  fa-toggle-down");
-                nextDiv.removeClass("d-none");
+                nextDiv.removeClass("hidden");
             }
-            $(el).next("div").toggleClass("d-none");
+            $(el).next("div").toggleClass("hidden");
         }
 
     </script>

@@ -27,13 +27,6 @@
         url: 'נתיב לתמונה',
         remove: 'הסר תמונה'
       },
-      video: {
-        video: 'סרטון',
-        videoLink: 'קישור לסרטון',
-        insert: 'הוסף סרטון',
-        url: 'קישור לסרטון',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion או Youku)'
-      },
       link: {
         link: 'קישור',
         insert: 'הוסף קישור',
@@ -51,7 +44,7 @@
       },
       style: {
         style: 'עיצוב',
-        p: 'טקסט רגיל',
+        normal: 'טקסט רגיל',
         blockquote: 'ציטוט',
         pre: 'קוד',
         h1: 'כותרת 1',

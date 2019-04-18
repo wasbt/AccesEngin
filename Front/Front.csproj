@@ -1069,6 +1069,10 @@
     <Content Include="assets\plugins\select2\js\select2.full.min.js" />
     <Content Include="assets\plugins\select2\js\select2.js" />
     <Content Include="assets\plugins\select2\js\select2.min.js" />
+    <Content Include="assets\plugins\select2\sweet-alert\sweetalert2.css" />
+    <Content Include="assets\plugins\select2\sweet-alert\sweetalert2.js" />
+    <Content Include="assets\plugins\select2\sweet-alert\sweetalert2.min.css" />
+    <Content Include="assets\plugins\select2\sweet-alert\sweetalert2.min.js" />
     <Content Include="assets\plugins\summernote\lang\summernote-ar-AR.js" />
     <Content Include="assets\plugins\summernote\lang\summernote-ar-AR.min.js" />
     <Content Include="assets\plugins\summernote\lang\summernote-bg-BG.js" />
@@ -1352,7 +1356,7 @@
     <Content Include="fonts\themify.eot" />
     <Content Include="fonts\themify.ttf" />
     <Content Include="fonts\themify.woff" />
-    <Content Include="assets\css\icons.css.map" />
+    <None Include="assets\css\icons.css.map" />
     <Content Include="assets\css\style.css.map" />
     <Content Include="assets\fonts\dripicons-v2.eot" />
     <Content Include="assets\fonts\dripicons-v2.ttf" />
@@ -1601,6 +1605,7 @@
     <Content Include="Views\Shared\_Table_ResultatExigencePDF.cshtml" />
     <Content Include="Views\Home\DemandeExpired.cshtml" />
     <Content Include="Views\Home\SortiesEngins.cshtml" />
+    <Content Include="Views\Home\ResultatsInfoGeneral.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

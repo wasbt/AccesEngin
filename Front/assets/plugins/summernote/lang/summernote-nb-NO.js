@@ -25,13 +25,6 @@
         url: 'Bilde-URL',
         remove: 'Fjern bilde'
       },
-      video: {
-        video: 'Video',
-        videoLink: 'Videolenke',
-        insert: 'Sett inn video',
-        url: 'Video-URL',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion eller Youku)'
-      },
       link: {
         link: 'Lenke',
         insert: 'Sett inn lenke',
@@ -49,7 +42,7 @@
       },
       style: {
         style: 'Stil',
-        p: 'p',
+        normal: 'Normal',
         blockquote: 'Sitat',
         pre: 'Kode',
         h1: 'Overskrift 1',

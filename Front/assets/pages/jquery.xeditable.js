@@ -1,98 +1,114 @@
+
 /**
- * Theme: Adminto  Admin Dashboard
- * Author: Coderthemes
- * X editable
- */
+* Theme: Adminto Admin Template
+* Author: Coderthemes
+* Demo: Editable (Inline editing)
+* 
+*/
 
 
 $(function(){
 
     //modify buttons style
-    $.fn.editableform.buttons =
-        '<button type="submit" class="btn btn-primary editable-submit btn-sm waves-effect waves-light"><i class="mdi mdi-check"></i></button>' +
-        '<button type="button" class="btn btn-secondary editable-cancel btn-sm waves-effect"><i class="mdi mdi-close"></i></button>';
+    $.fn.editableform.buttons = 
+    '<button type="submit" class="btn btn-primary editable-submit btn-sm waves-effect waves-light"><i class="zmdi zmdi-check"></i></button>' +
+    '<button type="button" class="btn editable-cancel btn-sm waves-effect"><i class="zmdi zmdi-close"></i></button>';
+    
+    //editables 
+    $('#username').editable({
+     type: 'text',
+     pk: 1,
+     name: 'username',
+     title: 'Enter username'
+   });
+    
+    $('#firstname').editable({
+      validate: function(value) {
+       if($.trim(value) == '') return 'This field is required';
+     }
+   });
+    
+    $('#sex').editable({
+      prepend: "not selected",
+      source: [
+      {value: 1, text: 'Male'},
+      {value: 2, text: 'Female'}
+      ],
+      display: function(value, sourceData) {
+       var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+       elem = $.grep(sourceData, function(o){return o.value == value;});
 
-    //Inline editables
-    $('#inline-username').editable({
-        type: 'text',
-        pk: 1,
-        name: 'username',
-        title: 'Enter username',
-        mode: 'inline'
+       if(elem.length) {
+         $(this).text(elem[0].text).css("color", colors[value]);
+       } else {
+         $(this).empty();
+       }
+     }
+   });
+    
+    $('#status').editable();
+    
+    $('#group').editable({
+      showbuttons: false
     });
 
+    $('#dob').editable();
+
+    $('#comments').editable({
+      showbuttons: 'bottom'
+    });
+
+    //inline
+
+
+  $('#inline-username').editable({
+     type: 'text',
+     pk: 1,
+     name: 'username',
+     title: 'Enter username',
+     mode: 'inline'
+   });
+    
     $('#inline-firstname').editable({
-        validate: function(value) {
-            if($.trim(value) == '') return 'This field is required';
-        },
-        mode: 'inline'
-    });
-
+      validate: function(value) {
+       if($.trim(value) == '') return 'This field is required';
+     },
+     mode: 'inline'
+   });
+    
     $('#inline-sex').editable({
-        prepend: "not selected",
-        mode: 'inline',
-        source: [
-            {value: 1, text: 'Male'},
-            {value: 2, text: 'Female'}
-        ],
-        display: function(value, sourceData) {
-            var colors = {"": "gray", 1: "green", 2: "blue"},
-                elem = $.grep(sourceData, function(o){return o.value == value;});
+      prepend: "not selected",
+      mode: 'inline',
+      source: [
+      {value: 1, text: 'Male'},
+      {value: 2, text: 'Female'}
+      ],
+      display: function(value, sourceData) {
+       var colors = {"": "#98a6ad", 1: "#5fbeaa", 2: "#5d9cec"},
+       elem = $.grep(sourceData, function(o){return o.value == value;});
 
-            if(elem.length) {
-                $(this).text(elem[0].text).css("color", colors[value]);
-            } else {
-                $(this).empty();
-            }
-        }
-    });
-
+       if(elem.length) {
+         $(this).text(elem[0].text).css("color", colors[value]);
+       } else {
+         $(this).empty();
+       }
+     }
+   });
+    
+    $('#inline-status').editable({mode: 'inline'});
+    
     $('#inline-group').editable({
-        showbuttons: false,
-        mode: 'inline'
+      showbuttons: false,
+      mode: 'inline'
     });
 
-    $('#inline-status').editable({
-        mode: 'inline'
-    });
-
-    $('#inline-dob').editable({
-        mode: 'inline'
-    });
-
-    $('#inline-event').editable({
-        placement: 'right',
-        mode: 'inline',
-        combodate: {
-            firstItem: 'name'
-        }
-    });
+    $('#inline-dob').editable({mode: 'inline'});
 
     $('#inline-comments').editable({
-        showbuttons: 'bottom',
-        mode: 'inline'
+      showbuttons: 'bottom',
+      mode: 'inline'
     });
 
-    $('#inline-fruits').editable({
-        pk: 1,
-        limit: 3,
-        mode: 'inline',
-        source: [
-            {value: 1, text: 'Banana'},
-            {value: 2, text: 'Peach'},
-            {value: 3, text: 'Apple'},
-            {value: 4, text: 'Watermelon'},
-            {value: 5, text: 'Orange'}
-        ]
-    });
 
-    $('#inline-tags').editable({
-        inputclass: 'input-large',
-        mode: 'inline',
-        select2: {
-            tags: ['html', 'javascript', 'css', 'ajax'],
-            tokenSeparators: [",", " "]
-        }
-    });
 
-});
+  });

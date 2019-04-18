@@ -22,22 +22,10 @@
         floatLeft: 'Расположить слева',
         floatRight: 'Расположить справа',
         floatNone: 'Расположение по-умолчанию',
-        shapeRounded: 'Форма: Закругленная',
-        shapeCircle: 'Форма: Круг',
-        shapeThumbnail: 'Форма: Миниатюра',
-        shapeNone: 'Форма: Нет',
         dragImageHere: 'Перетащите сюда картинку',
-        dropImage: 'Перетащите картинку',
         selectFromFiles: 'Выбрать из файлов',
         url: 'URL картинки',
         remove: 'Удалить картинку'
-      },
-      video: {
-        video: 'Видео',
-        videoLink: 'Ссылка на видео',
-        insert: 'Вставить видео',
-        url: 'URL видео',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion или Youku)'
       },
       link: {
         link: 'Ссылка',
@@ -56,7 +44,7 @@
       },
       style: {
         style: 'Стиль',
-        p: 'Нормальный',
+        normal: 'Нормальный',
         blockquote: 'Цитата',
         pre: 'Код',
         h1: 'Заголовок 1',

@@ -25,17 +25,20 @@ namespace Front
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/assets/css/bootstrap.min.css",
-                    "~/assets/css/icons.css",
-                    "~/assets/css/style.css",
+                      "~/assets/css/core.css",
+                      "~/assets/css/components.css",
+                      "~/assets/css/icons.css",
+                      "~/assets/css/pages.css",
+                      "~/assets/css/menu.css",
+                      "~/assets/css/responsive.css",
                     "~/Content/ocp-overrides.css",
                     "~/assets/plugins/sweet-alert/sweetalert2.min.css",
-                    "~/assets/plugins/select2/css/select2.min.css",
+                    "~/assets/plugins/select2/dist/css/select2.min.css",
                     "~/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
                     ));
 
             bundles.Add(new ScriptBundle("~/bundles/templateJS").Include(
                             "~/assets/js/jquery.min.js",
-                            "~/assets/js/popper.min.js",
                             "~/assets/js/bootstrap.min.js",
                             "~/assets/js/waves.js",
                             "~/assets/js/jquery.slimscroll.js",

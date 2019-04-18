@@ -39,54 +39,28 @@
     <!-- Navigation Bar-->
     <header id="topnav">
         <div class="topbar-main">
-            <div class="container-fluid">
+            <div class="container">
 
-                <!-- Logo container-->
-                <div class="logo">
-                    <!-- Text Logo -->
-                    <!--<a href="index.html" class="logo">-->
-                    <!--<span class="logo-small"><i class="mdi mdi-radar"></i></span>-->
-                    <!--<span class="logo-large"><i class="mdi mdi-radar"></i> Adminto</span>-->
-                    <!--</a>-->
-                    <!-- Image Logo -->
-                    <a href="/" class="logo">
-                        <img src="~/assets/images/logo-sm.png" alt="" height="26" class="logo-small">
-                        <img src="~/images/logo.png" height="24" class="logo-large" />
-                    </a>
-
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <a href="/" class="logo"><img src="/images/logo-ocp.png" height="60" /></a>
                 </div>
                 <!-- End Logo container-->
 
 
-                <div class="menu-extras topbar-custom">
+                <div class="menu-extras">
 
-                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
-
-                        <li class="menu-item">
-                            <!-- Mobile menu toggle-->
-                            <a class="navbar-toggle nav-link">
-                                <div class="lines">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </a>
-                            <!-- End mobile menu toggle-->
-                        </li>
-                        <li class="hide-phone">
-                            <form class="app-search">
-                                <input type="text" placeholder="Search..."
-                                       class="form-control">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </form>
-                        </li>
+                    <ul class="nav navbar-nav navbar-right pull-right">
+                        @*<li>
+                            <a href="#myModal" class="btn" data-toggle="modal" data-target="#myModalNorm"><i class="fa fa-search"></i></a>
+                        </li>*@
                         <li>
                             <!-- Notification -->
                             <div class="notification-box">
-                                <ul class="list-inline mb-0">
+                                <ul class="list-inline m-b-0">
                                     <li>
                                         <a href="javascript:void(0);" class="right-bar-toggle">
-                                            <i class="mdi mdi-bell-outline noti-icon"></i>
+                                            <i class="zmdi zmdi-notifications-none"></i>
                                         </a>
                                         <div class="noti-dot">
                                             <span class="dot"></span>
@@ -98,31 +72,37 @@
                             <!-- End Notification bar -->
                         </li>
 
-                        <li class="dropdown notification-list">
-                            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
-                               aria-haspopup="false" aria-expanded="false">
-                                <img src="~/assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                        <li class="dropdown user-box">
+                            <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
+                                <img src="/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
+                                <div class="user-status away"><i class="zmdi zmdi-dot-circle"></i></div>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
+                            <ul class="dropdown-menu">
                                 @Html.Partial("_LoginPartial")
-
-                            </div>
+                            </ul>
                         </li>
-
                     </ul>
+                    <div class="menu-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </div>
                 </div>
-                <!-- end menu-extras -->
 
-                <div class="clearfix"></div>
-
-            </div> <!-- end container -->
+            </div>
         </div>
         <!-- end topbar-main -->
 
 
         <div class="navbar-custom">
-            <div class="container-fluid">
+            <div class="container">
                 <div id="navigation">
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu">
@@ -181,7 +161,7 @@
     </header>
     <!-- End Navigation Bar-->
     <div class="wrapper">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Page-Title -->
             <div class="row">
                 <div class="col-sm-12">

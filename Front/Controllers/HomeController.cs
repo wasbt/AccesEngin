@@ -186,6 +186,63 @@ namespace Front.Controllers
 
             return View(ResultatViewModel);
         }
+        public async Task<ActionResult> ResultatsInfoGeneral(int id)
+        {
+            #region Check Controle id & find it
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var controle = await context.DemandeAccesEngin.FindAsync(id);
+            if (controle == null)
+            {
+                return HttpNotFound();
+            }
+
+            #endregion
+
+            #region get & check checklist
+            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            if (checkList == null)
+            {
+                return HttpNotFound();
+            }
+            #endregion
+
+                        #region get & Type Engin
+            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+
+            if (typeEngin == null)
+            {
+                return HttpNotFound();
+            }
+            #endregion
+
+            #region get & Nature de la Matiere
+            var natureMatiere = await context.NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
+
+            #endregion
+
+          
+
+            #region Resultats Model
+            //To Model
+            var ResultatViewModel = new ResultatsVM
+            {
+                TypeCheckList = checkList,
+                controle = controle,
+                TypeEngin = typeEngin,
+                NatureMatiere = natureMatiere,
+            };
+
+            #endregion
+
+
+            return View(ResultatViewModel);
+        }
+
+
 
         public async Task<ActionResult> NewControleResultatCheckList(int id)
         {
