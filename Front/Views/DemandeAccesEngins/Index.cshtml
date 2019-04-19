@@ -246,12 +246,10 @@
                                 @{
                                     if (!isControled)
                                     {
-                                        if (item.StatutDemandeId != 1 && item.StatutDemandeId.HasValue) //1 => accepter
-                                        {
+                                        
                                             <a href="@Url.Action("ResultatsInfoGeneral", "Home", new { id = item.Id.ToString() })" class="btn btn-custom  waves-effect w-lg waves-light m-b-5">
                                                 <span class="fa fa-list-alt"></span>&nbsp;Voir Détail
                                             </a>
-                                        }
                                     }
                                     if (item.StatutDemandeId != 2 && item.StatutDemandeId.HasValue) //2 => refuser
                                     {
