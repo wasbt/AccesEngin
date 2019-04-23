@@ -35,7 +35,7 @@ namespace Mobile.ViewModel
                 return new Command(async () =>
                 {
                     var mdp = Application.Current.MainPage as MasterDetailPage;
-                    await    mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeAcces.Id));
+                    await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeAcces.Id));
                 });
             }
         }

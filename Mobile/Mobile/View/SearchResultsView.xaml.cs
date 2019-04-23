@@ -1,4 +1,5 @@
-﻿using Mobile.ViewModel;
+﻿using Mobile.View.Base;
+using Mobile.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,16 @@ using Xamarin.Forms.Xaml;
 namespace Mobile.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SearchResultsView : ContentPage
-	{
-        SearchResultsVM ViewModel;
+	public partial class SearchResultsView : BaseView
+    {
+        //SearchResultsVM ViewModel;
 
-        public SearchResultsView ()
+        public SearchResultsView (long Id)
 		{
             InitializeComponent();
-            ViewModel = Resources["vm"] as SearchResultsVM;
+           var ViewModel = new SearchResultsVM(Id);
+            BindingContext = ViewModel;
         }
-	}
+       
+    }
 }

@@ -1,29 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<Base:BaseView
     x:Class="Mobile.View.SearchResultsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:vm="clr-namespace:Mobile.ViewModel">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <vm:SearchResultsVM x:Key="vm" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.Content>
         <StackLayout>
             <Frame
                 Padding="10,15"
                 BackgroundColor="White"
-                BindingContext="{StaticResource vm}"
                 HasShadow="True">
+                <StackLayout
+                    Orientation="Vertical"
+                    Spacing="10"
+                    VerticalOptions="Start">
+                    <StackLayout>
+                        <Label Text="{Binding ResultatExigence.DemandeAccesDto.TypeEnginName}" />
+                    </StackLayout>
 
-                <Label
-                    HorizontalOptions="EndAndExpand"
-                    Style="{StaticResource valueLabel}"
-                    Text="{Binding DemandeAcces.TypeEnginName}" />
+                </StackLayout>
             </Frame>
+            <ListView ItemsSource="{Binding ResultatExigence.ResultatValueGroupingInfoG}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Label BackgroundColor="Yellow" Text="{Binding Key}" />
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
+
     </ContentPage.Content>
-</ContentPage>
+</Base:BaseView>

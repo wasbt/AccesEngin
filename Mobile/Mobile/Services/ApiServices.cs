@@ -142,7 +142,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/GetResultatExigence/40");
+                    Constants.BaseApiAddress + "api/GetResultatExigence/" + DemandeAccesId);
 
                 var demandeAcces = JsonConvert.DeserializeObject<ResultatExigenceModel>(json);
                 return demandeAcces;

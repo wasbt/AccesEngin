@@ -75,6 +75,9 @@ namespace Mobile.ViewModel
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public virtual void OnAppearing() { }
+
+        public virtual void OnDisappearing() { }
         #endregion
     }
 }

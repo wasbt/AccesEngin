@@ -14,7 +14,8 @@ namespace Mobile.ViewModel
     public class SearchResultsVM : BaseViewModel
     {
         private readonly ApiServices _apiServices = new ApiServices();
-
+        long Id = 0;
+     
         public ResultatExigenceModel resultatExigence;
 
         public ResultatExigenceModel ResultatExigence
@@ -23,9 +24,15 @@ namespace Mobile.ViewModel
 
             set => SetProperty(ref resultatExigence, value);
         }
-        public SearchResultsVM()
-        {
 
+        public SearchResultsVM(long id)
+        {
+             Id = id;
+        }
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+            SearchResultsCommand?.Execute(Id);
         }
 
         private ICommand _SearchResultsCommand;

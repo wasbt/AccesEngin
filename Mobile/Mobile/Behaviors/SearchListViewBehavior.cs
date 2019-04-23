@@ -23,12 +23,13 @@ namespace Mobile.Behaviors
 
         void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            if (((ListView)sender).SelectedItem == null)
+                return;
+
             DemandeAcces selectedDemande = (listView.SelectedItem) as DemandeAcces;
-            var tt = new SearchResultsVM();
-            tt.SearchResultsCommand?.Execute(selectedDemande.Id);
-            ((ListView)sender).SelectedItem = null;
             var mdp = Application.Current.MainPage as MasterDetailPage;
-            mdp.Detail.Navigation.PushAsync(new SearchResultsView());
+            mdp.Detail.Navigation.PushAsync(new SearchResultsView(selectedDemande.Id));
+            ((ListView)sender).SelectedItem = null;
         }
 
         protected override void OnDetachingFrom(ListView bindable)
