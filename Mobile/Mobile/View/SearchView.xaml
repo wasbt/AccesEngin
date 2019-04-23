@@ -70,9 +70,6 @@
                                                 Text="{Binding DatePlannification}"
                                                 TextColor="Gray"
                                                 VerticalOptions="CenterAndExpand" />
-
-
-
                                         </Grid>
                                     </StackLayout>
                                 </Frame>

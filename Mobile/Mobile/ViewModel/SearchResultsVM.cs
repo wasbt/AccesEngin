@@ -1,5 +1,6 @@
 ﻿using Mobile.Helpers;
 using Mobile.Services;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace Mobile.ViewModel
     {
         private readonly ApiServices _apiServices = new ApiServices();
 
+        public ResultatExigenceModel resultatExigence;
+
+        public ResultatExigenceModel ResultatExigence
+        {
+            get => resultatExigence;
+
+            set => SetProperty(ref resultatExigence, value);
+        }
         public SearchResultsVM()
         {
 
@@ -29,7 +38,7 @@ namespace Mobile.ViewModel
                     if (Id > 0)
                     {
                         var accessToken = Settings.AccessToken;
-                        var t = await _apiServices.GetResultatExigenceByDemandeAccesId(Id, accessToken);
+                        ResultatExigence = await _apiServices.GetResultatExigenceByDemandeAccesId(Id, accessToken);
                     }
                 }));
             }

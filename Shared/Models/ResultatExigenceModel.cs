@@ -10,10 +10,11 @@ namespace Shared.Models
     public class ResultatExigenceModel
     {
         public DemandeAccesDto DemandeAccesDto { get; set; }
-        public List<Group> ResultatValueGrouping { get; set; }
+        public List<GroupInfoGeneral> ResultatValueGroupingInfoG { get; set; }
+        public List<GroupExigence> ResultatValueGroupingExigence { get; set; }
     }
 
-    public class ResultatValue
+    public class ResultatValueExigence
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -23,9 +24,22 @@ namespace Shared.Models
         public string datetime { get; set; }
     }
 
-    public class Group
+    public class ResultatValueInfoGrenerale
+    {
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class GroupInfoGeneral
     {
         public string Key { get; set; }
-        public List<ResultatValue> ResultatValue { get; set; }
+        public List<ResultatValueInfoGrenerale> RsesultatInfoGrenerale { get; set; }
+    }
+
+    public class GroupExigence
+    {
+        public string Key { get; set; }
+        public List<ResultatValueExigence> ResultatExigence { get; set; }
     }
 }

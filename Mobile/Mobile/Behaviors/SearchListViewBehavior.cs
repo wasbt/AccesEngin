@@ -1,4 +1,5 @@
 ﻿using Mobile.Model;
+using Mobile.View;
 using Mobile.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,9 @@ namespace Mobile.Behaviors
             DemandeAcces selectedDemande = (listView.SelectedItem) as DemandeAcces;
             var tt = new SearchResultsVM();
             tt.SearchResultsCommand?.Execute(selectedDemande.Id);
+            ((ListView)sender).SelectedItem = null;
+            var mdp = Application.Current.MainPage as MasterDetailPage;
+            mdp.Detail.Navigation.PushAsync(new SearchResultsView());
         }
 
         protected override void OnDetachingFrom(ListView bindable)

@@ -155,14 +155,18 @@ namespace BLL.Biz
 
         public async Task<List<DemandeAccesDto>> DemandeAccesByMatricule(string Matricule)
         {
+
             #region Check demand acces id & find it
             if (string.IsNullOrWhiteSpace(Matricule))
             {
                 return null;
             }
             var demandeAcces = context.DemandeAccesEngin
-                .Where(x => x.ResultatInfoGenerale
-                .Any(i => i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) && 
+                .Where(x =>
+                    x.Autorise &&
+                    x.StatutDemandeId == (int)DemandeStatus.Accepter &&
+                    x.ResultatInfoGenerale
+                    .Any(i => i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                           i.ValueInfo.Contains(Matricule)));
             if (demandeAcces == null)
             {
@@ -177,11 +181,11 @@ namespace BLL.Biz
         public async Task<List<DemandeAccesEngin>> DemandeAccesByEntityMatricule(SearchDemandeModel model)
         {
             var demandeAcces = context.DemandeAccesEngin.Where(x =>
-                                                                   x.Autorise && 
+                                                                   x.Autorise &&
                                                                    x.StatutDemandeId == (int)DemandeStatus.Accepter &&
-                                                                   x.DemandeResultatEntete.Any()) 
+                                                                   x.DemandeResultatEntete.Any())
                                                                    .AsQueryable();
-                
+
             #region Check demand acces id & find it
             if (!string.IsNullOrWhiteSpace(model.Matricule))
             {
@@ -189,8 +193,8 @@ namespace BLL.Biz
                 demandeAcces = demandeAcces
                 .Where(x =>
                        x.ResultatInfoGenerale
-                .Any(i => 
-                     i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) && 
+                .Any(i =>
+                     i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                      i.ValueInfo.Equals(model.Matricule, StringComparison.OrdinalIgnoreCase)));
             }
             if (model.EntityId.HasValue)

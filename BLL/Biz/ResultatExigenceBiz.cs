@@ -84,15 +84,16 @@ namespace BLL.Biz
             //}
 
             var RubricGroupingList = typeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name);
-            result.ResultatValueGrouping = new List<Group>();
+            result.ResultatValueGroupingInfoG = new List<GroupInfoGeneral>();
+            result.ResultatValueGroupingExigence = new List<GroupExigence>();
             #region rubrique info generale
             foreach (var infoRubriqueGroup in RubricGroupingList)
             {
 
-                var group = new Group
+                var group = new GroupInfoGeneral
                 {
                     Key = infoRubriqueGroup.Key,
-                    ResultatValue = new List<ResultatValue>(),
+                    RsesultatInfoGrenerale = new List<ResultatValueInfoGrenerale>(),
 
                 };
 
@@ -105,36 +106,30 @@ namespace BLL.Biz
                         continue;
                     }
 
-                    var element = new ResultatValue
+                    var element = new ResultatValueInfoGrenerale
                     {
                         Name = rebricInfo.Name,
                         Value = info.ValueInfo
                     };
-                    group.ResultatValue.Add(element);
+                    group.RsesultatInfoGrenerale.Add(element);
                 }
-                result.ResultatValueGrouping.Add(group);
+                result.ResultatValueGroupingInfoG.Add(group);
             }
 
 
             #endregion
 
 
-            #region Header
-            //workSheet.Cells[startingRow, ExigenceColumn].Value = $"Exigence";
-            //workSheet.Cells[startingRow, ExigenceColumn + 6].Value = $"Conforme";
-            //workSheet.Cells[startingRow, ExigenceColumn + 8].Value = $"Observation";
-            //workSheet.Cells[startingRow, ExigenceColumn + 11].Value = $"Date";
-            #endregion
 
             #region rubrique 
             var rubriqueGrouping = typeCheckList.CheckListRubrique.Where(x => x.IsActif == true);
             foreach (var rubrique in rubriqueGrouping)
             {
 
-                var group = new Group
+                var group = new GroupExigence
                 {
                     Key = rubrique.Name,
-                    ResultatValue = new List<ResultatValue>(),
+                    ResultatExigence = new List<ResultatValueExigence>(),
 
                 };
 
@@ -149,7 +144,7 @@ namespace BLL.Biz
                     {
                         continue;
                     }
-                    var element = new ResultatValue
+                    var element = new ResultatValueExigence
                     {
                         Name = checkListExigence.Name,
                         datetime = data.Date.ToString(),
@@ -157,24 +152,11 @@ namespace BLL.Biz
                         conform = data.IsConform ? $"Conforme" : $"Non conforme",
                     };
 
-                    group.ResultatValue.Add(element);
+                    group.ResultatExigence.Add(element);
                 }
-                result.ResultatValueGrouping.Add(group);
+                result.ResultatValueGroupingExigence.Add(group);
             }
             #endregion
-
-           // var tc = $"TAUX DE CONFORMITE";
-
-            //workSheet.Cells[startingRow, ExigenceColumn].Value = $"Conforme";
-            //workSheet.Cells[startingRow, ResultatColumn].Value = $"{exigencesApplicable} %";
-
-            //startingRow++;
-            //workSheet.Cells[startingRow, ExigenceColumn].Value = $"Non conforme";
-            //workSheet.Cells[startingRow, ResultatColumn].Value = $"{exigencesNonApplicable} %";
-
-
-
-
 
             #endregion
 

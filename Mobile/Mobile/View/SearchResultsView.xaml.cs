@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mobile.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,12 @@ namespace Mobile.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SearchResultsView : ContentPage
 	{
-		public SearchResultsView ()
+        SearchResultsVM ViewModel;
+
+        public SearchResultsView ()
 		{
-			InitializeComponent ();
-		}
+            InitializeComponent();
+            ViewModel = Resources["vm"] as SearchResultsVM;
+        }
 	}
 }
