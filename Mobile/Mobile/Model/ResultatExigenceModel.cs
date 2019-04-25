@@ -1,19 +1,23 @@
 ﻿using Shared.DTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
-namespace Shared.Models
+namespace Mobile.Model
 {
-    public class ResultatExigenceModel
+    public class ResultatExigenceModel 
     {
+      
+
         public DemandeAccesDto DemandeAccesDto { get; set; }
         public List<Group> ResultatValueGrouping { get; set; }
     }
 
-    public class ResultatValue
+    public class ResultatValue : INotifyPropertyChanged
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -24,12 +28,17 @@ namespace Shared.Models
         public string Color { get; set; }
         public bool IsInfoG { get; set; }
         public bool IsExigence { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
     }
 
-    public class Group
+    public class Group : BindableObject
     {
         public string Key { get; set; }
         public string ColorRubrique { get; set; }
         public List<ResultatValue> ResultatValue { get; set; }
+
     }
 }

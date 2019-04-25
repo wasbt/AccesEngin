@@ -133,7 +133,7 @@ namespace Mobile.Services
             }
 
         }
-        public async Task<ResultatExigenceModel> GetResultatExigenceByDemandeAccesId(long DemandeAccesId, string accessToken)
+        public async Task<Model.ResultatExigenceModel> GetResultatExigenceByDemandeAccesId(long DemandeAccesId, string accessToken)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace Mobile.Services
                 var json = await client.GetStringAsync(
                     Constants.BaseApiAddress + "api/GetResultatExigence/" + DemandeAccesId);
 
-                var demandeAcces = JsonConvert.DeserializeObject<ResultatExigenceModel>(json);
+                var demandeAcces = JsonConvert.DeserializeObject<Model.ResultatExigenceModel>(json);
                 return demandeAcces;
 
 

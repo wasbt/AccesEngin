@@ -1,6 +1,6 @@
 ﻿using Mobile.Helpers;
+using Mobile.Model;
 using Mobile.Services;
-using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

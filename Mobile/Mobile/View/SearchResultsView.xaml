@@ -22,14 +22,77 @@
 
                 </StackLayout>
             </Frame>
-            <ListView ItemsSource="{Binding ResultatExigence.ResultatValueGroupingInfoG}">
+
+            <ListView
+                BackgroundColor="Transparent"
+                HasUnevenRows="True"
+                ItemsSource="{Binding ResultatExigence.ResultatValueGrouping}"
+                SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Label BackgroundColor="Yellow" Text="{Binding Key}" />
+                        <ViewCell>
+                            <StackLayout VerticalOptions="FillAndExpand">
+                                <StackLayout Padding="5,5" BackgroundColor="{Binding ColorRubrique}">
+                                    <Label
+                                        BackgroundColor="{Binding ColorRubrique}"
+                                        Font="Bold,15"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="{Binding Key}" />
+                                </StackLayout>
+                                <StackLayout BindableLayout.ItemsSource="{Binding ResultatValue}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="20" />
+                                                        <RowDefinition Height="5" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="100" />
+                                                    </Grid.ColumnDefinitions>
 
+                                                    <Label
+                                                        Grid.Column="0"
+                                                        FontAttributes="None"
+                                                        FontSize="Small"
+                                                        Text="{Binding Name}"
+                                                        TextColor="Black"
+                                                        VerticalTextAlignment="Center" />
+
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        Font="Small"
+                                                        HorizontalOptions="Start"
+                                                        IsVisible="{Binding IsExigence}"
+                                                        Text="{Binding Value}"
+                                                        TextColor="Gray" />
+                                                    <Frame
+                                                        Grid.Column="1"
+                                                        BackgroundColor="red"
+                                                        CornerRadius="10"
+                                                        HasShadow="False"
+                                                        IsVisible="{Binding IsInfoG}">
+                                                        <Label
+                                                            Font="Small"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            Text="{Binding Conform}"
+                                                            TextColor="Gray" />
+                                                    </Frame>
+
+                                                </Grid>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+
         </StackLayout>
 
     </ContentPage.Content>

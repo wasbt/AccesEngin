@@ -74,26 +74,17 @@ namespace BLL.Biz
 
             result.DemandeAccesDto = demandeAcces.DemandeAccesToDTO();
 
-            //if (demandeAcces.Autorise)
-            //{
-
-            //}
-            //else
-            //{
-
-            //}
-
             var RubricGroupingList = typeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name);
-            result.ResultatValueGroupingInfoG = new List<GroupInfoGeneral>();
-            result.ResultatValueGroupingExigence = new List<GroupExigence>();
+            result.ResultatValueGrouping = new List<Group>();
             #region rubrique info generale
             foreach (var infoRubriqueGroup in RubricGroupingList)
             {
 
-                var group = new GroupInfoGeneral
+                var group = new Group
                 {
                     Key = infoRubriqueGroup.Key,
-                    RsesultatInfoGrenerale = new List<ResultatValueInfoGrenerale>(),
+                    ColorRubrique = "#cff0da",
+                    ResultatValue = new List<ResultatValue>(),
 
                 };
 
@@ -106,19 +97,20 @@ namespace BLL.Biz
                         continue;
                     }
 
-                    var element = new ResultatValueInfoGrenerale
+                    var element = new ResultatValue
                     {
                         Name = rebricInfo.Name,
-                        Value = info.ValueInfo
+                        Value = info.ValueInfo,
+                        IsExigence = false,
+                        IsInfoG = true,
                     };
-                    group.RsesultatInfoGrenerale.Add(element);
+                    group.ResultatValue.Add(element);
                 }
-                result.ResultatValueGroupingInfoG.Add(group);
+                result.ResultatValueGrouping.Add(group);
             }
 
 
             #endregion
-
 
 
             #region rubrique 
@@ -126,10 +118,11 @@ namespace BLL.Biz
             foreach (var rubrique in rubriqueGrouping)
             {
 
-                var group = new GroupExigence
+                var group = new Group
                 {
                     Key = rubrique.Name,
-                    ResultatExigence = new List<ResultatValueExigence>(),
+                    ColorRubrique = "#dadbdb",
+                    ResultatValue = new List<ResultatValue>(),
 
                 };
 
@@ -144,17 +137,19 @@ namespace BLL.Biz
                     {
                         continue;
                     }
-                    var element = new ResultatValueExigence
+                    var element = new ResultatValue
                     {
                         Name = checkListExigence.Name,
-                        datetime = data.Date.ToString(),
+                        Datetime = data.Date.ToString(),
                         Observation = data.Observation,
-                        conform = data.IsConform ? $"Conforme" : $"Non conforme",
+                        Conform = data.IsConform ? $"Conforme" : $"Non conforme",
+                        IsExigence = true,
+                        IsInfoG = false,
                     };
 
-                    group.ResultatExigence.Add(element);
+                    group.ResultatValue.Add(element);
                 }
-                result.ResultatValueGroupingExigence.Add(group);
+                result.ResultatValueGrouping.Add(group);
             }
             #endregion
 
