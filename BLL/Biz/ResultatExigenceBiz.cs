@@ -145,6 +145,7 @@ namespace BLL.Biz
                         Conform = data.IsConform ? $"Conforme" : $"Non conforme",
                         IsExigence = true,
                         IsInfoG = false,
+                        Color = data.IsConform ? $"#44D185" : $"#FF6370",
                     };
 
                     group.ResultatValue.Add(element);

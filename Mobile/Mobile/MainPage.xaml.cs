@@ -24,8 +24,8 @@ namespace Mobile
             // Creating our pages for menu navigation
             // Here you can define title for item, 
             // icon on the left side, and page that you want to open after selection
-            var page1 = new MasterPageItem() { Title = "Demandes non controleés", Icon = "itemIcon1.png", TargetType = typeof(ListDemandeView) };
-            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "itemIcon1.png", TargetType = typeof(SearchView) };
+            var page1 = new MasterPageItem() { Title = "Demandes non controleés", Icon = "arrow_a.png", TargetType = typeof(ListDemandeView) };
+            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "arrow_a", TargetType = typeof(SearchView) };
 
 
             // Adding menu items to menuList

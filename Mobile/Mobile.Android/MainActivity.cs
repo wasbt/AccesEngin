@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Lottie.Forms.Droid;
+using Acr.UserDialogs;
 
 namespace Mobile.Droid
 {
@@ -17,10 +19,13 @@ namespace Mobile.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+
+            UserDialogs.Init(this);
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState); // add this line to your code, it may also be called: bundle
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
+            AnimationViewRenderer.Init();
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
         }

@@ -1,4 +1,5 @@
-﻿using Mobile.Helpers;
+﻿using Acr.UserDialogs;
+using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
 using System;
@@ -33,6 +34,7 @@ namespace Mobile.ViewModel
         {
             base.OnAppearing();
             SearchResultsCommand?.Execute(Id);
+  
         }
 
         private ICommand _SearchResultsCommand;
@@ -44,8 +46,11 @@ namespace Mobile.ViewModel
                 {
                     if (Id > 0)
                     {
+                        UserDialogs.Instance.ShowLoading("Chargement...");
                         var accessToken = Settings.AccessToken;
                         ResultatExigence = await _apiServices.GetResultatExigenceByDemandeAccesId(Id, accessToken);
+                        await Task.Delay(2000);
+                        UserDialogs.Instance.HideLoading();
                     }
                 }));
             }

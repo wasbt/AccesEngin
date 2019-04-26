@@ -33,5 +33,11 @@ namespace Shared.DTO
 
         public string CreatedEmail { get; set; }
 
+        public string Statut { get; set; }
+        public string StatutColor { get; set; }
+
+        public string AutoriseName { get; set; }
+
+
     }
 }

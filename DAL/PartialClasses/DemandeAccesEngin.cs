@@ -27,7 +27,12 @@ namespace DAL
                 Observation = model?.Observation,
                 CreatedBy = model.CreatedBy,
                 CreatedOn = model.CreatedOn,
-                CreatedEmail = model.AspNetUsers.Email               
+                CreatedEmail = model.AspNetUsers.Email,
+                AutoriseName = model.Autorise ? "Autorisé" : "Non autorisé",
+                Statut = model?.StatutDemande?.Name,
+                StatutColor = model?.StatutDemande?.Color,
+
+
             };
             return dto;
         }
