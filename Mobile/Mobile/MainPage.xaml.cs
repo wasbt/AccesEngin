@@ -24,8 +24,8 @@ namespace Mobile
             // Creating our pages for menu navigation
             // Here you can define title for item, 
             // icon on the left side, and page that you want to open after selection
-            var page1 = new MasterPageItem() { Title = "Demandes non controleés", Icon = "arrow_a.png", TargetType = typeof(ListDemandeView) };
-            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "arrow_a", TargetType = typeof(SearchView) };
+            var page1 = new MasterPageItem() { Title = "Controler", Icon = "checkList", TargetType = typeof(ListDemandeView) };
+            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "search", TargetType = typeof(SearchView) };
 
 
             // Adding menu items to menuList
@@ -37,7 +37,7 @@ namespace Mobile
             navigationDrawerList.ItemsSource = menuList;
 
             // Initial navigation, this can be used for our home page
-            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ListDemandeView)));
+            Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(SearchView)));
         }
 
         // Event for Menu Item selection, here we are going to handle navigation based

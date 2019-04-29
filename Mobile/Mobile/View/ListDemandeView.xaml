@@ -10,6 +10,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <vm:DemandeAccesVM x:Key="vm" />
+            <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -20,8 +21,9 @@
             ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
             <ListView.Behaviors>
                 <behaviors:ListViewBehavior />
-                <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsBusy}" />
+                <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsWorking}" />
             </ListView.Behaviors>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -57,7 +59,7 @@
                                             FontAttributes="None"
                                             FontSize="Default"
                                             HorizontalOptions="EndAndExpand"
-                                            Text="{Binding DatePlannification}"
+                                            Text="{Binding DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
                                             TextColor="Gray"
                                             VerticalOptions="CenterAndExpand" />
 
@@ -71,7 +73,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.Footer>
-                <Grid Padding="6" IsVisible="{Binding IsBusy}">
+                <Grid Padding="6" IsVisible="{Binding IsWorking}">
                     <!--  set the footer to have a zero height when invisible  -->
                     <Grid.Triggers>
                         <Trigger TargetType="Grid" Property="IsVisible" Value="False">
@@ -80,11 +82,8 @@
                     </Grid.Triggers>
                     <!--  the loading content  -->
                     <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
                         HorizontalOptions="Center"
                         Text="Loading..."
-                        TextColor="Black"
                         VerticalOptions="Center" />
                 </Grid>
             </ListView.Footer>

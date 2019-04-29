@@ -24,13 +24,6 @@
         url: 'Адреса слике',
         remove: 'Уклони слику'
       },
-      video: {
-        video: 'Видео',
-        videoLink: 'Веза ка видеу',
-        insert: 'Уметни видео',
-        url: 'URL видео',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion или Youku)'
-      },
       link: {
         link: 'Веза',
         insert: 'Уметни везу',
@@ -48,7 +41,7 @@
       },
       style: {
         style: 'Стил',
-        p: 'Нормални',
+        normal: 'Нормални',
         blockquote: 'Цитат',
         pre: 'Код',
         h1: 'Заглавље 1',

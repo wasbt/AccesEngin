@@ -24,13 +24,6 @@
         url: 'URL gambar',
         remove: 'Hapus Gambar'
       },
-      video: {
-        video: 'Video',
-        videoLink: 'Link video',
-        insert: 'Sisipkan video',
-        url: 'Tautan video',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion atau Youku)'
-      },
       link: {
         link: 'Tautan',
         insert: 'Tambah tautan',
@@ -48,7 +41,7 @@
       },
       style: {
         style: 'Gaya',
-        p: 'p',
+        normal: 'Normal',
         blockquote: 'Kutipan',
         pre: 'Kode',
         h1: 'Heading 1',

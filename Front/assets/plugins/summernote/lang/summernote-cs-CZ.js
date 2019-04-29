@@ -23,13 +23,6 @@
         selectFromFiles: 'Vybrat soubor',
         url: 'URL obrázku'
       },
-      video: {
-        video: 'Video',
-        videoLink: 'Odkaz videa',
-        insert: 'Vložit video',
-        url: 'URL videa?',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion nebo Youku)'
-      },
       link: {
         link: 'Odkaz',
         insert: 'Vytvořit odkaz',
@@ -47,7 +40,7 @@
       },
       style: {
         style: 'Styl',
-        p: 'Normální',
+        normal: 'Normální',
         blockquote: 'Citace',
         pre: 'Kód',
         h1: 'Nadpis 1',

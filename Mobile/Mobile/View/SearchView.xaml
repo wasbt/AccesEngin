@@ -9,6 +9,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <vm:SearchVM x:Key="vm" />
+            <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -67,7 +68,7 @@
                                                 FontAttributes="None"
                                                 FontSize="Default"
                                                 HorizontalOptions="EndAndExpand"
-                                                Text="{Binding DatePlannification}"
+                                                Text="{Binding DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
                                                 TextColor="Gray"
                                                 VerticalOptions="CenterAndExpand" />
                                         </Grid>

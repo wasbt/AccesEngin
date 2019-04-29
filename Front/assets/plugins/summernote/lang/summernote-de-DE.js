@@ -30,13 +30,6 @@
         url: 'Grafik URL',
         remove: 'Grafik entfernen'
       },
-      video: {
-        video: 'Video',
-        videoLink: 'Video Link',
-        insert: 'Video einfügen',
-        url: 'Video URL?',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion oder Youku)'
-      },
       link: {
         link: 'Link',
         insert: 'Link einfügen',
@@ -54,7 +47,7 @@
       },
       style: {
         style: 'Stil',
-        p: 'Normal',
+        normal: 'Normal',
         blockquote: 'Zitat',
         pre: 'Quellcode',
         h1: 'Überschrift 1',

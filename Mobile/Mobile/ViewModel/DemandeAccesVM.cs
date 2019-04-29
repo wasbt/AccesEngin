@@ -15,13 +15,13 @@ using Xamarin.Forms.Extended;
 
 namespace Mobile.ViewModel
 {
-    public class DemandeAccesVM : INotifyPropertyChanged
+    public class DemandeAccesVM : BindableObject
     {
         private bool _isBusy;
         private const int PageSize = 5;
         private readonly ApiServices _apiServices = new ApiServices();
         private InfiniteScrollCollection<DemandeAcces> demandeAcces;
-
+        public static readonly BindableProperty IsWorkingProperty =  BindableProperty.Create(nameof(IsWorking), typeof(bool), typeof(DemandeAccesVM), default(bool));
 
         //public DemandeAccesVM()
         //{
@@ -80,32 +80,42 @@ namespace Mobile.ViewModel
 
                     // return the items that need to be added
                     return items;
-                },
-                OnCanLoadMore = () =>
-                {
-                    return DemandeAcces.Count <= 100;
                 }
             };
 
-            DownloadDataAsync();
+            RefreshCommand = new Command(() =>
+            {
+                // clear and start again
+                DemandeAcces.Clear();
+                DemandeAcces.LoadMoreAsync();
+            });
+
+            // load the initial data
+            DemandeAcces.LoadMoreAsync();
         }
 
-        private async Task DownloadDataAsync()
-        {
-            var accessToken = Settings.AccessToken;
+        //private async Task DownloadDataAsync()
+        //{
+        //    var accessToken = Settings.AccessToken;
 
-            var items = await _apiServices.GetDemandeAccesListAsync(accessToken, pageIndex: 0, pageSize: PageSize);
+        //    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, pageIndex: 0, pageSize: PageSize);
 
-            DemandeAcces.AddRange(items);
-        }
+        //    DemandeAcces.AddRange(items);
+        //}
 
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public bool IsWorking
+        {
+            get { return (bool)GetValue(IsWorkingProperty); }
+            set { SetValue(IsWorkingProperty, value); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+        public ICommand RefreshCommand { get; }
+
     }
 }

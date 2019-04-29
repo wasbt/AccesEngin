@@ -23,13 +23,6 @@
         selectFromFiles: 'Alege din fişiere',
         url: 'URL imagine'
       },
-      video: {
-        video: 'Video',
-        videoLink: 'Link video',
-        insert: 'Inserează video',
-        url: 'URL video?',
-        providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion sau Youku)'
-      },
       link: {
         link: 'Link',
         insert: 'Inserează link',
@@ -46,7 +39,7 @@
       },
       style: {
         style: 'Stil',
-        p: 'p',
+        normal: 'Normal',
         blockquote: 'Citat',
         pre: 'Preformatat',
         h1: 'Titlu 1',
