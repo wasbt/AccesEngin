@@ -62,14 +62,6 @@
     <Folder Include="dbo\Tables\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="BackOffice\TypeCheckList.sql" />
-    <Build Include="BackOffice\AspNetRoles.sql" />
-    <Build Include="BackOffice\AspNetUserClaims.sql" />
-    <Build Include="BackOffice\AspNetUserLogins.sql" />
-    <Build Include="BackOffice\AspNetUsers.sql" />
-    <Build Include="BackOffice\AspNetUserRoles.sql" />
-    <Build Include="BackOffice\CheckListRubrique.sql" />
-    <Build Include="BackOffice\CheckListExigence.sql" />
     <Build Include="DemandeAccesEngin.sql" />
     <Build Include="ResultatExigence.sql" />
     <Build Include="dbo\Tables\Profile.sql" />
@@ -77,16 +69,27 @@
     <Build Include="dbo\Tables\Sites.sql" />
     <Build Include="dbo\Tables\ResultatInfoGenerale.sql" />
     <Build Include="dbo\Tables\MAP_InfoGenerale_TypeCheckList.sql" />
-    <Build Include="dbo\Tables\InfoGeneralRubrique.sql" />
     <Build Include="dbo\Tables\InfoGenerale.sql" />
     <Build Include="dbo\Tables\Entities.sql" />
     <Build Include="dbo\Tables\AppFiles.sql" />
-    <Build Include="dbo\Tables\__MigrationHistory.sql" />
     <Build Include="dbo\Tables\NatureMatiere.sql" />
     <Build Include="dbo\Tables\DemandeResultatEntete.sql" />
-    <Build Include="dbo\Tables\Reports.sql" />
-    <Build Include="dbo\Tables\StatutDemandes.sql" />
-    <Build Include="dbo\Tables\REF_MailingList.sql" />
     <Build Include="dbo\Tables\Map_REF_MailingListAspNetUsers.sql" />
+    <Build Include="dbo\Tables\ReponseDemande.sql" />
+    <Build Include="dbo\Tables\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\CheckListExigence.sql" />
+    <Build Include="dbo\Tables\CheckListRubrique.sql" />
+    <Build Include="BackOffice\REF_CheckListExigence.sql" />
+    <Build Include="BackOffice\REF_CheckListRubrique.sql" />
+    <Build Include="BackOffice\REF_InfoGenerale.sql" />
+    <Build Include="BackOffice\REF_NatureMatiere.sql" />
+    <Build Include="BackOffice\REF_StatutDemandes.sql" />
+    <Build Include="BackOffice\REF_TypeCheckList.sql" />
+    <Build Include="BackOffice\REF_TypeEngin.sql" />
+    <Build Include="BackOffice\REF_InfoGeneralRubrique.sql" />
   </ItemGroup>
 </Project>

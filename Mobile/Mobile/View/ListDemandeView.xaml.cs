@@ -18,7 +18,9 @@ namespace Mobile.View
         public ListDemandeView ()
 		{
 			InitializeComponent ();
-            ViewModel = Resources["vm"] as DemandeAccesVM;
+            // ViewModel = Resources["vm"] as DemandeAccesVM;
+            BindingContext = new DemandeAccesVM();
+
         }
     }
    

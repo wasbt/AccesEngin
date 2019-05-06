@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿using DATAAL;
 using Microsoft.AspNet.Identity;
 using Shared;
 using System;
@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 {
     public class BaseApiController : ApiController
     {
-        public EnginDbContext context = new EnginDbContext();
+        public TestEnginEntities context = new TestEnginEntities();
         private ApplicationUserManager _userManager;
 
         #region ContainerName - SourceName

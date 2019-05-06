@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class TypeEnginsController : BackOfficeController
     {
         // GET: BackOffice/TypeEngins
-        public async Task<ActionResult> Index(StandardModel<TypeEngin> model)
+        public async Task<ActionResult> Index(StandardModel<REF_TypeEngin> model)
         {
-            var typeEngin = context.TypeEngin.Include(t => t.AspNetUsers).Include(t => t.TypeCheckList);
+            var typeEngin = context.REF_TypeEngin.Include(t => t.AspNetUsers).Include(t => t.REF_TypeCheckList);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.TypeEngin.AsQueryable();
+			var query = context.REF_TypeEngin.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<TypeEngin>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<REF_TypeEngin>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeEngin typeEngin = await context.TypeEngin.FindAsync(id);
+            REF_TypeEngin typeEngin = await context.REF_TypeEngin.FindAsync(id);
             if (typeEngin == null)
             {
                 return HttpNotFound();
@@ -67,7 +67,7 @@ namespace Front.Areas.BackOffice.Controllers
         public ActionResult Create()
         {
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name");
             return View();
         }
 
@@ -76,20 +76,20 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(TypeEngin typeEngin)
+        public async Task<ActionResult> Create(REF_TypeEngin typeEngin)
         {
             if (ModelState.IsValid)
             {
                 typeEngin.CreatedBy = CurrentUserId;
                 typeEngin.CreatedOn = DateTime.Now; 
-                context.TypeEngin.Add(typeEngin);
+                context.REF_TypeEngin.Add(typeEngin);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", typeEngin.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
             return View(typeEngin);
         }
 
@@ -100,13 +100,13 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeEngin typeEngin = await context.TypeEngin.FindAsync(id);
+            REF_TypeEngin typeEngin = await context.REF_TypeEngin.FindAsync(id);
             if (typeEngin == null)
             {
                 return HttpNotFound();
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", typeEngin.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
             return View(typeEngin);
         }
 
@@ -115,7 +115,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(TypeEngin typeEngin)
+        public async Task<ActionResult> Edit(REF_TypeEngin typeEngin)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace Front.Areas.BackOffice.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", typeEngin.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", typeEngin.TypeCheckListId);
             return View(typeEngin);
         }
 
@@ -138,7 +138,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TypeEngin typeEngin = await context.TypeEngin.FindAsync(id);
+            REF_TypeEngin typeEngin = await context.REF_TypeEngin.FindAsync(id);
             if (typeEngin == null)
             {
                 return HttpNotFound();
@@ -151,8 +151,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            TypeEngin typeEngin = await context.TypeEngin.FindAsync(id);
-            context.TypeEngin.Remove(typeEngin);
+            REF_TypeEngin typeEngin = await context.REF_TypeEngin.FindAsync(id);
+            context.REF_TypeEngin.Remove(typeEngin);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

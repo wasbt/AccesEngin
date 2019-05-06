@@ -1,7 +1,9 @@
-﻿@model DAL.TypeCheckList
+﻿@model DATAAL.REF_TypeCheckList
 
 @{
-    ViewBag.Title = "Details";
+                /**/
+
+                ViewBag.Title = "Details";
 }
 
 
@@ -12,39 +14,39 @@
             <h2 class="header">Détails de Type demande d'acces #@Model.Name</h2>
 
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </dt>
+            <div>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.AspNetUsers.Email)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedOn)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CreatedOn)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreatedOn)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.CreatedOn)
+                    </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.Partial("_BackToList")
-    @Html.Partial("_BtnAdminEdit", Model.Id)
-</p>
-</div>
-</div>
+                </dl>
+            </div>
+            <p>
+                @Html.Partial("_BackToList")
+                @Html.Partial("_BtnAdminEdit", Model.Id)
+            </p>
+        </div>
+    </div>
 </div>

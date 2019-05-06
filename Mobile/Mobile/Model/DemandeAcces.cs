@@ -30,8 +30,27 @@ namespace Mobile.Model
         public DateTime CreatedOn { get; set; }
 
         public string CreatedBy { get; set; }
+
         public string CreatedEmail { get; set; }
 
-        public string Icon { get; set; } = "itemIcon1.png";
+        public string Statut { get; set; }
+
+        public string StatutColor { get; set; }
+
+        public bool VisibleStatut
+        {
+            get
+            {
+                if (Statut == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            
+        }
     }
 }

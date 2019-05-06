@@ -1,76 +1,76 @@
-﻿@model DAL.CheckListExigence
+﻿@model DATAAL.REF_CheckListExigence
 
 @{
     ViewBag.Title = "Nouveau exigence";
 }
 
 <div class="row">
-<div class="col-sm-12">
-<div class="card-box">
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.CheckListRubriqueId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CheckListRubriqueId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CheckListRubriqueId, "", new { @class = "text-danger" })
-            </div>
+    <div class="col-sm-12">
+        <div class="card-box">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CheckListRubriqueId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("CheckListRubriqueId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CheckListRubriqueId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShowOrder, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ShowOrder, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ShowOrder, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class=" form-group">
+                        @Html.LabelFor(model => model.IsActif, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="checkbox checkbox-primary col-md-10">
+                            &nbsp;<input id="IsActifId" type="checkbox" value="true" name="IsActif">
+                            <label for="IsActifId">
+                                &nbsp;
+                            </label>
+                            @Html.ValidationMessageFor(model => model.IsActif, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class=" form-group">
+                        @Html.LabelFor(model => model.IsHasDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="checkbox checkbox-primary col-md-10">
+                            &nbsp;<input id="IsHasDateId" type="checkbox" value="true" name="IsHasDate">
+                            <label for="IsHasDateId">
+                                &nbsp;
+                            </label>
+                            @Html.ValidationMessageFor(model => model.IsHasDate, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @Html.Partial("_BackToList")
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShowOrder, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ShowOrder, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ShowOrder, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class=" form-group">
-            @Html.LabelFor(model => model.IsActif, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="checkbox checkbox-primary col-md-10">
-                &nbsp;<input id="IsActifId" type="checkbox" value="true" name="IsActif">
-                <label for="IsActifId">
-                    &nbsp;
-                </label>
-                @Html.ValidationMessageFor(model => model.IsActif, "", new { @class = "text-danger" })
-
-            </div>
-        </div> 
-        
-        <div class=" form-group">
-            @Html.LabelFor(model => model.IsHasDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="checkbox checkbox-primary col-md-10">
-                &nbsp;<input id="IsHasDateId" type="checkbox" value="true" name="IsHasDate">
-                <label for="IsHasDateId">
-                    &nbsp;
-                </label>
-                @Html.ValidationMessageFor(model => model.IsHasDate, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit"  class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
+    </div>
 </div>
-        </div>
-    </div>
-}
-
-@Html.Partial("_BackToList")
-  </div>
-        </div>
-    </div>

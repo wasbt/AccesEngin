@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class SitesController : BackOfficeController
     {
         // GET: BackOffice/Sites
-        public async Task<ActionResult> Index(StandardModel<Site> model)
+        public async Task<ActionResult> Index(StandardModel<Sites> model)
         {
-            var site = context.Site.Include(s => s.AspNetUsers);
+            var site = context.Sites.Include(s => s.AspNetUsers);
             int pageSize = 10;
 
             int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-            var query = context.Site.AsQueryable();
+            var query = context.Sites.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<Site>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<Sites>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Site site = await context.Site.FindAsync(id);
+            Sites site = await context.Sites.FindAsync(id);
             if (site == null)
             {
                 return HttpNotFound();
@@ -75,13 +75,13 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Site site)
+        public async Task<ActionResult> Create(Sites site)
         {
             if (ModelState.IsValid)
             {
                 site.CreatedBy = CurrentUserId;
                 site.CreatedOn = DateTime.Now;
-                context.Site.Add(site);
+                context.Sites.Add(site);
                 await context.SaveChangesAsync();
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
@@ -98,7 +98,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Site site = await context.Site.FindAsync(id);
+            Sites site = await context.Sites.FindAsync(id);
             if (site == null)
             {
                 return HttpNotFound();
@@ -112,7 +112,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Site site)
+        public async Task<ActionResult> Edit(Sites site)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Site site = await context.Site.FindAsync(id);
+            Sites site = await context.Sites.FindAsync(id);
             if (site == null)
             {
                 return HttpNotFound();
@@ -147,8 +147,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            Site site = await context.Site.FindAsync(id);
-            context.Site.Remove(site);
+            Sites site = await context.Sites.FindAsync(id);
+            context.Sites.Remove(site);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

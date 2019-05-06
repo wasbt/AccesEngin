@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DATAAL
+{
+    public class REF_CheckListRubriqueMetadata
+    {
+        [Display(Name = "#")]
+        public long Id { get; set; }
+
+        [Display(Name = "Type demande d'acces")]
+        public long TypeCheckListId { get; set; }
+
+        [Display(Name = "Rubrique")]
+        public string Name { get; set; }
+
+        [Display(Name = "Order")]
+        public int ShowOrder { get; set; }
+
+        [Display(Name = "Activer")]
+        public bool IsActif { get; set; }
+
+        [Display(Name = "Date de création")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime CreatedOn { get; set; }
+
+        [Display(Name = "Crée par")]
+        public string CreatedBy { get; set; }
+
+    }
+}

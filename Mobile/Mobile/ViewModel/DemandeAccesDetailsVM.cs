@@ -1,4 +1,5 @@
-﻿using Mobile.Model;
+﻿using Acr.UserDialogs;
+using Mobile.Model;
 using Mobile.View;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,22 @@ namespace Mobile.ViewModel
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ICommand ValiderCommand
+        {
+            get
+            {
+                return new Command(async (object obj) =>
+                {
+                    PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                    {
+                        InputType = InputType.Name,
+                        OkText = "Create",
+                        Title = "Create Folder",
+                    });
+                });
+            }
         }
     }
 }

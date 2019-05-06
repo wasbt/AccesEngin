@@ -18,10 +18,10 @@ namespace Mobile.ViewModel
     public class DemandeAccesVM : BindableObject
     {
         private bool _isBusy;
-        private const int PageSize = 5;
+        private const int PageSize = 10;
         private readonly ApiServices _apiServices = new ApiServices();
         private InfiniteScrollCollection<DemandeAcces> demandeAcces;
-        public static readonly BindableProperty IsWorkingProperty =  BindableProperty.Create(nameof(IsWorking), typeof(bool), typeof(DemandeAccesVM), default(bool));
+        public static readonly BindableProperty IsWorkingProperty = BindableProperty.Create(nameof(IsWorking), typeof(bool), typeof(DemandeAccesVM), default(bool));
 
         //public DemandeAccesVM()
         //{
@@ -63,19 +63,26 @@ namespace Mobile.ViewModel
 
         public DemandeAccesVM()
         {
-            DemandeAcces = new InfiniteScrollCollection<DemandeAcces>
+            Items = new InfiniteScrollCollection<DemandeAcces>
             {
                 OnLoadMore = async () =>
                 {
                     IsBusy = true;
 
                     // load the next page
-                    var page = DemandeAcces.Count / PageSize;
-
+                    var page = Items.Count / PageSize;
+                    if ((Items.Count % PageSize) != 0)
+                    {
+                        page++;
+                    }
                     var accessToken = Settings.AccessToken;
 
-                    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, page, PageSize); 
+                    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, page, PageSize);
 
+                    if (items.Count() == 0)
+                    {
+                        IsWorking = false;
+                    }
                     IsBusy = false;
 
                     // return the items that need to be added
@@ -86,12 +93,12 @@ namespace Mobile.ViewModel
             RefreshCommand = new Command(() =>
             {
                 // clear and start again
-                DemandeAcces.Clear();
-                DemandeAcces.LoadMoreAsync();
+                Items.Clear();
+                Items.LoadMoreAsync();
             });
 
             // load the initial data
-            DemandeAcces.LoadMoreAsync();
+            Items.LoadMoreAsync();
         }
 
         //private async Task DownloadDataAsync()
@@ -113,9 +120,14 @@ namespace Mobile.ViewModel
             get { return (bool)GetValue(IsWorkingProperty); }
             set { SetValue(IsWorkingProperty, value); }
         }
+        public InfiniteScrollCollection<DemandeAcces> Items { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public ICommand RefreshCommand { get; }
+
+     
+      
 
     }
 }

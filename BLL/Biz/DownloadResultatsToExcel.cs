@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DAL;
+using DATAAL;
 using log4net;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -16,7 +16,7 @@ namespace BLL.Biz
 {
     public class DownloadResultatsToExcel : CommonBiz
     {
-        public DownloadResultatsToExcel(EnginDbContext context, ILog log) : base(context, log)
+        public DownloadResultatsToExcel(TestEnginEntities context, ILog log) : base(context, log)
         {
         }
 
@@ -38,7 +38,7 @@ namespace BLL.Biz
             #endregion
 
             #region get & check checklist
-            var typeCheckList = await context.TypeCheckList.Where(x => x.Id == demandeAcces.TypeCheckListId).FirstOrDefaultAsync();
+            var typeCheckList = await context.REF_TypeCheckList.Where(x => x.Id == demandeAcces.TypeCheckListId).FirstOrDefaultAsync();
             if (typeCheckList == null)
             {
                 return null;
@@ -54,7 +54,7 @@ namespace BLL.Biz
             #endregion
 
             #region get exigence
-            var exigences = typeCheckList.CheckListRubrique.SelectMany(x => x.CheckListExigence).ToList(); // all checklist exigences
+            var exigences = typeCheckList.REF_CheckListRubrique.SelectMany(x => x.REF_CheckListExigence).ToList(); // all checklist exigences
             #endregion
 
 
@@ -120,9 +120,9 @@ namespace BLL.Biz
                 workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].Style.WrapText = true;
                 workSheet.Cells[startingRow, ResultatColumnInfoG, startingRow, ResultatColumnInfoG + 1].AutoFitColumns();
-                workSheet.Cells[startingRow, minColumn].Value = $"{demandeAcces.TypeEngin.Name}";
+                workSheet.Cells[startingRow, minColumn].Value = $"{demandeAcces.REF_TypeEngin.Name}";
                 startingRow++;
-                foreach (var infoRubriqueGroup in typeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+                foreach (var infoRubriqueGroup in typeCheckList.REF_InfoGenerale.GroupBy(g => g.REF_InfoGeneralRubrique.Name))
                 {
                     startingRow++;
 
@@ -179,7 +179,7 @@ namespace BLL.Biz
                 workSheet.Cells[startingRow, ExigenceColumn + 11].Value = $"Date";
                 #endregion
 
-                foreach (var rubrique in typeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
+                foreach (var rubrique in typeCheckList.REF_CheckListRubrique.Where(x => x.IsActif == true))
                 {
                     startingRow++;
 
@@ -197,7 +197,7 @@ namespace BLL.Biz
 
                     workSheet.Cells[startingRow, minColumn, startingRow, maxColumn].Value = $"{rubrique.Name}";
                     #endregion
-                    foreach (var checkListExigence in rubrique.CheckListExigence.Where(x => x.IsActif == true))
+                    foreach (var checkListExigence in rubrique.REF_CheckListExigence.Where(x => x.IsActif == true))
                     {
                         var data = resultatEntete.ResultatExigence.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
 

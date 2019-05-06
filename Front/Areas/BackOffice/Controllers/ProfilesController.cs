@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;

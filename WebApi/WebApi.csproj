@@ -327,9 +327,9 @@
       <Project>{9708B573-CFE4-432D-B97E-7DB4EFA4CA0F}</Project>
       <Name>BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{bf483b4a-8efb-493e-8493-7fa9e5210d94}</Project>
-      <Name>DAL</Name>
+    <ProjectReference Include="..\DATAAL\DATAAL.csproj">
+      <Project>{0a106b6b-8f1b-4b7d-a51a-6e0bcfb43724}</Project>
+      <Name>DATAAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{637b4990-5383-476f-8cff-d9da909bc92c}</Project>

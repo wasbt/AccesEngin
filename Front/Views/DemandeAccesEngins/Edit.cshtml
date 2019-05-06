@@ -1,4 +1,4 @@
-﻿@model DAL.DemandeAccesEngin
+﻿@model DATAAL.DemandeAccesEngin
 
 @{
     ViewBag.Title = "Edit";
@@ -67,7 +67,7 @@
 
                     <div id="InfosGeneralId">
                         @{
-                            foreach (var group in Model.TypeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name))
+                            foreach (var group in Model.REF_TypeCheckList.REF_InfoGenerale.GroupBy(g => g.REF_InfoGeneralRubrique.Name))
                             {
 
                                 foreach (var rebricInfo in group)

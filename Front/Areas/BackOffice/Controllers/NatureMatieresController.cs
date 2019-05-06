@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class NatureMatieresController : BaseController
     {
         // GET: BackOffice/NatureMatieres
-        public async Task<ActionResult> Index(StandardModel<NatureMatiere> model)
+        public async Task<ActionResult> Index(StandardModel<REF_NatureMatiere> model)
         {
-            var natureMatiere = context.NatureMatiere.Include(n => n.AspNetUsers).Include(n => n.TypeCheckList);
+            var natureMatiere = context.REF_NatureMatiere.Include(n => n.AspNetUsers).Include(n => n.REF_TypeCheckList);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.NatureMatiere.AsQueryable();
+			var query = context.REF_NatureMatiere.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<NatureMatiere>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<REF_NatureMatiere>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NatureMatiere natureMatiere = await context.NatureMatiere.FindAsync(id);
+            REF_NatureMatiere natureMatiere = await context.REF_NatureMatiere.FindAsync(id);
             if (natureMatiere == null)
             {
                 return HttpNotFound();
@@ -67,7 +67,7 @@ namespace Front.Areas.BackOffice.Controllers
         public ActionResult Create()
         {
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name");
             return View();
         }
 
@@ -76,20 +76,20 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(NatureMatiere natureMatiere)
+        public async Task<ActionResult> Create(REF_NatureMatiere natureMatiere)
         {
             if (ModelState.IsValid)
             {
                 natureMatiere.CreatedBy = CurrentUserId;
                 natureMatiere.CreatedOn = DateTime.Now;
-                context.NatureMatiere.Add(natureMatiere);
+                context.REF_NatureMatiere.Add(natureMatiere);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", natureMatiere.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
             return View(natureMatiere);
         }
 
@@ -100,13 +100,13 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NatureMatiere natureMatiere = await context.NatureMatiere.FindAsync(id);
+            REF_NatureMatiere natureMatiere = await context.REF_NatureMatiere.FindAsync(id);
             if (natureMatiere == null)
             {
                 return HttpNotFound();
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", natureMatiere.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
             return View(natureMatiere);
         }
 
@@ -115,7 +115,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(NatureMatiere natureMatiere)
+        public async Task<ActionResult> Edit(REF_NatureMatiere natureMatiere)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace Front.Areas.BackOffice.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", natureMatiere.CreatedBy);
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", natureMatiere.TypeCheckListId);
             return View(natureMatiere);
         }
 
@@ -138,7 +138,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NatureMatiere natureMatiere = await context.NatureMatiere.FindAsync(id);
+            REF_NatureMatiere natureMatiere = await context.REF_NatureMatiere.FindAsync(id);
             if (natureMatiere == null)
             {
                 return HttpNotFound();
@@ -151,8 +151,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            NatureMatiere natureMatiere = await context.NatureMatiere.FindAsync(id);
-            context.NatureMatiere.Remove(natureMatiere);
+            REF_NatureMatiere natureMatiere = await context.REF_NatureMatiere.FindAsync(id);
+            context.REF_NatureMatiere.Remove(natureMatiere);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

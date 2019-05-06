@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿using DATAAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,6 @@ namespace Front.ViewModels
     public class ControleCheckListVM
     {
         public DemandeAccesEngin controle { get; set; }
-        public TypeCheckList TypeCheckList { get; set; }
+        public REF_TypeCheckList TypeCheckList { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using BLL.Biz;
 using Shared;
 using Rotativa;
@@ -54,7 +54,7 @@ namespace Front.Controllers
                 model.Matricule = "";
             }
 
-            var entities = context.Entity.Where(x => x.SiteId == CurrentUserProfile.Entity.SiteId).ToList();
+            var entities = context.Entities.Where(x => x.SiteId == CurrentUserProfile.Entities1.SiteId).ToList();
 
             ViewBag.EntityId = new SelectList(entities, "Id", "Name");
 
@@ -124,7 +124,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & check checklist
-            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            var checkList = await context.REF_TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
             if (checkList == null)
             {
                 return HttpNotFound();
@@ -140,7 +140,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & Type Engin
-            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+            var typeEngin = await context.REF_TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
 
             if (typeEngin == null)
             {
@@ -149,7 +149,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & Nature de la Matiere
-            var natureMatiere = await context.NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
+            var natureMatiere = await context.REF_NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
 
             #endregion
 
@@ -203,7 +203,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & check checklist
-            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            var checkList = await context.REF_TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
             if (checkList == null)
             {
                 return HttpNotFound();
@@ -211,7 +211,7 @@ namespace Front.Controllers
             #endregion
 
                         #region get & Type Engin
-            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+            var typeEngin = await context.REF_TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
 
             if (typeEngin == null)
             {
@@ -220,7 +220,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & Nature de la Matiere
-            var natureMatiere = await context.NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
+            var natureMatiere = await context.REF_NatureMatiere.Where(x => x.Id == controle.NatureMatiereId).FirstOrDefaultAsync();
 
             #endregion
 
@@ -263,7 +263,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & check checklist
-            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            var checkList = await context.REF_TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
 
             if (checkList == null)
             {
@@ -278,8 +278,8 @@ namespace Front.Controllers
             {
                 TypeCheckList = checkList,
                 controle = controle,
-                TypeEngin = controle.TypeEngin,
-                NatureMatiere = controle.NatureMatiere,
+                TypeEngin = controle.REF_TypeEngin,
+                NatureMatiere = controle.REF_NatureMatiere,
             };
 
             #endregion
@@ -329,7 +329,7 @@ namespace Front.Controllers
 
 
                     #region GET CHECKLISTEXIIGENCE ISHASDATE
-                    var listExigenceHasDate = context.CheckListExigence.Where(x => x.IsHasDate).Select(c => c.Id).ToList();
+                    var listExigenceHasDate = context.REF_CheckListExigence.Where(x => x.IsHasDate).Select(c => c.Id).ToList();
                     #endregion
 
 
@@ -385,7 +385,7 @@ namespace Front.Controllers
                     #region Send Mail To Chef project
 
                     var Email = demandeAccesEngin.AspNetUsers.Email;
-                    var Subject = "contôle de " + demandeAccesEngin.TypeCheckList.Name;
+                    var Subject = "contôle de " + demandeAccesEngin.REF_TypeCheckList.Name;
                     //   var lettre = $@"";
                     var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + demandeAccesEngin.Id + " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.Autorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
                     await MailHelper.SendEmailDemandeEngin(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
@@ -454,7 +454,7 @@ namespace Front.Controllers
 
 
             #region get & check checklist
-            var checkList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            var checkList = await context.REF_TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
             if (checkList == null)
             {
                 return HttpNotFound();
@@ -462,7 +462,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & Type Engin
-            var typeEngin = await context.TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
+            var typeEngin = await context.REF_TypeEngin.Where(x => x.Id == controle.TypeEnginId).FirstOrDefaultAsync();
 
             if (typeEngin == null)
             {
@@ -519,7 +519,7 @@ namespace Front.Controllers
         {
             var biz = new CommonBiz(context, log);
 
-            var file = await context.AppFile.FindAsync(id);
+            var file = await context.AppFiles.FindAsync(id);
             if (file == null)
             {
                 return HttpNotFound();

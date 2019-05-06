@@ -15,12 +15,12 @@
 
 
 
-GO
-CREATE NONCLUSTERED INDEX [IX_CreatedBy]
-    ON [dbo].[Sites]([CreatedBy] ASC);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_HSESiteId]
-    ON [dbo].[Sites]([HSESiteId] ASC);
+
+
+
+GO
+
 

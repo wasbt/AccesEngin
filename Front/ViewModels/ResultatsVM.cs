@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿using DATAAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +11,9 @@ namespace Front.ViewModels
     {
         public DemandeAccesEngin controle { get; set; }
         public DemandeResultatEntete DemandeResultat { get; set; }
-        public TypeCheckList TypeCheckList { get; set; }
-        public TypeEngin TypeEngin { get; set; }
-        public NatureMatiere NatureMatiere { get; set; }
+        public REF_TypeCheckList TypeCheckList { get; set; }
+        public REF_TypeEngin TypeEngin { get; set; }
+        public REF_NatureMatiere NatureMatiere { get; set; }
         public long exigencesNonApplicable { get; set; }
         public long exigencesApplicable { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@model Front.Models.StandardModel<DAL.DemandeAccesEngin>
+﻿@model Front.Models.StandardModel<DATAAL.DemandeAccesEngin>
 @using X.PagedList
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Bootstrap4
@@ -115,7 +115,7 @@
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().TypeCheckList.Name)
+                        @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().REF_TypeCheckList.Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Observation)
@@ -158,7 +158,7 @@
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                                @Html.DisplayFor(modelItem => item.REF_TypeCheckList.Name)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Observation)
@@ -219,17 +219,17 @@
                                     else
                                     {
 
-                                        <span class="badge" style="background-color:@(item.StatutDemande.Color)">@item.StatutDemande.Name</span>
+                                        <span class="badge" style="background-color:@(item.REF_StatutDemandes.Color)">@item.REF_StatutDemandes.Name</span>
 
-                                        if (item.Report.ToList().Count() > 0)
+                                        if (item.ReponseDemande.ToList().Count() > 0)
                                         {
-                                            foreach (var rp in item.Report.ToList())
+                                            foreach (var rp in item.ReponseDemande.ToList())
                                             {
                                                 <text>
                                                     <div>
                                                         <span class="fa  fa-toggle-down" onclick="showDetails(this)"></span>
                                                         <div class="hidden">
-                                                            <small> @Html.Raw(string.Join(" <br/> ", rp.MotifReport))</small>
+                                                            <small> @Html.Raw(string.Join(" <br/> ", rp.Motif))</small>
                                                         </div>
                                                     </div>
 

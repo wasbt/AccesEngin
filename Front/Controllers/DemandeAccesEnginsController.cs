@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -29,7 +29,7 @@ namespace Front.Controllers
         public async Task<ActionResult> Index(StandardModel<DemandeAccesEngin> model, SearchDemandeModel Filter)
         {
 
-            var demandeAccesEngin = context.DemandeAccesEngin.Where(x => x.StatutDemandeId != 3).Include(d => d.AspNetUsers).Include(d => d.TypeCheckList);
+            var demandeAccesEngin = context.DemandeAccesEngin.Where(x => x.StatutDemandeId != 3).Include(d => d.AspNetUsers).Include(d => d.REF_TypeCheckList);
             var query = demandeAccesEngin.AsQueryable();
 
             if (IsChefProjet)
@@ -93,8 +93,8 @@ namespace Front.Controllers
 
             model.resultList = query.ToPagedList(pageNumber, pageSize);
 
-            var statutDemandes = context.StatutDemande.Where(x => x.Id != (int)DemandeStatus.Expirer);
-            var typeCheckLists = context.TypeCheckList;
+            var statutDemandes = context.REF_StatutDemandes.Where(x => x.Id != (int)DemandeStatus.Expirer);
+            var typeCheckLists = context.REF_TypeCheckList;
 
             ViewBag.StatutDemandeId = new SelectList(statutDemandes, "Id", "Name");
             ViewBag.TypeCheckListId = new SelectList(typeCheckLists, "Id", "Name");
@@ -127,8 +127,8 @@ namespace Front.Controllers
         // GET: DemandeAccesEngins/Create
         public ActionResult Create()
         {
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name");
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name");
             return View();
         }
 
@@ -152,8 +152,8 @@ namespace Front.Controllers
                 var dateNow = DateTime.Now.Date;
                 var tomorrow = dateNow.AddDays(1);
                 var demandeAccesEnginPlannig = demandeAccesEnginQuery.Where(x => DbFunctions.TruncateTime(x.DatePlannification) == demandeAccesEngin.DatePlannification).ToList();
-                var listTypeCheckList = demandeAccesEnginPlannig.Select(x => x.TypeCheckList).ToList();
-                var getCountTypeEngin = listTypeCheckList.SelectMany(x => x.TypeEngin);
+                var listTypeCheckList = demandeAccesEnginPlannig.Select(x => x.REF_TypeCheckList).ToList();
+                var getCountTypeEngin = listTypeCheckList.SelectMany(x => x.REF_TypeEngin);
                 var selecDureeEstimativeToDay = getCountTypeEngin.Select(x => double.Parse(x.DureeEstimative));
                 var sumDuree = selecDureeEstimativeToDay.Sum();
 
@@ -161,8 +161,8 @@ namespace Front.Controllers
                 if (sumDuree >= (long)DureeEstimativeEnums.MaxDuree)
                 {
                     TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "s'il vous plaît choisir une autre date de planification!";
-                    ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
-                    ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+                    ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name");
+                    ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
                     return View(demandeAccesEngin);
                 }
 
@@ -213,8 +213,8 @@ namespace Front.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name");
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
             return View(demandeAccesEngin);
         }
 
@@ -230,12 +230,12 @@ namespace Front.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", demandeAccesEngin.Entity.SiteId);
-            ViewBag.EntityId = new SelectList(context.Entity.Where(e => e.SiteId == demandeAccesEngin.Entity.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entities.SiteId);
+            ViewBag.EntityId = new SelectList(context.Entities.Where(e => e.SiteId == demandeAccesEngin.Entities.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
 
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
-            ViewBag.TypeEnginId = new SelectList(context.TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
-            ViewBag.NatureMatiereId = new SelectList(context.NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+            ViewBag.TypeEnginId = new SelectList(context.REF_TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
+            ViewBag.NatureMatiereId = new SelectList(context.REF_NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
             return View(demandeAccesEngin);
         }
 
@@ -294,12 +294,12 @@ namespace Front.Controllers
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", demandeAccesEngin.Entity.SiteId);
-            ViewBag.EntityId = new SelectList(context.Entity.Where(e => e.SiteId == demandeAccesEngin.Entity.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entities.SiteId);
+            ViewBag.EntityId = new SelectList(context.Entities.Where(e => e.SiteId == demandeAccesEngin.Entities.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
 
-            ViewBag.TypeCheckListId = new SelectList(context.TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
-            ViewBag.TypeEnginId = new SelectList(context.TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
-            ViewBag.NatureMatiereId = new SelectList(context.NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
+            ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
+            ViewBag.TypeEnginId = new SelectList(context.REF_TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
+            ViewBag.NatureMatiereId = new SelectList(context.REF_NatureMatiere.Where(n => n.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.NatureMatiereId);
             return View(demandeAccesEngin);
         }
 
@@ -394,8 +394,8 @@ namespace Front.Controllers
             model.resultList = query.ToPagedList(pageNumber, pageSize);
 
             ViewBag.Log = query.ToString();
-            var statutDemandes = context.StatutDemande.Where(x => x.Id != (int)DemandeStatus.Expirer);
-            var typeCheckLists = context.TypeCheckList;
+            var statutDemandes = context.REF_StatutDemandes.Where(x => x.Id != (int)DemandeStatus.Expirer);
+            var typeCheckLists = context.REF_TypeCheckList;
 
             ViewBag.StatutDemandeId = new SelectList(statutDemandes, "Id", "Name");
             ViewBag.TypeCheckListId = new SelectList(typeCheckLists, "Id", "Name");
@@ -410,7 +410,7 @@ namespace Front.Controllers
         {
             var biz = new CommonBiz(context, log);
 
-            var file = await context.AppFile.FindAsync(id);
+            var file = await context.AppFiles.FindAsync(id);
             if (file == null)
             {
                 return HttpNotFound();

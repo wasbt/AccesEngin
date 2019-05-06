@@ -9,85 +9,108 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <vm:DemandeAccesVM x:Key="vm" />
             <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <ListView
-            x:Name="listView"
-            HasUnevenRows="True"
-            ItemsSource="{Binding Source={StaticResource vm}, Path=DemandeAcces}">
-            <ListView.Behaviors>
-                <behaviors:ListViewBehavior />
-                <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsWorking}" />
-            </ListView.Behaviors>
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ContentView Padding="5,10" BackgroundColor="White">
-                            <Frame
-                                Padding="10,15"
-                                BackgroundColor="White"
-                                HasShadow="False">
-                                <StackLayout>
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="60" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label
-                                            Grid.Column="0"
-                                            FontAttributes="Bold"
-                                            FontFamily="SemiBold"
-                                            FontSize="14"
-                                            Text="{Binding TypeCheckListName}"
-                                            TextColor="Black" />
-                                    </Grid>
-                                    <Grid>
-                                        <Label
-                                            Grid.Column="0"
-                                            FontFamily="SemiBold"
-                                            FontSize="10"
-                                            Text="{Binding TypeCheckListName}"
-                                            TextColor="Gray" />
-
-                                        <Label
-                                            Grid.Column="1"
-                                            FontAttributes="None"
-                                            FontSize="Default"
-                                            HorizontalOptions="EndAndExpand"
-                                            Text="{Binding DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
-                                            TextColor="Gray"
-                                            VerticalOptions="CenterAndExpand" />
+        <StackLayout>
 
 
 
-                                    </Grid>
-                                </StackLayout>
-                            </Frame>
-                        </ContentView>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.Footer>
-                <Grid Padding="6" IsVisible="{Binding IsWorking}">
-                    <!--  set the footer to have a zero height when invisible  -->
-                    <Grid.Triggers>
-                        <Trigger TargetType="Grid" Property="IsVisible" Value="False">
-                            <Setter Property="HeightRequest" Value="0" />
-                        </Trigger>
-                    </Grid.Triggers>
-                    <!--  the loading content  -->
-                    <Label
-                        HorizontalOptions="Center"
-                        Text="Loading..."
-                        VerticalOptions="Center" />
-                </Grid>
-            </ListView.Footer>
-        </ListView>
+            <ListView
+                x:Name="listView"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="True"
+                IsRefreshing="{Binding IsWorking}"
+                ItemsSource="{Binding Items}">
+                <ListView.Behaviors>
+                    <behaviors:ListViewBehavior />
+                    <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsWorking}" />
+                </ListView.Behaviors>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ContentView Padding="5,10" BackgroundColor="White">
+                                <Frame
+                                    Padding="10,15"
+                                    BackgroundColor="White"
+                                    HasShadow="False">
+                                    <StackLayout>
+                                        <Grid Grid.Column="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60*" />
+                                                <ColumnDefinition Width="20*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label
+                                                Grid.Column="0"
+                                                FontAttributes="Bold"
+                                                FontFamily="SemiBold"
+                                                FontSize="14"
+                                                Text="{Binding TypeEnginName}"
+                                                TextColor="Black" />
+                                            <Frame
+                                                Grid.Column="1"
+                                                Padding="1,2,2,2"
+                                                BackgroundColor="{Binding StatutColor}"
+                                                CornerRadius="5"
+                                                HasShadow="False"
+                                                IsVisible="{Binding VisibleStatut}">
+                                                <Label
+                                                    BackgroundColor="{Binding StatutColor}"
+                                                    FontAttributes="Bold"
+                                                    FontFamily="SemiBold"
+                                                    FontSize="14"
+                                                    HorizontalOptions="Center"
+                                                    Text="{Binding Statut}"
+                                                    TextColor="White" />
+                                            </Frame>
+
+                                        </Grid>
+                                        <Grid>
+                                            <Label
+                                                Grid.Column="0"
+                                                FontFamily="SemiBold"
+                                                FontSize="10"
+                                                Text="{Binding TypeCheckListName}"
+                                                TextColor="Gray" />
+
+                                            <Label
+                                                Grid.Column="1"
+                                                FontAttributes="None"
+                                                FontSize="Default"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{Binding DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
+                                                TextColor="Gray"
+                                                VerticalOptions="CenterAndExpand" />
+
+
+
+                                        </Grid>
+                                    </StackLayout>
+                                </Frame>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Grid Padding="6" IsVisible="{Binding IsWorking}">
+                        <!--  set the footer to have a zero height when invisible  -->
+                        <Grid.Triggers>
+                            <Trigger TargetType="Grid" Property="IsVisible" Value="False">
+                                <Setter Property="HeightRequest" Value="0" />
+                            </Trigger>
+                        </Grid.Triggers>
+                        <!--  the loading content  -->
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="Loading..."
+                            VerticalOptions="Center" />
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 
 </ContentPage>

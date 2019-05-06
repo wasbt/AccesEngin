@@ -12,12 +12,12 @@
     <tbody>
         @{
 
-            foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
+            foreach (var rubric in Model.TypeCheckList.REF_CheckListRubrique.Where(x => x.IsActif == true))
             {
                 <tr style="background-color:#9CCC65; color:white">
                     <td colspan="4"><b>@rubric.Name</b></td>
                 </tr>
-                foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
+                foreach (var exigence in rubric.REF_CheckListExigence.Where(x => x.IsActif == true))
                 {
                     var data = Model.DemandeResultat.ResultatExigence.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
 

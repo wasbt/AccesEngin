@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DAL;
+using DATAAL;
 using log4net;
 using Shared.Models;
 using System;
@@ -13,7 +13,7 @@ namespace BLL.Biz
 {
     public class ResultatExigenceBiz : CommonBiz
     {
-        public ResultatExigenceBiz(EnginDbContext context, ILog log) : base(context, log)
+        public ResultatExigenceBiz(TestEnginEntities context, ILog log) : base(context, log)
         {
 
         }
@@ -36,7 +36,7 @@ namespace BLL.Biz
             #endregion
 
             #region get & check checklist
-            var typeCheckList = await context.TypeCheckList.Where(x => x.Id == demandeAcces.TypeCheckListId).FirstOrDefaultAsync();
+            var typeCheckList = await context.REF_TypeCheckList.Where(x => x.Id == demandeAcces.TypeCheckListId).FirstOrDefaultAsync();
             if (typeCheckList == null)
             {
                 return null;
@@ -52,7 +52,7 @@ namespace BLL.Biz
             #endregion
 
             #region get exigence
-            var exigences = typeCheckList.CheckListRubrique.SelectMany(x => x.CheckListExigence).ToList(); // all checklist exigences
+            var exigences = typeCheckList.REF_CheckListRubrique.SelectMany(x => x.REF_CheckListExigence).ToList(); // all checklist exigences
             #endregion
 
 
@@ -74,7 +74,7 @@ namespace BLL.Biz
 
             result.DemandeAccesDto = demandeAcces.DemandeAccesToDTO();
 
-            var RubricGroupingList = typeCheckList.InfoGenerale.GroupBy(g => g.InfoGeneralRubrique.Name);
+            var RubricGroupingList = typeCheckList.REF_InfoGenerale.GroupBy(g => g.REF_InfoGeneralRubrique.Name);
             result.ResultatValueGrouping = new List<Group>();
             #region rubrique info generale
             foreach (var infoRubriqueGroup in RubricGroupingList)
@@ -114,7 +114,7 @@ namespace BLL.Biz
 
 
             #region rubrique 
-            var rubriqueGrouping = typeCheckList.CheckListRubrique.Where(x => x.IsActif == true);
+            var rubriqueGrouping = typeCheckList.REF_CheckListRubrique.Where(x => x.IsActif == true);
             foreach (var rubrique in rubriqueGrouping)
             {
 
@@ -126,7 +126,7 @@ namespace BLL.Biz
 
                 };
 
-                var checkListExigenceGrouping = rubrique.CheckListExigence.Where(x => x.IsActif == true);
+                var checkListExigenceGrouping = rubrique.REF_CheckListExigence.Where(x => x.IsActif == true);
 
 
                 foreach (var checkListExigence in checkListExigenceGrouping)

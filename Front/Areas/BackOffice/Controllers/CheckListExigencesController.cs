@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class CheckListExigencesController : BackOfficeController
     {
         // GET: BackOffice/CheckListExigences
-        public async Task<ActionResult> Index(StandardModel<CheckListExigence> model)
+        public async Task<ActionResult> Index(StandardModel<REF_CheckListExigence> model)
         {
-            var checkListExigence = context.CheckListExigence.Include(c => c.AspNetUsers).Include(c => c.CheckListRubrique);
+            var checkListExigence = context.REF_CheckListExigence.Include(c => c.AspNetUsers).Include(c => c.REF_CheckListRubrique);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.CheckListExigence.AsQueryable();
+			var query = context.REF_CheckListExigence.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<CheckListExigence>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<REF_CheckListExigence>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CheckListExigence checkListExigence = await context.CheckListExigence.FindAsync(id);
+            REF_CheckListExigence checkListExigence = await context.REF_CheckListExigence.FindAsync(id);
             if (checkListExigence == null)
             {
                 return HttpNotFound();
@@ -67,7 +67,7 @@ namespace Front.Areas.BackOffice.Controllers
         public ActionResult Create()
         {
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
-            ViewBag.CheckListRubriqueId = new SelectList(context.CheckListRubrique, "Id", "Name");
+            ViewBag.CheckListRubriqueId = new SelectList(context.REF_CheckListRubrique, "Id", "Name");
             return View();
         }
 
@@ -76,20 +76,20 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CheckListExigence checkListExigence)
+        public async Task<ActionResult> Create(REF_CheckListExigence checkListExigence)
         {
             if (ModelState.IsValid)
             {
                 checkListExigence.CreatedBy = CurrentUserId;
                 checkListExigence.CreatedOn = DateTime.Now;
-                context.CheckListExigence.Add(checkListExigence);
+                context.REF_CheckListExigence.Add(checkListExigence);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", checkListExigence.CreatedBy);
-            ViewBag.CheckListRubriqueId = new SelectList(context.CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
+            ViewBag.CheckListRubriqueId = new SelectList(context.REF_CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
             return View(checkListExigence);
         }
 
@@ -100,13 +100,13 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CheckListExigence checkListExigence = await context.CheckListExigence.FindAsync(id);
+            REF_CheckListExigence checkListExigence = await context.REF_CheckListExigence.FindAsync(id);
             if (checkListExigence == null)
             {
                 return HttpNotFound();
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", checkListExigence.CreatedBy);
-            ViewBag.CheckListRubriqueId = new SelectList(context.CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
+            ViewBag.CheckListRubriqueId = new SelectList(context.REF_CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
             return View(checkListExigence);
         }
 
@@ -115,7 +115,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CheckListExigence checkListExigence)
+        public async Task<ActionResult> Edit(REF_CheckListExigence checkListExigence)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace Front.Areas.BackOffice.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", checkListExigence.CreatedBy);
-            ViewBag.CheckListRubriqueId = new SelectList(context.CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
+            ViewBag.CheckListRubriqueId = new SelectList(context.REF_CheckListRubrique, "Id", "Name", checkListExigence.CheckListRubriqueId);
             return View(checkListExigence);
         }
 
@@ -138,7 +138,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CheckListExigence checkListExigence = await context.CheckListExigence.FindAsync(id);
+            REF_CheckListExigence checkListExigence = await context.REF_CheckListExigence.FindAsync(id);
             if (checkListExigence == null)
             {
                 return HttpNotFound();
@@ -151,8 +151,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            CheckListExigence checkListExigence = await context.CheckListExigence.FindAsync(id);
-            context.CheckListExigence.Remove(checkListExigence);
+            REF_CheckListExigence checkListExigence = await context.REF_CheckListExigence.FindAsync(id);
+            context.REF_CheckListExigence.Remove(checkListExigence);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

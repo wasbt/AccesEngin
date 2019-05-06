@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -22,28 +22,28 @@ namespace Front.Areas.BackOffice.Controllers
         // GET: BackOffice/InfoGenerales
         public async Task<ActionResult> Index(StandardModel<InfoGeneraleVM> model)
         {
-            var infoGenerale = context.InfoGenerale.Include(i => i.AspNetUsers).Include(i => i.InfoGeneralRubrique);
+            var infoGenerale = context.REF_InfoGenerale.Include(i => i.AspNetUsers).Include(i => i.REF_InfoGeneralRubrique);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.InfoGenerale.AsQueryable();
+			var query = context.REF_InfoGenerale.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<InfoGenerale>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<REF_InfoGenerale>)query.ProcessWhere(model.columnName, model.content);
             }
 
             var infoGeneraleQuery = query.Select(x => new InfoGeneraleVM
             {
                 Id = x.Id,
                 Name = x.Name,
-                InfoGeneralRubriqueName = x.InfoGeneralRubrique.Name,
+                InfoGeneralRubriqueName = x.REF_InfoGeneralRubrique.Name,
                 CreatedBy = x.AspNetUsers.Email,
                 CreatedOn = x.CreatedOn,
-                TypeCheckListNames = x.TypeCheckList.Select(t => t.Name)
+                TypeCheckListNames = x.REF_TypeCheckList.Select(t => t.Name)
             });
             infoGeneraleQuery = infoGeneraleQuery.OrderBy(x => x.Id);
 
@@ -65,7 +65,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
+            REF_InfoGenerale infoGenerale = await context.REF_InfoGenerale.FindAsync(id);
             if (infoGenerale == null)
             {
                 return HttpNotFound();
@@ -77,8 +77,8 @@ namespace Front.Areas.BackOffice.Controllers
         public ActionResult Create()
         {
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email");
-            ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name");
-            ViewBag.TypeCheckListIds = new SelectList(context.TypeCheckList, "Id", "Name");
+            ViewBag.InfoGeneralRubriqueId = new SelectList(context.REF_InfoGeneralRubrique, "Id", "Name");
+            ViewBag.TypeCheckListIds = new SelectList(context.REF_TypeCheckList, "Id", "Name");
             return View();
         }
 
@@ -87,17 +87,17 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(InfoGenerale infoGenerale,long[] TypeCheckListIds)
+        public async Task<ActionResult> Create(REF_InfoGenerale infoGenerale,long[] TypeCheckListIds)
         {
             if (ModelState.IsValid)
             {
                 infoGenerale.CreatedBy = CurrentUserId;
                 infoGenerale.CreatedOn = DateTime.Now;
-                context.InfoGenerale.Add(infoGenerale);
+                context.REF_InfoGenerale.Add(infoGenerale);
                 foreach (var item in TypeCheckListIds)
                 {
-                    var TypeCheckList = await context.TypeCheckList.FindAsync(item); 
-                    infoGenerale.TypeCheckList.Add(TypeCheckList);
+                    var TypeCheckList = await context.REF_TypeCheckList.FindAsync(item); 
+                    infoGenerale.REF_TypeCheckList.Add(TypeCheckList);
                 }
                 await context.SaveChangesAsync();
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
@@ -105,8 +105,8 @@ namespace Front.Areas.BackOffice.Controllers
             }
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", infoGenerale.CreatedBy);
-            ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
-            ViewBag.TypeCheckListIds = new SelectList(context.TypeCheckList, "Id", "Name");
+            ViewBag.InfoGeneralRubriqueId = new SelectList(context.REF_InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
+            ViewBag.TypeCheckListIds = new SelectList(context.REF_TypeCheckList, "Id", "Name");
 
             return View(infoGenerale);
         }
@@ -120,17 +120,17 @@ namespace Front.Areas.BackOffice.Controllers
             }
 
             //var ListTypeCheckList = new SelectList(context.TypeCheckList, "Id", "Name");
-            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
+            REF_InfoGenerale infoGenerale = await context.REF_InfoGenerale.FindAsync(id);
             if (infoGenerale == null)
             {
                 return HttpNotFound();
             }
 
-            var typeChckListSelected = infoGenerale.TypeCheckList;
+            var typeChckListSelected = infoGenerale.REF_TypeCheckList;
             var selectedlist = typeChckListSelected.Select(t => t.Id).ToList();
             ViewData["TypeCheckListIds"] = new MultiSelectList(
 
-               items: context.TypeCheckList.OrderBy(o => o.Name),
+               items: context.REF_TypeCheckList.OrderBy(o => o.Name),
 
                dataValueField: "Id",
 
@@ -142,7 +142,7 @@ namespace Front.Areas.BackOffice.Controllers
             
          
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", infoGenerale.CreatedBy);
-            ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
+            ViewBag.InfoGeneralRubriqueId = new SelectList(context.REF_InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
             return View(infoGenerale);
         }
 
@@ -151,7 +151,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(InfoGenerale infoGenerale,long[] TypeCheckListIds)
+        public async Task<ActionResult> Edit(REF_InfoGenerale infoGenerale,long[] TypeCheckListIds)
         {
             if (ModelState.IsValid)
             {
@@ -159,13 +159,13 @@ namespace Front.Areas.BackOffice.Controllers
                 infoGenerale.CreatedOn = DateTime.Now;
                 context.Entry(infoGenerale).State = EntityState.Modified;
                 //Removed && Added All TypeCheckList for this infoGenerale
-                var TypeCheckLists = context.InfoGenerale.Include(w => w.TypeCheckList).Where(x => x.Id == infoGenerale.Id).SingleOrDefault().TypeCheckList;
+                var TypeCheckLists = context.REF_InfoGenerale.Include(w => w.REF_TypeCheckList).Where(x => x.Id == infoGenerale.Id).SingleOrDefault().REF_TypeCheckList;
                 TypeCheckLists.Clear();
 
                 foreach (var item in TypeCheckListIds)
                 {
-                    var TypeCheckList = await context.TypeCheckList.FindAsync(item);
-                    infoGenerale.TypeCheckList.Add(TypeCheckList);
+                    var TypeCheckList = await context.REF_TypeCheckList.FindAsync(item);
+                    infoGenerale.REF_TypeCheckList.Add(TypeCheckList);
                 }
                 await context.SaveChangesAsync();
                
@@ -173,7 +173,7 @@ namespace Front.Areas.BackOffice.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", infoGenerale.CreatedBy);
-            ViewBag.InfoGeneralRubriqueId = new SelectList(context.InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
+            ViewBag.InfoGeneralRubriqueId = new SelectList(context.REF_InfoGeneralRubrique, "Id", "Name", infoGenerale.InfoGeneralRubriqueId);
             return View(infoGenerale);
         }
 
@@ -184,7 +184,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
+            REF_InfoGenerale infoGenerale = await context.REF_InfoGenerale.FindAsync(id);
             if (infoGenerale == null)
             {
                 return HttpNotFound();
@@ -197,9 +197,9 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            InfoGenerale infoGenerale = await context.InfoGenerale.FindAsync(id);
-            infoGenerale.TypeCheckList.Clear();
-            context.InfoGenerale.Remove(infoGenerale);
+            REF_InfoGenerale infoGenerale = await context.REF_InfoGenerale.FindAsync(id);
+            infoGenerale.REF_TypeCheckList.Clear();
+            context.REF_InfoGenerale.Remove(infoGenerale);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

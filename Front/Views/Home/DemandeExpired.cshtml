@@ -1,4 +1,4 @@
-﻿@model Front.Models.StandardModel<DAL.DemandeAccesEngin>
+﻿@model Front.Models.StandardModel<DATAAL.DemandeAccesEngin>
 @using X.PagedList
 @using X.PagedList.Mvc
 @using X.PagedList.Mvc.Bootstrap4
@@ -40,7 +40,7 @@
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Id)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().TypeCheckList.Name)
+                        @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().REF_TypeCheckList.Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.resultList.FirstOrDefault().Observation)
@@ -71,7 +71,7 @@
                                 @Html.DisplayFor(modelItem => item.Id)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.TypeCheckList.Name)
+                                @Html.DisplayFor(modelItem => item.REF_TypeCheckList.Name)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Observation)
@@ -120,7 +120,7 @@
                                 }
                             </td>
                             <td>
-                                <span class="badge badge-danger">@item.StatutDemande.Name</span>
+                                <span class="badge badge-danger">@item.REF_StatutDemandes.Name</span>
                             </td>
                             <td class="AdminListButtons">
                                 @{

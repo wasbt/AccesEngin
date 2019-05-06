@@ -21,7 +21,7 @@ namespace Front.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("EnginDataModel", throwIfV1Schema: false)
+            : base("TestEnginDefaultConnection", throwIfV1Schema: false)
         {
         }
 

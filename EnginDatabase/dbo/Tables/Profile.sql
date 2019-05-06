@@ -16,12 +16,12 @@
 
 
 
-GO
-CREATE NONCLUSTERED INDEX [IX_Id]
-    ON [dbo].[Profile]([Id] ASC);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_EntiteId]
-    ON [dbo].[Profile]([EntiteId] ASC);
+
+
+
+GO
+
 

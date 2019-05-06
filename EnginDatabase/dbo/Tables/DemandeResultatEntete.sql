@@ -13,17 +13,16 @@
 
 
 
-GO
-CREATE NONCLUSTERED INDEX [IX_CreatedBy]
-    ON [dbo].[DemandeResultatEntete]([CreatedBy] ASC);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_DemandeAccesEnginId]
-    ON [dbo].[DemandeResultatEntete]([DemandeAccesEnginId] ASC);
+
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_AppFileId]
-    ON [dbo].[DemandeResultatEntete]([AppFileId] ASC);
+
+
+
+GO
+
 

@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DAL;
+using DATAAL;
 using log4net;
 using Shared.Models;
 using Shared.API.IN;
@@ -14,7 +14,7 @@ namespace BLL.Biz
 {
     public class ProfileBiz : CommonBiz
     {
-        public ProfileBiz(EnginDbContext context, ILog log) : base(context, log)
+        public ProfileBiz(TestEnginEntities context, ILog log) : base(context, log)
         {
         }
 

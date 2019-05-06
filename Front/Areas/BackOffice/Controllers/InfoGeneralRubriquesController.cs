@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class InfoGeneralRubriquesController : BackOfficeController
     {
         // GET: BackOffice/InfoGeneralRubriques
-        public async Task<ActionResult> Index(StandardModel<InfoGeneralRubrique> model)
+        public async Task<ActionResult> Index(StandardModel<REF_InfoGeneralRubrique> model)
         {
-            var infoGeneralRubrique = context.InfoGeneralRubrique.Include(i => i.AspNetUsers);
+            var infoGeneralRubrique = context.REF_InfoGeneralRubrique.Include(i => i.AspNetUsers);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.InfoGeneralRubrique.AsQueryable();
+			var query = context.REF_InfoGeneralRubrique.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<InfoGeneralRubrique>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<REF_InfoGeneralRubrique>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InfoGeneralRubrique infoGeneralRubrique = await context.InfoGeneralRubrique.FindAsync(id);
+            REF_InfoGeneralRubrique infoGeneralRubrique = await context.REF_InfoGeneralRubrique.FindAsync(id);
             if (infoGeneralRubrique == null)
             {
                 return HttpNotFound();
@@ -75,13 +75,13 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create( InfoGeneralRubrique infoGeneralRubrique)
+        public async Task<ActionResult> Create( REF_InfoGeneralRubrique infoGeneralRubrique)
         {
             if (ModelState.IsValid)
             {
                 infoGeneralRubrique.CreatedBy = CurrentUserId;
                 infoGeneralRubrique.CreatedOn = DateTime.Now;
-                context.InfoGeneralRubrique.Add(infoGeneralRubrique);
+                context.REF_InfoGeneralRubrique.Add(infoGeneralRubrique);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
@@ -98,7 +98,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InfoGeneralRubrique infoGeneralRubrique = await context.InfoGeneralRubrique.FindAsync(id);
+            REF_InfoGeneralRubrique infoGeneralRubrique = await context.REF_InfoGeneralRubrique.FindAsync(id);
             if (infoGeneralRubrique == null)
             {
                 return HttpNotFound();
@@ -112,7 +112,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(InfoGeneralRubrique infoGeneralRubrique)
+        public async Task<ActionResult> Edit(REF_InfoGeneralRubrique infoGeneralRubrique)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            InfoGeneralRubrique infoGeneralRubrique = await context.InfoGeneralRubrique.FindAsync(id);
+            REF_InfoGeneralRubrique infoGeneralRubrique = await context.REF_InfoGeneralRubrique.FindAsync(id);
             if (infoGeneralRubrique == null)
             {
                 return HttpNotFound();
@@ -147,8 +147,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            InfoGeneralRubrique infoGeneralRubrique = await context.InfoGeneralRubrique.FindAsync(id);
-            context.InfoGeneralRubrique.Remove(infoGeneralRubrique);
+            REF_InfoGeneralRubrique infoGeneralRubrique = await context.REF_InfoGeneralRubrique.FindAsync(id);
+            context.REF_InfoGeneralRubrique.Remove(infoGeneralRubrique);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DAL;
+using DATAAL;
 using log4net;
 using Shared.ENUMS;
 using Shared.Models;
@@ -13,7 +13,7 @@ namespace BLL.Biz
 {
     public class KpiBiz : CommonBiz
     {
-        public KpiBiz(EnginDbContext context, ILog log) : base(context, log)
+        public KpiBiz(TestEnginEntities context, ILog log) : base(context, log)
         {
         }
 

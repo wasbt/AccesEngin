@@ -17,17 +17,16 @@
 
 
 
-GO
-CREATE NONCLUSTERED INDEX [IX_CreatedBy]
-    ON [dbo].[Entities]([CreatedBy] ASC);
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_SiteId]
-    ON [dbo].[Entities]([SiteId] ASC);
+
 
 
 GO
-CREATE NONCLUSTERED INDEX [IX_HSEEntiteUserId]
-    ON [dbo].[Entities]([HSEEntiteUserId] ASC);
+
+
+
+GO
+
 

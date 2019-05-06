@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL;
+using DATAAL;
 using X.PagedList;
 using Front.Models;
 using Front.Controllers;
@@ -19,20 +19,20 @@ namespace Front.Areas.BackOffice.Controllers
     public class EntitiesController : BackOfficeController
     {
         // GET: BackOffice/Entities
-        public async Task<ActionResult> Index(StandardModel<Entity> model)
+        public async Task<ActionResult> Index(StandardModel<Entities> model)
         {
-            var entity = context.Entity.Include(e => e.AspNetUsers).Include(e => e.Site);
+            var entity = context.Entities.Include(e => e.AspNetUsers).Include(e => e.Sites);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.Entity.AsQueryable();
+			var query = context.Entities.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<Entity>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<Entities>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -55,7 +55,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entity entity = await context.Entity.FindAsync(id);
+            Entities entity = await context.Entities.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -67,7 +67,7 @@ namespace Front.Areas.BackOffice.Controllers
         public ActionResult Create()
         {
             ViewBag.HSEEntiteUserId = new SelectList(context.AspNetUsers, "Id", "Email");
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name");
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name");
             return View();
         }
 
@@ -76,20 +76,20 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create( Entity entity)
+        public async Task<ActionResult> Create(Entities entity)
         {
             if (ModelState.IsValid)
             {
                 entity.CreatedBy = CurrentUserId;
                 entity.CreatedOn = DateTime.Now;
-                context.Entity.Add(entity);
+                context.Entities.Add(entity);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }
 
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", entity.CreatedBy);
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", entity.SiteId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", entity.SiteId);
             return View(entity);
         }
 
@@ -100,13 +100,13 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entity entity = await context.Entity.FindAsync(id);
+            Entities entity = await context.Entities.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
             }
             ViewBag.HSEEntiteUserId = new SelectList(context.AspNetUsers, "Id", "Email", entity.CreatedBy);
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", entity.SiteId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", entity.SiteId);
             return View(entity);
         }
 
@@ -115,7 +115,7 @@ namespace Front.Areas.BackOffice.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Entity entity)
+        public async Task<ActionResult> Edit(Entities entity)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace Front.Areas.BackOffice.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CreatedBy = new SelectList(context.AspNetUsers, "Id", "Email", entity.CreatedBy);
-            ViewBag.SiteId = new SelectList(context.Site, "Id", "Name", entity.SiteId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", entity.SiteId);
             return View(entity);
         }
 
@@ -138,7 +138,7 @@ namespace Front.Areas.BackOffice.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entity entity = await context.Entity.FindAsync(id);
+            Entities entity = await context.Entities.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -151,8 +151,8 @@ namespace Front.Areas.BackOffice.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            Entity entity = await context.Entity.FindAsync(id);
-            context.Entity.Remove(entity);
+            Entities entity = await context.Entities.FindAsync(id);
+            context.Entities.Remove(entity);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

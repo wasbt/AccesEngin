@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿using DATAAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace Front.AGUtils
 
             List<string> colsList = new List<string>();
 
-            using (var context = new EnginDbContext())
+            using (var context = new TestEnginEntities())
             {
                 // Sql Server
 #if DEBUG

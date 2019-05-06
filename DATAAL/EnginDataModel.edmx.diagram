@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d07a1a401df342f28fedee75d7d0d2d8" Name="Diagram1">
+        <EntityTypeShape EntityType="TestEnginModel.AppFiles" Width="1.5" PointX="10.5" PointY="11.125" />
+        <EntityTypeShape EntityType="TestEnginModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="21.125" />
+        <EntityTypeShape EntityType="TestEnginModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="21.75" />
+        <EntityTypeShape EntityType="TestEnginModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="24.375" />
+        <EntityTypeShape EntityType="TestEnginModel.AspNetUsers" Width="1.5" PointX="3" PointY="18.75" />
+        <EntityTypeShape EntityType="TestEnginModel.DemandeAccesEngin" Width="1.5" PointX="10.5" PointY="19.25" />
+        <EntityTypeShape EntityType="TestEnginModel.DemandeResultatEntete" Width="1.5" PointX="12.75" PointY="20.5" />
+        <EntityTypeShape EntityType="TestEnginModel.Entities" Width="1.5" PointX="8.25" PointY="20" />
+        <EntityTypeShape EntityType="TestEnginModel.Profile" Width="1.5" PointX="15.5" PointY="20.375" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_CheckListExigence" Width="1.5" PointX="7.5" PointY="15.75" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_CheckListRubrique" Width="1.5" PointX="5.25" PointY="17.5" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_InfoGenerale" Width="1.5" PointX="7.5" PointY="31.875" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_InfoGeneralRubrique" Width="1.5" PointX="5.25" PointY="45.25" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_MailingList" Width="1.5" PointX="13.5" PointY="16.875" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_NatureMatiere" Width="1.5" PointX="15" PointY="28.625" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_StatutDemandes" Width="1.5" PointX="8.25" PointY="12" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_TypeCheckList" Width="1.5" PointX="9.75" PointY="26.25" />
+        <EntityTypeShape EntityType="TestEnginModel.REF_TypeEngin" Width="1.5" PointX="15" PointY="24.5" />
+        <EntityTypeShape EntityType="TestEnginModel.ReponseDemande" Width="1.5" PointX="12.75" PointY="24.375" />
+        <EntityTypeShape EntityType="TestEnginModel.ResultatExigence" Width="1.5" PointX="9.75" PointY="15" />
+        <EntityTypeShape EntityType="TestEnginModel.ResultatInfoGenerale" Width="1.5" PointX="12.75" PointY="27.75" />
+        <EntityTypeShape EntityType="TestEnginModel.Sites" Width="1.5" PointX="17.75" PointY="20.375" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_AppFiles_AppFileId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeResultatEntete_dbo_AppFiles_AppFileId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeResultatEntete_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Entities_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_InfoGeneralRubrique_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_NatureMatiere_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Profile_dbo_AspNetUsers_Id" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_Entities_EntityId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_NatureMatiere_NatureMatiereId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_StatutDemandes_StatutDemandeId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_TypeCheckList_TypeCheckListId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeAccesEngin_dbo_TypeEngin_TypeEngin_Id" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_DemandeResultatEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Reports_dbo_DemandeAccesEngin_DemandeAccesEnginId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_ResultatInfoGenerale_dbo_DemandeAccesEngin_DemandeAccesEnginId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_ResultatExigence_dbo_DemandeResultatEntete_DemandeResultatEnteteId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Entities_dbo_Profile_HSEEntiteUserId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Entities_dbo_Sites_SiteId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Profile_dbo_Entities_EntiteId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_REF_MailingList_dbo_Entities_EntityId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_Sites_dbo_Profile_HSESiteId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_CheckListExigence_dbo_CheckListRubrique_CheckListRubriqueId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_ResultatExigence_dbo_CheckListExigence_CheckListExigenceId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_CheckListRubrique_dbo_TypeCheckList_TypeCheckListId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_InfoGenerale_dbo_InfoGeneralRubrique_InfoGeneralRubriqueId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_ResultatInfoGenerale_dbo_InfoGenerale_InfoGeneraleId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_NatureMatiere_dbo_TypeCheckList_TypeCheckListId" />
+        <AssociationConnector Association="TestEnginModel.FK_dbo_TypeEngin_dbo_TypeCheckList_TypeCheckListId" />
+        <AssociationConnector Association="TestEnginModel.AspNetUserRoles" />
+        <AssociationConnector Association="TestEnginModel.MAP_InfoGenerale_TypeCheckList" />
+        <AssociationConnector Association="TestEnginModel.Map_REF_MailingListAspNetUsers" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DAL;
+using DATAAL;
 using log4net;
 using Shared.DTO;
 using System;
@@ -19,7 +19,7 @@ namespace BLL.Biz
 {
     public class DemandeAccesBiz : CommonBiz
     {
-        public DemandeAccesBiz(EnginDbContext context, ILog log) : base(context, log)
+        public DemandeAccesBiz(TestEnginEntities context, ILog log) : base(context, log)
         {
         }
 
@@ -37,7 +37,7 @@ namespace BLL.Biz
 
             #region Check Controle id & find it
 
-            var typeCheckList = await context.TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
+            var typeCheckList = await context.REF_TypeCheckList.Where(x => x.Id == controle.TypeCheckListId).FirstOrDefaultAsync();
 
             var typeCheckListDTO = typeCheckList.TypeCheckListToDTO();
 
@@ -103,10 +103,10 @@ namespace BLL.Biz
 
             if (!string.IsNullOrEmpty(validerDemande.Motif) && validerDemande.StatutDemandeId == 2)
             {
-                context.Report.Add(new Report()
+                context.ReponseDemande.Add(new ReponseDemande()
                 {
                     DemandeAccesEnginId = validerDemande.DemandeAccesEnginId,
-                    MotifReport = validerDemande.Motif,
+                    Motif = validerDemande.Motif,
                     CreatedBy = currentUserId,
                     CreatedOn = DateTime.Now,
                 });
@@ -131,8 +131,8 @@ namespace BLL.Biz
                     //   var existFile =  context.RegulatoryText.Where(r => r.RegulatoryTextId == regulatoryText.RegulatoryTextId);
                     if (demandeAccesEngin.AppFileId.HasValue)
                     {
-                        var oldFile = await context.AppFile.FindAsync(demandeAccesEngin.AppFileId);
-                        context.AppFile.Remove(oldFile);
+                        var oldFile = await context.AppFiles.FindAsync(demandeAccesEngin.AppFileId);
+                        context.AppFiles.Remove(oldFile);
                         await context.SaveChangesAsync();
                     }
                     //add file to database & Azure
@@ -166,7 +166,7 @@ namespace BLL.Biz
                     x.Autorise &&
                     x.StatutDemandeId == (int)DemandeStatus.Accepter &&
                     x.ResultatInfoGenerale
-                    .Any(i => i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
+                    .Any(i => i.REF_InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                           i.ValueInfo.Contains(Matricule)));
             if (demandeAcces == null)
             {
@@ -182,7 +182,6 @@ namespace BLL.Biz
         {
             var demandeAcces = context.DemandeAccesEngin.Where(x =>
                                                                    x.Autorise &&
-                                                                   x.StatutDemandeId == (int)DemandeStatus.Accepter &&
                                                                    x.DemandeResultatEntete.Any())
                                                                    .AsQueryable();
 
@@ -194,7 +193,7 @@ namespace BLL.Biz
                 .Where(x =>
                        x.ResultatInfoGenerale
                 .Any(i =>
-                     i.InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
+                     i.REF_InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                      i.ValueInfo.Equals(model.Matricule, StringComparison.OrdinalIgnoreCase)));
             }
             if (model.EntityId.HasValue)
