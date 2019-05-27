@@ -9,6 +9,7 @@ using Mobile.Helpers;
 using Mobile.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Shared.API.OUT;
 using Shared.DTO;
 using Shared.Models;
 
@@ -104,6 +105,36 @@ namespace Mobile.Services
             }
 
         }
+
+        /// <summary>
+        /// Get Detail Demande By Id 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="accessToken"></param>
+        /// <returns>TypeCheckListDTO</returns>
+        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(long Id, string accessToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
+
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/GetDetailsDemandeById/" + Id);
+
+                var demandeDetail = JsonConvert.DeserializeObject<DemandeDetail>(json);
+                return demandeDetail;
+
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+        }
         /// <summary>
         /// Get Demande By Matricule
         /// </summary>
@@ -173,6 +204,25 @@ namespace Mobile.Services
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = await client.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", content);
+        }
+
+        /// <summary>
+        /// Refuser/Accepter Demande 
+        /// </summary>
+        /// <param name="validerDemande"></param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        public async Task ValiderDemandeAsync(ValiderDemande validerDemande, string accessToken= "")
+        {
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var json = JsonConvert.SerializeObject(validerDemande);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
     }
 }

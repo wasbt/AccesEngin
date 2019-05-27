@@ -67,6 +67,32 @@ namespace WebApi.Controllers
 
         #endregion
 
+
+        #region get CheckList For controller
+
+        [ResponseType(typeof(ResultatCheckList))]
+        [Route("api/PostResultatExigences")]
+        public async Task<HttpResponseMessage> PostResultatExigencesAsync(ResultatCheckList resultat)
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
+
+            var result = await biz.PostResultatExigencesAsync(resultat);
+
+            if (result)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
+
+
+        #endregion
+
         [HttpGet]
         [Route("api/GetResultatExigence/{Id}")]
         public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(int Id)
@@ -107,11 +133,10 @@ namespace WebApi.Controllers
 
         }
 
-        #region get CheckList For controller
 
-        [ResponseType(typeof(ResultatCheckList))]
-        [Route("api/PostResultatExigences")]
-        public async Task<HttpResponseMessage> PostResultatExigencesAsync(ResultatCheckList resultat)
+        [HttpGet]
+        [Route("api/GetDetailsDemandeById/{Id}")]
+        public async Task<HttpResponseMessage> GetDetailsDemandeById(int Id)
         {
 
             if (!ModelState.IsValid)
@@ -120,16 +145,13 @@ namespace WebApi.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = await biz.PostResultatExigencesAsync(resultat);
+            var result = await biz.GetDetailsDemandeByIdAsync(Id);
 
-            if (result)
+            if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
         }
-
-
-        #endregion
     }
 }

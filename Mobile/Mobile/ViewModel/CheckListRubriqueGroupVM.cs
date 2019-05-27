@@ -1,6 +1,11 @@
-﻿using Mobile.Helpers;
+﻿using Acr.UserDialogs;
+using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +21,7 @@ namespace Mobile.ViewModel
 {
     public class CheckListRubriqueGroupVM : BaseViewModel
     {
+        private MediaFile _mediaFile;
 
         private readonly ApiServices _apiServices = new ApiServices();
 
@@ -41,6 +47,7 @@ namespace Mobile.ViewModel
                 });
             }
         }
+        public bool IsAutorise { get; set; }
 
         private ObservableCollection<CheckListRubriqueVM> items;
         public ObservableCollection<CheckListRubriqueVM> Items
@@ -49,6 +56,8 @@ namespace Mobile.ViewModel
 
             set => SetProperty(ref items, value);
         }
+
+
 
         public Command LoadCheckListRubriqueCommand { get; set; }
         public Command<CheckListRubriqueVM> RefreshItemsCommand { get; set; }
@@ -148,16 +157,18 @@ namespace Mobile.ViewModel
         {
             get
             {
-                return new Command<ObservableCollection<CheckListRubriqueVM>>(async (Rubrique) =>
+                return new Command<ObservableCollection<CheckListRubriqueVM>>(async (Rubriques) =>
                 {
                     ResultatCheckList = new ResultatCheckList();
                     ResultatCheckList.ResultatsList = new List<Resultats>();
-                    var data = Rubrique;
+                    //  var data = Rubrique;
                     ResultatCheckList.DemandeAccesEnginId = DemandeAccesEnginId;
                     ResultatCheckList.CreatedBy = Settings.UserId;
                     ResultatCheckList.CreatedOn = DateTime.Now;
+                    ResultatCheckList.IsAutorise = IsAutorise;
 
-                    foreach (var rubrique in Rubrique)
+
+                    foreach (var rubrique in Rubriques)
                     {
                         foreach (var exigence in rubrique)
                         {
@@ -174,6 +185,107 @@ namespace Mobile.ViewModel
                     }
 
                     await _apiServices.PostResultatExigencesAsync(ResultatCheckList, Settings.AccessToken);
+                });
+            }
+        }
+
+        public ICommand PickPhotoCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    try
+                    {
+                        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                        if (status != PermissionStatus.Granted)
+                        {
+                            await CrossMedia.Current.Initialize();
+
+                            if (!CrossMedia.Current.IsPickPhotoSupported)
+                            {
+                                UserDialogs.Instance.Alert("No PickPhoto", ":( No PickPhoto available.", "OK");
+                                return;
+                            }
+
+                            _mediaFile = await CrossMedia.Current.PickPhotoAsync();
+
+                            if (_mediaFile == null)
+                                return;
+
+                            UserDialogs.Instance.Alert("No PickPhoto", _mediaFile.Path, "OK");
+                            //FileImage.Source = ImageSource.FromStream(() =>
+                            //{
+                            //    return _mediaFile.GetStream();
+                            //});
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        //LabelGeolocation.Text = "Error: " + ex;
+                    }
+                });
+            }
+        }
+
+        public ICommand TakePhotoCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    try
+                    {
+                        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+                        if (status != PermissionStatus.Granted)
+                        {
+                            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                            {
+                                UserDialogs.Instance.Alert("Need location", "Gunna need that location", "OK");
+                            }
+
+                            var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+                            if (results.ContainsKey(Permission.Camera))
+                            {
+                                status = results[Permission.Camera];
+                            }
+                        }
+
+
+
+                        if (status == PermissionStatus.Granted)
+                        {
+                            await CrossMedia.Current.Initialize();
+
+                            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                            {
+                                UserDialogs.Instance.Alert("No camera", ":( No PickPhoto available.", "OK");
+                                return;
+                            }
+
+                            _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() {
+           
+                            });
+
+
+                            if (_mediaFile == null)
+                                return;
+
+
+                            var Source = ImageSource.FromStream(() =>
+                            {
+                                return _mediaFile.GetStream();
+                            });
+                        
+                            
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        //LabelGeolocation.Text = "Error: " + ex;
+                    }
                 });
             }
         }

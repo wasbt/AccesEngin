@@ -19,26 +19,27 @@ namespace UnitTestDemandeAcces.BackOffiice
     [TestFixture]
     public class REF_TypeCheckListTest
     {
+        private TypeCheckListsController typeCheckListsController;
+        [SetUp]
+        public void SetUp()
+        {
+            typeCheckListsController = new TypeCheckListsController();
+        }
+
         [Test]
         public void Index_GetList_ReturnList()
         {
             //Arrange
             var model = new StandardModel<REF_TypeCheckList>();
-            TypeCheckListsController obj = new TypeCheckListsController();
+            IList<REF_TypeCheckList> typeCheckLists = new List<REF_TypeCheckList>
+                {
+                    new REF_TypeCheckList { Id = 1, Name = "tmd",CreatedBy = Guid.NewGuid().ToString(),CreatedOn = DateTime.Now},
+                    new REF_TypeCheckList { Id = 1, Name = "SousP",CreatedBy = Guid.NewGuid().ToString(),CreatedOn = DateTime.Now},
+                    new REF_TypeCheckList { Id = 1, Name = "Pemp",CreatedBy = Guid.NewGuid().ToString(),CreatedOn = DateTime.Now},
+                };
 
-            var foo = new Mock<TypeCheckListsController> ();
-            var bar = new Mock<StandardModel<REF_TypeCheckList>> ();
-           // foo.Setup(mk => mk.Index(model)).Returns();
-
-            //Act
-            var result =  obj.Index(model) as Task<ActionResult>;
-            result.Wait();
-            var viewresult = result.Result;
-            var data = (StandardModel<REF_TypeCheckList>)((ViewResult)viewresult).Model;
-
-            //Assert
-            Assert.IsNotNull(viewresult);
-            Assert.AreEqual(2, data.resultList.Count);
+            var mock = new Moq.Mock<TypeCheckListsController>();
+           // mock.Setup(m => m.Index(model)).Returns(model);
         }
 
         [Test]
@@ -51,9 +52,8 @@ namespace UnitTestDemandeAcces.BackOffiice
                 .Setup(c => c.Request)
                 .Returns(request.Object);
             var model = new StandardModel<REF_TypeCheckList>();
-            TypeCheckListsController obj = new TypeCheckListsController();
 
-            obj.ControllerContext = new ControllerContext(context.Object, new RouteData(), obj);
+            typeCheckListsController.ControllerContext = new ControllerContext(context.Object, new RouteData(), typeCheckListsController);
 
             ////Act
             //var result =  obj.Index(model) as Task<ActionResult>;
@@ -64,6 +64,18 @@ namespace UnitTestDemandeAcces.BackOffiice
             ////Assert
             //Assert.IsNotNull(viewresult);
             //Assert.AreEqual(4, data.resultList.Count);
+        }
+
+
+        [Test]
+        public void DeleteEmployee_WhenCalled_DeleteTheEmployeeFromDb()
+        {
+            var storage = new Mock<REF_TypeCheckList>();
+            var controller = new TypeCheckListsController();
+
+            var tt = controller.Delete((int)storage.Object.Id) as Task<ActionResult>;
+
+            storage.Verify(s => s.(1));
         }
 
     }

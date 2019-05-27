@@ -1,4 +1,5 @@
 ﻿using Mobile.Model;
+using Mobile.View.Base;
 using Mobile.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,15 @@ using Xamarin.Forms.Xaml;
 
 namespace Mobile.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DemandeAccesDetailsView : ContentPage
-	{
-        DemandeAccesDetailsVM ViewModel;
-
-        public DemandeAccesDetailsView ()
-		{
-			InitializeComponent();
-		}
-        public DemandeAccesDetailsView(DemandeAcces demandeAcces)
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class DemandeAccesDetailsView : BaseView
+    {
+        //DemandeAccesDetailsVM ViewModel;
+        public DemandeAccesDetailsView(long Id)
         {
             InitializeComponent();
-
-            ViewModel = Resources["vm"] as DemandeAccesDetailsVM;
-            ViewModel.DemandeAcces = demandeAcces;
+            var ViewModel = new DemandeAccesDetailsVM(Id);
+            BindingContext = ViewModel;
         }
     }
 }

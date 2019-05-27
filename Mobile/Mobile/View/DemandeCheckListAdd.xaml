@@ -17,6 +17,7 @@
                 <ListView
                     x:Name="HotelsList"
                     BackgroundColor="White"
+                    CachingStrategy="RetainElement"
                     HasUnevenRows="True"
                     IsGroupingEnabled="True"
                     ItemsSource="{Binding Items}"
@@ -61,15 +62,11 @@
                                                                 HorizontalOptions="Start"
                                                                 VerticalOptions="Start"
                                                                  />-->
-                                                <local:CustomSwitch
+                                                <Switch
                                                     Grid.Column="1"
                                                     HeightRequest="20"
                                                     HorizontalOptions="Start"
                                                     IsToggled="{Binding IsConforme}"
-                                                    SwitchOffColor="Gray"
-                                                    SwitchOffThumbColor="Gray"
-                                                    SwitchOnColor="#9CCC65"
-                                                    SwitchOnThumbColor="#9CCC65"
                                                     VerticalOptions="Start"
                                                     WidthRequest="60" />
 
@@ -115,7 +112,26 @@
                         </DataTemplate>
                     </ListView.GroupHeaderTemplate>
                     <ListView.Footer>
+
                         <StackLayout Padding="10">
+                            <StackLayout Padding="10" Orientation="Horizontal">
+                                <Label Text="Aitorisé" TextColor="Black" />
+                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding IsAutorise}" />
+                            </StackLayout>
+                            <StackLayout Padding="10" Orientation="Horizontal">
+                                <Button
+                                    BackgroundColor="Teal"
+                                    Command="{Binding PickPhotoCommand}"
+                                    FontSize="15"
+                                    Text="Pick Photo"
+                                    TextColor="White" />
+                                <Button
+                                    BackgroundColor="Teal"
+                                    Command="{Binding TakePhotoCommand}"
+                                    FontSize="15"
+                                    Text="Take Photo"
+                                    TextColor="White" />
+                            </StackLayout>
                             <Button
                                 BackgroundColor="Green"
                                 BorderRadius="5"

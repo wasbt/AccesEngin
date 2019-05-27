@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DATAAL;
+using DAL;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -89,7 +89,7 @@ namespace WebApi.Providers
 
         public static AuthenticationProperties CreateProperties(string userId)
         {
-            using (var context = new TestEnginEntities())
+            using (var context = new OcpPerformanceDataContext())
             {
                 var profile = context.Profile.Find(userId);
                 profile.DtLastConnection = DateTime.Now;

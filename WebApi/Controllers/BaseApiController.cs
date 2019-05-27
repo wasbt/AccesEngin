@@ -1,4 +1,4 @@
-﻿using DATAAL;
+﻿using DAL;
 using Microsoft.AspNet.Identity;
 using Shared;
 using System;
@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 {
     public class BaseApiController : ApiController
     {
-        public TestEnginEntities context = new TestEnginEntities();
+        public OcpPerformanceDataContext context = new OcpPerformanceDataContext();
         private ApplicationUserManager _userManager;
 
         #region ContainerName - SourceName

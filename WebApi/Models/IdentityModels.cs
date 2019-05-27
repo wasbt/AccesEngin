@@ -21,7 +21,7 @@ namespace WebApi.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("EnginDataModel", throwIfV1Schema: false)
+            : base("OcpPerformanceConnection", throwIfV1Schema: false)
         {
         }
         

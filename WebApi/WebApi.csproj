@@ -273,7 +273,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -323,16 +325,16 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
-      <Project>{9708B573-CFE4-432D-B97E-7DB4EFA4CA0F}</Project>
+    <ProjectReference Include="..\..\AccesEngin\BLL\BLL.csproj">
+      <Project>{a5a905ee-0b2f-4691-8484-5d265fbef734}</Project>
       <Name>BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DATAAL\DATAAL.csproj">
-      <Project>{0a106b6b-8f1b-4b7d-a51a-6e0bcfb43724}</Project>
-      <Name>DATAAL</Name>
+    <ProjectReference Include="..\..\AccesEngin\DAL\DAL.csproj">
+      <Project>{e1fe24d6-1f5b-47ca-b127-e61f39c673eb}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
-      <Project>{637b4990-5383-476f-8cff-d9da909bc92c}</Project>
+    <ProjectReference Include="..\..\AccesEngin\Shared\Shared.csproj">
+      <Project>{71d97417-b9d5-49b3-80f3-0b15ece6b6f5}</Project>
       <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>

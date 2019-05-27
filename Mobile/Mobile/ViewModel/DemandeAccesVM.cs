@@ -1,6 +1,8 @@
 ﻿using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
+using Mobile.View;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,8 +17,10 @@ using Xamarin.Forms.Extended;
 
 namespace Mobile.ViewModel
 {
-    public class DemandeAccesVM : BindableObject
+    [AddINotifyPropertyChangedInterface]
+    public class DemandeAccesVM : BaseViewModel
     {
+        public bool isNeedLoadMore = false;
         private bool _isBusy;
         private const int PageSize = 10;
         private readonly ApiServices _apiServices = new ApiServices();
@@ -37,7 +41,16 @@ namespace Mobile.ViewModel
                 OnPropertyChanged();
             }
         }
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
 
+        public override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Settings.MESSAGE_RefreshControlList);
+        }
 
         public InfiniteScrollCollection<DemandeAcces> DemandeAcces
         {
@@ -49,20 +62,16 @@ namespace Mobile.ViewModel
             }
         }
 
-        //public ICommand GetDemandeAccesCommand
-        //{
-        //    get
-        //    {
-        //        return new Command(async () =>
-        //        {
-        //            var accessToken = Settings.AccessToken;
-        //            DemandeAcces = await _apiServices.GetDemandeAccesListAsync(accessToken);
-        //        });
-        //    }
-        //}
 
         public DemandeAccesVM()
         {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Settings.MESSAGE_RefreshControlList, async (callback) => {
+
+                IsWorking = false;
+                Items.Clear();
+                await Items.LoadMoreAsync();
+
+            });
             Items = new InfiniteScrollCollection<DemandeAcces>
             {
                 OnLoadMore = async () =>
@@ -89,37 +98,24 @@ namespace Mobile.ViewModel
                     return items;
                 }
             };
-
-            RefreshCommand = new Command(() =>
-            {
-                // clear and start again
-                Items.Clear();
-                Items.LoadMoreAsync();
-            });
+            //RefreshCommand = new Command(() =>
+            //{
+            //    // clear and start again
+            //    Items.Clear();
+            //    Items.LoadMoreAsync();
+            //});
 
             // load the initial data
             Items.LoadMoreAsync();
         }
-
-        //private async Task DownloadDataAsync()
-        //{
-        //    var accessToken = Settings.AccessToken;
-
-        //    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, pageIndex: 0, pageSize: PageSize);
-
-        //    DemandeAcces.AddRange(items);
-        //}
 
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public bool IsWorking
-        {
-            get { return (bool)GetValue(IsWorkingProperty); }
-            set { SetValue(IsWorkingProperty, value); }
-        }
+ 
+        public bool IsWorking { get; set; }
         public InfiniteScrollCollection<DemandeAcces> Items { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

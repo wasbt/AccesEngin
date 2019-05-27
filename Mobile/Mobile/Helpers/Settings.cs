@@ -77,5 +77,8 @@ namespace Mobile.Helpers
                 Preferences.Set("AccessTokenExpirationDate", value);
             }
         }
+
+
+        public const string MESSAGE_RefreshControlList = "refreshcontrollist";
     }
 }
