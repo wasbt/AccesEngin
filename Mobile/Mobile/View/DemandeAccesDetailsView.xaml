@@ -105,8 +105,24 @@
                     </StackLayout>
                     <StackLayout
                         HorizontalOptions="Fill"
-                        IsVisible="{Binding DemandeDetail.ButtonValideIsVisible}"
+                        IsVisible="False"
                         Orientation="Horizontal">
+
+                        <StackLayout.Triggers>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                TargetType="StackLayout"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                TargetType="StackLayout"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </StackLayout.Triggers>
+
                         <Button
                             BackgroundColor="Green"
                             Command="{Binding ValiderCommand}"
@@ -126,9 +142,23 @@
                     </StackLayout>
 
                     <StackLayout
-                        IsVisible="{Binding DemandeDetail.IsControlled}"
+                        IsVisible="False"
                         Orientation="Vertical"
                         VerticalOptions="End">
+                        <StackLayout.Triggers>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                TargetType="StackLayout"
+                                Value="False">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                TargetType="StackLayout"
+                                Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </StackLayout.Triggers>
                         <Button
                             BackgroundColor="#FFC107"
                             Command="{Binding GoToControleCommand}"

@@ -89,7 +89,7 @@ namespace Mobile.ViewModel
                         var mdp = Application.Current.MainPage as MasterDetailPage;
                         await mdp.Detail.Navigation.PopAsync();
                         MessagingCenter.Send(this, Settings.MESSAGE_RefreshControlList);
-                      //  MessagingCenter.Send<DemandeAccesVM, string>(this, "Alert", "Internet went off.");
+                        //  MessagingCenter.Send<DemandeAccesVM, string>(this, "Alert", "Internet went off.");
 
                         //var mdp = Application.Current.MainPage as MasterDetailPage;
                         //await mdp.Detail.Navigation.PushAsync(new ListDemandeView());
@@ -110,11 +110,20 @@ namespace Mobile.ViewModel
                         DateSortie = DateTime.Now,
                         StatutDemandeId = (int)DemandeStatus.Accepter
                     };
-                    var accessToken = Settings.AccessToken;
-                    await _apiServices.ValiderDemandeAsync(result, accessToken);
-                    MessagingCenter.Send(this, Settings.MESSAGE_RefreshControlList);
-                    var mdp = Application.Current.MainPage as MasterDetailPage;
-                    await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                    try
+                    {
+                        var accessToken = Settings.AccessToken;
+                        await _apiServices.ValiderDemandeAsync(result, accessToken);
+                        MessagingCenter.Send(this, Settings.MESSAGE_RefreshControlList);
+                        var mdp = Application.Current.MainPage as MasterDetailPage;
+                        await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
                 });
             }
         }
@@ -128,11 +137,18 @@ namespace Mobile.ViewModel
                 {
                     if (Id > 0)
                     {
-                        UserDialogs.Instance.ShowLoading("Chargement...");
-                        var accessToken = Settings.AccessToken;
-                        DemandeDetail = await _apiServices.GetDetailsDemandeByIdAsync(Id, accessToken);
-                        await Task.Delay(2000);
-                        UserDialogs.Instance.HideLoading();
+                        try
+                        {
+                            UserDialogs.Instance.ShowLoading("Chargement...");
+                            var accessToken = Settings.AccessToken;
+                            DemandeDetail = await _apiServices.GetDetailsDemandeByIdAsync(Id, accessToken);
+                            UserDialogs.Instance.HideLoading();
+                        }
+                        catch (Exception)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                        }
+                     
                     }
                 }));
             }

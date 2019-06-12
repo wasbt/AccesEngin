@@ -10,8 +10,11 @@ using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -33,6 +36,9 @@ namespace Mobile.ViewModel
         {
 
         }
+        public bool IsAutorise { get; set; }
+        public bool ShowImage { get; set; } = false;
+        public byte[] file { get; set; }
 
         public ICommand GetCheckListByIdCommand
         {
@@ -47,7 +53,6 @@ namespace Mobile.ViewModel
                 });
             }
         }
-        public bool IsAutorise { get; set; }
 
         private ObservableCollection<CheckListRubriqueVM> items;
         public ObservableCollection<CheckListRubriqueVM> Items
@@ -142,6 +147,14 @@ namespace Mobile.ViewModel
             set => SetProperty(ref typeCheckList, value);
 
         }
+        private ImageSource imageSource;
+
+        public ImageSource ImageSource
+        {
+            get => imageSource;
+
+            set => SetProperty(ref imageSource, value);
+        }
 
         private List<CheckListRubrique> rubriques;
 
@@ -159,6 +172,8 @@ namespace Mobile.ViewModel
             {
                 return new Command<ObservableCollection<CheckListRubriqueVM>>(async (Rubriques) =>
                 {
+
+
                     ResultatCheckList = new ResultatCheckList();
                     ResultatCheckList.ResultatsList = new List<Resultats>();
                     //  var data = Rubrique;
@@ -166,8 +181,6 @@ namespace Mobile.ViewModel
                     ResultatCheckList.CreatedBy = Settings.UserId;
                     ResultatCheckList.CreatedOn = DateTime.Now;
                     ResultatCheckList.IsAutorise = IsAutorise;
-
-
                     foreach (var rubrique in Rubriques)
                     {
                         foreach (var exigence in rubrique)
@@ -183,8 +196,18 @@ namespace Mobile.ViewModel
                         }
 
                     }
+                    if (_mediaFile != null)
+                    {
+                        await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile,Settings.AccessToken);
+                        //var test = _mediaFile.GetStream();
+                        //var content = new MultipartFormDataContent();
+                        //content.Add(new StreamContent(_mediaFile.GetStream()),
+                        //    "\"file\"",
+                        //    $"\"{_mediaFile.Path}\"");
+                        //var cc = new StreamContent(_mediaFile.GetStream());
 
-                    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, Settings.AccessToken);
+                   //     await _apiServices.UploadFileAsync(content, Settings.AccessToken);
+                    }
                 });
             }
         }
@@ -214,10 +237,7 @@ namespace Mobile.ViewModel
                                 return;
 
                             UserDialogs.Instance.Alert("No PickPhoto", _mediaFile.Path, "OK");
-                            //FileImage.Source = ImageSource.FromStream(() =>
-                            //{
-                            //    return _mediaFile.GetStream();
-                            //});
+                            file = AStreamToByteArray(_mediaFile.GetStream());
                         }
                     }
                     catch (Exception ex)
@@ -264,21 +284,24 @@ namespace Mobile.ViewModel
                                 return;
                             }
 
-                            _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() {
-           
+                            _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
+                            {
+
                             });
 
 
                             if (_mediaFile == null)
                                 return;
 
-
-                            var Source = ImageSource.FromStream(() =>
+                            ImageSource = ImageSource.FromStream(() =>
                             {
                                 return _mediaFile.GetStream();
                             });
-                        
-                            
+                            ShowImage = true;
+                            file = AStreamToByteArray(_mediaFile.GetStream());
+
+
+
                         }
                     }
                     catch (Exception ex)
@@ -287,6 +310,15 @@ namespace Mobile.ViewModel
                         //LabelGeolocation.Text = "Error: " + ex;
                     }
                 });
+            }
+        }
+
+        public static byte[] AStreamToByteArray(Stream input)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                input.CopyTo(ms);
+                return ms.ToArray();
             }
         }
 

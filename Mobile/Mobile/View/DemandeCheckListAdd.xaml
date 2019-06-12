@@ -113,23 +113,30 @@
                     </ListView.GroupHeaderTemplate>
                     <ListView.Footer>
 
-                        <StackLayout Padding="10">
+                        <StackLayout Padding="5,5,5,5">
+
                             <StackLayout Padding="10" Orientation="Horizontal">
                                 <Label Text="Aitorisé" TextColor="Black" />
                                 <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding IsAutorise}" />
                             </StackLayout>
-                            <StackLayout Padding="10" Orientation="Horizontal">
+                            <Image
+                                x:Name="FileImage"
+                                HeightRequest="100"
+                                IsVisible="{Binding ShowImage}"
+                                Source="{Binding ImageSource}"
+                                WidthRequest="100" />
+                            <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
                                 <Button
                                     BackgroundColor="Teal"
                                     Command="{Binding PickPhotoCommand}"
                                     FontSize="15"
-                                    Text="Pick Photo"
+                                    Text="Choisir image"
                                     TextColor="White" />
                                 <Button
                                     BackgroundColor="Teal"
                                     Command="{Binding TakePhotoCommand}"
                                     FontSize="15"
-                                    Text="Take Photo"
+                                    Text="Prendre photo"
                                     TextColor="White" />
                             </StackLayout>
                             <Button
