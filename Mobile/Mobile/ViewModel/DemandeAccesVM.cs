@@ -49,7 +49,7 @@ namespace Mobile.ViewModel
         public override void OnDisappearing()
         {
             base.OnDisappearing();
-            MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Settings.MESSAGE_RefreshControlList);
+            MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList);
         }
 
         public InfiniteScrollCollection<DemandeAcces> DemandeAcces
@@ -65,7 +65,13 @@ namespace Mobile.ViewModel
 
         public DemandeAccesVM()
         {
-            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Settings.MESSAGE_RefreshControlList, async (callback) => {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList, async (sender) => {
+
+                IsWorking = false;
+                Items.Clear();
+                await Items.LoadMoreAsync();
+            });
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, async (callback) => {
 
                 IsWorking = false;
                 Items.Clear();

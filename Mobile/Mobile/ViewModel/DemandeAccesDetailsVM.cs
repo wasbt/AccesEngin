@@ -25,7 +25,11 @@ namespace Mobile.ViewModel
         long Id = 0;
         public DemandeAccesDetailsVM()
         {
-
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
         }
 
 
@@ -35,11 +39,22 @@ namespace Mobile.ViewModel
 
         public DemandeAccesDetailsVM(long id)
         {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
             Id = id;
         }
 
         public override async void OnAppearing()
         {
+            MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
+
             DemandeDetailCommand?.Execute(Id);
             await Task.Delay(1000);
             base.OnAppearing();
@@ -87,8 +102,8 @@ namespace Mobile.ViewModel
                         var accessToken = Settings.AccessToken;
                         await _apiServices.ValiderDemandeAsync(result, accessToken);
                         var mdp = Application.Current.MainPage as MasterDetailPage;
-                        await mdp.Detail.Navigation.PopAsync();
-                        MessagingCenter.Send(this, Settings.MESSAGE_RefreshControlList);
+                        MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList);
+                        await mdp.Detail.Navigation.PopAsync(true);
                         //  MessagingCenter.Send<DemandeAccesVM, string>(this, "Alert", "Internet went off.");
 
                         //var mdp = Application.Current.MainPage as MasterDetailPage;
@@ -114,7 +129,7 @@ namespace Mobile.ViewModel
                     {
                         var accessToken = Settings.AccessToken;
                         await _apiServices.ValiderDemandeAsync(result, accessToken);
-                        MessagingCenter.Send(this, Settings.MESSAGE_RefreshControlList);
+                        MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
                         var mdp = Application.Current.MainPage as MasterDetailPage;
                         await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
                     }

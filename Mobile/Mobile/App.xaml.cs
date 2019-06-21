@@ -1,4 +1,6 @@
-﻿using Mobile.View;
+﻿using Mobile.Interfaces;
+using Mobile.Services;
+using Mobile.View;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +10,8 @@ namespace Mobile
 {
     public partial class App : Application
     {
+        public static INavigationService NavigationService { get; } = new NavigationService();
+
         public App()
         {
             InitializeComponent();
@@ -16,7 +20,13 @@ namespace Mobile
 #if DEBUG
             HotReloader.Current.Start(this);
 #endif
-            MainPage = new Login();
+            NavigationService.Configure("Login", typeof(View.Login));
+
+            NavigationService.Configure("ListDemandeView", typeof(View.ListDemandeView));
+            //NavigationService.Configure("PushNavigationPage", typeof(View.PushNavigationPage));
+            var mainPage = ((NavigationService)NavigationService).SetRootPage("Login");
+
+            MainPage = mainPage;
 
         }
 

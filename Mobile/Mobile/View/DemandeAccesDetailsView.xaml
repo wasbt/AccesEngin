@@ -121,6 +121,7 @@
                                 Value="False">
                                 <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
+
                         </StackLayout.Triggers>
 
                         <Button
@@ -147,16 +148,16 @@
                         VerticalOptions="End">
                         <StackLayout.Triggers>
                             <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                Binding="{Binding DemandeDetail.Statut}"
                                 TargetType="StackLayout"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="True" />
+                                Value="Refusé">
+                                <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
                             <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                Binding="{Binding DemandeDetail.Statut}"
                                 TargetType="StackLayout"
-                                Value="True">
-                                <Setter Property="IsVisible" Value="False" />
+                                Value="Accepté">
+                                <Setter Property="IsVisible" Value="True" />
                             </DataTrigger>
                         </StackLayout.Triggers>
                         <Button

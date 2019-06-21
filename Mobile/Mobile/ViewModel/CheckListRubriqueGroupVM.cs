@@ -2,6 +2,7 @@
 using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
+using Mobile.View;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions;
@@ -198,7 +199,7 @@ namespace Mobile.ViewModel
                     }
                     if (_mediaFile != null)
                     {
-                        await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile,Settings.AccessToken);
+                        await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
                         //var test = _mediaFile.GetStream();
                         //var content = new MultipartFormDataContent();
                         //content.Add(new StreamContent(_mediaFile.GetStream()),
@@ -206,8 +207,20 @@ namespace Mobile.ViewModel
                         //    $"\"{_mediaFile.Path}\"");
                         //var cc = new StreamContent(_mediaFile.GetStream());
 
-                   //     await _apiServices.UploadFileAsync(content, Settings.AccessToken);
+                        //     await _apiServices.UploadFileAsync(content, Settings.AccessToken);
                     }
+                    //    MessagingCenter.Send<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail);
+                    //var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
+                    //await currentPage.Navigation.PushModalAsync(new ListDemandeView());
+
+                     await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
+
+                    //var mdp = Application.Current.MainPage as MasterDetailPage;
+
+                    //mdp.Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ListDemandeView)));
+
+                    //Application.Current.MainPage = mdp;
+
                 });
             }
         }
@@ -236,7 +249,12 @@ namespace Mobile.ViewModel
                             if (_mediaFile == null)
                                 return;
 
-                            UserDialogs.Instance.Alert("No PickPhoto", _mediaFile.Path, "OK");
+                            ImageSource = ImageSource.FromStream(() =>
+                            {
+                                return _mediaFile.GetStream();
+                            });
+                            ShowImage = true;
+
                             file = AStreamToByteArray(_mediaFile.GetStream());
                         }
                     }

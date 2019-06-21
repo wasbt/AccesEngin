@@ -79,6 +79,5 @@ namespace Mobile.Helpers
         }
 
 
-        public const string MESSAGE_RefreshControlList = "refreshcontrollist";
     }
 }
