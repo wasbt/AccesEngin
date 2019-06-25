@@ -148,6 +148,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Xamarin.SfPdfViewer">
+      <Version>17.1.0.53</Version>
+    </PackageReference>
     <PackageReference Include="UXDivers.GorillaPlayer.Common">
       <Version>0.9.1.2</Version>
     </PackageReference>

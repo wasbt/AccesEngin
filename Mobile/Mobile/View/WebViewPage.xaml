@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.View.WebViewPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Mobile.Controls"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfPdfViewer.XForms;assembly=Syncfusion.SfPdfViewer.XForms">
+    <ContentPage.Content>
+
+
+        <StackLayout>
+            <!--  Place new controls here  -->
+
+            <syncfusion:SfPdfViewer x:Name="pdfViewerControl"/>
+            <WebView
+                HorizontalOptions="FillAndExpand"
+                Source="http://192.168.137.1:3481/Uploads/04-02_1.jpg"
+                VerticalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

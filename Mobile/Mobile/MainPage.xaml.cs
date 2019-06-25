@@ -26,11 +26,13 @@ namespace Mobile
             // icon on the left side, and page that you want to open after selection
             var page1 = new MasterPageItem() { Title = "Controler", Icon = "checkList", TargetType = typeof(ListDemandeView) };
             var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "search", TargetType = typeof(SearchView) };
+            var page3 = new MasterPageItem() { Title = "Rechercher", Icon = "search", TargetType = typeof(WebViewPage) };
 
 
             // Adding menu items to menuList
             menuList.Add(page1);
             menuList.Add(page2);
+            menuList.Add(page3);
         
 
             // Setting our list to be ItemSource for ListView in MainPage.xaml
