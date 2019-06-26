@@ -1,4 +1,4 @@
-﻿@model DATAAL.DemandeAccesEngin
+﻿@model DAL.DemandeAccesEngin
 
 @{
     ViewBag.Title = "Edit";
@@ -20,19 +20,19 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">Site</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control", @disabled = "true" })
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-2">Entité</label>
                         <div class="col-md-10">
-                            @Html.DropDownList("EntityId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("EntiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" , @disabled = "true" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("TypeCheckListId", null, htmlAttributes: new { @class = "form-control", @disabled = "true" })
                             @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                 foreach (var rebricInfo in group)
                                 {
 
-                                    var info = Model.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                                    var info = Model.DemandeAccesEnginInfoGeneraleValue.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
                                     if (info == null)
                                     {
                                         continue;
@@ -157,9 +157,9 @@
                 SiteId : selectedSiteId
             }
             var posting = $.post('/AccesEnginapi/GetEntityBySite', jsonObject, function (response) {
-                $("#EntityId").html("");
+                $("#EntiteId").html("");
                 $.each(response.data, function (i,entity) {
-                    $("#EntityId").append($('<option>', {
+                    $("#EntiteId").append($('<option>', {
                         value: entity.Id,
                         text: entity.Name
                     }));
@@ -205,11 +205,11 @@
 
         $(document).ready(function () {
         // Date Picker
-                jQuery('.datepicker-autoclose').datepicker({
-                    format: "yyyy/mm/dd",
-                     autoclose: true,
-                     todayHighlight: true,
-                });
+                //jQuery('.datepicker-autoclose').datepicker({
+                //    format: "yyyy/mm/dd",
+                //     autoclose: true,
+                //     todayHighlight: true,
+                //});
             $('#TypeCheckListId').change(function () {
                 GetInfosGenerals();
                 FillTypeEnginDDL();

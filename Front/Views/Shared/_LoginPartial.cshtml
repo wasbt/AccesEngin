@@ -3,16 +3,22 @@
 
 @if (Request.IsAuthenticated)
 {
-    <form id="logoutForm" action="/Account/LogOff" method="post">
+<form id="logoutForm" action="/Account/LogOff" method="post">
 
-        @Html.AntiForgeryToken()
-        <!-- item-->
+    @Html.AntiForgeryToken()
+    <!-- item-->
+    <li class="has-submenu">
+
         <a href="javascript:void(0);" class="dropdown-item notify-item">
             <i class="ti-user m-r-5"></i> Bienvenue <strong>@(Session[ConstsAccesEngin.SESSION_FullName] as string)</strong>
         </a>
+    </li>
+    <li class="has-submenu">
+
         <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item notify-item">
             <i class="ti-power-off m-r-5"></i> Déconnexion
         </a>
-    </form>
+    </li>
+</form>
 }
 

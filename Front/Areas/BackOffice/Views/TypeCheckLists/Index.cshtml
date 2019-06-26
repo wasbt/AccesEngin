@@ -1,7 +1,7 @@
-﻿@model Front.Models.StandardModel<DATAAL.REF_TypeCheckList>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+﻿@model Front.Models.StandardModel<DAL.REF_TypeCheckList>
+@using PagedList
+@using PagedList.Mvc
+
 
 @{
     ViewBag.Title = "Gestion des Type demande d'acces";
@@ -70,7 +70,7 @@
             <br />
 
             Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }), Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }))
         </div>
     </div>
 </div>

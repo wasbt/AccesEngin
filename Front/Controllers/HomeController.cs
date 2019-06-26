@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DATAAL;
+using DAL;
 using BLL.Biz;
 using Shared;
 using Rotativa;
@@ -17,7 +17,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Web.Routing;
 using Front.Models;
-using X.PagedList;
+using PagedList;
 using Shared.Models;
 
 namespace Front.Controllers
@@ -54,9 +54,9 @@ namespace Front.Controllers
                 model.Matricule = "";
             }
 
-            var entities = context.Entities.Where(x => x.SiteId == CurrentUserProfile.Entities1.SiteId).ToList();
+            var Entite = context.Entite.Where(x => x.SiteId == CurrentUserProfile.Entite1.SiteId).ToList();
 
-            ViewBag.EntityId = new SelectList(entities, "Id", "Name");
+            ViewBag.EntiteId = new SelectList(Entite, "Id", "Name");
 
             var biz = new DemandeAccesBiz(context,log);
 
@@ -132,7 +132,7 @@ namespace Front.Controllers
             #endregion
 
             #region get & check resultat entete 
-            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
+            var resultatEntete = await context.ResultatControleEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
             if (resultatEntete == null)
             {
                 return null;
@@ -154,8 +154,8 @@ namespace Front.Controllers
             #endregion
 
             #region Conformité
-            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
-            var exigences = resultatEntete.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatControleDetail.ToList();
+            var exigences = resultatEntete.ResultatControleDetail.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -302,21 +302,23 @@ namespace Front.Controllers
                     var biz = new CommonBiz(context, log);
 
                     #region Save entete resultat Exigence 
-                    var resultatEntete = new DemandeResultatEntete()
+                    var resultatEntete = new ResultatControleEntete()
                     {
                         DemandeAccesEnginId = ResultatExigence.DemandeAccesEnginId,
                         CreatedBy = CurrentUserId,
                         CreatedOn = DateTime.Now,
                     };
-                    #endregion
 
-                    context.DemandeResultatEntete.Add(resultatEntete);
+                    context.ResultatControleEntete.Add(resultatEntete);
+                    await context.SaveChangesAsync();
+
+                    #endregion
 
                     #region case row has file
                     if (file != null)
                     {
                         //add file to database
-                        fileId = await biz.SaveOCPFile(file, ContainerName, resultatEntete.Id, SourceName);
+                        fileId = await biz.SaveAppFile(file, ContainerName, resultatEntete.Id.ToString(), SourceName);
 
                         //verify if file was added
                         if (fileId == 0)
@@ -337,9 +339,9 @@ namespace Front.Controllers
                     foreach (var resultatEx in ResultatExigence.ResultatExigenceList)
                     {
                         line++;
-                        var controlResultatExigence = new ResultatExigence()
+                        var controlResultatExigence = new ResultatControleDetail()
                         {
-                            DemandeResultatEnteteId = resultatEntete.Id,
+                            ResultatControleEnteteId = resultatEntete.Id,
                             CheckListExigenceId = resultatEx.CheckListExigenceId,
                             IsConform = resultatEx.IsConform,
                             Observation = resultatEx.Observation,
@@ -349,7 +351,7 @@ namespace Front.Controllers
                         {
                             if (!string.IsNullOrEmpty(resultatEx.Date))
                             {
-                                controlResultatExigence.Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
+                                controlResultatExigence.DateExpiration = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
 
                             }
                             else
@@ -363,17 +365,17 @@ namespace Front.Controllers
                         }
                         else
                         {
-                            controlResultatExigence.Date = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
+                            controlResultatExigence.DateExpiration = string.IsNullOrEmpty(resultatEx.Date) ? (DateTime?)null : Convert.ToDateTime(resultatEx.Date);
                         }
 
-                        context.ResultatExigence.Add(controlResultatExigence);
+                        context.ResultatControleDetail.Add(controlResultatExigence);
 
                     }
                     #endregion
 
                     #region Get Demande acces 
                     DemandeAccesEngin demandeAccesEngin = await context.DemandeAccesEngin.FindAsync(ResultatExigence.DemandeAccesEnginId);
-                    demandeAccesEngin.Autorise = ResultatExigence.Autorise;
+                    demandeAccesEngin.IsAutorise = ResultatExigence.Autorise;
                     #endregion
 
                     await context.SaveChangesAsync();
@@ -387,7 +389,7 @@ namespace Front.Controllers
                     var Email = demandeAccesEngin.AspNetUsers.Email;
                     var Subject = "contôle de " + demandeAccesEngin.REF_TypeCheckList.Name;
                     //   var lettre = $@"";
-                    var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + demandeAccesEngin.Id + " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.Autorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
+                    var lettre = "<div><div><i><br></i></div><div><i>Bonjour M/Mme " + Email + "<br></i></div><div><i>Votre demande réferencée " + demandeAccesEngin.Id + " a été traité. </i></div><div><i>Votre engin est " + (demandeAccesEngin.IsAutorise ? "autorisé" : "refusé") + ". </i></div><div><i>Pour plus de détail veuillez consulter le lien suivant...... : http://ocpaccesengins.azurewebsites.net/Home/Resultats/" + demandeAccesEngin.Id + " </i></div><div><i> Bien cordialement</i></div><div><span style=\"color:rgb(32,37,42);font-family:Roboto,RobotoDraft,Helvetica,Arial,sans-serif;font-size:14px;font-weight:700\">L'équipe prévention HSE du site est à votre disposition pour toute information complémentaire</span><br></div></div>";
                     await MailHelper.SendEmailDemandeEngin(new List<string> { "elmehdielmellali.mobile@gmail.com" }, lettre, Subject);
                     #endregion
 
@@ -445,7 +447,7 @@ namespace Front.Controllers
 
 
             #region get & check resultat entete 
-            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
+            var resultatEntete = await context.ResultatControleEntete.Where(x => x.DemandeAccesEnginId == controle.Id).FirstOrDefaultAsync();
             if (resultatEntete == null)
             {
                 return null;
@@ -471,8 +473,8 @@ namespace Front.Controllers
             #endregion
 
             #region Conformité
-            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
-            var exigences = resultatEntete.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatControleDetail.ToList();
+            var exigences = resultatEntete.ResultatControleDetail.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -519,7 +521,7 @@ namespace Front.Controllers
         {
             var biz = new CommonBiz(context, log);
 
-            var file = await context.AppFiles.FindAsync(id);
+            var file = await context.AppFile.FindAsync(id);
             if (file == null)
             {
                 return HttpNotFound();
@@ -528,6 +530,30 @@ namespace Front.Controllers
             //  var tt = biz.GetBlobBytes(file.SystemFileName,ContainerName);
             byte[] fileBytes = await biz.GetBlobBytes(file.SystemFileName, ContainerName);
             return File(fileBytes, MimeMapping.GetMimeMapping(file.OriginalFileName), Path.GetFileName(file.OriginalFileName));
+        }
+
+        public async Task GetFiles(long? id)
+        {
+            var biz = new CommonBiz(context, log);
+
+            var file = await context.AppFile.FindAsync(id);
+            using (var client = new WebClient())
+            {
+                var pp = Request.Url;
+                client.DownloadFile(Request.Url, file.SystemFileName);
+            }
+        }
+
+        public async Task<FileResult> GetFile(long? id)
+        {
+            var file = await context.AppFile.FindAsync(id);
+
+            var cc = file.OriginalFileName;
+
+            string fullPath = Path.Combine(Server.MapPath("~/Uploads/"), file.OriginalFileName);
+
+
+            return File(fullPath, "application/octet-stream", fullPath);
         }
 
         #endregion

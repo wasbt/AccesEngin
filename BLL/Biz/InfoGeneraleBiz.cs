@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using Shared.API.IN;
 using Shared.DTO;
@@ -13,7 +13,7 @@ namespace BLL.Biz
 {
     public class InfoGeneraleBiz : CommonBiz
     {
-        public InfoGeneraleBiz(TestEnginEntities context, ILog log) : base(context, log)
+        public InfoGeneraleBiz(OcpPerformanceDataContext  context, ILog log) : base(context, log)
         {
         }
 

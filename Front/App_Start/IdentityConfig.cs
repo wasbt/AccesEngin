@@ -54,10 +54,10 @@ namespace Front
             manager.PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = false,
+                RequireNonLetterOrDigit = true,
                 RequireDigit = true,
-                RequireLowercase = false,
-                RequireUppercase = false,
+                RequireLowercase = true,
+                RequireUppercase = true,
             };
 
             // Configure user lockout defaults

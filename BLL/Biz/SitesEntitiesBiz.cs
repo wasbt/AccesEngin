@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using Shared.API.IN;
 using Shared.DTO;
@@ -13,14 +13,14 @@ namespace BLL.Biz
 {
     public class SitesEntitiesBiz : CommonBiz
     {
-        public SitesEntitiesBiz(TestEnginEntities context, ILog log) : base(context, log)
+        public SitesEntitiesBiz(OcpPerformanceDataContext  context, ILog log) : base(context, log)
         {
 
         }
 
         public List<EntityDTO> GetEntityBySite(GetEntityBySiteModel model)
         {
-            var entities = context.Entities.Where(i => i.SiteId == model.SiteId).ToList();
+            var entities = context.Entite.Where(i => i.SiteId == model.SiteId).ToList();
 
             var entitiesDto = entities.Select(te => te.EntityToDTO()).ToList();
 

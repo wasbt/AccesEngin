@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Base:BaseView
+<ContentPage
     x:Class="Mobile.View.DemandeAccesDetailsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:Base="clr-namespace:Mobile.View.Base"
-    xmlns:converters="clr-namespace:Mobile.Converters"
     xmlns:vm="clr-namespace:Mobile.ViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <vm:DemandeAccesDetailsVM x:Key="vm" />
             <Style x:Key="nameLabel" TargetType="Label">
                 <Setter Property="FontAttributes" Value="None" />
                 <Setter Property="FontSize" Value="14" />
@@ -31,7 +30,6 @@
                 <Setter Property="TextColor" Value="#05A8AA" />
                 <Setter Property="FontAttributes" Value="Italic" />
             </Style>
-            <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -39,6 +37,7 @@
             <Frame
                 Padding="10,15"
                 BackgroundColor="White"
+                BindingContext="{StaticResource vm}"
                 HasShadow="True">
                 <StackLayout
                     Margin="0,0,0,0"
@@ -49,7 +48,7 @@
                         Spacing="10"
                         VerticalOptions="Start">
                         <StackLayout>
-                            <Label Style="{StaticResource TitreLabel}" Text="{Binding DemandeDetail.TypeCheckListName}" />
+                            <Label Style="{StaticResource TitreLabel}" Text="{Binding DemandeAcces.TypeCheckListName}" />
                         </StackLayout>
                         <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
                             <Label
@@ -59,7 +58,7 @@
                             <Label
                                 HorizontalOptions="EndAndExpand"
                                 Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.TypeEnginName}" />
+                                Text="{Binding DemandeAcces.TypeEnginName}" />
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
                         <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
@@ -70,7 +69,7 @@
                             <Label
                                 HorizontalOptions="EndAndExpand"
                                 Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.DatePlannification}" />
+                                Text="{Binding DemandeAcces.DatePlannification}" />
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
                         <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
@@ -81,7 +80,7 @@
                             <Label
                                 HorizontalOptions="EndAndExpand"
                                 Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.CreatedEmail}" />
+                                Text="{Binding DemandeAcces.CreatedEmail}" />
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
 
@@ -93,7 +92,7 @@
                             <Label
                                 HorizontalOptions="EndAndExpand"
                                 Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.CreatedOn}" />
+                                Text="{Binding DemandeAcces.CreatedOn}" />
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
                     </StackLayout>
@@ -101,68 +100,12 @@
                         <Label
                             HorizontalOptions="EndAndExpand"
                             Style="{StaticResource valueLabel}"
-                            Text="{Binding DemandeDetail.Observation}" />
+                            Text="{Binding DemandeAcces.Observation}" />
                     </StackLayout>
-                    <StackLayout
-                        HorizontalOptions="Fill"
-                        IsVisible="False"
-                        Orientation="Horizontal">
-
-                        <StackLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
-                                TargetType="StackLayout"
-                                Value="True">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
-                                TargetType="StackLayout"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-
-                        </StackLayout.Triggers>
-
-                        <Button
-                            BackgroundColor="Green"
-                            Command="{Binding ValiderCommand}"
-                            CommandParameter="{Binding DemandeDetail.Id}"
-                            FontSize="10"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Accepter"
-                            TextColor="White" />
-                        <Button
-                            BackgroundColor="Red"
-                            Command="{Binding RefuserCommand}"
-                            CommandParameter="{Binding DemandeDetail.Id}"
-                            FontSize="10"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Refuser"
-                            TextColor="White" />
-                    </StackLayout>
-
-                    <StackLayout
-                        IsVisible="False"
-                        Orientation="Vertical"
-                        VerticalOptions="End">
-                        <StackLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="Refusé">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="Accepté">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                        </StackLayout.Triggers>
+                    <StackLayout Orientation="Vertical" VerticalOptions="End">
                         <Button
                             BackgroundColor="#FFC107"
-                            Command="{Binding GoToControleCommand}"
+                            Command="{Binding Source={StaticResource vm}, Path=GoToControleCommand}"
                             FontSize="10"
                             Text="Controler"
                             TextColor="Black" />
@@ -173,4 +116,4 @@
 
         </ContentView>
     </ContentPage.Content>
-</Base:BaseView>
+</ContentPage>

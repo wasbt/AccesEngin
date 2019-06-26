@@ -23,19 +23,10 @@ namespace Mobile.Behaviors
 
         void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            DemandeAcces selectedDemande = ((ListView)sender).SelectedItem as DemandeAcces;
-
-            if (selectedDemande == null)
-            {
-                ((ListView)sender).SelectedItem = null;
-                return;
-            }
-
+            DemandeAcces selectedDemande = (listView.SelectedItem) as DemandeAcces;
             //Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
             var mdp = Application.Current.MainPage as MasterDetailPage;
-
-            mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
-            ((ListView)sender).SelectedItem = null;
+             mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
         }
 
         protected override void OnDetachingFrom(ListView bindable)
@@ -63,10 +54,10 @@ namespace Mobile.Behaviors
             if (item == null)
             {
                 ((ListView)sender).SelectedItem = null;
-                return;
+                return; 
             }
 
-            item.IsConforme = !item.IsConforme;
+            item.IsConforme =! item.IsConforme;
             ((ListView)sender).SelectedItem = null;
         }
 

@@ -1,0 +1,2172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AccesEngisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DemandeAccesEngin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntiteId" Type="int" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
+          <Property Name="Observation" Type="nvarchar(max)" />
+          <Property Name="TypeEnginId" Type="bigint" Nullable="false" />
+          <Property Name="IsAutorise" Type="bit" Nullable="false" />
+          <Property Name="DatePlannification" Type="datetime" Nullable="false" />
+          <Property Name="NatureMatiereId" Type="bigint" />
+          <Property Name="AppFileId" Type="bigint" />
+          <Property Name="StatutDemandeId" Type="bigint" />
+          <Property Name="DateSortie" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Data" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="DemandeAccesEnginInfoGeneraleValue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DemandeAccesEnginId" Type="bigint" Nullable="false" />
+          <Property Name="InfoGeneraleId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ValueInfo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MAP_InfoGenerale_TypeCheckList">
+          <Key>
+            <PropertyRef Name="InfoGeneraleId" />
+            <PropertyRef Name="TypeCheckListId" />
+          </Key>
+          <Property Name="InfoGeneraleId" Type="bigint" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_CheckListExigence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CheckListRubriqueId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShowOrder" Type="int" Nullable="false" />
+          <Property Name="IsActif" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IsHasDate" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_CheckListRubrique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShowOrder" Type="int" Nullable="false" />
+          <Property Name="IsActif" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_InfoGenerale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InfoGeneralRubriqueId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_InfoGeneralRubrique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShowOrder" Type="int" Nullable="false" />
+          <Property Name="IsActif" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_NatureMatiere">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_StatutDemandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Color" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="REF_TypeCheckList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REF_TypeEngin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DureeEstimative" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReponseDemande">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DemandeAccesEnginId" Type="bigint" Nullable="false" />
+          <Property Name="Motif" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResultatControleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResultatControleEnteteId" Type="bigint" Nullable="false" />
+          <Property Name="CheckListExigenceId" Type="bigint" Nullable="false" />
+          <Property Name="IsConform" Type="bit" Nullable="false" />
+          <Property Name="DateExpiration" Type="datetime" />
+          <Property Name="Observation" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ResultatControleEntete">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DemandeAccesEnginId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="AppFileId" Type="bigint" />
+          <Property Name="Data" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="AppFile">
+          <Key>
+            <PropertyRef Name="AppFileId" />
+          </Key>
+          <Property Name="AppFileId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceName" Type="nvarchar(max)" />
+          <Property Name="SourceId" Type="nvarchar(max)" />
+          <Property Name="ContainerName" Type="nvarchar(max)" />
+          <Property Name="OriginalFileName" Type="nvarchar(max)" />
+          <Property Name="SystemFileName" Type="nvarchar(max)" />
+          <Property Name="FileSize" Type="bigint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiteId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HSEEntiteUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ADFUserId" Type="nvarchar(max)" />
+          <Property Name="ResponsableEntiteUserId" Type="nvarchar(max)" />
+          <Property Name="IsHSE" Type="bit" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="DtLastConnection" Type="datetime" />
+          <Property Name="EntiteId" Type="int" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber1" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber2" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="HSESiteId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId">
+          <End Role="REF_CheckListRubrique" Type="Self.REF_CheckListRubrique" Multiplicity="1" />
+          <End Role="REF_CheckListExigence" Type="Self.REF_CheckListExigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_CheckListRubrique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListExigence">
+              <PropertyRef Name="CheckListRubriqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="1" />
+          <End Role="REF_CheckListRubrique" Type="Self.REF_CheckListRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListRubrique">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId">
+          <End Role="REF_NatureMatiere" Type="Self.REF_NatureMatiere" Multiplicity="0..1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_NatureMatiere">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="NatureMatiereId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId">
+          <End Role="REF_StatutDemandes" Type="Self.REF_StatutDemandes" Multiplicity="0..1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_StatutDemandes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="StatutDemandeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id">
+          <End Role="REF_TypeEngin" Type="Self.REF_TypeEngin" Multiplicity="1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="TypeEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId">
+          <End Role="AppFile" Type="Self.AppFile" Multiplicity="0..1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppFile">
+              <PropertyRef Name="AppFileId" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="AppFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId">
+          <End Role="Entite" Type="Self.Entite" Multiplicity="1" />
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="EntiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="1" />
+          <End Role="DemandeAccesEnginInfoGeneraleValue" Type="Self.DemandeAccesEnginInfoGeneraleValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEnginInfoGeneraleValue">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId">
+          <End Role="REF_InfoGenerale" Type="Self.REF_InfoGenerale" Multiplicity="1" />
+          <End Role="DemandeAccesEnginInfoGeneraleValue" Type="Self.DemandeAccesEnginInfoGeneraleValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_InfoGenerale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEnginInfoGeneraleValue">
+              <PropertyRef Name="InfoGeneraleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId">
+          <End Role="REF_InfoGeneralRubrique" Type="Self.REF_InfoGeneralRubrique" Multiplicity="1" />
+          <End Role="REF_InfoGenerale" Type="Self.REF_InfoGenerale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_InfoGeneralRubrique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGenerale">
+              <PropertyRef Name="InfoGeneralRubriqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_InfoGeneralRubrique" Type="Self.REF_InfoGeneralRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGeneralRubrique">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="1" />
+          <End Role="REF_NatureMatiere" Type="Self.REF_NatureMatiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_NatureMatiere">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_NatureMatiere" Type="Self.REF_NatureMatiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_NatureMatiere">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="1" />
+          <End Role="ReponseDemande" Type="Self.ReponseDemande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReponseDemande">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId">
+          <End Role="REF_CheckListExigence" Type="Self.REF_CheckListExigence" Multiplicity="1" />
+          <End Role="ResultatControleDetail" Type="Self.ResultatControleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_CheckListExigence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleDetail">
+              <PropertyRef Name="CheckListExigenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId">
+          <End Role="ResultatControleEntete" Type="Self.ResultatControleEntete" Multiplicity="1" />
+          <End Role="ResultatControleDetail" Type="Self.ResultatControleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResultatControleEntete">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleDetail">
+              <PropertyRef Name="ResultatControleEnteteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="1" />
+          <End Role="REF_TypeEngin" Type="Self.REF_TypeEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeEngin">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_CheckListExigence" Type="Self.REF_CheckListExigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListExigence">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_CheckListRubrique" Type="Self.REF_CheckListRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListRubrique">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Entite" Type="Self.Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
+          <End Role="Entite" Type="Self.Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="HSEEntiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_Sites_SiteId">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="Entite" Type="Self.Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_InfoGenerale" Type="Self.REF_InfoGenerale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGenerale">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_InfoGenerale_InfoGeneraleId">
+          <End Role="REF_InfoGenerale" Type="Self.REF_InfoGenerale" Multiplicity="1" />
+          <End Role="MAP_InfoGenerale_TypeCheckList" Type="Self.MAP_InfoGenerale_TypeCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_InfoGenerale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MAP_InfoGenerale_TypeCheckList">
+              <PropertyRef Name="InfoGeneraleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="1" />
+          <End Role="MAP_InfoGenerale_TypeCheckList" Type="Self.MAP_InfoGenerale_TypeCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MAP_InfoGenerale_TypeCheckList">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Profile_dbo_AspNetUsers_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Profile_dbo_Entities_EntiteId">
+          <End Role="Entite" Type="Self.Entite" Multiplicity="0..1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="EntiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId">
+          <End Role="AppFile" Type="Self.AppFile" Multiplicity="0..1" />
+          <End Role="ResultatControleEntete" Type="Self.ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppFile">
+              <PropertyRef Name="AppFileId" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="AppFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ResultatControleEntete" Type="Self.ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Role="DemandeAccesEngin" Type="Self.DemandeAccesEngin" Multiplicity="1" />
+          <End Role="ResultatControleEntete" Type="Self.ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sites_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Sites" Type="Self.Sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sites">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sites_dbo_Profile_HSESiteId">
+          <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
+          <End Role="Sites" Type="Self.Sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sites">
+              <PropertyRef Name="HSESiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_TypeCheckList" Type="Self.REF_TypeCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeCheckList">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="REF_TypeEngin" Type="Self.REF_TypeEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeEngin">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AccesEngisModelStoreContainer">
+          <EntitySet Name="DemandeAccesEngin" EntityType="Self.DemandeAccesEngin" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="DemandeAccesEnginInfoGeneraleValue" EntityType="Self.DemandeAccesEnginInfoGeneraleValue" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="MAP_InfoGenerale_TypeCheckList" EntityType="Self.MAP_InfoGenerale_TypeCheckList" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_CheckListExigence" EntityType="Self.REF_CheckListExigence" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_CheckListRubrique" EntityType="Self.REF_CheckListRubrique" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_InfoGenerale" EntityType="Self.REF_InfoGenerale" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_InfoGeneralRubrique" EntityType="Self.REF_InfoGeneralRubrique" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_NatureMatiere" EntityType="Self.REF_NatureMatiere" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_StatutDemandes" EntityType="Self.REF_StatutDemandes" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_TypeCheckList" EntityType="Self.REF_TypeCheckList" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="REF_TypeEngin" EntityType="Self.REF_TypeEngin" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="ReponseDemande" EntityType="Self.ReponseDemande" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="ResultatControleDetail" EntityType="Self.ResultatControleDetail" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="ResultatControleEntete" EntityType="Self.ResultatControleEntete" Schema="AccesEngins" store:Type="Tables" />
+          <EntitySet Name="AppFile" EntityType="Self.AppFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entite" EntityType="Self.Entite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sites" EntityType="Self.Sites" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId" Association="Self.FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId">
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId" Association="Self.FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId" Association="Self.FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId">
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId" Association="Self.FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId">
+            <End Role="REF_StatutDemandes" EntitySet="REF_StatutDemandes" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId" Association="Self.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id" Association="Self.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id">
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId" Association="Self.FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId">
+            <End Role="AppFile" EntitySet="AppFile" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy" Association="Self.FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId" Association="Self.FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId">
+            <End Role="Entite" EntitySet="Entite" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId" Association="Self.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="DemandeAccesEnginInfoGeneraleValue" EntitySet="DemandeAccesEnginInfoGeneraleValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId" Association="Self.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId">
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+            <End Role="DemandeAccesEnginInfoGeneraleValue" EntitySet="DemandeAccesEnginInfoGeneraleValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId" Association="Self.FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId">
+            <End Role="REF_InfoGeneralRubrique" EntitySet="REF_InfoGeneralRubrique" />
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy" Association="Self.FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_InfoGeneralRubrique" EntitySet="REF_InfoGeneralRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId" Association="Self.FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy" Association="Self.FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId" Association="Self.FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="ReponseDemande" EntitySet="ReponseDemande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId" Association="Self.FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId">
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+            <End Role="ResultatControleDetail" EntitySet="ResultatControleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId" Association="Self.FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId">
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+            <End Role="ResultatControleDetail" EntitySet="ResultatControleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId" Association="Self.FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId" Association="Self.FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_Sites_SiteId" Association="Self.FK_dbo_Entitie_dbo_Sites_SiteId">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_InfoGenerale_InfoGeneraleId" Association="Self.FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_InfoGenerale_InfoGeneraleId">
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+            <End Role="MAP_InfoGenerale_TypeCheckList" EntitySet="MAP_InfoGenerale_TypeCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_TypeCheckList_TypeCheckListId" Association="Self.FK_dbo_MAP_InfoGenerale_TypeCheckList_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="MAP_InfoGenerale_TypeCheckList" EntitySet="MAP_InfoGenerale_TypeCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Profile_dbo_AspNetUsers_Id" Association="Self.FK_dbo_Profile_dbo_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Profile_dbo_Entities_EntiteId" Association="Self.FK_dbo_Profile_dbo_Entities_EntiteId">
+            <End Role="Entite" EntitySet="Entite" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId" Association="Self.FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId">
+            <End Role="AppFile" EntitySet="AppFile" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId" Association="Self.FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Sites" EntitySet="Sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sites_dbo_Profile_HSESiteId" Association="Self.FK_dbo_Sites_dbo_Profile_HSESiteId">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Sites" EntitySet="Sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy" Association="Self.FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccesEngisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OcpPerformanceDataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DemandeAccesEngin" EntityType="AccesEngisModel.DemandeAccesEngin" />
+          <EntitySet Name="DemandeAccesEnginInfoGeneraleValue" EntityType="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue" />
+          <EntitySet Name="REF_CheckListExigence" EntityType="AccesEngisModel.REF_CheckListExigence" />
+          <EntitySet Name="REF_CheckListRubrique" EntityType="AccesEngisModel.REF_CheckListRubrique" />
+          <EntitySet Name="REF_InfoGenerale" EntityType="AccesEngisModel.REF_InfoGenerale" />
+          <EntitySet Name="REF_InfoGeneralRubrique" EntityType="AccesEngisModel.REF_InfoGeneralRubrique" />
+          <EntitySet Name="REF_NatureMatiere" EntityType="AccesEngisModel.REF_NatureMatiere" />
+          <EntitySet Name="REF_StatutDemandes" EntityType="AccesEngisModel.REF_StatutDemandes" />
+          <EntitySet Name="REF_TypeCheckList" EntityType="AccesEngisModel.REF_TypeCheckList" />
+          <EntitySet Name="REF_TypeEngin" EntityType="AccesEngisModel.REF_TypeEngin" />
+          <EntitySet Name="ReponseDemande" EntityType="AccesEngisModel.ReponseDemande" />
+          <EntitySet Name="ResultatControleDetail" EntityType="AccesEngisModel.ResultatControleDetail" />
+          <EntitySet Name="ResultatControleEntete" EntityType="AccesEngisModel.ResultatControleEntete" />
+          <EntitySet Name="AppFile" EntityType="AccesEngisModel.AppFile" />
+          <EntitySet Name="AspNetRoles" EntityType="AccesEngisModel.AspNetRoles" />
+          <EntitySet Name="AspNetUserClaims" EntityType="AccesEngisModel.AspNetUserClaims" />
+          <EntitySet Name="AspNetUserLogins" EntityType="AccesEngisModel.AspNetUserLogins" />
+          <EntitySet Name="AspNetUsers" EntityType="AccesEngisModel.AspNetUsers" />
+          <EntitySet Name="Entite" EntityType="AccesEngisModel.Entite" />
+          <EntitySet Name="Profile" EntityType="AccesEngisModel.Profile" />
+          <EntitySet Name="Sites" EntityType="AccesEngisModel.Sites" />
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId">
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId">
+            <End Role="REF_StatutDemandes" EntitySet="REF_StatutDemandes" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id">
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId">
+            <End Role="AppFile" EntitySet="AppFile" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId">
+            <End Role="Entite" EntitySet="Entite" />
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="DemandeAccesEnginInfoGeneraleValue" EntitySet="DemandeAccesEnginInfoGeneraleValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId" Association="AccesEngisModel.FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="ReponseDemande" EntitySet="ReponseDemande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId" Association="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+            <End Role="DemandeAccesEngin" EntitySet="DemandeAccesEngin" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId" Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId">
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+            <End Role="DemandeAccesEnginInfoGeneraleValue" EntitySet="DemandeAccesEnginInfoGeneraleValue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId" Association="AccesEngisModel.FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId">
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId" Association="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId">
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+            <End Role="ResultatControleDetail" EntitySet="ResultatControleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_CheckListExigence" EntitySet="REF_CheckListExigence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId" Association="AccesEngisModel.FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_CheckListRubrique" EntitySet="REF_CheckListRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId" Association="AccesEngisModel.FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId">
+            <End Role="REF_InfoGeneralRubrique" EntitySet="REF_InfoGeneralRubrique" />
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_InfoGeneralRubrique" EntitySet="REF_InfoGeneralRubrique" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId" Association="AccesEngisModel.FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_NatureMatiere" EntitySet="REF_NatureMatiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId" Association="AccesEngisModel.FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="REF_TypeEngin" EntitySet="REF_TypeEngin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId" Association="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId">
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+            <End Role="ResultatControleDetail" EntitySet="ResultatControleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId" Association="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId">
+            <End Role="AppFile" EntitySet="AppFile" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ResultatControleEntete" EntitySet="ResultatControleEntete" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="AccesEngisModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="AccesEngisModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Profile_dbo_AspNetUsers_Id" Association="AccesEngisModel.FK_dbo_Profile_dbo_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" Association="AccesEngisModel.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Sites" EntitySet="Sites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId" Association="AccesEngisModel.FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Entitie_dbo_Sites_SiteId" Association="AccesEngisModel.FK_dbo_Entitie_dbo_Sites_SiteId">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Entite" EntitySet="Entite" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Profile_dbo_Entities_EntiteId" Association="AccesEngisModel.FK_dbo_Profile_dbo_Entities_EntiteId">
+            <End Role="Entite" EntitySet="Entite" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Sites_dbo_Profile_HSESiteId" Association="AccesEngisModel.FK_dbo_Sites_dbo_Profile_HSESiteId">
+            <End Role="Profile" EntitySet="Profile" />
+            <End Role="Sites" EntitySet="Sites" />
+          </AssociationSet>
+          <AssociationSet Name="MAP_InfoGenerale_TypeCheckList" Association="AccesEngisModel.MAP_InfoGenerale_TypeCheckList">
+            <End Role="REF_InfoGenerale" EntitySet="REF_InfoGenerale" />
+            <End Role="REF_TypeCheckList" EntitySet="REF_TypeCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="AccesEngisModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DemandeAccesEngin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntiteId" Type="Int32" Nullable="false" />
+          <Property Name="TypeCheckListId" Type="Int64" Nullable="false" />
+          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeEnginId" Type="Int64" Nullable="false" />
+          <Property Name="IsAutorise" Type="Boolean" Nullable="false" />
+          <Property Name="DatePlannification" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NatureMatiereId" Type="Int64" />
+          <Property Name="AppFileId" Type="Int64" />
+          <Property Name="StatutDemandeId" Type="Int64" />
+          <Property Name="DateSortie" Type="DateTime" Precision="3" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="REF_NatureMatiere" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId" FromRole="DemandeAccesEngin" ToRole="REF_NatureMatiere" />
+          <NavigationProperty Name="REF_StatutDemandes" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId" FromRole="DemandeAccesEngin" ToRole="REF_StatutDemandes" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="DemandeAccesEngin" ToRole="REF_TypeCheckList" />
+          <NavigationProperty Name="REF_TypeEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id" FromRole="DemandeAccesEngin" ToRole="REF_TypeEngin" />
+          <NavigationProperty Name="AppFile" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId" FromRole="DemandeAccesEngin" ToRole="AppFile" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy" FromRole="DemandeAccesEngin" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Entite" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId" FromRole="DemandeAccesEngin" ToRole="Entite" />
+          <NavigationProperty Name="DemandeAccesEnginInfoGeneraleValue" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId" FromRole="DemandeAccesEngin" ToRole="DemandeAccesEnginInfoGeneraleValue" />
+          <NavigationProperty Name="ReponseDemande" Relationship="AccesEngisModel.FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId" FromRole="DemandeAccesEngin" ToRole="ReponseDemande" />
+          <NavigationProperty Name="ResultatControleEntete" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId" FromRole="DemandeAccesEngin" ToRole="ResultatControleEntete" />
+        </EntityType>
+        <EntityType Name="DemandeAccesEnginInfoGeneraleValue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DemandeAccesEnginId" Type="Int64" Nullable="false" />
+          <Property Name="InfoGeneraleId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValueInfo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId" FromRole="DemandeAccesEnginInfoGeneraleValue" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="REF_InfoGenerale" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId" FromRole="DemandeAccesEnginInfoGeneraleValue" ToRole="REF_InfoGenerale" />
+        </EntityType>
+        <EntityType Name="REF_CheckListExigence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CheckListRubriqueId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShowOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActif" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsHasDate" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="REF_CheckListRubrique" Relationship="AccesEngisModel.FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId" FromRole="REF_CheckListExigence" ToRole="REF_CheckListRubrique" />
+          <NavigationProperty Name="ResultatControleDetail" Relationship="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId" FromRole="REF_CheckListExigence" ToRole="ResultatControleDetail" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy" FromRole="REF_CheckListExigence" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="REF_CheckListRubrique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCheckListId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShowOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActif" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="REF_CheckListExigence" Relationship="AccesEngisModel.FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId" FromRole="REF_CheckListRubrique" ToRole="REF_CheckListExigence" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_CheckListRubrique" ToRole="REF_TypeCheckList" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy" FromRole="REF_CheckListRubrique" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="REF_InfoGenerale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InfoGeneralRubriqueId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEnginInfoGeneraleValue" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId" FromRole="REF_InfoGenerale" ToRole="DemandeAccesEnginInfoGeneraleValue" />
+          <NavigationProperty Name="REF_InfoGeneralRubrique" Relationship="AccesEngisModel.FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId" FromRole="REF_InfoGenerale" ToRole="REF_InfoGeneralRubrique" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy" FromRole="REF_InfoGenerale" ToRole="AspNetUsers" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.MAP_InfoGenerale_TypeCheckList" FromRole="REF_InfoGenerale" ToRole="REF_TypeCheckList" />
+        </EntityType>
+        <EntityType Name="REF_InfoGeneralRubrique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShowOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsActif" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="REF_InfoGenerale" Relationship="AccesEngisModel.FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId" FromRole="REF_InfoGeneralRubrique" ToRole="REF_InfoGenerale" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy" FromRole="REF_InfoGeneralRubrique" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="REF_NatureMatiere">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TypeCheckListId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId" FromRole="REF_NatureMatiere" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_NatureMatiere" ToRole="REF_TypeCheckList" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy" FromRole="REF_NatureMatiere" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="REF_StatutDemandes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId" FromRole="REF_StatutDemandes" ToRole="DemandeAccesEngin" />
+        </EntityType>
+        <EntityType Name="REF_TypeCheckList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_TypeCheckList" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="REF_CheckListRubrique" Relationship="AccesEngisModel.FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_TypeCheckList" ToRole="REF_CheckListRubrique" />
+          <NavigationProperty Name="REF_NatureMatiere" Relationship="AccesEngisModel.FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_TypeCheckList" ToRole="REF_NatureMatiere" />
+          <NavigationProperty Name="REF_TypeEngin" Relationship="AccesEngisModel.FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_TypeCheckList" ToRole="REF_TypeEngin" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy" FromRole="REF_TypeCheckList" ToRole="AspNetUsers" />
+          <NavigationProperty Name="REF_InfoGenerale" Relationship="AccesEngisModel.MAP_InfoGenerale_TypeCheckList" FromRole="REF_TypeCheckList" ToRole="REF_InfoGenerale" />
+        </EntityType>
+        <EntityType Name="REF_TypeEngin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeCheckListId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DureeEstimative" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id" FromRole="REF_TypeEngin" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId" FromRole="REF_TypeEngin" ToRole="REF_TypeCheckList" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy" FromRole="REF_TypeEngin" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="ReponseDemande">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DemandeAccesEnginId" Type="Int64" Nullable="false" />
+          <Property Name="Motif" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId" FromRole="ReponseDemande" ToRole="DemandeAccesEngin" />
+        </EntityType>
+        <EntityType Name="ResultatControleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ResultatControleEnteteId" Type="Int64" Nullable="false" />
+          <Property Name="CheckListExigenceId" Type="Int64" Nullable="false" />
+          <Property Name="IsConform" Type="Boolean" Nullable="false" />
+          <Property Name="DateExpiration" Type="DateTime" Precision="3" />
+          <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="REF_CheckListExigence" Relationship="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId" FromRole="ResultatControleDetail" ToRole="REF_CheckListExigence" />
+          <NavigationProperty Name="ResultatControleEntete" Relationship="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId" FromRole="ResultatControleDetail" ToRole="ResultatControleEntete" />
+        </EntityType>
+        <EntityType Name="ResultatControleEntete">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DemandeAccesEnginId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AppFileId" Type="Int64" />
+          <Property Name="Data" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId" FromRole="ResultatControleEntete" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="ResultatControleDetail" Relationship="AccesEngisModel.FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId" FromRole="ResultatControleEntete" ToRole="ResultatControleDetail" />
+          <NavigationProperty Name="AppFile" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId" FromRole="ResultatControleEntete" ToRole="AppFile" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy" FromRole="ResultatControleEntete" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AppFile">
+          <Key>
+            <PropertyRef Name="AppFileId" />
+          </Key>
+          <Property Name="AppFileId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SourceId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContainerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SystemFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileSize" Type="Int64" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId" FromRole="AppFile" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="ResultatControleEntete" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId" FromRole="AppFile" ToRole="ResultatControleEntete" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="REF_CheckListExigence" Relationship="AccesEngisModel.FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_CheckListExigence" />
+          <NavigationProperty Name="REF_CheckListRubrique" Relationship="AccesEngisModel.FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_CheckListRubrique" />
+          <NavigationProperty Name="REF_InfoGenerale" Relationship="AccesEngisModel.FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_InfoGenerale" />
+          <NavigationProperty Name="REF_InfoGeneralRubrique" Relationship="AccesEngisModel.FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_InfoGeneralRubrique" />
+          <NavigationProperty Name="REF_NatureMatiere" Relationship="AccesEngisModel.FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_NatureMatiere" />
+          <NavigationProperty Name="REF_TypeCheckList" Relationship="AccesEngisModel.FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_TypeCheckList" />
+          <NavigationProperty Name="REF_TypeEngin" Relationship="AccesEngisModel.FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="REF_TypeEngin" />
+          <NavigationProperty Name="ResultatControleEntete" Relationship="AccesEngisModel.FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="ResultatControleEntete" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="AccesEngisModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="AccesEngisModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Entite" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="Entite" />
+          <NavigationProperty Name="Profile" Relationship="AccesEngisModel.FK_dbo_Profile_dbo_AspNetUsers_Id" FromRole="AspNetUsers" ToRole="Profile" />
+          <NavigationProperty Name="Sites" Relationship="AccesEngisModel.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" FromRole="AspNetUsers" ToRole="Sites" />
+          <NavigationProperty Name="AspNetRoles" Relationship="AccesEngisModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Entite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HSEEntiteUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ADFUserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsableEntiteUserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsHSE" Type="Boolean" />
+          <NavigationProperty Name="DemandeAccesEngin" Relationship="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId" FromRole="Entite" ToRole="DemandeAccesEngin" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy" FromRole="Entite" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Profile" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId" FromRole="Entite" ToRole="Profile" />
+          <NavigationProperty Name="Sites" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_Sites_SiteId" FromRole="Entite" ToRole="Sites" />
+          <NavigationProperty Name="Profile1" Relationship="AccesEngisModel.FK_dbo_Profile_dbo_Entities_EntiteId" FromRole="Entite" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DtLastConnection" Type="DateTime" Precision="3" />
+          <Property Name="EntiteId" Type="Int32" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_Profile_dbo_AspNetUsers_Id" FromRole="Profile" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Entite" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId" FromRole="Profile" ToRole="Entite" />
+          <NavigationProperty Name="Entite1" Relationship="AccesEngisModel.FK_dbo_Profile_dbo_Entities_EntiteId" FromRole="Profile" ToRole="Entite" />
+          <NavigationProperty Name="Sites" Relationship="AccesEngisModel.FK_dbo_Sites_dbo_Profile_HSESiteId" FromRole="Profile" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="HSESiteId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="AccesEngisModel.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" FromRole="Sites" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Entite" Relationship="AccesEngisModel.FK_dbo_Entitie_dbo_Sites_SiteId" FromRole="Sites" ToRole="Entite" />
+          <NavigationProperty Name="Profile" Relationship="AccesEngisModel.FK_dbo_Sites_dbo_Profile_HSESiteId" FromRole="Sites" ToRole="Profile" />
+        </EntityType>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId">
+          <End Type="AccesEngisModel.REF_NatureMatiere" Role="REF_NatureMatiere" Multiplicity="0..1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_NatureMatiere">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="NatureMatiereId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId">
+          <End Type="AccesEngisModel.REF_StatutDemandes" Role="REF_StatutDemandes" Multiplicity="0..1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_StatutDemandes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="StatutDemandeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeEngin_TypeEngin_Id">
+          <End Type="AccesEngisModel.REF_TypeEngin" Role="REF_TypeEngin" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="TypeEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_AppFiles_AppFileId">
+          <End Type="AccesEngisModel.AppFile" Role="AppFile" Multiplicity="0..1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppFile">
+              <PropertyRef Name="AppFileId" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="AppFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEngin_dbo_Entite_EntiteId">
+          <End Type="AccesEngisModel.Entite" Role="Entite" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEngin">
+              <PropertyRef Name="EntiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue" Role="DemandeAccesEnginInfoGeneraleValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEnginInfoGeneraleValue">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ReponseDemande_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="1" />
+          <End Type="AccesEngisModel.ReponseDemande" Role="ReponseDemande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReponseDemande">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_DemandeAccesEngin_DemandeAccesEnginId">
+          <End Type="AccesEngisModel.DemandeAccesEngin" Role="DemandeAccesEngin" Multiplicity="1" />
+          <End Type="AccesEngisModel.ResultatControleEntete" Role="ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DemandeAccesEngin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="DemandeAccesEnginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_DemandeAccesEnginInfoGeneraleValue_AccesEngins_InfoGenerale_InfoGeneraleId">
+          <End Type="AccesEngisModel.REF_InfoGenerale" Role="REF_InfoGenerale" Multiplicity="1" />
+          <End Type="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue" Role="DemandeAccesEnginInfoGeneraleValue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_InfoGenerale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DemandeAccesEnginInfoGeneraleValue">
+              <PropertyRef Name="InfoGeneraleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_CheckListExigence_AccesEngins_CheckListRubrique_CheckListRubriqueId">
+          <End Type="AccesEngisModel.REF_CheckListRubrique" Role="REF_CheckListRubrique" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_CheckListExigence" Role="REF_CheckListExigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_CheckListRubrique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListExigence">
+              <PropertyRef Name="CheckListRubriqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_CheckListExigence_CheckListExigenceId">
+          <End Type="AccesEngisModel.REF_CheckListExigence" Role="REF_CheckListExigence" Multiplicity="1" />
+          <End Type="AccesEngisModel.ResultatControleDetail" Role="ResultatControleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_CheckListExigence">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleDetail">
+              <PropertyRef Name="CheckListExigenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CheckListExigence_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_CheckListExigence" Role="REF_CheckListExigence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListExigence">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_CheckListRubrique_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_CheckListRubrique" Role="REF_CheckListRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListRubrique">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CheckListRubrique_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_CheckListRubrique" Role="REF_CheckListRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_CheckListRubrique">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_InfoGenerale_AccesEngins_InfoGeneralRubrique_InfoGeneralRubriqueId">
+          <End Type="AccesEngisModel.REF_InfoGeneralRubrique" Role="REF_InfoGeneralRubrique" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_InfoGenerale" Role="REF_InfoGenerale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_InfoGeneralRubrique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGenerale">
+              <PropertyRef Name="InfoGeneralRubriqueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InfoGenerale_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_InfoGenerale" Role="REF_InfoGenerale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGenerale">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_InfoGeneralRubrique_AccesEngins_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_InfoGeneralRubrique" Role="REF_InfoGeneralRubrique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_InfoGeneralRubrique">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_NatureMatiere_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_NatureMatiere" Role="REF_NatureMatiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_NatureMatiere">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_NatureMatiere_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_NatureMatiere" Role="REF_NatureMatiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_NatureMatiere">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_TypeEngin_AccesEngins_TypeCheckList_TypeCheckListId">
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_TypeEngin" Role="REF_TypeEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REF_TypeCheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeEngin">
+              <PropertyRef Name="TypeCheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TypeCheckList_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeCheckList">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_TypeEngin_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.REF_TypeEngin" Role="REF_TypeEngin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="REF_TypeEngin">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccesEngins_ResultatControleDetail_AccesEngins_ResultatControleEntete_ResultatControleEnteteId">
+          <End Type="AccesEngisModel.ResultatControleEntete" Role="ResultatControleEntete" Multiplicity="1" />
+          <End Type="AccesEngisModel.ResultatControleDetail" Role="ResultatControleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ResultatControleEntete">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleDetail">
+              <PropertyRef Name="ResultatControleEnteteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_AppFiles_AppFileId">
+          <End Type="AccesEngisModel.AppFile" Role="AppFile" Multiplicity="0..1" />
+          <End Type="AccesEngisModel.ResultatControleEntete" Role="ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppFile">
+              <PropertyRef Name="AppFileId" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="AppFileId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ResultatControleEntete_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.ResultatControleEntete" Role="ResultatControleEntete" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResultatControleEntete">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.AspNetUserClaims" Role="AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.AspNetUserLogins" Role="AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.Entite" Role="Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Profile_dbo_AspNetUsers_Id">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sites_dbo_AspNetUsers_CreatedBy">
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="AccesEngisModel.Sites" Role="Sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sites">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId">
+          <End Type="AccesEngisModel.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="AccesEngisModel.Entite" Role="Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="HSEEntiteUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Entitie_dbo_Sites_SiteId">
+          <End Type="AccesEngisModel.Sites" Role="Sites" Multiplicity="1" />
+          <End Type="AccesEngisModel.Entite" Role="Entite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entite">
+              <PropertyRef Name="SiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Profile_dbo_Entities_EntiteId">
+          <End Type="AccesEngisModel.Entite" Role="Entite" Multiplicity="0..1" />
+          <End Type="AccesEngisModel.Profile" Role="Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entite">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="EntiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Sites_dbo_Profile_HSESiteId">
+          <End Type="AccesEngisModel.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="AccesEngisModel.Sites" Role="Sites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sites">
+              <PropertyRef Name="HSESiteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MAP_InfoGenerale_TypeCheckList">
+          <End Type="AccesEngisModel.REF_InfoGenerale" Role="REF_InfoGenerale" Multiplicity="*" />
+          <End Type="AccesEngisModel.REF_TypeCheckList" Role="REF_TypeCheckList" Multiplicity="*" />
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="AccesEngisModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="AccesEngisModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccesEngisModelStoreContainer" CdmEntityContainer="OcpPerformanceDataContext">
+          <EntitySetMapping Name="DemandeAccesEngin">
+            <EntityTypeMapping TypeName="AccesEngisModel.DemandeAccesEngin">
+              <MappingFragment StoreEntitySet="DemandeAccesEngin">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DateSortie" ColumnName="DateSortie" />
+                <ScalarProperty Name="StatutDemandeId" ColumnName="StatutDemandeId" />
+                <ScalarProperty Name="AppFileId" ColumnName="AppFileId" />
+                <ScalarProperty Name="NatureMatiereId" ColumnName="NatureMatiereId" />
+                <ScalarProperty Name="DatePlannification" ColumnName="DatePlannification" />
+                <ScalarProperty Name="IsAutorise" ColumnName="IsAutorise" />
+                <ScalarProperty Name="TypeEnginId" ColumnName="TypeEnginId" />
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="TypeCheckListId" ColumnName="TypeCheckListId" />
+                <ScalarProperty Name="EntiteId" ColumnName="EntiteId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DemandeAccesEnginInfoGeneraleValue">
+            <EntityTypeMapping TypeName="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue">
+              <MappingFragment StoreEntitySet="DemandeAccesEnginInfoGeneraleValue">
+                <ScalarProperty Name="ValueInfo" ColumnName="ValueInfo" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="InfoGeneraleId" ColumnName="InfoGeneraleId" />
+                <ScalarProperty Name="DemandeAccesEnginId" ColumnName="DemandeAccesEnginId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_CheckListExigence">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_CheckListExigence">
+              <MappingFragment StoreEntitySet="REF_CheckListExigence">
+                <ScalarProperty Name="IsHasDate" ColumnName="IsHasDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsActif" ColumnName="IsActif" />
+                <ScalarProperty Name="ShowOrder" ColumnName="ShowOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CheckListRubriqueId" ColumnName="CheckListRubriqueId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_CheckListRubrique">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_CheckListRubrique">
+              <MappingFragment StoreEntitySet="REF_CheckListRubrique">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsActif" ColumnName="IsActif" />
+                <ScalarProperty Name="ShowOrder" ColumnName="ShowOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeCheckListId" ColumnName="TypeCheckListId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_InfoGenerale">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_InfoGenerale">
+              <MappingFragment StoreEntitySet="REF_InfoGenerale">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="InfoGeneralRubriqueId" ColumnName="InfoGeneralRubriqueId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_InfoGeneralRubrique">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_InfoGeneralRubrique">
+              <MappingFragment StoreEntitySet="REF_InfoGeneralRubrique">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsActif" ColumnName="IsActif" />
+                <ScalarProperty Name="ShowOrder" ColumnName="ShowOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_NatureMatiere">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_NatureMatiere">
+              <MappingFragment StoreEntitySet="REF_NatureMatiere">
+                <ScalarProperty Name="TypeCheckListId" ColumnName="TypeCheckListId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_StatutDemandes">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_StatutDemandes">
+              <MappingFragment StoreEntitySet="REF_StatutDemandes">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_TypeCheckList">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_TypeCheckList">
+              <MappingFragment StoreEntitySet="REF_TypeCheckList">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REF_TypeEngin">
+            <EntityTypeMapping TypeName="AccesEngisModel.REF_TypeEngin">
+              <MappingFragment StoreEntitySet="REF_TypeEngin">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DureeEstimative" ColumnName="DureeEstimative" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeCheckListId" ColumnName="TypeCheckListId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReponseDemande">
+            <EntityTypeMapping TypeName="AccesEngisModel.ReponseDemande">
+              <MappingFragment StoreEntitySet="ReponseDemande">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Motif" ColumnName="Motif" />
+                <ScalarProperty Name="DemandeAccesEnginId" ColumnName="DemandeAccesEnginId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultatControleDetail">
+            <EntityTypeMapping TypeName="AccesEngisModel.ResultatControleDetail">
+              <MappingFragment StoreEntitySet="ResultatControleDetail">
+                <ScalarProperty Name="Observation" ColumnName="Observation" />
+                <ScalarProperty Name="DateExpiration" ColumnName="DateExpiration" />
+                <ScalarProperty Name="IsConform" ColumnName="IsConform" />
+                <ScalarProperty Name="CheckListExigenceId" ColumnName="CheckListExigenceId" />
+                <ScalarProperty Name="ResultatControleEnteteId" ColumnName="ResultatControleEnteteId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResultatControleEntete">
+            <EntityTypeMapping TypeName="AccesEngisModel.ResultatControleEntete">
+              <MappingFragment StoreEntitySet="ResultatControleEntete">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="AppFileId" ColumnName="AppFileId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DemandeAccesEnginId" ColumnName="DemandeAccesEnginId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppFile">
+            <EntityTypeMapping TypeName="AccesEngisModel.AppFile">
+              <MappingFragment StoreEntitySet="AppFile">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="SystemFileName" ColumnName="SystemFileName" />
+                <ScalarProperty Name="OriginalFileName" ColumnName="OriginalFileName" />
+                <ScalarProperty Name="ContainerName" ColumnName="ContainerName" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="SourceName" ColumnName="SourceName" />
+                <ScalarProperty Name="AppFileId" ColumnName="AppFileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="AccesEngisModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="AccesEngisModel.AspNetUserClaims">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="AccesEngisModel.AspNetUserLogins">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="AccesEngisModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entite">
+            <EntityTypeMapping TypeName="AccesEngisModel.Entite">
+              <MappingFragment StoreEntitySet="Entite">
+                <ScalarProperty Name="IsHSE" ColumnName="IsHSE" />
+                <ScalarProperty Name="ResponsableEntiteUserId" ColumnName="ResponsableEntiteUserId" />
+                <ScalarProperty Name="ADFUserId" ColumnName="ADFUserId" />
+                <ScalarProperty Name="HSEEntiteUserId" ColumnName="HSEEntiteUserId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SiteId" ColumnName="SiteId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile">
+            <EntityTypeMapping TypeName="AccesEngisModel.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="EntiteId" ColumnName="EntiteId" />
+                <ScalarProperty Name="DtLastConnection" ColumnName="DtLastConnection" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sites">
+            <EntityTypeMapping TypeName="AccesEngisModel.Sites">
+              <MappingFragment StoreEntitySet="Sites">
+                <ScalarProperty Name="HSESiteId" ColumnName="HSESiteId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="PhoneNumber2" ColumnName="PhoneNumber2" />
+                <ScalarProperty Name="PhoneNumber1" ColumnName="PhoneNumber1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MAP_InfoGenerale_TypeCheckList" TypeName="AccesEngisModel.MAP_InfoGenerale_TypeCheckList" StoreEntitySet="MAP_InfoGenerale_TypeCheckList">
+            <EndProperty Name="REF_TypeCheckList">
+              <ScalarProperty Name="Id" ColumnName="TypeCheckListId" />
+            </EndProperty>
+            <EndProperty Name="REF_InfoGenerale">
+              <ScalarProperty Name="Id" ColumnName="InfoGeneraleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="AccesEngisModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

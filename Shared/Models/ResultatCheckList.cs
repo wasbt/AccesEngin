@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace Shared.Models
         public string CreatedBy { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public bool IsAutorise { get; set; }
 
         public List<Resultats> ResultatsList { get; set; }
 

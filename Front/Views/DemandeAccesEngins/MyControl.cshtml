@@ -1,7 +1,7 @@
-﻿@model Front.Models.StandardModel<DATAAL.DemandeAccesEngin>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+﻿@model Front.Models.StandardModel<DAL.DemandeAccesEngin>
+@using PagedList
+@using PagedList.Mvc
+ 
 @using Shared;
 @{
     /**/
@@ -110,7 +110,7 @@
                 @{
                     foreach (var item in Model.resultList)
                     {
-                        var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
+                        var isControled = Model.resultList.Any(x => x.ResultatControleEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
                         <tr class="line">
                             <td>
@@ -142,23 +142,23 @@
                             <td>
                                 @if (isControled)
                                 {
-                                    <span class="badge badge-info">Contrôlée</span>
+                                    <span class="label label-info">Contrôlée</span>
                                 }
                                 else
                                 {
-                                    <span class="badge badge-warning">Non contrôlée</span>
+                                    <span class="label label-warning">Non contrôlée</span>
                                 }
                             </td>
                             <td>
                                 @if (isControled)
                                 {
-                                    if (item.Autorise)
+                                    if (item.IsAutorise)
                                     {
-                                        <span class="badge badge-success">Autorisée</span>
+                                        <span class="label label-success">Autorisée</span>
                                     }
                                     else
                                     {
-                                        <span class="badge badge-danger">Non autorisée</span>
+                                        <span class="label label-danger">Non autorisée</span>
                                     }
                                 }
 
@@ -182,11 +182,11 @@
                                     {
                                         if (item.StatutDemandeId != 2) //2 => refuser
                                         {
-                                            <span class="badge badge-success">Acceptée</span>
+                                            <span class="label alert-success">Acceptée</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-danger">Refusée</span>
+                                            <span class="label alert-danger">Refusée</span>
                                             if (item.ReponseDemande.ToList().Count() > 0)
                                             {
                                                 foreach (var rp in item.ReponseDemande.ToList())
@@ -244,7 +244,7 @@
             <br />
 
             Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }), Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }))
         </div>
     </div>
 </div>

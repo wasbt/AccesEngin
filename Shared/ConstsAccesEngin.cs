@@ -33,6 +33,11 @@ namespace Shared
 
         //log
         public const string LogEmail = "elmehdielmellali.mobile@gmail.com";
+
+        //File
+        public const string ContainerName = "DigiControl";
+
+
     }
 
 }

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DATAAL;
-using X.PagedList;
+using DAL;
+using PagedList;
 using Front.Models;
 using Front.Controllers;
 using Shared;
@@ -16,23 +16,23 @@ using Front.AGUtils;
 
 namespace Front.Areas.BackOffice.Controllers
 {
-    public class EntitiesController : BackOfficeController
+    public class EntiteController : BackOfficeController
     {
-        // GET: BackOffice/Entities
-        public async Task<ActionResult> Index(StandardModel<Entities> model)
+        // GET: BackOffice/Entite
+        public async Task<ActionResult> Index(StandardModel<Entite> model)
         {
-            var entity = context.Entities.Include(e => e.AspNetUsers).Include(e => e.Sites);
+            var entity = context.Entite.Include(e => e.AspNetUsers).Include(e => e.Sites);
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.Entities.AsQueryable();
+			var query = context.Entite.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {
-                query = (IQueryable<Entities>)query.ProcessWhere(model.columnName, model.content);
+                query = (IQueryable<Entite>)query.ProcessWhere(model.columnName, model.content);
             }
 
             query = query.OrderBy(x => x.Id);
@@ -48,14 +48,14 @@ namespace Front.Areas.BackOffice.Controllers
             // V0: return View(await entity.ToListAsync());
         }
 
-        // GET: BackOffice/Entities/Details/5
+        // GET: BackOffice/Entite/Details/5
         public async Task<ActionResult> Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entities entity = await context.Entities.FindAsync(id);
+            Entite entity = await context.Entite.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace Front.Areas.BackOffice.Controllers
             return View(entity);
         }
 
-        // GET: BackOffice/Entities/Create
+        // GET: BackOffice/Entite/Create
         public ActionResult Create()
         {
             ViewBag.HSEEntiteUserId = new SelectList(context.AspNetUsers, "Id", "Email");
@@ -71,18 +71,18 @@ namespace Front.Areas.BackOffice.Controllers
             return View();
         }
 
-        // POST: BackOffice/Entities/Create
+        // POST: BackOffice/Entite/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Entities entity)
+        public async Task<ActionResult> Create(Entite entity)
         {
             if (ModelState.IsValid)
             {
                 entity.CreatedBy = CurrentUserId;
                 entity.CreatedOn = DateTime.Now;
-                context.Entities.Add(entity);
+                context.Entite.Add(entity);
                 await context.SaveChangesAsync();
 				TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
@@ -93,14 +93,14 @@ namespace Front.Areas.BackOffice.Controllers
             return View(entity);
         }
 
-        // GET: BackOffice/Entities/Edit/5
+        // GET: BackOffice/Entite/Edit/5
         public async Task<ActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entities entity = await context.Entities.FindAsync(id);
+            Entite entity = await context.Entite.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -110,12 +110,12 @@ namespace Front.Areas.BackOffice.Controllers
             return View(entity);
         }
 
-        // POST: BackOffice/Entities/Edit/5
+        // POST: BackOffice/Entite/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Entities entity)
+        public async Task<ActionResult> Edit(Entite entity)
         {
             if (ModelState.IsValid)
             {
@@ -131,14 +131,14 @@ namespace Front.Areas.BackOffice.Controllers
             return View(entity);
         }
 
-        // GET: BackOffice/Entities/Delete/5
+        // GET: BackOffice/Entite/Delete/5
         public async Task<ActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Entities entity = await context.Entities.FindAsync(id);
+            Entite entity = await context.Entite.FindAsync(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -146,13 +146,13 @@ namespace Front.Areas.BackOffice.Controllers
             return View(entity);
         }
 
-        // POST: BackOffice/Entities/Delete/5
+        // POST: BackOffice/Entite/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(long id)
         {
-            Entities entity = await context.Entities.FindAsync(id);
-            context.Entities.Remove(entity);
+            Entite entity = await context.Entite.FindAsync(id);
+            context.Entite.Remove(entity);
             await context.SaveChangesAsync();
             TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Suppression efféctuée avec succès!";
             return RedirectToAction("Index");

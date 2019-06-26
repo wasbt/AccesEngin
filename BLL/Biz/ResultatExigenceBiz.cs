@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using Shared.Models;
 using System;
@@ -13,7 +13,7 @@ namespace BLL.Biz
 {
     public class ResultatExigenceBiz : CommonBiz
     {
-        public ResultatExigenceBiz(TestEnginEntities context, ILog log) : base(context, log)
+        public ResultatExigenceBiz(OcpPerformanceDataContext  context, ILog log) : base(context, log)
         {
 
         }
@@ -44,7 +44,7 @@ namespace BLL.Biz
             #endregion
 
             #region get & check resultat entete 
-            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == demandeAcces.Id).FirstOrDefaultAsync();
+            var resultatEntete = await context.ResultatControleEntete.Where(x => x.DemandeAccesEnginId == demandeAcces.Id).FirstOrDefaultAsync();
             if (resultatEntete == null)
             {
                 return null;
@@ -58,7 +58,7 @@ namespace BLL.Biz
 
             #region Conformité
 
-            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatControleDetail.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -91,7 +91,7 @@ namespace BLL.Biz
                 foreach (var rebricInfo in infoRubriqueGroup)
                 {
 
-                    var info = demandeAcces.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                    var info = demandeAcces.DemandeAccesEnginInfoGeneraleValue.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
                     if (info == null)
                     {
                         continue;
@@ -131,7 +131,7 @@ namespace BLL.Biz
 
                 foreach (var checkListExigence in checkListExigenceGrouping)
                 {
-                    var data = resultatEntete.ResultatExigence.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
+                    var data = resultatEntete.ResultatControleDetail.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
 
                     if (data == null)
                     {
@@ -140,7 +140,7 @@ namespace BLL.Biz
                     var element = new ResultatValue
                     {
                         Name = checkListExigence.Name,
-                        Datetime = data.Date.ToString(),
+                        Datetime = data.DateExpiration.ToString(),
                         Observation = data.Observation,
                         Conform = data.IsConform ? $"Conforme" : $"Non conforme",
                         IsExigence = true,

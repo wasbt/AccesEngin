@@ -5,11 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
     <!-- App css -->
-    <link href="~/assets/css/icons.css" rel="stylesheet" type="text/css" />
 
     <style>
         .hrefstyle {
@@ -31,81 +30,29 @@
             box-sizing: border-box;
             border-radius: 11px;
         }
+        .body-content {
+            margin-top: 50px;
+        }
+
+
     </style>
 </head>
 
 <body>
-
-    <!-- Navigation Bar-->
-    <header id="topnav">
-        <div class="topbar-main">
+    <header>
+        <div class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-
-                <!-- LOGO -->
-                <div class="topbar-left">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a href="/" class="logo"><img src="/images/logo-ocp.png" height="60" /></a>
                 </div>
-                <!-- End Logo container-->
+                <div class="navbar-collapse collapse">
 
-
-                <div class="menu-extras">
-
-                    <ul class="nav navbar-nav navbar-right pull-right">
-                        @*<li>
-                            <a href="#myModal" class="btn" data-toggle="modal" data-target="#myModalNorm"><i class="fa fa-search"></i></a>
-                        </li>*@
-                        <li>
-                            <!-- Notification -->
-                            <div class="notification-box">
-                                <ul class="list-inline m-b-0">
-                                    <li>
-                                        <a href="javascript:void(0);" class="right-bar-toggle">
-                                            <i class="zmdi zmdi-notifications-none"></i>
-                                        </a>
-                                        <div class="noti-dot">
-                                            <span class="dot"></span>
-                                            <span class="pulse"></span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- End Notification bar -->
-                        </li>
-
-                        <li class="dropdown user-box">
-                            <a href="" class="dropdown-toggle waves-effect waves-light profile " data-toggle="dropdown" aria-expanded="true">
-                                <img src="/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
-                                <div class="user-status away"><i class="zmdi zmdi-dot-circle"></i></div>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                @Html.Partial("_LoginPartial")
-                            </ul>
-                        </li>
-                    </ul>
-                    <div class="menu-item">
-                        <!-- Mobile menu toggle-->
-                        <a class="navbar-toggle">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </a>
-                        <!-- End mobile menu toggle-->
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- end topbar-main -->
-
-
-        <div class="navbar-custom">
-            <div class="container">
-                <div id="navigation">
-                    <!-- Navigation Menu-->
-                    <ul class="navigation-menu">
+                    <ul class="nav navbar-nav">
 
                         @{
                             if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_SURETE))
@@ -154,58 +101,58 @@
 
 
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @Html.Partial("_LoginPartial")
+                            </ul>
+                        </li>
+                    </ul>
                     <!-- End navigation menu -->
                 </div> <!-- end #navigation -->
             </div> <!-- end container -->
         </div> <!-- end navbar-custom -->
     </header>
-    <!-- End Navigation Bar-->
-    <div class="wrapper">
-        <div class="container">
-            <!-- Page-Title -->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="pull-right m-t-20">
-
-                    </div>
-                    <h4 class="page-title">@ViewBag.Title</h4>
-                </div>
-            </div>
-            <!-- end page title end breadcrumb -->
-            @Html.Partial("_MessageHeader")
-
-            <div class="row">
-                <div class="col-sm-12">
-                    @RenderBody()
+    <div class="container body-content">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="pull-right m-t-20">
 
                 </div>
+                <h4 class="page-title">@ViewBag.Title</h4>
             </div>
         </div>
-        <!-- end container -->
-        <!-- Right Sidebar -->
+        @Html.Partial("_MessageHeader")
+
+        <div class="row">
+            <div class="col-sm-12">
+                @RenderBody()
+
+            </div>
+        </div>
         <div class="side-bar right-bar">
             <a href="javascript:void(0);" class="right-bar-toggle">
                 <i class="mdi mdi-close-circle-outline"></i>
             </a>
         </div>
-        <!-- /Right-bar -->
-    </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    2016 - @DateTime.Now.Year © Ocp Acces Des Engins
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        2016 - @DateTime.Now.Year © Ocp Acces Des Engins
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
-    @Scripts.Render("~/bundles/templateJS")
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
     @*@Html.Partial("_FooterAllScripts")*@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-    <!-- App js -->
-    @RenderSection("scripts", required: false)
-    <script src="~/assets/js/jquery.core.js"></script>
-    <script src="~/assets/js/jquery.app.js"></script>
+
 </body>
 </html>

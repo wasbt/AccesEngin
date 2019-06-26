@@ -1,15 +1,13 @@
-﻿using DATAAL;
+﻿using DAL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Data.Entity;
-using System.Linq.Dynamic;
 using System.Web;
-using System.Web.Mvc;
 using Shared;
+using System.Linq;
 
 namespace Front.AGUtils
 {
@@ -23,7 +21,7 @@ namespace Front.AGUtils
 
             List<string> colsList = new List<string>();
 
-            using (var context = new TestEnginEntities())
+            using (var context = new OcpPerformanceDataContext())
             {
                 // Sql Server
 #if DEBUG
@@ -52,11 +50,11 @@ namespace Front.AGUtils
 
                 if (int.TryParse(content, out intContent))
                 {
-                    query = query.Where(string.Format("{0}=={1}", columnName, content));
+                  //  query = query.Where(string.Format("{0}=={1}", columnName, content));
                 }
                 else
                 {
-                    query = query.Where(string.Format("{0}.ToLower().Contains(\"{1}\".ToLower())", columnName, content));
+                  //  query = query.Where(string.Format("{0}.ToLower().Contains(\"{1}\".ToLower())", columnName, content));
                 }
 
             }
@@ -64,7 +62,7 @@ namespace Front.AGUtils
             {
                 try
                 {
-                    query = query.Where(string.Format("{0}.Contains(\"{1}\")", columnName, content));
+                  //  query = query.Where(string.Format("{0}.Contains(\"{1}\")", columnName, content));
                 }
                 catch (Exception)
                 {

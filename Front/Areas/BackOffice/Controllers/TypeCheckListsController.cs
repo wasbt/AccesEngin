@@ -7,28 +7,38 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DATAAL;
-using X.PagedList;
+using DAL;
+using PagedList;
 using Front.Models;
 using Front.Controllers;
 using Shared;
 using Front.AGUtils;
+using Front.Core;
 
 namespace Front.Areas.BackOffice.Controllers
 {
     public class TypeCheckListsController : BackOfficeController
     {
+        private readonly IUnitOfWork _unitOfWork;
+        public TypeCheckListsController(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+
         // GET: BackOffice/TypeCheckLists
         public async Task<ActionResult> Index(StandardModel<REF_TypeCheckList> model)
         {
-            var typeCheckList = context.REF_TypeCheckList.Include(t => t.AspNetUsers);
+              var typeCheckList = context.REF_TypeCheckList.Include(t => t.AspNetUsers);
+           // var typeCheckList = _unitOfWork.TypeCheckLists.GetAllTypeCheckList();
+
             int pageSize = 10;
             
 			int pageNumber = (model.page ?? 1);
 
             pageNumber = (model.newSearch ?? pageNumber);
 
-			var query = context.REF_TypeCheckList.AsQueryable();
+            var query = typeCheckList.AsQueryable();
 
             if (!String.IsNullOrEmpty(model.content))
             {

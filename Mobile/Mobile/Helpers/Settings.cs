@@ -77,7 +77,5 @@ namespace Mobile.Helpers
                 Preferences.Set("AccessTokenExpirationDate", value);
             }
         }
-
-
     }
 }

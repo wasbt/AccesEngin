@@ -63,7 +63,6 @@ namespace Mobile.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::Mobile.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::Mobile.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::Mobile.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
-			global::ModernHttpClient.Resource.String.library_name = global::Mobile.Droid.Resource.String.library_name;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::Mobile.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::Mobile.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::Mobile.Droid.Resource.Attribute.font;
@@ -12253,10 +12252,7 @@ namespace Mobile.Droid
 		{
 			
 			// aapt resource value: 0x7f080000
-			public const int file_paths = 2131230720;
-			
-			// aapt resource value: 0x7f080001
-			public const int xamarin_essentials_fileprovider_file_paths = 2131230721;
+			public const int xamarin_essentials_fileprovider_file_paths = 2131230720;
 			
 			static Xml()
 			{

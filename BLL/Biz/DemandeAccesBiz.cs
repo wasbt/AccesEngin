@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using Shared.DTO;
 using System;
@@ -14,21 +14,54 @@ using Shared.Models;
 using System.Web;
 using System.Diagnostics;
 using Shared.ENUMS;
+using Shared.API.OUT;
+using System.IO;
 
 namespace BLL.Biz
 {
     public class DemandeAccesBiz : CommonBiz
     {
-        public DemandeAccesBiz(TestEnginEntities context, ILog log) : base(context, log)
+        public DemandeAccesBiz(OcpPerformanceDataContext context, ILog log) : base(context, log)
         {
         }
 
         public List<DemandeAccesDto> DemandeAccesList(int pageIndex, int pageSize)
         {
             var demandeAccesList = context.DemandeAccesEngin.ToList();
-            var Demendes = demandeAccesList.Where(x => !x.DemandeResultatEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
+            var Demendes = demandeAccesList.Where(x => !x.ResultatControleEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
             var demandeAcces = Demendes.Skip(pageIndex * pageSize).Take(pageSize).ToList();
             return demandeAcces;
+        }
+
+        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(int Id)
+        {
+            var demandeAcces = await context.DemandeAccesEngin.FindAsync(Id);
+
+            if (demandeAcces == null)
+                return null;
+
+
+            var demandeDetail = new DemandeDetail()
+            {
+                Id = demandeAcces.Id,
+                TypeCheckListId = demandeAcces.TypeCheckListId,
+                TypeEnginName = demandeAcces.REF_TypeEngin.Name,
+                TypeCheckListName = demandeAcces.REF_TypeCheckList.Name,
+                NatureMatiereName = demandeAcces?.REF_NatureMatiere?.Name,
+                EntityName = demandeAcces.Entite.Name,
+                DatePlannification = demandeAcces.DatePlannification,
+                IsAutorise = demandeAcces.IsAutorise,
+                Observation = demandeAcces?.Observation,
+                CreatedBy = demandeAcces.CreatedBy,
+                CreatedOn = demandeAcces.CreatedOn,
+                CreatedEmail = demandeAcces.AspNetUsers.Email,
+                AutoriseName = demandeAcces.IsAutorise ? "Autorisé" : "Non autorisé",
+                StatutId = demandeAcces.StatutDemandeId,
+                Statut = demandeAcces?.REF_StatutDemandes?.Name,
+                StatutColor = demandeAcces?.REF_StatutDemandes?.Color,
+            };
+
+            return demandeDetail;
         }
 
         public async Task<TypeCheckListDTO> GetCheckListAsync(int id)
@@ -48,39 +81,55 @@ namespace BLL.Biz
             return typeCheckListDTO;
         }
 
-        public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat)
+        public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat, HttpPostedFileBase uploadedFile, string ContainerName, string SourceName)
         {
+            byte[] fileData = null;
+            long SourceId = 0;
+            long fileId = 0;
             try
             {
-                #region Save entete resultat Exigence 
-                var resultatEntete = new DemandeResultatEntete()
-                {
-                    DemandeAccesEnginId = resultat.DemandeAccesEnginId,
-                    CreatedBy = resultat.CreatedBy,
-                    CreatedOn = resultat.CreatedOn
-                };
+                #region Update Demande
+                var demande = await context.DemandeAccesEngin.FindAsync(resultat.DemandeAccesEnginId);
+                demande.IsAutorise = resultat.IsAutorise;
                 #endregion
 
-                context.DemandeResultatEntete.Add(resultatEntete);
-                var cc = await context.SaveChangesAsync();
+                #region Save entete resultat Exigence 
+                var resultatEntete = new ResultatControleEntete();
+                resultatEntete.DemandeAccesEnginId = resultat.DemandeAccesEnginId;
+                resultatEntete.CreatedBy = resultat.CreatedBy;
+                resultatEntete.CreatedOn = DateTime.Now;
+                #endregion
+
+                context.ResultatControleEntete.Add(resultatEntete);
+                await context.SaveChangesAsync();
+
+                SourceId = resultatEntete.Id;
 
                 #region Save resultat Exigence
                 foreach (var resultatEx in resultat.ResultatsList)
                 {
-                    var controlResultatExigence = new ResultatExigence()
+                    var controlResultatExigence = new ResultatControleDetail()
                     {
-                        DemandeResultatEnteteId = resultatEntete.Id,
+                        ResultatControleEnteteId = resultatEntete.Id,
                         CheckListExigenceId = resultatEx.CheckListExigenceId,
                         IsConform = resultatEx.IsConform,
-                        Date = resultatEx.Date,
+                        DateExpiration = resultatEx.Date,
                         Observation = resultatEx.Observation,
                     };
 
-                    context.ResultatExigence.Add(controlResultatExigence);
-
-
+                    context.ResultatControleDetail.Add(controlResultatExigence);
                 }
-                var tt = await context.SaveChangesAsync();
+                #endregion
+
+
+                #region Ajout de la pièce jointe dans le contexte
+                var biz = new CommonBiz(context, log);
+
+                fileId = await biz.SaveAppFile(uploadedFile, ContainerName, SourceId.ToString(), SourceName);
+
+                resultatEntete.AppFileId = fileId;
+                await context.SaveChangesAsync();
+
                 #endregion
                 return true;
 
@@ -131,8 +180,8 @@ namespace BLL.Biz
                     //   var existFile =  context.RegulatoryText.Where(r => r.RegulatoryTextId == regulatoryText.RegulatoryTextId);
                     if (demandeAccesEngin.AppFileId.HasValue)
                     {
-                        var oldFile = await context.AppFiles.FindAsync(demandeAccesEngin.AppFileId);
-                        context.AppFiles.Remove(oldFile);
+                        var oldFile = await context.AppFile.FindAsync(demandeAccesEngin.AppFileId);
+                        context.AppFile.Remove(oldFile);
                         await context.SaveChangesAsync();
                     }
                     //add file to database & Azure
@@ -163,9 +212,9 @@ namespace BLL.Biz
             }
             var demandeAcces = context.DemandeAccesEngin
                 .Where(x =>
-                    x.Autorise &&
+                    x.IsAutorise &&
                     x.StatutDemandeId == (int)DemandeStatus.Accepter &&
-                    x.ResultatInfoGenerale
+                    x.DemandeAccesEnginInfoGeneraleValue
                     .Any(i => i.REF_InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                           i.ValueInfo.Contains(Matricule)));
             if (demandeAcces == null)
@@ -181,8 +230,8 @@ namespace BLL.Biz
         public async Task<List<DemandeAccesEngin>> DemandeAccesByEntityMatricule(SearchDemandeModel model)
         {
             var demandeAcces = context.DemandeAccesEngin.Where(x =>
-                                                                   x.Autorise &&
-                                                                   x.DemandeResultatEntete.Any())
+                                                                   x.IsAutorise &&
+                                                                   x.ResultatControleEntete.Any())
                                                                    .AsQueryable();
 
             #region Check demand acces id & find it
@@ -191,14 +240,14 @@ namespace BLL.Biz
                 //demandeAcces = demandeAcces.Where(x => x.ResultatInfoGenerale.Any(i => i.ValueInfo.Contains(model.Matricule)));
                 demandeAcces = demandeAcces
                 .Where(x =>
-                       x.ResultatInfoGenerale
+                       x.DemandeAccesEnginInfoGeneraleValue
                 .Any(i =>
                      i.REF_InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
                      i.ValueInfo.Equals(model.Matricule, StringComparison.OrdinalIgnoreCase)));
             }
             if (model.EntityId.HasValue)
             {
-                demandeAcces = demandeAcces.Where(x => x.EntityId == model.EntityId);
+                demandeAcces = demandeAcces.Where(x => x.EntiteId == model.EntityId);
             }
             #endregion
 

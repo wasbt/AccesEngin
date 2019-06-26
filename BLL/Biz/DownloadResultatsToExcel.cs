@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -16,7 +16,7 @@ namespace BLL.Biz
 {
     public class DownloadResultatsToExcel : CommonBiz
     {
-        public DownloadResultatsToExcel(TestEnginEntities context, ILog log) : base(context, log)
+        public DownloadResultatsToExcel(OcpPerformanceDataContext  context, ILog log) : base(context, log)
         {
         }
 
@@ -46,7 +46,7 @@ namespace BLL.Biz
             #endregion
 
             #region get & check resultat entete 
-            var resultatEntete = await context.DemandeResultatEntete.Where(x => x.DemandeAccesEnginId == demandeAcces.Id).FirstOrDefaultAsync();
+            var resultatEntete = await context.ResultatControleEntete.Where(x => x.DemandeAccesEnginId == demandeAcces.Id).FirstOrDefaultAsync();
             if (resultatEntete == null)
             {
                 return null;
@@ -60,7 +60,7 @@ namespace BLL.Biz
 
             #region Conformité
 
-            var resultatExigenceDetail = resultatEntete.ResultatExigence.ToList();
+            var resultatExigenceDetail = resultatEntete.ResultatControleDetail.ToList();
             var exigenceNonApplicable = resultatExigenceDetail.Where(x => !x.IsConform).ToList();
             var exigencesNonApplicableCount = exigenceNonApplicable.LongCount();
             var exigenceApplicable = resultatExigenceDetail.Where(x => x.IsConform).ToList();
@@ -100,7 +100,7 @@ namespace BLL.Biz
                 workSheet.InsertRow(workSheet.Cells[startingRow + 1, minColumn, startingRow, maxColumnInfoG].Start.Row, 1, copyStylesFromRow: 1);
 
 
-                if (demandeAcces.Autorise)
+                if (demandeAcces.IsAutorise)
                 {
                     DrawnRubrique(minColumn, minColumn, startingRowHeadr, workSheet, succes);
                     workSheet.Cells[startingRowHeadr, minColumn].Value = $"Autorisé";
@@ -142,7 +142,7 @@ namespace BLL.Biz
 
                     foreach (var rebricInfo in infoRubriqueGroup)
                     {
-                        var info = demandeAcces.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                        var info = demandeAcces.DemandeAccesEnginInfoGeneraleValue.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
                         if (info == null)
                         {
                             continue;
@@ -199,7 +199,7 @@ namespace BLL.Biz
                     #endregion
                     foreach (var checkListExigence in rubrique.REF_CheckListExigence.Where(x => x.IsActif == true))
                     {
-                        var data = resultatEntete.ResultatExigence.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
+                        var data = resultatEntete.ResultatControleDetail.Where(x => x.CheckListExigenceId == checkListExigence.Id).FirstOrDefault();
 
                         if (data == null)
                         {
@@ -222,7 +222,7 @@ namespace BLL.Biz
                         workSheet.Cells[startingRow, ResultatColumn, startingRow, ResultatColumn + 1].AutoFitColumns();
                         workSheet.Cells[startingRow, ResultatColumn].Value = data.IsConform ? $"Conforme" : $"Non conforme";
                         workSheet.Cells[startingRow, ResultatColumn + 2].Value = $"{data.Observation}";
-                        workSheet.Cells[startingRow, ResultatColumn + 5].Value = data.Date.HasValue ? $"{data.Date.Value.ToString("dd/mm/yyyy")}" : $"{data.Date}";
+                        workSheet.Cells[startingRow, ResultatColumn + 5].Value = data.DateExpiration.HasValue ? $"{data.DateExpiration.Value.ToString("dd/mm/yyyy")}" : $"{data.DateExpiration}";
                         workSheet.Column(ResultatColumn).AutoFit();
                         #endregion
 

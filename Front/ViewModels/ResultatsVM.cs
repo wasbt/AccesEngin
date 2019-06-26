@@ -1,4 +1,4 @@
-﻿using DATAAL;
+﻿using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace Front.ViewModels
     public class ResultatsVM
     {
         public DemandeAccesEngin controle { get; set; }
-        public DemandeResultatEntete DemandeResultat { get; set; }
+        public ResultatControleEntete DemandeResultat { get; set; }
         public REF_TypeCheckList TypeCheckList { get; set; }
         public REF_TypeEngin TypeEngin { get; set; }
         public REF_NatureMatiere NatureMatiere { get; set; }

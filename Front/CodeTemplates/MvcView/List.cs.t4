@@ -2,9 +2,9 @@
 <#@ output extension=".cshtml" #>
 <#@ include file="Imports.include.t4" #>
 @model Front.Models.StandardModel<#= "<" + ViewDataTypeName + ">" #>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+@using PagedList
+@using PagedList.Mvc
+ 
 <#
 // The following chained if-statement outputs the file header code and markup for a partial view, a view using a layout page, or a regular view.
 if(IsPartialView) {
@@ -156,7 +156,7 @@ if (pkName != null) {
 <br />
 
 Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }),Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }))
 </div>
 </div>
 </div>

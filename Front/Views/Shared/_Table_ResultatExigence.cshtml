@@ -6,7 +6,7 @@
             <th>Exigences</th>
             <th>Conforme</th>
             <th>Observation</th>
-            <th>Date</th>
+            <th>Date fin de validité</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
                 </tr>
                 foreach (var exigence in rubric.REF_CheckListExigence.Where(x => x.IsActif == true))
                 {
-                    var data = Model.DemandeResultat.ResultatExigence.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
+                    var data = Model.DemandeResultat.ResultatControleDetail.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
 
                     if (data == null)
                     {
@@ -29,7 +29,7 @@
                         <td>@exigence.Name</td>
                         <td>@(data.IsConform ? "Conforme" : "Non conforme")</td>
                         <td>@data.Observation</td>
-                        <td>@(data.Date?.ToString("dd/MM/yyyy"))</td>
+                        <td>@(data.DateExpiration?.ToString("dd/MM/yyyy"))</td>
 
                     </tr>
 

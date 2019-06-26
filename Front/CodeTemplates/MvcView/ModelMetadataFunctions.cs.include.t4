@@ -1,14 +1,14 @@
 ﻿
 <#+
 // Gets the related entity information for an association property where there is an associated foreign key property.
-// Note: ModelMetadata.RelatedEntities contains only the related entities associated through a foreign key property.
+// Note: ModelMetadata.RelatedEntite contains only the related Entite associated through a foreign key property.
 
 RelatedModelMetadata GetRelatedModelMetadata(PropertyMetadata property){
     RelatedModelMetadata propertyModel;
     IDictionary<string, RelatedModelMetadata> relatedProperties;
-    if(ModelMetadata.RelatedEntities != null)
+    if(ModelMetadata.RelatedEntite != null)
     {
-        relatedProperties = ModelMetadata.RelatedEntities.ToDictionary(item => item.AssociationPropertyName);
+        relatedProperties = ModelMetadata.RelatedEntite.ToDictionary(item => item.AssociationPropertyName);
     }
     else
     {

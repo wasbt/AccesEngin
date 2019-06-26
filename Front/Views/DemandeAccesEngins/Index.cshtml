@@ -1,7 +1,7 @@
-﻿@model Front.Models.StandardModel<DATAAL.DemandeAccesEngin>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+﻿@model Front.Models.StandardModel<DAL.DemandeAccesEngin>
+@using PagedList
+@using PagedList.Mvc
+ 
 @using Shared;
 @{
     /**/
@@ -138,7 +138,7 @@
                 @{
                     foreach (var item in Model.resultList)
                     {
-                        var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
+                        var isControled = Model.resultList.Any(x => x.ResultatControleEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
                         <tr class="line">
                             @{
@@ -148,7 +148,7 @@
                                         @if (item?.StatutDemandeId == 2) //2 => refuser
                                         {
                                             <a href="@Url.Action("Edit", "DemandeAccesEngins", new { id = item.Id.ToString() })" class="">
-                                                <span class="fa fa-edit"></span>
+                                                <span class="fa fa-edit"></span> Edit
                                             </a>
                                         }
                                     </td>
@@ -185,7 +185,7 @@
                             <td>
                                 @if (isControled)
                                 {
-                                    if (item.Autorise)
+                                    if (item.IsAutorise)
                                     {
                                         <span class="label  label-success">Autorisée</span>
                                     }
@@ -284,7 +284,7 @@
             <br />
 
             Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }), Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("Index", new { page, Model.content, Model.columnName }))
         </div>
     </div>
 </div>
@@ -337,11 +337,11 @@
         var DemandeAccesEnginId;
         var statut;
         $(document).ready(function () {
-            jQuery('.datepicker-autoclose').datepicker({
-                format: "yyyy/mm/dd",
-                autoclose: true,
-                todayHighlight: true,
-            });
+            //jQuery('.datepicker-autoclose').datepicker({
+            //    format: "yyyy/mm/dd",
+            //    autoclose: true,
+            //    todayHighlight: true,
+            //});
             $('input[name=statutDemande]', this).change(function () {
                 var radioValue = $("input[name='statutDemande']:checked").val();
                 if (radioValue == 1) {

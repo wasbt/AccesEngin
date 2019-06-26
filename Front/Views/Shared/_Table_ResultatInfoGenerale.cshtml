@@ -37,7 +37,7 @@
                 foreach (var rebricInfo in group)
                 {
 
-                    var info = Model.controle.ResultatInfoGenerale.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
+                    var info = Model.controle.DemandeAccesEnginInfoGeneraleValue.Where(x => x.InfoGeneraleId == rebricInfo.Id).FirstOrDefault();
 
                     if (info == null)
                     {

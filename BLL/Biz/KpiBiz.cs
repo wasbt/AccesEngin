@@ -1,5 +1,5 @@
 ﻿using BLL.Common;
-using DATAAL;
+using DAL;
 using log4net;
 using Shared.ENUMS;
 using Shared.Models;
@@ -13,7 +13,7 @@ namespace BLL.Biz
 {
     public class KpiBiz : CommonBiz
     {
-        public KpiBiz(TestEnginEntities context, ILog log) : base(context, log)
+        public KpiBiz(OcpPerformanceDataContext  context, ILog log) : base(context, log)
         {
         }
 
@@ -23,12 +23,12 @@ namespace BLL.Biz
             var CountController = context.DemandeAccesEngin.Where(x =>
             x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
-            x.DemandeResultatEntete.Any()).LongCount();
+            x.ResultatControleEntete.Any()).LongCount();
 
             var CountNonController = context.DemandeAccesEngin.Where(x =>
              x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
-            !x.DemandeResultatEntete.Any()).LongCount();
+            !x.ResultatControleEntete.Any()).LongCount();
             var result = new KpiModel()
             {
                 Value1 = CountController,
@@ -43,12 +43,12 @@ namespace BLL.Biz
             var CountAutorise = context.DemandeAccesEngin.Where(x =>
               x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
-            x.DemandeResultatEntete.Any() && x.Autorise).LongCount();
+            x.ResultatControleEntete.Any() && x.IsAutorise).LongCount();
 
             var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
                   x.StatutDemandeId != (int)DemandeStatus.Expirer &&
             x.CreatedBy == CurrentUser &&
-            x.DemandeResultatEntete.Any() && !x.Autorise).LongCount();
+            x.ResultatControleEntete.Any() && !x.IsAutorise).LongCount();
 
             var result = new KpiModel()
             {
@@ -67,14 +67,14 @@ namespace BLL.Biz
         {
             var CountAutorise = context.DemandeAccesEngin.Where(x =>
                           x.StatutDemandeId == (int)DemandeStatus.Expirer &&
-            x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
-            x.Autorise).LongCount();
+            x.ResultatControleEntete.Any(r => r.CreatedBy == CurrentUser) &&
+            x.IsAutorise).LongCount();
 
 
             var CountNonAutorise = context.DemandeAccesEngin.Where(x =>
                                       x.StatutDemandeId == (int)DemandeStatus.Expirer &&
-            x.DemandeResultatEntete.Any(r => r.CreatedBy == CurrentUser) &&
-            !x.Autorise).LongCount();
+            x.ResultatControleEntete.Any(r => r.CreatedBy == CurrentUser) &&
+            !x.IsAutorise).LongCount();
 
             var result = new KpiModel()
             {
@@ -100,20 +100,20 @@ namespace BLL.Biz
 
             var CountExpire = QueryCountExpire.Where(x =>
               x.StatutDemandeId == (int)DemandeStatus.Expirer &&
-              x.DemandeResultatEntete.Any()).LongCount();
+              x.ResultatControleEntete.Any()).LongCount();
 
             var CountSorti =  QueryCountNonExpire.Where(x =>
              x.StatutDemandeId == (int)DemandeStatus.Sortir &&
-            x.DemandeResultatEntete.Any()).LongCount();
+            x.ResultatControleEntete.Any()).LongCount();
 
             var CountAccepte =  QueryCountNonExpire.Where(x =>
              x.StatutDemandeId == (int)DemandeStatus.Accepter &&
-            x.DemandeResultatEntete.Any()).LongCount();
+            x.ResultatControleEntete.Any()).LongCount();
 
 
             var CountRefuse =  QueryCountNonExpire.Where(x =>
              x.StatutDemandeId == (int)DemandeStatus.Refuser &&
-            x.DemandeResultatEntete.Any()).LongCount();
+            x.ResultatControleEntete.Any()).LongCount();
 
             var result = new KpiModel()
             {

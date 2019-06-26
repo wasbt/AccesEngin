@@ -1,7 +1,7 @@
-﻿@model Front.Models.StandardModel<DATAAL.DemandeAccesEngin>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+﻿@model Front.Models.StandardModel<DAL.DemandeAccesEngin>
+@using PagedList
+@using PagedList.Mvc
+ 
 @using Shared;
 @{
     /**/
@@ -63,7 +63,7 @@
                 @{
                     foreach (var item in Model.resultList)
                     {
-                        var isControled = Model.resultList.Any(x => x.DemandeResultatEntete.Any(r => r.DemandeAccesEnginId == item.Id));
+                        var isControled = Model.resultList.Any(x => x.ResultatControleEntete.Any(r => r.DemandeAccesEnginId == item.Id));
 
                         <tr class="line">
 
@@ -98,7 +98,7 @@
                             <td>
                                 @if (isControled)
                                 {
-                                    if (item.Autorise)
+                                    if (item.IsAutorise)
                                     {
                                         <span class="badge badge-success">Autorisée</span>
                                     }
@@ -145,7 +145,7 @@
             <br />
 
             Page @(Model.resultList.PageCount < Model.resultList.PageNumber ? 0 : Model.resultList.PageNumber) of @Model.resultList.PageCount
-            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("DemandeExpired", "Home", new { page, Model.content, Model.columnName}), Bootstrap4PagedListRenderOptions.Default)
+            @Html.PagedListPager((IPagedList)Model.resultList, page => Url.Action("DemandeExpired", "Home", new { page, Model.content, Model.columnName}))
         </div>
     </div>
 </div>

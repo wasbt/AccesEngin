@@ -25,7 +25,7 @@
                 <td colspan="12">
                     @if (Model.DemandeResultat.AppFileId.HasValue)
                     {
-                        @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "Home", new { id = Model.DemandeResultat.AppFileId }, null)
+                        @Html.ActionLink("Télécharger le fichier", "GetFile", "Home", new { id = Model.DemandeResultat.AppFileId }, null)
                     }
                     else
                     {

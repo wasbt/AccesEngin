@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DATAAL;
-using X.PagedList;
+using DAL;
+using PagedList;
 using Front.Models;
 using Front.Controllers;
 using Shared;
@@ -38,7 +38,7 @@ namespace Front.Controllers
             }
             if (IsConroleur)
             {
-                query = query.Where(x => !x.DemandeResultatEntete.Any());
+                query = query.Where(x => !x.ResultatControleEntete.Any());
             }
 
             if (Filter.StatutDemandeId.HasValue)
@@ -51,7 +51,7 @@ namespace Front.Controllers
             }
             if (Filter.Autorise.HasValue)
             {
-                query = query.Where(x => x.Autorise == Filter.Autorise);
+                query = query.Where(x => x.IsAutorise == Filter.Autorise);
             }
             if (Filter.DatePlannification.HasValue)
             {
@@ -63,11 +63,11 @@ namespace Front.Controllers
             {
                 if (Filter.Controle.Value)
                 {
-                    query = query.Where(x => x.DemandeResultatEntete.Any());
+                    query = query.Where(x => x.ResultatControleEntete.Any());
                 }
                 else
                 {
-                    query = query.Where(x => !x.DemandeResultatEntete.Any());
+                    query = query.Where(x => !x.ResultatControleEntete.Any());
                 }
             }
             if (!string.IsNullOrWhiteSpace(Filter.Content))
@@ -141,10 +141,11 @@ namespace Front.Controllers
         {
             long fileId = 0;
             var biz = new CommonBiz(context, log);
+
             if (ModelState.IsValid)
             {
 
-
+     
 
                 #region Calculer durée approximative du contrôle par type d’engin
 
@@ -172,7 +173,7 @@ namespace Front.Controllers
 
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
-                demandeAccesEngin.Autorise = false;
+                demandeAccesEngin.IsAutorise = false;
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
 
@@ -180,7 +181,7 @@ namespace Front.Controllers
 
                 foreach (var item in ResultatInfoGeneral)
                 {
-                    var resultatInfoGeneral = new ResultatInfoGenerale()
+                    var resultatInfoGeneral = new DemandeAccesEnginInfoGeneraleValue()
                     {
                         DemandeAccesEnginId = demandeAccesEngin.Id,
                         InfoGeneraleId = item.GeneralInfoId,
@@ -188,7 +189,7 @@ namespace Front.Controllers
                         CreatedOn = DateTime.Now,
                     };
 
-                    var addeResultatIinfoGenerale = context.ResultatInfoGenerale.Add(resultatInfoGeneral);
+                    var addeResultatIinfoGenerale = context.DemandeAccesEnginInfoGeneraleValue.Add(resultatInfoGeneral);
                 }
 
                 await context.SaveChangesAsync();
@@ -197,7 +198,7 @@ namespace Front.Controllers
                 if (file != null)
                 {
                     //add file to database
-                    fileId = await biz.SaveOCPFile(file, ContainerName, demandeAccesEngin.Id, SourceName);
+                    fileId = await biz.SaveAppFile(file, ContainerName, demandeAccesEngin.Id.ToString(), SourceName);
 
                     //verify if file was added
                     if (fileId == 0)
@@ -230,8 +231,8 @@ namespace Front.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entities.SiteId);
-            ViewBag.EntityId = new SelectList(context.Entities.Where(e => e.SiteId == demandeAccesEngin.Entities.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entite.SiteId);
+            ViewBag.EntiteId = new SelectList(context.Entite.Where(e => e.SiteId == demandeAccesEngin.Entite.SiteId), "Id", "Name", demandeAccesEngin.EntiteId);
 
             ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
             ViewBag.TypeEnginId = new SelectList(context.REF_TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
@@ -249,20 +250,22 @@ namespace Front.Controllers
             var biz = new DemandeAccesBiz(context, log);
             if (ModelState.IsValid)
             {
-                demandeAccesEngin.CreatedBy = CurrentUserId;
-                demandeAccesEngin.StatutDemandeId = null;
-                demandeAccesEngin.CreatedOn = DateTime.Now;
-                context.Entry(demandeAccesEngin).State = EntityState.Modified;
-                var oldResultatInfoGenerale = context.ResultatInfoGenerale.Where(x => x.DemandeAccesEnginId == demandeAccesEngin.Id);
+                var demandeAcces = await context.DemandeAccesEngin.FindAsync(demandeAccesEngin.Id);
+                demandeAcces.CreatedBy = CurrentUserId;
+                demandeAcces.StatutDemandeId = null;
+                demandeAcces.CreatedOn = DateTime.Now;
+                var oldResultatInfoGenerale = context.DemandeAccesEnginInfoGeneraleValue.Where(x => x.DemandeAccesEnginId == demandeAccesEngin.Id);
 
                 foreach (var olditem in oldResultatInfoGenerale)
                 {
-                    context.ResultatInfoGenerale.Remove(olditem);
+                    context.DemandeAccesEnginInfoGeneraleValue.Remove(olditem);
                 }
+                await context.SaveChangesAsync();
+
 
                 foreach (var item in ResultatInfoGeneral)
                 {
-                    var resultatInfoGeneral = new ResultatInfoGenerale()
+                    var resultatInfoGeneral = new DemandeAccesEnginInfoGeneraleValue()
                     {
                         DemandeAccesEnginId = demandeAccesEngin.Id,
                         InfoGeneraleId = item.GeneralInfoId,
@@ -270,7 +273,7 @@ namespace Front.Controllers
                         CreatedOn = DateTime.Now,
                     };
 
-                    var addeResultatIinfoGenerale = context.ResultatInfoGenerale.Add(resultatInfoGeneral);
+                    var addeResultatIinfoGenerale = context.DemandeAccesEnginInfoGeneraleValue.Add(resultatInfoGeneral);
                 }
                 await context.SaveChangesAsync();
 
@@ -294,8 +297,8 @@ namespace Front.Controllers
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Mise à jour efféctuée avec succès!";
                 return RedirectToAction("Index");
             }
-            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entities.SiteId);
-            ViewBag.EntityId = new SelectList(context.Entities.Where(e => e.SiteId == demandeAccesEngin.Entities.SiteId), "Id", "Name", demandeAccesEngin.EntityId);
+            ViewBag.SiteId = new SelectList(context.Sites, "Id", "Name", demandeAccesEngin.Entite.SiteId);
+            ViewBag.EntiteId = new SelectList(context.Entite.Where(e => e.SiteId == demandeAccesEngin.Entite.SiteId), "Id", "Name", demandeAccesEngin.EntiteId);
 
             ViewBag.TypeCheckListId = new SelectList(context.REF_TypeCheckList, "Id", "Name", demandeAccesEngin.TypeCheckListId);
             ViewBag.TypeEnginId = new SelectList(context.REF_TypeEngin.Where(t => t.TypeCheckListId == demandeAccesEngin.TypeCheckListId), "Id", "Name", demandeAccesEngin.TypeEnginId);
@@ -340,7 +343,7 @@ namespace Front.Controllers
 
             if (IsConroleur)
             {
-                query = query.Where(x => x.DemandeResultatEntete.Any(re => re.CreatedBy == CurrentUserId && re.ResultatExigence.Any()));
+                query = query.Where(x => x.ResultatControleEntete.Any(re => re.CreatedBy == CurrentUserId && re.ResultatControleDetail.Any()));
             }
             if (Filter.StatutDemandeId.HasValue)
             {
@@ -352,17 +355,17 @@ namespace Front.Controllers
             }
             if (Filter.Autorise.HasValue)
             {
-                query = query.Where(x => x.Autorise == Filter.Autorise);
+                query = query.Where(x => x.IsAutorise == Filter.Autorise);
             }
             if (Filter.Controle.HasValue)
             {
                 if (Filter.Controle.Value)
                 {
-                    query = query.Where(x => x.DemandeResultatEntete.Any());
+                    query = query.Where(x => x.ResultatControleEntete.Any());
                 }
                 else
                 {
-                    query = query.Where(x => !x.DemandeResultatEntete.Any());
+                    query = query.Where(x => !x.ResultatControleEntete.Any());
                 }
             }
             if (Filter.DatePlannification.HasValue)
@@ -410,7 +413,7 @@ namespace Front.Controllers
         {
             var biz = new CommonBiz(context, log);
 
-            var file = await context.AppFiles.FindAsync(id);
+            var file = await context.AppFile.FindAsync(id);
             if (file == null)
             {
                 return HttpNotFound();

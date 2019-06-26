@@ -46,7 +46,7 @@ using System.Web.Mvc;
 <# foreach (var namespaceName in RequiredNamespaces) { #>
 using <#= namespaceName #>;
 <# } #>
-using X.PagedList;
+using PagedList;
 using Front.Models;
 using Front.Controllers;
 using Shared;
@@ -64,7 +64,7 @@ namespace <#= Namespace #>
     var primaryKeyType = ModelMetadata.PrimaryKeys[0].TypeName;
     var primaryKeyNullableTypeName = GetNullableTypeName(primaryKeyType, primaryKeyShortTypeName);
     var lambdaVar = ModelVariable[0];
-    var relatedProperties = ModelMetadata.RelatedEntities.ToDictionary(item => item.AssociationPropertyName);
+    var relatedProperties = ModelMetadata.RelatedEntite.ToDictionary(item => item.AssociationPropertyName);
 
     string bindAttribute;
     if (IsOverpostingProtectionRequired)

@@ -1,4 +1,4 @@
-﻿using DATAAL;
+﻿using DAL;
 using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -15,7 +15,7 @@ namespace Front.Controllers
     [System.Web.Http.Authorize]
     public class BaseApiController : ApiController
     {
-        public TestEnginEntities context = new TestEnginEntities();
+        public OcpPerformanceDataContext context = new OcpPerformanceDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         public static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);

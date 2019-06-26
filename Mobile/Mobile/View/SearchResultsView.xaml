@@ -7,6 +7,7 @@
     xmlns:vm="clr-namespace:Mobile.ViewModel">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <vm:DemandeAccesDetailsVM x:Key="vm" />
             <Style x:Key="nameLabel" TargetType="Label">
                 <Setter Property="FontAttributes" Value="None" />
                 <Setter Property="FontSize" Value="14" />

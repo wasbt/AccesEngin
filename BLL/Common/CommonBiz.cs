@@ -1,4 +1,4 @@
-﻿using DATAAL;
+﻿using DAL;
 using ExcelDataReader;
 using log4net;
 using Microsoft.WindowsAzure.Storage;
@@ -22,9 +22,9 @@ namespace BLL.Common
         public string RootFilesPath = ConfigurationManager.AppSettings["RootFilesPath"]?.ToString();
         public static string AzureStorageConnectionString = ConfigurationManager.ConnectionStrings["AzureStorageConnectionString"].ConnectionString;
         public static log4net.ILog log;
-        public TestEnginEntities context { get; set; }
+        public OcpPerformanceDataContext  context { get; set; }
 
-        public CommonBiz(TestEnginEntities context, ILog log)
+        public CommonBiz(OcpPerformanceDataContext  context, ILog log)
         {
             this.context = context;
             log = log;
@@ -55,7 +55,7 @@ namespace BLL.Common
                     #endregion
 
                     #region Ajout de la pièce jointe dans le contexte
-                    var pj = new DATAAL.AppFiles()
+                    var pj = new DAL.AppFile()
                     {
                         OriginalFileName = uploadedFile.FileName,
                         FileSize = uploadedFile.ContentLength,
@@ -66,12 +66,12 @@ namespace BLL.Common
                         ContainerName = ContainerName
                     };
 
-                    context.AppFiles.Add(pj);
+                    context.AppFile.Add(pj);
                     #endregion
 
                     await context.SaveChangesAsync();
 
-                    return pj.Id;
+                    return pj.AppFileId;
                 }
                 return 0;
             }
@@ -219,7 +219,7 @@ namespace BLL.Common
 
                     #region Ajout de la pièce jointe dans le contexte
 
-                    var pj = new AppFiles()
+                    var pj = new AppFile()
                     {
                         OriginalFileName = uploadedFile.FileName,
                         SystemFileName = uri,
@@ -229,12 +229,12 @@ namespace BLL.Common
                         ContainerName = ContainerName
                     };
 
-                    context.AppFiles.Add(pj);
+                    context.AppFile.Add(pj);
                     #endregion
 
                     await context.SaveChangesAsync();
 
-                    return pj.Id;
+                    return pj.AppFileId;
                 }
                 return 0;
             }

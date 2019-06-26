@@ -1,0 +1,61 @@
+﻿@model DAL.Entite
+
+@{
+    ViewBag.Title = "Nouveau Entité";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SiteId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("SiteId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SiteId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">HSE Entité</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("HSEEntiteUserId", null, "-- choisis l'utilisateur --", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        @Html.LabelFor(model => model.IsHSE, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="checkbox checkbox-primary col-md-10">
+                            &nbsp;<input id="IsHSEId" type="checkbox" value="true" name="IsHSE">
+                            <label for="IsHSEId">
+                                &nbsp;
+                            </label>
+                            @Html.ValidationMessageFor(model => model.IsHSE, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @Html.Partial("_BackToList")
+        </div>
+    </div>
+</div>

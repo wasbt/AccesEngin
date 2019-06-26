@@ -1,7 +1,7 @@
-﻿@model  List<DATAAL.DemandeAccesEngin>
-@using X.PagedList
-@using X.PagedList.Mvc
-@using X.PagedList.Mvc.Bootstrap4
+﻿@model  List<DAL.DemandeAccesEngin>
+@using PagedList
+@using PagedList.Mvc
+ 
 @using Shared;
 @{
     /**/
@@ -18,7 +18,7 @@
                     @using (Html.BeginForm())
                     {
                         @Html.Editor("Matricule", new { htmlAttributes = new { @class = "form-control", placeholder = ".." } })
-                        @Html.DropDownList("EntityId", null, "-- Entité --", htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("EntiteId", null, "-- Entité --", htmlAttributes: new { @class = "form-control" })
                         <input class="btn btn-success btn-search" type="submit" value="Filtrer" />
                     }
                 </div>
@@ -89,7 +89,7 @@
                                 <td>
                                     @if (isControled)
                                     {
-                                        if (item.Autorise)
+                                        if (item.IsAutorise)
                                         {
                                             <span class="badge badge-success">Autorisée</span>
                                         }

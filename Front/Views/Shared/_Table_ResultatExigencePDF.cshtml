@@ -6,20 +6,22 @@
             <th>Exigences</th>
             <th>Conforme</th>
             <th>Observation</th>
-            <th>Date</th>
+            <th>
+                Date fin de validité
+            </th>
         </tr>
     </thead>
     <tbody>
         @{
 
-            foreach (var rubric in Model.TypeCheckList.CheckListRubrique.Where(x => x.IsActif == true))
+            foreach (var rubric in Model.TypeCheckList.REF_CheckListRubrique.Where(x => x.IsActif == true))
             {
                 <tr style="background-color:#9CCC65; color:white">
                     <td colspan="4"><b>@rubric.Name</b></td>
                 </tr>
-                foreach (var exigence in rubric.CheckListExigence.Where(x => x.IsActif == true))
+                foreach (var exigence in rubric.REF_CheckListExigence.Where(x => x.IsActif == true))
                 {
-                    var data = Model.DemandeResultat.ResultatExigence.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
+                    var data = Model.DemandeResultat.ResultatControleDetail.Where(x => x.CheckListExigenceId == exigence.Id).FirstOrDefault();
 
                     if (data == null)
                     {
@@ -29,7 +31,7 @@
                         <td>@exigence.Name</td>
                         <td>@(data.IsConform ? "Conforme" : "Non conforme")</td>
                         <td>@data.Observation</td>
-                        <td>@(data.Date?.ToString("dd/MM/yyyy"))</td>
+                        <td>@(data.DateExpiration?.ToString("dd/MM/yyyy"))</td>
 
                     </tr>
 
@@ -54,9 +56,9 @@
                     </tr>
                     <tr  style="">
 
-                        <td><b>Autorisé</b> à accéder le Site OCP <br /> @Model.controle.Entity.Site.Name pour <b>déchargement</b> ou <b>chargement</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><b>Autorisé</b> à accéder le Site OCP <br /> @Model.controle.Entite.Sites.Name pour <b>déchargement</b> ou <b>chargement</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td >
-                            @if (Model.controle.Autorise)
+                            @if (Model.controle.IsAutorise)
                             {
                                 <h4> <span class="badge  btn badge-success ">OUI</span></h4>
                             }

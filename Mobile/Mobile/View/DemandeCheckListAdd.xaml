@@ -17,7 +17,6 @@
                 <ListView
                     x:Name="HotelsList"
                     BackgroundColor="White"
-                    CachingStrategy="RetainElement"
                     HasUnevenRows="True"
                     IsGroupingEnabled="True"
                     ItemsSource="{Binding Items}"
@@ -62,11 +61,15 @@
                                                                 HorizontalOptions="Start"
                                                                 VerticalOptions="Start"
                                                                  />-->
-                                                <Switch
+                                                <local:CustomSwitch
                                                     Grid.Column="1"
                                                     HeightRequest="20"
                                                     HorizontalOptions="Start"
                                                     IsToggled="{Binding IsConforme}"
+                                                    SwitchOffColor="Gray"
+                                                    SwitchOffThumbColor="Gray"
+                                                    SwitchOnColor="#9CCC65"
+                                                    SwitchOnThumbColor="#9CCC65"
                                                     VerticalOptions="Start"
                                                     WidthRequest="60" />
 
@@ -112,33 +115,7 @@
                         </DataTemplate>
                     </ListView.GroupHeaderTemplate>
                     <ListView.Footer>
-
-                        <StackLayout Padding="5,5,5,5">
-
-                            <StackLayout Padding="10" Orientation="Horizontal">
-                                <Label Text="Aitorisé" TextColor="Black" />
-                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding IsAutorise}" />
-                            </StackLayout>
-                            <Image
-                                x:Name="FileImage"
-                                HeightRequest="100"
-                                IsVisible="{Binding ShowImage}"
-                                Source="{Binding ImageSource}"
-                                WidthRequest="100" />
-                            <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
-                                <Button
-                                    BackgroundColor="Teal"
-                                    Command="{Binding PickPhotoCommand}"
-                                    FontSize="15"
-                                    Text="Choisir image"
-                                    TextColor="White" />
-                                <Button
-                                    BackgroundColor="Teal"
-                                    Command="{Binding TakePhotoCommand}"
-                                    FontSize="15"
-                                    Text="Prendre photo"
-                                    TextColor="White" />
-                            </StackLayout>
+                        <StackLayout Padding="10">
                             <Button
                                 BackgroundColor="Green"
                                 BorderRadius="5"
