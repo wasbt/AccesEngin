@@ -53,9 +53,6 @@
     <PackageReference Include="Plugin.CurrentActivity">
       <Version>2.1.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfPdfViewer">
-      <Version>17.1.0.53</Version>
-    </PackageReference>
     <PackageReference Include="UXDivers.GorillaPlayer.Common">
       <Version>0.9.1.2</Version>
     </PackageReference>
