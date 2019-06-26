@@ -19,6 +19,7 @@ using System.Web.Routing;
 using Front.Models;
 using PagedList;
 using Shared.Models;
+using System.Configuration;
 
 namespace Front.Controllers
 {
@@ -550,7 +551,7 @@ namespace Front.Controllers
 
             var cc = file.OriginalFileName;
 
-            string fullPath = Path.Combine(Server.MapPath("~/Uploads/"), file.OriginalFileName);
+            string fullPath = Path.Combine(file.SystemFileName);
 
 
             return File(fullPath, "application/octet-stream", fullPath);
@@ -558,6 +559,8 @@ namespace Front.Controllers
 
         #endregion
 
+
+        
 
     }
 }

@@ -86,7 +86,9 @@ namespace Api.Controllers
             {
                 foreach (string file in httpRequest.Files)
                 {
-                    postedFile = new HttpPostedFileWrapper(httpRequest.Files[file]);
+                    var cc = httpRequest.Files[file];
+                    var fileName = cc.FileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
+                    postedFile = new HttpPostedFileWrapper(cc);
                 }
             }
 

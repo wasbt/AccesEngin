@@ -4,13 +4,17 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Mobile.Helpers;
 using Mobile.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.Media.Abstractions;
+using Shared.API.OUT;
 using Shared.DTO;
 using Shared.Models;
+using System.Linq;
 
 namespace Mobile.Services
 {
@@ -104,6 +108,36 @@ namespace Mobile.Services
             }
 
         }
+
+        /// <summary>
+        /// Get Detail Demande By Id 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="accessToken"></param>
+        /// <returns>TypeCheckListDTO</returns>
+        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(long Id, string accessToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
+
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/GetDetailsDemandeById/" + Id);
+
+                var demandeDetail = JsonConvert.DeserializeObject<DemandeDetail>(json);
+                return demandeDetail;
+
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+        }
         /// <summary>
         /// Get Demande By Matricule
         /// </summary>
@@ -163,16 +197,61 @@ namespace Mobile.Services
         /// <param name="resultat"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, string accessToken)
+        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, MediaFile _mediaFile,string accessToken)
+        {
+
+
+            var jsonToSend = JsonConvert.SerializeObject(resultat);
+            var multipart = new MultipartFormDataContent();
+            var body = new StringContent(jsonToSend);
+            multipart.Add(body, "JsonDetails");
+            var fileName = _mediaFile.Path.Split('/').LastOrDefault();
+            multipart.Add(new StreamContent(_mediaFile.GetStream()), "\"file\"",
+                 $"\"{fileName}\"");
+
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = httpClient.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", multipart).Result;
+
+            //var client = new HttpClient();
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            //var json = JsonConvert.SerializeObject(resultat);
+            //            var content = new MultipartFormDataContent(json);
+            //content.Add(new StreamContent(_mediaFile.GetStream()),
+            //     "\"file\"",
+            //     $"\"{_mediaFile.Path}\"");
+            //content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            //var response = await client.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", content);
+        }
+
+        public async Task UploadFileAsync(MultipartFormDataContent contents, string accessToken)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await client.PostAsync(Constants.BaseApiAddress + "api/Files/Upload", contents);
+            var Text = await response.Content.ReadAsStringAsync();
 
-            var json = JsonConvert.SerializeObject(resultat);
+        }
+
+        /// <summary>
+        /// Refuser/Accepter Demande 
+        /// </summary>
+        /// <param name="validerDemande"></param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        public async Task ValiderDemandeAsync(ValiderDemande validerDemande, string accessToken= "")
+        {
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var json = JsonConvert.SerializeObject(validerDemande);
             HttpContent content = new StringContent(json);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", content);
+            var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
     }
 }

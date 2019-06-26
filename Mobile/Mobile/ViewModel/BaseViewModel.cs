@@ -1,4 +1,6 @@
-﻿using Plugin.Toast;
+﻿using Mobile.Interfaces;
+using Plugin.Toast;
+using PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +13,11 @@ namespace Mobile.ViewModel
 {
     public class BaseViewModel: INotifyPropertyChanged
     {
-
+        public readonly INavigationService _navigationService;
+        public BaseViewModel()
+        {
+            _navigationService = App.NavigationService;
+        }
 
         bool isBusy = false;
         public bool IsBusy

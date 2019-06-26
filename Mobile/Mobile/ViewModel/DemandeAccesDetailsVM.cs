@@ -1,6 +1,12 @@
 ﻿using Acr.UserDialogs;
+using Mobile.Helpers;
 using Mobile.Model;
+using Mobile.Services;
 using Mobile.View;
+using PropertyChanged;
+using Shared.API.OUT;
+using Shared.ENUMS;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,22 +18,49 @@ using Xamarin.Forms;
 
 namespace Mobile.ViewModel
 {
-    public class DemandeAccesDetailsVM : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class DemandeAccesDetailsVM : BaseViewModel
     {
-        private DemandeAcces demande;
-        public DemandeAcces DemandeAcces
-        {
-            get { return demande; }
-            set
-            {
-                demande = value;
-                OnPropertyChanged("DemandeAcces");
-            }
-        }
-
+        private readonly ApiServices _apiServices = new ApiServices();
+        long Id = 0;
         public DemandeAccesDetailsVM()
         {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
         }
+
+
+
+        public DemandeDetail DemandeDetail { get; set; }
+
+
+        public DemandeAccesDetailsVM(long id)
+        {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
+            Id = id;
+        }
+
+        public override async void OnAppearing()
+        {
+            MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+                var mdp = Application.Current.MainPage as MasterDetailPage;
+                MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
+                await mdp.Detail.Navigation.PopAsync(true);
+            });
+
+            DemandeDetailCommand?.Execute(Id);
+            await Task.Delay(1000);
+            base.OnAppearing();
+
+        }
+
 
         public ICommand GoToControleCommand
         {
@@ -36,32 +69,103 @@ namespace Mobile.ViewModel
                 return new Command(async () =>
                 {
                     var mdp = Application.Current.MainPage as MasterDetailPage;
-                    await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeAcces.Id));
+                    await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
                 });
             }
         }
-      
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+
+        public ICommand RefuserCommand
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get
+            {
+                return new Command<long>(async (Id) =>
+                {
+                    PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                    {
+                        InputType = InputType.Name,
+                        Placeholder = "Motif",
+                        OkText = "Valider",
+                        Title = "Valider la demande",
+                    });
+                    if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                    {
+                        var result = new ValiderDemande()
+                        {
+                            DemandeAccesEnginId = Id,
+                            Motif = pResult.Text,
+                            DateSortie = DateTime.Now,
+                            StatutDemandeId = (int)DemandeStatus.Refuser
+
+                        };
+                        var accessToken = Settings.AccessToken;
+                        await _apiServices.ValiderDemandeAsync(result, accessToken);
+                        var mdp = Application.Current.MainPage as MasterDetailPage;
+                        MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList);
+                        await mdp.Detail.Navigation.PopAsync(true);
+                        //  MessagingCenter.Send<DemandeAccesVM, string>(this, "Alert", "Internet went off.");
+
+                        //var mdp = Application.Current.MainPage as MasterDetailPage;
+                        //await mdp.Detail.Navigation.PushAsync(new ListDemandeView());
+                    }
+                });
+            }
         }
 
         public ICommand ValiderCommand
         {
             get
             {
-                return new Command(async (object obj) =>
+                return new Command<long>(async (Id) =>
                 {
-                    PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                    var result = new ValiderDemande()
                     {
-                        InputType = InputType.Name,
-                        OkText = "Create",
-                        Title = "Create Folder",
-                    });
+                        DemandeAccesEnginId = Id,
+                        DateSortie = DateTime.Now,
+                        StatutDemandeId = (int)DemandeStatus.Accepter
+                    };
+                    try
+                    {
+                        var accessToken = Settings.AccessToken;
+                        await _apiServices.ValiderDemandeAsync(result, accessToken);
+                        MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
+                        var mdp = Application.Current.MainPage as MasterDetailPage;
+                        await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
                 });
+            }
+        }
+
+        private ICommand _DemandeDetailCommand;
+        public ICommand DemandeDetailCommand
+        {
+            get
+            {
+                return _DemandeDetailCommand ?? (_DemandeDetailCommand = new Command<long>(async (Id) =>
+                {
+                    if (Id > 0)
+                    {
+                        try
+                        {
+                            UserDialogs.Instance.ShowLoading("Chargement...");
+                            var accessToken = Settings.AccessToken;
+                            DemandeDetail = await _apiServices.GetDetailsDemandeByIdAsync(Id, accessToken);
+                            UserDialogs.Instance.HideLoading();
+                        }
+                        catch (Exception)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                        }
+                     
+                    }
+                }));
             }
         }
     }

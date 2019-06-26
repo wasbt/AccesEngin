@@ -35,7 +35,7 @@ namespace Mobile.ViewModel
                     {
                         case NetworkAccess.Internet:
                             // Connected to internet
-                            var accesstoken = await _apiServices.LoginAsync("admin@gmail.com", "AZERTY123456");
+                            var accesstoken = await _apiServices.LoginAsync("Controleur@ocp.ma", "AZERTY123456");
 
                             Settings.AccessToken = accesstoken;
                             Application.Current.MainPage = new MainPage();
