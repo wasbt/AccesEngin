@@ -103,6 +103,17 @@
                             Style="{StaticResource valueLabel}"
                             Text="{Binding DemandeDetail.Observation}" />
                     </StackLayout>
+                    <StackLayout VerticalOptions="CenterAndExpand">
+
+                        <Button
+                            BackgroundColor="Green"
+                            Command="{Binding OpenPdfCommand}"
+                            CommandParameter="{Binding DemandeDetail.Id}"
+                            FontSize="10"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Pièce jointe"
+                            TextColor="White" />
+                    </StackLayout>
                     <StackLayout
                         HorizontalOptions="Fill"
                         IsVisible="False"

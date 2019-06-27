@@ -57,7 +57,7 @@ namespace BLL.Common
                     #region Ajout de la pièce jointe dans le contexte
                     var pj = new DAL.AppFile()
                     {
-                        OriginalFileName = uploadedFile.FileName,
+                        OriginalFileName = uploadedFile.FileName,   
                         FileSize = uploadedFile.ContentLength,
                         SystemFileName = FullFileName,
                         CreatedOn = DateTime.Now,

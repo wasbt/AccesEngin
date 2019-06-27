@@ -41,25 +41,25 @@ namespace BLL.Biz
                 return null;
 
 
-            var demandeDetail = new DemandeDetail()
-            {
-                Id = demandeAcces.Id,
-                TypeCheckListId = demandeAcces.TypeCheckListId,
-                TypeEnginName = demandeAcces.REF_TypeEngin.Name,
-                TypeCheckListName = demandeAcces.REF_TypeCheckList.Name,
-                NatureMatiereName = demandeAcces?.REF_NatureMatiere?.Name,
-                EntityName = demandeAcces.Entite.Name,
-                DatePlannification = demandeAcces.DatePlannification,
-                IsAutorise = demandeAcces.IsAutorise,
-                Observation = demandeAcces?.Observation,
-                CreatedBy = demandeAcces.CreatedBy,
-                CreatedOn = demandeAcces.CreatedOn,
-                CreatedEmail = demandeAcces.AspNetUsers.Email,
-                AutoriseName = demandeAcces.IsAutorise ? "Autorisé" : "Non autorisé",
-                StatutId = demandeAcces.StatutDemandeId,
-                Statut = demandeAcces?.REF_StatutDemandes?.Name,
-                StatutColor = demandeAcces?.REF_StatutDemandes?.Color,
-            };
+            var demandeDetail = new DemandeDetail();
+            demandeDetail.Id = demandeAcces.Id;
+            demandeDetail.TypeCheckListId = demandeAcces.TypeCheckListId;
+            demandeDetail.TypeEnginName = demandeAcces.REF_TypeEngin.Name;
+            demandeDetail.TypeCheckListName = demandeAcces.REF_TypeCheckList.Name;
+            demandeDetail.NatureMatiereName = demandeAcces?.REF_NatureMatiere?.Name;
+            demandeDetail.EntityName = demandeAcces.Entite.Name;
+            demandeDetail.DatePlannification = demandeAcces.DatePlannification;
+            demandeDetail.IsAutorise = demandeAcces.IsAutorise;
+            demandeDetail.Observation = demandeAcces?.Observation;
+            demandeDetail.CreatedBy = demandeAcces.CreatedBy;
+            demandeDetail.CreatedOn = demandeAcces.CreatedOn;
+            demandeDetail.CreatedEmail = demandeAcces.AspNetUsers.Email;
+            demandeDetail.AutoriseName = demandeAcces.IsAutorise ? "Autorisé" : "Non autorisé";
+            demandeDetail.StatutId = demandeAcces.StatutDemandeId;
+            demandeDetail.Statut = demandeAcces?.REF_StatutDemandes?.Name;
+            demandeDetail.StatutColor = demandeAcces?.REF_StatutDemandes?.Color;
+            demandeDetail.UrlFile = demandeAcces.AppFile.SystemFileName;
+            demandeDetail.FileName = demandeAcces.AppFile.SystemFileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
 
             return demandeDetail;
         }

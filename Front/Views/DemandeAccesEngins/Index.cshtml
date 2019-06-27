@@ -199,7 +199,7 @@
                             <td>
                                 @if (item.AppFileId.HasValue)
                                 {
-                                    @Html.ActionLink("Télécharger le fichier", "GetFileAzure", "DemandeAccesEngins", new { id = item.AppFileId }, null)
+                                    @Html.ActionLink("Télécharger le fichier", "DownloadAsync", "Home", new { id = item.AppFileId }, null)
                                 }
                                 else
                                 {

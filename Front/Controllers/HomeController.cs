@@ -554,13 +554,22 @@ namespace Front.Controllers
             string fullPath = Path.Combine(file.SystemFileName);
 
 
-            return File(fullPath, "application/octet-stream", fullPath);
+            return File(fullPath, "Application/pdf", cc);
         }
+        public async Task<FileResult> DownloadAsync(long? id)
+        {
+            var file = await context.AppFile.FindAsync(id);
 
+            string fullPath = Path.Combine(file.SystemFileName);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(fullPath);
+            string fileName = fullPath.Split('\\').LastOrDefault();
+            return File(fileBytes, MimeMapping.GetMimeMapping(file.OriginalFileName), Path.GetFileName(file.OriginalFileName));
+            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
         #endregion
 
 
-        
+
 
     }
 }

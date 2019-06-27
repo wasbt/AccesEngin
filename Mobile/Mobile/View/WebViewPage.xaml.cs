@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.API.OUT;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,14 @@ namespace Mobile.View
         public WebViewPage()
         {
             InitializeComponent();
-            WebView wv = new WebView();
-            wv.Source = "http://developer.xamarin.com/guides/cross-platform/getting_started/introduction_to_mobile_development/offline.pdf";
-            Content = wv;
+        }
+
+        public WebViewPage(DemandeDetail demandeDetail)
+        {
+            InitializeComponent();
+            //WebView wv = new WebView();
+            //wv.Source = "http://192.168.137.1:3481/Uploades"+demandeDetail.UrlFile;
+            //Content = wv;
         }
     }
 }

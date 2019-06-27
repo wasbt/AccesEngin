@@ -9,11 +9,8 @@
 
         <StackLayout>
             <!--  Place new controls here  -->
-
-            <WebView
-                HorizontalOptions="FillAndExpand"
-                Source="http://192.168.137.1:3481/Uploads/04-02_1.jpg"
-                VerticalOptions="FillAndExpand" />
+            <Label Text="Hello" />
+            <WebView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

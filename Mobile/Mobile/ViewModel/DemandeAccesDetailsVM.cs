@@ -3,6 +3,8 @@ using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
 using Mobile.View;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using PropertyChanged;
 using Shared.API.OUT;
 using Shared.ENUMS;
@@ -70,6 +72,48 @@ namespace Mobile.ViewModel
                 {
                     var mdp = Application.Current.MainPage as MasterDetailPage;
                     await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                });
+            }
+        }
+        public ICommand OpenPdfCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+
+                    try
+                    {
+                        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+                        if (status != PermissionStatus.Granted)
+                        {
+                            if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+                            {
+                                
+                            }
+
+                            var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
+                            status = results[Permission.Storage];
+                        }
+
+                        if (status == PermissionStatus.Granted)
+                        {
+                            await Xamarin.Essentials.Browser.OpenAsync(DemandeDetail.UrlFile);
+
+                        }
+                        else if (status != PermissionStatus.Unknown)
+                        {
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+              
+                    
+
+                    //var mdp = Application.Current.MainPage as MasterDetailPage;
+                    //await mdp.Detail.Navigation.PushAsync(new WebViewPage(DemandeDetail));
                 });
             }
         }
