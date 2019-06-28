@@ -253,5 +253,17 @@ namespace Mobile.Services
 
             var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
+            /// <summary>
+            /// </summary>
+            /// <param name="validerDemande"></param>
+            /// <param name="accessToken"></param>
+            /// <returns></returns>
+        public async Task DownloadAsync(long? id,string accessToken = "")
+        {
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            var response = await client.GetStringAsync(Constants.BaseApiAddress + "api/File/" + id);
+        }
     }
 }

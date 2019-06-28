@@ -42,7 +42,10 @@ namespace Shared.API.OUT
         public string AutoriseName { get; set; }
 
         public string UrlFile { get; set; }
+
         public string FileName { get; set; }
+
+        public long? FileId { get; set; }
 
 
         private bool _IsControlled;

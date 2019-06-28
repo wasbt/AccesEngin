@@ -58,6 +58,7 @@ namespace BLL.Biz
             demandeDetail.StatutId = demandeAcces.StatutDemandeId;
             demandeDetail.Statut = demandeAcces?.REF_StatutDemandes?.Name;
             demandeDetail.StatutColor = demandeAcces?.REF_StatutDemandes?.Color;
+            demandeDetail.FileId = demandeAcces?.AppFileId;
             demandeDetail.UrlFile = demandeAcces.AppFile.SystemFileName;
             demandeDetail.FileName = demandeAcces.AppFile.SystemFileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
 

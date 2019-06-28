@@ -4,6 +4,7 @@ using Shared;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -189,6 +190,29 @@ namespace Api.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
 
+        }
+        [HttpGet, AllowAnonymous, Route("api/File/{id}")]
+        public async Task<HttpResponseMessage> GetProjectImage(long id)
+        {
+            var file = await context.AppFile.FindAsync(id);
+            var data = file?.SystemFileName;
+
+            System.IO.MemoryStream memoryStream = new MemoryStream();
+            if (data != null && data.Length > 10)
+            {
+            
+                //string path = System.Web.Hosting.HostingEnvironment.MapPath(imgData);
+
+                var localPhotoData = File.ReadAllBytes(data);
+                memoryStream = new System.IO.MemoryStream(localPhotoData);
+            }
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(memoryStream)
+            };
+            var contentType = MimeMapping.GetMimeMapping(file.OriginalFileName);
+            response.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+            return response;
         }
 
     }

@@ -106,7 +106,7 @@
                     <StackLayout VerticalOptions="CenterAndExpand">
 
                         <Button
-                            BackgroundColor="Green"
+                            BackgroundColor="Gray"
                             Command="{Binding OpenPdfCommand}"
                             CommandParameter="{Binding DemandeDetail.Id}"
                             FontSize="10"

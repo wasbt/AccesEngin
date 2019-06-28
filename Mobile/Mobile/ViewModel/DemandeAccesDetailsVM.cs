@@ -27,7 +27,8 @@ namespace Mobile.ViewModel
         long Id = 0;
         public DemandeAccesDetailsVM()
         {
-            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) =>
+            {
                 var mdp = Application.Current.MainPage as MasterDetailPage;
                 MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
                 await mdp.Detail.Navigation.PopAsync(true);
@@ -41,7 +42,8 @@ namespace Mobile.ViewModel
 
         public DemandeAccesDetailsVM(long id)
         {
-            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail, async (sender) =>
+            {
                 var mdp = Application.Current.MainPage as MasterDetailPage;
                 MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_GoToDetail);
                 await mdp.Detail.Navigation.PopAsync(true);
@@ -51,7 +53,8 @@ namespace Mobile.ViewModel
 
         public override async void OnAppearing()
         {
-            MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) => {
+            MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) =>
+            {
                 var mdp = Application.Current.MainPage as MasterDetailPage;
                 MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
                 await mdp.Detail.Navigation.PopAsync(true);
@@ -89,7 +92,7 @@ namespace Mobile.ViewModel
                         {
                             if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
                             {
-                                
+
                             }
 
                             var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Storage });
@@ -98,7 +101,11 @@ namespace Mobile.ViewModel
 
                         if (status == PermissionStatus.Granted)
                         {
-                            await Xamarin.Essentials.Browser.OpenAsync(DemandeDetail.UrlFile);
+                            var accessToken = Settings.AccessToken;
+                            var Id = DemandeDetail.FileId;
+                            //  await _apiServices.DownloadAsync(Id, accessToken);
+                            Device.OpenUri(new Uri(Constants.BaseApiAddress + "api/File/" + DemandeDetail.FileId));
+                         //   await Xamarin.Essentials.Browser.OpenAsync(Constants.BaseApiAddress+ "api/File/" + DemandeDetail.FileId + ".pdf");
 
                         }
                         else if (status != PermissionStatus.Unknown)
@@ -109,8 +116,8 @@ namespace Mobile.ViewModel
                     {
 
                     }
-              
-                    
+
+
 
                     //var mdp = Application.Current.MainPage as MasterDetailPage;
                     //await mdp.Detail.Navigation.PushAsync(new WebViewPage(DemandeDetail));
@@ -207,7 +214,7 @@ namespace Mobile.ViewModel
                         {
                             UserDialogs.Instance.HideLoading();
                         }
-                     
+
                     }
                 }));
             }
