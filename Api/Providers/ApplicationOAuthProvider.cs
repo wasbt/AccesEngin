@@ -10,12 +10,14 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Api.Models;
+using DAL;
 
 namespace Api.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
+        public static OcpPerformanceDataContext context = new OcpPerformanceDataContext();
 
         public ApplicationOAuthProvider(string publicClientId)
         {
@@ -88,10 +90,13 @@ namespace Api.Providers
 
         public static AuthenticationProperties CreateProperties(string userName,string userId)
         {
+            var user = context.AspNetUsers.Find(userId);
+            var userRoles = string.Join(" / ", user.AspNetRoles.Select(x  => x.Name));
             IDictionary<string, string> data = new Dictionary<string, string>
             {
                 { "userName", userName } ,
-                { "UserId", userId }
+                { "UserId", userId },
+                { "UserRoles", userRoles }
             };
             return new AuthenticationProperties(data);
         }

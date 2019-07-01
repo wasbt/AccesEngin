@@ -21,6 +21,12 @@ namespace Mobile.ViewModel
         public string Username { get; set; }
         public string Password { get; set; }
 
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+          
+        }
+
         public ICommand LoginCommand
         {
             get
@@ -69,6 +75,7 @@ namespace Mobile.ViewModel
             Username = Settings.FullName;
             Password = Settings.Password;
         }
+        
 
     }
 }
