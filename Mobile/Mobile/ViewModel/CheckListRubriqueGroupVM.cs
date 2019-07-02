@@ -246,6 +246,7 @@ namespace Mobile.ViewModel
                             
                             _mediaFile = await CrossMedia.Current.PickPhotoAsync();
 
+                            UserDialogs.Instance.ShowLoading("Chargement...");
                             if (_mediaFile == null)
                                 return;
 
@@ -256,6 +257,7 @@ namespace Mobile.ViewModel
                             ShowImage = true;
 
                             file = AStreamToByteArray(_mediaFile.GetStream());
+                            UserDialogs.Instance.HideLoading();
                         }
                     }
                     catch (Exception ex)
@@ -295,7 +297,6 @@ namespace Mobile.ViewModel
                         if (status == PermissionStatus.Granted)
                         {
                             await CrossMedia.Current.Initialize();
-
                             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                             {
                                 UserDialogs.Instance.Alert("No camera", ":( No PickPhoto available.", "OK");
@@ -304,19 +305,21 @@ namespace Mobile.ViewModel
 
                             _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
                             {
-
+                                
                             });
 
-
+                            
                             if (_mediaFile == null)
                                 return;
 
+                            UserDialogs.Instance.ShowLoading("Chargement...");
                             ImageSource = ImageSource.FromStream(() =>
                             {
                                 return _mediaFile.GetStream();
                             });
                             ShowImage = true;
                             file = AStreamToByteArray(_mediaFile.GetStream());
+                            UserDialogs.Instance.HideLoading();
 
 
 

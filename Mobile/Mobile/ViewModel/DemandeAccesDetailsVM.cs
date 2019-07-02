@@ -61,7 +61,6 @@ namespace Mobile.ViewModel
             });
 
             DemandeDetailCommand?.Execute(Id);
-            await Task.Delay(1000);
             base.OnAppearing();
 
         }

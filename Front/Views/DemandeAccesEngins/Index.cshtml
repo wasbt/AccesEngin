@@ -324,7 +324,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
-                <button type="button" id="btn-reporter-action" class="btn btn-danger">Valider</button>
+                <button type="button" id="btnMotifId" class="btn btn-danger">Accepter</button>
             </div>
         </div>
     </div>
@@ -348,9 +348,11 @@
                     $("#divMotif").addClass("hidden");
                     $("#motif-report").val("");
                     statut = "validée";
+                    $("#btnMotifId").html('Accepter');
                 } else {
                     $("#divMotif").removeClass("hidden");
                     statut = "refusée";
+                    $("#btnMotifId").html('Refuser');
                 }
             });
             $("#btn-reporter-action").click(function () {

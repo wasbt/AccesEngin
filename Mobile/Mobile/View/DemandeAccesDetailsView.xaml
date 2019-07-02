@@ -103,8 +103,7 @@
                             Style="{StaticResource valueLabel}"
                             Text="{Binding DemandeDetail.Observation}" />
                     </StackLayout>
-                    <StackLayout VerticalOptions="CenterAndExpand">
-
+                    <StackLayout IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}" VerticalOptions="CenterAndExpand">
                         <Button
                             BackgroundColor="Gray"
                             Command="{Binding OpenPdfCommand}"
