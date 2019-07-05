@@ -39,5 +39,6 @@ namespace Mobile.ViewModel
         {
             get => checkListExigence;
         }
+        public bool IsHasDate { get { return checkListExigence.IsHasDate; } set { checkListExigence.IsHasDate = value; } }
     }
 }

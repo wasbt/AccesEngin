@@ -78,6 +78,10 @@ namespace Mobile.Helpers
             }
         }
 
+        public static void ClearSettings()
+        {
+            Preferences.Clear();
+        }
 
     }
 }

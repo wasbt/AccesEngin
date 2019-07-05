@@ -200,26 +200,9 @@ namespace Mobile.ViewModel
                     if (_mediaFile != null)
                     {
                         await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                        //var test = _mediaFile.GetStream();
-                        //var content = new MultipartFormDataContent();
-                        //content.Add(new StreamContent(_mediaFile.GetStream()),
-                        //    "\"file\"",
-                        //    $"\"{_mediaFile.Path}\"");
-                        //var cc = new StreamContent(_mediaFile.GetStream());
-
-                        //     await _apiServices.UploadFileAsync(content, Settings.AccessToken);
+                       
                     }
-                    //    MessagingCenter.Send<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail);
-                    //var currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-                    //await currentPage.Navigation.PushModalAsync(new ListDemandeView());
-
                      await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
-
-                    //var mdp = Application.Current.MainPage as MasterDetailPage;
-
-                    //mdp.Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(ListDemandeView)));
-
-                    //Application.Current.MainPage = mdp;
 
                 });
             }
@@ -296,12 +279,14 @@ namespace Mobile.ViewModel
 
                         if (status == PermissionStatus.Granted)
                         {
+                            
                             await CrossMedia.Current.Initialize();
                             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                             {
                                 UserDialogs.Instance.Alert("No camera", ":( No PickPhoto available.", "OK");
                                 return;
                             }
+                            UserDialogs.Instance.ShowLoading("Chargement...");
 
                             _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
                             {
@@ -312,7 +297,7 @@ namespace Mobile.ViewModel
                             if (_mediaFile == null)
                                 return;
 
-                            UserDialogs.Instance.ShowLoading("Chargement...");
+         
                             ImageSource = ImageSource.FromStream(() =>
                             {
                                 return _mediaFile.GetStream();

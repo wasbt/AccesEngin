@@ -13,6 +13,7 @@ namespace Mobile.Model
         public string Name { get; set; }
         public double Poids { get; set; }
         public bool IsActif { get; set; }
+        public bool IsHasDate { get; set; }
         public int ShowOrder { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }

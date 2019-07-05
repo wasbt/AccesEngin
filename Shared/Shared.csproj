@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\IN\FilterListDemande.cs" />
     <Compile Include="API\IN\GetEntityBySiteModel.cs" />
     <Compile Include="API\IN\GetInfoGeneraleByTypeCheckList.cs" />
     <Compile Include="API\IN\GetUserRolesModel.cs" />

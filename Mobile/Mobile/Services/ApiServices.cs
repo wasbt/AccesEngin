@@ -15,6 +15,7 @@ using Shared.API.OUT;
 using Shared.DTO;
 using Shared.Models;
 using System.Linq;
+using Shared.API.IN;
 
 namespace Mobile.Services
 {
@@ -26,7 +27,7 @@ namespace Mobile.Services
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<string> LoginAsync(string userName, string password)
+        public async Task LoginAsync(string userName, string password)
         {
             var keyValues = new List<KeyValuePair<string, string>>
             {
@@ -47,17 +48,15 @@ namespace Mobile.Services
 
             JObject jwtDynamic = JsonConvert.DeserializeObject<dynamic>(content);
 
-            var accessTokenExpiration = jwtDynamic.Value<DateTime>(".expires");
-            var accessToken = jwtDynamic.Value<string>("access_token");
+            SetSettings(jwtDynamic);
+        }
+
+        private static void SetSettings(JObject jwtDynamic)
+        {
+            Settings.AccessTokenExpirationDate = jwtDynamic.Value<DateTime>(".expires");
+            Settings.AccessToken = jwtDynamic.Value<string>("access_token"); ;
             Settings.UserId = jwtDynamic.Value<string>("UserId");
             Settings.UserRoles = jwtDynamic.Value<string>("UserRoles");
-            Settings.AccessTokenExpirationDate = accessTokenExpiration;
-
-            Debug.WriteLine(accessTokenExpiration);
-
-            Debug.WriteLine(content);
-
-            return accessToken;
         }
 
 
@@ -66,15 +65,20 @@ namespace Mobile.Services
         /// </summary>
         /// <param name="accessToken"></param>
         /// <returns>DemandeAcces</returns>
-        public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken, int pageIndex, int pageSize)
+        public async Task<List<DemandeAcces>> GetDemandeAccesListAsync(string accessToken, FilterListDemande filterListDemande)
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Bearer", accessToken);
 
-            var json = await client.GetStringAsync(Constants.BaseApiAddress + "api/DemandeAccesList?pageIndex=" + pageIndex + "&pageSize=" + pageSize);
+            var json = JsonConvert.SerializeObject(filterListDemande);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(json);
+            var data = await client.PostAsync(Constants.BaseApiAddress + "api/DemandeAccesList", content);
+
+
+            var demandeAcces =  JsonConvert.DeserializeObject<List<DemandeAcces>>(await data.Content.ReadAsStringAsync());
 
             return demandeAcces;
         }
@@ -97,6 +101,33 @@ namespace Mobile.Services
                     Constants.BaseApiAddress + "api/GetCheckList/" + Id);
 
                 var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
+                return typeCheckList;
+
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+
+        } 
+        /// <summary>
+        /// Get TypeCheck List
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns>TypeCheckListDTO</returns>
+        public async Task<List<TypeCheckList>> GetTypeCheckListAsync(string accessToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Bearer", accessToken);
+
+                var json = await client.GetStringAsync(
+                    Constants.BaseApiAddress + "api/GetTypeCheckList");
+
+                var typeCheckList = JsonConvert.DeserializeObject<List<TypeCheckList>>(json);
                 return typeCheckList;
 
 
@@ -213,17 +244,6 @@ namespace Mobile.Services
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var response = httpClient.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", multipart).Result;
 
-            //var client = new HttpClient();
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            //var json = JsonConvert.SerializeObject(resultat);
-            //            var content = new MultipartFormDataContent(json);
-            //content.Add(new StreamContent(_mediaFile.GetStream()),
-            //     "\"file\"",
-            //     $"\"{_mediaFile.Path}\"");
-            //content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            //var response = await client.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", content);
         }
 
         public async Task UploadFileAsync(MultipartFormDataContent contents, string accessToken)
@@ -254,6 +274,7 @@ namespace Mobile.Services
             var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
             /// <summary>
+            /// get File
             /// </summary>
             /// <param name="validerDemande"></param>
             /// <param name="accessToken"></param>

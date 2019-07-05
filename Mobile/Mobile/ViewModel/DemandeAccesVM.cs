@@ -1,16 +1,14 @@
 ﻿using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
-using Mobile.View;
+using Mobile.View.PopUp;
 using PropertyChanged;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Services;
+using Shared.API.IN;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Extended;
@@ -20,6 +18,7 @@ namespace Mobile.ViewModel
     [AddINotifyPropertyChangedInterface]
     public class DemandeAccesVM : BaseViewModel
     {
+        private static readonly IPopupNavigation _popupNavigation;
         public bool isNeedLoadMore = false;
         private bool _isBusy;
         private const int PageSize = 10;
@@ -44,6 +43,11 @@ namespace Mobile.ViewModel
         public override void OnAppearing()
         {
             base.OnAppearing();
+            MessagingCenter.Subscribe<FilterListVM,FilterListDemande>(this, Constants.MESSAGE_FilterList, async (sender, filterModel) => {
+              //  Items.Clear();
+               // var items = await _apiServices.GetDemandeAccesListAsync(Settings.AccessToken, filterModel);
+               // Items.AddRange(items);
+            });
         }
 
         public override void OnDisappearing()
@@ -91,15 +95,18 @@ namespace Mobile.ViewModel
                         page++;
                     }
                     var accessToken = Settings.AccessToken;
-
-                    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, page, PageSize);
+                    var filterModel = new FilterListDemande();
+                    filterModel.PageIndex = page;
+                    filterModel.PageSize = PageSize;
+                    var items = await _apiServices.GetDemandeAccesListAsync(accessToken, filterModel);
 
                     if (items.Count() == 0)
                     {
                         IsWorking = false;
+                        IsBusy = false;
                     }
                     IsBusy = false;
-
+                    IsWorking = false;
                     // return the items that need to be added
                     return items;
                 }
@@ -120,16 +127,35 @@ namespace Mobile.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
- 
-        public bool IsWorking { get; set; }
+
+        public bool isWorking;
+        public bool IsWorking
+        {
+            get { return isWorking; }
+            set
+            {
+                isWorking = value;
+                OnPropertyChanged();
+            }
+        }
         public InfiniteScrollCollection<DemandeAcces> Items { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand RefreshCommand { get; }
+        public ICommand OpenPopUpCommand 
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    await PopupNavigation.Instance.PushAsync(new PopUpFilterListView());
+                });
+            }
+        }
 
-     
-      
+
+
 
     }
 }

@@ -17,5 +17,6 @@ namespace Shared.DTO
         public string CreatedBy { get; set; }
         public long RubriqueId { get; set; }
         public string RubriqueName { get; set; }
+        public bool IsHasDate { get; set; }
     }
 }

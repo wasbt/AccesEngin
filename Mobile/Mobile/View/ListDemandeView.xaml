@@ -7,7 +7,16 @@
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     xmlns:converters="clr-namespace:Mobile.Converters"
     xmlns:extended="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
-    xmlns:vm="clr-namespace:Mobile.ViewModel">
+    xmlns:vm="clr-namespace:Mobile.ViewModel"
+    Title="Liste contrôles">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding OpenPopUpCommand}"
+            Icon="filter"
+            Order="Primary" />
+
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
@@ -93,7 +102,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.Footer>
-                    <Grid Padding="6" IsVisible="{Binding IsWorking}">
+                    <Grid Padding="6" IsVisible="{Binding IsBusy}">
                         <!--  set the footer to have a zero height when invisible  -->
                         <Grid.Triggers>
                             <Trigger TargetType="Grid" Property="IsVisible" Value="False">

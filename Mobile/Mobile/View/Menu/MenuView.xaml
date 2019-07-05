@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Mobile.View.Menu.MenuView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Menu"
+    BackgroundColor="#289851">
+
+    <StackLayout Orientation="Vertical">
+
+        <StackLayout BackgroundColor="#289851" HeightRequest="75">
+
+            <Label
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="Demande accés engins"
+                TextColor="White"
+                VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+
+        <ListView
+            x:Name="navigationDrawerList"
+            BackgroundColor="#e8e8e8"
+            ItemSelected="OnMenuItemSelected"
+            RowHeight="60"
+            SeparatorVisibility="None">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+
+                        <!--  Main design for our menu items  -->
+                        <StackLayout
+                            Padding="20,10,0,10"
+                            Orientation="Horizontal"
+                            Spacing="20"
+                            VerticalOptions="FillAndExpand">
+
+                            <Image
+                                HeightRequest="40"
+                                Source="{Binding Icon}"
+                                VerticalOptions="Center"
+                                WidthRequest="40" />
+
+                            <Label
+                                FontSize="Medium"
+                                Text="{Binding Title}"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

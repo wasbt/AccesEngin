@@ -22,12 +22,13 @@
     <PackageReference Include="Plugin.Toast" Version="2.1.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="2.5.13" />
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.3.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.264807" />
     <PackageReference Include="Xamarin.Forms.Extended.InfiniteScrolling" Version="1.0.0-preview2" />
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="3.6.0.264807" />
-    <PackageReference Include="Xamarin.HotReload" Version="1.2.4" />
+    <PackageReference Include="Xamarin.HotReload" Version="1.4.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="View\Base\BasePopUpPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\Base\BaseView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -49,6 +53,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\Login.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\Menu\MenuView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\PopUp\PopUpFilterListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\SearchResultsView.xaml">
@@ -66,6 +76,9 @@
     <None Update="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="View\Base\BasePopUpPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="View\Base\BaseView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
@@ -79,6 +92,12 @@
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="View\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="View\Menu\MenuView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="View\PopUp\PopUpFilterListView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="View\SearchResultsView.xaml">

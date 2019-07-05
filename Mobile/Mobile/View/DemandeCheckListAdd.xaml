@@ -50,18 +50,6 @@
                                                     TextColor="Black"
                                                     VerticalTextAlignment="Center" />
 
-                                                <!--<ia:Checkbox x:Name="AwesomeCheckbox"
-                                                             IsChecked="{Binding IsConforme}"
-                                                                Grid.Column="1"
-                                                                OutlineColor="Green"
-                                                                FillColor="Green"
-                                                                CheckColor="White"
-                                                                Shape="Rectangle"
-                                                                HeightRequest="20"
-                                                                WidthRequest="20"
-                                                                HorizontalOptions="Start"
-                                                                VerticalOptions="Start"
-                                                                 />-->
                                                 <Switch
                                                     Grid.Column="1"
                                                     HeightRequest="20"
@@ -81,6 +69,7 @@
                                                 <local:NullableRoundedDatePicker
                                                     Grid.Column="1"
                                                     HorizontalOptions="FillAndExpand"
+                                                    IsVisible="{Binding IsHasDate}"
                                                     NullableDate="{Binding Date}"
                                                     VerticalOptions="CenterAndExpand" />
 

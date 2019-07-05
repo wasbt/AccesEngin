@@ -22,6 +22,7 @@ namespace DAL
                 ShowOrder = model.ShowOrder,
                 CreatedBy = model.CreatedBy,
                 CreatedOn = model.CreatedOn,
+                IsHasDate = model.IsHasDate
             };
             return dto;
         }

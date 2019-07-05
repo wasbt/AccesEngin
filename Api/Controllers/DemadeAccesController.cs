@@ -1,6 +1,7 @@
 ﻿using BLL.Biz;
 using Newtonsoft.Json;
 using Shared;
+using Shared.API.IN;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace Api.Controllers
         #region get All DemadeAcces
 
         // GET: DemadeAcces
-        [HttpGet]
+        [HttpPost]
         [Route("api/demandeAccesList")]
-        public async Task<HttpResponseMessage> DemandeAccesList(int pageIndex, int pageSize)
+        public async Task<HttpResponseMessage> DemandeAccesList(FilterListDemande filterList)
         {
 
             if (!ModelState.IsValid)
@@ -33,7 +34,7 @@ namespace Api.Controllers
 
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = biz.DemandeAccesList(pageIndex, pageSize);
+            var result = biz.DemandeAccesList(filterList);
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -59,6 +60,26 @@ namespace Api.Controllers
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
             var result = await biz.GetCheckListAsync(Id);
+
+            if (result != null)
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+        }
+
+        [HttpGet]
+        [Route("api/GetTypeCheckList")]
+        public async Task<HttpResponseMessage> GetTypeCheckListAsync()
+        {
+
+            if (!ModelState.IsValid)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
+            DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
+
+            var result = await biz.GetTypeCheckListAsync();
 
             if (result != null)
                 return Request.CreateResponse(HttpStatusCode.OK, result);

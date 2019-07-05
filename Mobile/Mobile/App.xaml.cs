@@ -1,6 +1,8 @@
-﻿using Mobile.Interfaces;
+﻿using Mobile.Helpers;
+using Mobile.Interfaces;
 using Mobile.Services;
 using Mobile.View;
+using Mobile.View.Menu;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,21 +14,53 @@ namespace Mobile
     {
         public static INavigationService NavigationService { get; } = new NavigationService();
 
+        public static MasterDetailPage MasterDetailPage;
+
         public App()
         {
             InitializeComponent();
-           // MainPage = new Login();
-
+            #region Hot Reload
 #if DEBUG
-            HotReloader.Current.Start(this);
-#endif
-            NavigationService.Configure("Login", typeof(View.Login));
+            try
+            {
+                HotReloader.Current.Run(this);
+            }
+            catch
+            {
 
-            NavigationService.Configure("ListDemandeView", typeof(View.ListDemandeView));
-            //NavigationService.Configure("PushNavigationPage", typeof(View.PushNavigationPage));
-            var mainPage = ((NavigationService)NavigationService).SetRootPage("Login");
+            }
+#endif 
+            #endregion
+            NavigationService.Configure(nameof(Login), typeof(Login));
+            NavigationService.Configure(nameof(ListDemandeView), typeof(ListDemandeView));
 
-            MainPage = mainPage;
+            MasterDetailPage = new MasterDetailPage
+            {
+                Master = new MenuView(),
+                Detail = new NavigationPage(new ListDemandeView()),
+            };
+
+            #region Login Case
+
+            if (AppHelper.IsTokenStillValid)
+            {
+                if (Constants.IsLoggedIn)
+                {
+                    AppHelper.SetMainPageAsMasterDetailPage();
+                }
+                else
+                {
+                    AppHelper.SetMainPageAsMasterDetailPage(new ListDemandeView());
+                    Constants.IsLoggedIn = true;
+                }
+            }
+            else
+            {
+                MainPage = new NavigationPage(new Login());
+            }
+
+            #endregion
+
 
         }
 

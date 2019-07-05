@@ -1,6 +1,7 @@
 ﻿using Mobile.Helpers;
 using Mobile.Services;
 using Mobile.View;
+using Mobile.View.Menu;
 using Plugin.Toast;
 using System;
 using System.Collections.Generic;
@@ -13,19 +14,15 @@ using Xamarin.Forms;
 
 namespace Mobile.ViewModel
 {
-    public class LoginVM: BaseViewModel
+    public class LoginVM : BaseViewModel
     {
 
         private readonly ApiServices _apiServices = new ApiServices();
 
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public string Username { get; set; } = Settings.FullName = "Controleur@ocp.ma";
+        public string Password { get; set; } = Settings.Password = "AZERTY123456";
 
-        public override void OnAppearing()
-        {
-            base.OnAppearing();
-          
-        }
+
 
         public ICommand LoginCommand
         {
@@ -33,49 +30,26 @@ namespace Mobile.ViewModel
             {
                 return new Command(async () =>
                 {
-
-
-                    var current = Connectivity.NetworkAccess;
-
-                    switch (current)
+                    if (!AppHelper.IsConnected)
                     {
-                        case NetworkAccess.Internet:
-                            // Connected to internet
-                            var accesstoken = await _apiServices.LoginAsync("Controleur@ocp.ma", "AZERTY123456");
-
-                            Settings.AccessToken = accesstoken;
-                            Application.Current.MainPage = new MainPage();
-                            break;
-                        case NetworkAccess.Local:
-                            // Only local network access
-                            break;
-                        case NetworkAccess.ConstrainedInternet:
-                            // Connected, but limited internet access such as behind a network login page
-                            break;
-                        case NetworkAccess.None:
-                            // No internet available
-                            IsEmpty = true;
-                            CrossToastPopUp.Current.ShowToastMessage("Verifier votre connexion internet et réessayer");
-                            break;
-                        case NetworkAccess.Unknown:
-                            // Internet access is unknown
-                            break;
+                        CrossToastPopUp.Current.ShowToastMessage("Verifier votre connexion internet et réessayer");
+                        return;
                     }
+                    await _apiServices.LoginAsync(Username, Password);
+                    Constants.IsLoggedIn = true;
 
-
-                    //var accesstoken = await _apiServices.LoginAsync(Username, Password);
-
-
+                    App.MasterDetailPage = new MasterDetailPage
+                    {
+                        Master = new MenuView(),
+                        Detail = new NavigationPage(new ListDemandeView()),
+                    };
+                    App.Current.MainPage = App.MasterDetailPage;
                 });
             }
         }
 
-        public LoginVM()
-        {
-            Username = Settings.FullName;
-            Password = Settings.Password;
-        }
-        
+
+
 
     }
 }

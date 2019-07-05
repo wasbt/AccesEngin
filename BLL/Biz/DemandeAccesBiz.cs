@@ -16,6 +16,7 @@ using System.Diagnostics;
 using Shared.ENUMS;
 using Shared.API.OUT;
 using System.IO;
+using Shared.API.IN;
 
 namespace BLL.Biz
 {
@@ -25,11 +26,24 @@ namespace BLL.Biz
         {
         }
 
-        public List<DemandeAccesDto> DemandeAccesList(int pageIndex, int pageSize)
+        public List<DemandeAccesDto> DemandeAccesList(FilterListDemande filterList)
         {
-            var demandeAccesList = context.DemandeAccesEngin.ToList();
+            var demandeAccesQuery = context.DemandeAccesEngin.AsQueryable(); ;
+            if (filterList.TypeCheckListId.HasValue)
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x => x.TypeCheckListId == filterList.TypeCheckListId);
+            }
+             if (filterList.StatutId.HasValue)
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x => x.StatutDemandeId == filterList.StatutId);
+            }
+            if (filterList.DatePlanification.HasValue)
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x => x.DatePlannification == filterList.DatePlanification);
+            }
+            var demandeAccesList = demandeAccesQuery.ToList();
             var Demendes = demandeAccesList.Where(x => !x.ResultatControleEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
-            var demandeAcces = Demendes.Skip(pageIndex * pageSize).Take(pageSize).ToList();
+            var demandeAcces = Demendes.Skip(filterList.PageIndex * filterList.PageSize).Take(filterList.PageSize).ToList();
             return demandeAcces;
         }
 
@@ -276,6 +290,21 @@ namespace BLL.Biz
             {
                 return true;
             }
+        }
+
+        public async Task<List<TypeCheckListDTO>> GetTypeCheckListAsync()
+        {
+            var typeCheckList =  await context.REF_TypeCheckList.AsQueryable().ToListAsync();
+
+            #region Check Controle id & find it
+
+            var typeCheckListDTO =  typeCheckList.Select(x   => x.TypeCheckListToDTO()).ToList();
+
+            //  var tt = typeCheckListDTO.Rubriques.GroupBy(r => r.Name).Select(x => new Grouping<string, CheckListRubriqueDTO>(x.Key, x)).ToList();
+            #endregion
+            // typeCheckListDTO.RubriquesGrouping = tt;
+
+            return typeCheckListDTO;
         }
 
     }
