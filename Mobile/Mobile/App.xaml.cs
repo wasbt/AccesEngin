@@ -31,6 +31,7 @@ namespace Mobile
             }
 #endif 
             #endregion
+            XF.Material.Forms.Material.Init(this);
             NavigationService.Configure(nameof(Login), typeof(Login));
             NavigationService.Configure(nameof(ListDemandeView), typeof(ListDemandeView));
 

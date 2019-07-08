@@ -26,6 +26,7 @@ namespace Mobile.iOS
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
+            XF.Material.iOS.Material.Init();
             LoadApplication(new App());
             AnimationViewRenderer.Init();
             return base.FinishedLaunching(app, options);

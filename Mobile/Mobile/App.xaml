@@ -1,19 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Mobile.App">
+<Application
+    x:Class="Mobile.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core">
     <Application.Resources>
         <ResourceDictionary>
             <Style
-               ApplyToDerivedTypes="True"
-               CanCascade="True"
-               TargetType="Button">
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="Button">
                 <Setter Property="Visual" Value="Material" />
                 <Setter Property="HeightRequest" Value="45" />
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="Visual" Value="Material" />
+            </Style>
+            <Style
+                ApplyToDerivedTypes="True"
+                CanCascade="True"
+                TargetType="ListView">
+                <Setter Property="android:ListView.IsFastScrollEnabled" Value="True" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

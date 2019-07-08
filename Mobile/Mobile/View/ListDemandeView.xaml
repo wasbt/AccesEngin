@@ -5,8 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
-    xmlns:converters="clr-namespace:Mobile.Converters"
-    xmlns:extended="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
     Title="Liste contrôles">
     <ContentPage.ToolbarItems>
@@ -29,13 +27,10 @@
                 x:Name="listView"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
-                IsRefreshing="{Binding IsWorking}"
                 ItemsSource="{Binding Items}">
                 <ListView.Behaviors>
                     <behaviors:ListViewBehavior />
-                    <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsWorking}" />
                 </ListView.Behaviors>
-
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -101,21 +96,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <ListView.Footer>
-                    <Grid Padding="6" IsVisible="{Binding IsBusy}">
-                        <!--  set the footer to have a zero height when invisible  -->
-                        <Grid.Triggers>
-                            <Trigger TargetType="Grid" Property="IsVisible" Value="False">
-                                <Setter Property="HeightRequest" Value="0" />
-                            </Trigger>
-                        </Grid.Triggers>
-                        <!--  the loading content  -->
-                        <Label
-                            HorizontalOptions="Center"
-                            Text="Loading..."
-                            VerticalOptions="Center" />
-                    </Grid>
-                </ListView.Footer>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

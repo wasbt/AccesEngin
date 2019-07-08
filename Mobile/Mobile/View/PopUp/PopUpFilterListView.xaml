@@ -45,15 +45,17 @@
                 HorizontalOptions="FillAndExpand"
                 ItemDisplayBinding="{Binding Name}"
                 ItemsSource="{Binding TypeCheckList}"
-                SelectedItem="{Binding Id}" />
+                SelectedItem="{Binding TypeCheckListId}" />
+
             <local:NullableRoundedDatePicker
-                Grid.Column="1"
                 HorizontalOptions="FillAndExpand"
-                NullableDate="{Binding DatePlanification}"
+                NullableDate="{Binding Path=DatePlanification, Mode=TwoWay}"
                 VerticalOptions="CenterAndExpand" />
+
+
             <Frame
                 Margin="0,20,0,0"
-                BackgroundColor="Orange"
+                BackgroundColor="#FFC107"
                 CornerRadius="2"
                 HasShadow="False"
                 HorizontalOptions="Center"

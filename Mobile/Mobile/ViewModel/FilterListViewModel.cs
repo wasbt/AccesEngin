@@ -39,13 +39,24 @@ namespace Mobile.ViewModel
 
         public long _typeCheckListId;
 
-     
-
         public DemandeStatus SelectedStatus { get; set; }
 
-        public TypeCheckList  TypeEngins { get; set; }
-        public DateTime DatePlanification { get; set; }
+        public TypeCheckList TypeCheckListId { get; set; }
 
+        public DateTime? _datePlanification = null;
+
+        public DateTime? DatePlanification
+        {
+
+            get
+            {
+                return _datePlanification;
+            }
+            set
+            {
+                _datePlanification = value;
+            }
+        }
 
         public ICommand FilterCommand
         {
@@ -56,10 +67,10 @@ namespace Mobile.ViewModel
                     var filterModel = new FilterListDemande();
 
                     filterModel.StatutId = (int)SelectedStatus;
-                    filterModel.TypeCheckListId = TypeEngins?.Id;
+                    filterModel.TypeCheckListId = TypeCheckListId?.Id;
                     filterModel.DatePlanification = DatePlanification;
                     filterModel.PageIndex = 0;
-                    filterModel.PageSize = 10;
+                    filterModel.PageSize = 4;
 
 
                     MessagingCenter.Send(this, Constants.MESSAGE_FilterList, filterModel);

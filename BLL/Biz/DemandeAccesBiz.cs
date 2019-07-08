@@ -28,12 +28,12 @@ namespace BLL.Biz
 
         public List<DemandeAccesDto> DemandeAccesList(FilterListDemande filterList)
         {
-            var demandeAccesQuery = context.DemandeAccesEngin.AsQueryable(); ;
-            if (filterList.TypeCheckListId.HasValue)
+            var demandeAccesQuery = context.DemandeAccesEngin.AsQueryable();
+            if (filterList.TypeCheckListId.HasValue && filterList.TypeCheckListId != 0)
             {
                 demandeAccesQuery = demandeAccesQuery.Where(x => x.TypeCheckListId == filterList.TypeCheckListId);
             }
-             if (filterList.StatutId.HasValue)
+             if (filterList.StatutId.HasValue && filterList.StatutId != 0)
             {
                 demandeAccesQuery = demandeAccesQuery.Where(x => x.StatutDemandeId == filterList.StatutId);
             }
@@ -43,8 +43,8 @@ namespace BLL.Biz
             }
             var demandeAccesList = demandeAccesQuery.ToList();
             var Demendes = demandeAccesList.Where(x => !x.ResultatControleEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
-            var demandeAcces = Demendes.Skip(filterList.PageIndex * filterList.PageSize).Take(filterList.PageSize).ToList();
-            return demandeAcces;
+            //var demandeAcces = Demendes.Skip(filterList.PageIndex * filterList.PageSize).Take(filterList.PageSize).ToList();
+            return Demendes;
         }
 
         public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(int Id)

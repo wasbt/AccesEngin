@@ -6,6 +6,7 @@
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
     xmlns:local="clr-namespace:Mobile.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
     x:Name="currentPage">
 
@@ -67,9 +68,11 @@
                                                     Text="{Binding Observation, Mode=TwoWay}" />
 
                                                 <local:NullableRoundedDatePicker
+                                                    x:Name="DatePickerDate"
                                                     Grid.Column="1"
                                                     HorizontalOptions="FillAndExpand"
                                                     IsVisible="{Binding IsHasDate}"
+                                                    MinimumDate="{Binding Source={x:Static sys:DateTime.Now}}"
                                                     NullableDate="{Binding Date}"
                                                     VerticalOptions="CenterAndExpand" />
 

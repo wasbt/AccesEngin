@@ -47,11 +47,13 @@ namespace Mobile.View.Menu
 
         // Event for Menu Item selection, here we are going to handle navigation based
         // on user selection in menu ListView
-        private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
             var item = (MasterPageItem)e.SelectedItem;
             Type page = item.TargetType;
+            App.MasterDetailPage.IsPresented = false;
+            await Task.Delay(300);
             if (page == typeof(Login))
             {
                 Settings.ClearSettings();
@@ -59,9 +61,7 @@ namespace Mobile.View.Menu
             }
             else
             {
-
                 App.MasterDetailPage.Detail = new NavigationPage((Page)Activator.CreateInstance(page));
-                App.MasterDetailPage.IsPresented = false;
             }
         }
     }

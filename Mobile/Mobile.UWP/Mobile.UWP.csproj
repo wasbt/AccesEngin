@@ -151,6 +151,9 @@
     <PackageReference Include="Xamarin.HotReload">
       <Version>1.4.12</Version>
     </PackageReference>
+    <PackageReference Include="XF.Material">
+      <Version>1.4.1.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mobile\Mobile.csproj">

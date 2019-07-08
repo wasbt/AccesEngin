@@ -5,7 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:converters="clr-namespace:Mobile.Converters"
-    xmlns:vm="clr-namespace:Mobile.ViewModel">
+    xmlns:vm="clr-namespace:Mobile.ViewModel"
+    Title="{Binding DemandeDetail.TypeEnginName}">
+
+
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,6 +35,7 @@
                 <Setter Property="FontAttributes" Value="Italic" />
             </Style>
             <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+            <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -70,7 +74,7 @@
                             <Label
                                 HorizontalOptions="EndAndExpand"
                                 Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.DatePlannification}" />
+                                Text="{Binding DemandeDetail.DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}" />
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
                         <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
@@ -97,13 +101,17 @@
                         </StackLayout>
                         <BoxView BackgroundColor="Gray" HeightRequest="1" />
                     </StackLayout>
-                    <StackLayout VerticalOptions="CenterAndExpand">
+                    <StackLayout VerticalOptions="StartAndExpand">
                         <Label
-                            HorizontalOptions="EndAndExpand"
+                            HorizontalOptions="StartAndExpand"
+                            Style="{StaticResource nameLabel}"
+                            Text="Observation" />
+                        <Label
+                            HorizontalOptions="StartAndExpand"
                             Style="{StaticResource valueLabel}"
                             Text="{Binding DemandeDetail.Observation}" />
                     </StackLayout>
-                    <StackLayout IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}" VerticalOptions="CenterAndExpand">
+                    <StackLayout HorizontalOptions="Fill" IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}">
                         <Button
                             BackgroundColor="Gray"
                             Command="{Binding OpenPdfCommand}"
@@ -135,7 +143,7 @@
                         </StackLayout.Triggers>
 
                         <Button
-                            BackgroundColor="Green"
+                            BackgroundColor="#289851"
                             Command="{Binding ValiderCommand}"
                             CommandParameter="{Binding DemandeDetail.Id}"
                             FontSize="10"
@@ -143,7 +151,7 @@
                             Text="Accepter"
                             TextColor="White" />
                         <Button
-                            BackgroundColor="Red"
+                            BackgroundColor="#DC3545"
                             Command="{Binding RefuserCommand}"
                             CommandParameter="{Binding DemandeDetail.Id}"
                             FontSize="10"
