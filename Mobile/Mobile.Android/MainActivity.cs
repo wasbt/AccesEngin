@@ -11,6 +11,7 @@ using Acr.UserDialogs;
 using Plugin.Permissions;
 using Plugin.Media  ;
 using Plugin.CurrentActivity;
+using System.IO;
 
 namespace Mobile.Droid
 {
@@ -22,6 +23,7 @@ namespace Mobile.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            string dbName = "notes.db3";
 
             UserDialogs.Init(this);
             base.OnCreate(savedInstanceState);
@@ -33,7 +35,10 @@ namespace Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             AnimationViewRenderer.Init();
-            LoadApplication(new App());
+            string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //! added using System.IO;
+            string dbPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new App(dbPath));
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

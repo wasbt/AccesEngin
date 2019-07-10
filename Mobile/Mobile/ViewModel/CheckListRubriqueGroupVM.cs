@@ -11,6 +11,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Rg.Plugins.Popup.Services;
 using Shared.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -197,15 +198,43 @@ namespace Mobile.ViewModel
                                        dismissiveText: "Non");
                     if (resultDialog == true)
                     {
-                        //if (_mediaFile != null)
-                        //{
-                        //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                        //}
-                        //else
-                        //{
-                        //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                        //}
+                        if (Xamarin.Essentials.Connectivity.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
+                        {
+                            //if (_mediaFile != null)
+                            //{
+                            //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
+                            //}
+                            //else
+                            //{
+                            //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
+                            //}
 
+                        }
+                        else
+                        {
+                            try
+                            {
+                               
+                                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
+                                        var result = new PostResultatExigenceModel()
+                                        {
+                                            ResultatExigencJson = json
+                                        };
+                                using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+                                {
+                                    conn.CreateTable<PostResultatExigenceModel>();
+                                    int itemsInserted = conn.Insert(result);
+
+                                conn.CreateTable<PostResultatExigenceModel>();
+                               var notes = conn.Table<PostResultatExigenceModel>().ToList();
+                                }
+                            }
+                            catch (Exception e)
+                            {
+
+                            }
+
+                        }
                         await PopupNavigation.Instance.PushPopupSingleAsync(new PopUpSuccessAnimationView());
 
                         await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));

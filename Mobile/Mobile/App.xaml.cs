@@ -16,7 +16,9 @@ namespace Mobile
 
         public static MasterDetailPage MasterDetailPage;
 
-        public App()
+        public static string DatabasePath = string.Empty;
+
+        public App(string databasePath)
         {
             InitializeComponent();
             #region Hot Reload
@@ -61,7 +63,7 @@ namespace Mobile
             }
 
             #endregion
-
+            DatabasePath = databasePath;
 
         }
 

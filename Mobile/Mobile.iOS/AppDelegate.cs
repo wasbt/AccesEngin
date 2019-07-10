@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Foundation;
@@ -23,11 +24,15 @@ namespace Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            string dbName = "notes.db3";
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
             XF.Material.iOS.Material.Init();
-            LoadApplication(new App());
+            //! added using System.IO;
+            string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
+            string dbPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new App(dbPath));
             AnimationViewRenderer.Init();
             return base.FinishedLaunching(app, options);
         }
