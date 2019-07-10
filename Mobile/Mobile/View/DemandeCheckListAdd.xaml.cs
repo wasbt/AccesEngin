@@ -1,4 +1,5 @@
 ﻿using Mobile.Model;
+using Mobile.View.Base;
 using Mobile.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,8 @@ using Xamarin.Forms.Xaml;
 namespace Mobile.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DemandeCheckListAdd : ContentPage
-	{
+	public partial class DemandeCheckListAdd : BaseView
+    {
         //TypeCheckListVM ViewModel;
         private CheckListRubriqueGroupVM ViewModel
         {
@@ -29,6 +30,7 @@ namespace Mobile.View
 		{
 			InitializeComponent ();
         }
+
         protected override void OnAppearing()
         {
             try
@@ -57,6 +59,14 @@ namespace Mobile.View
         {
             InitializeComponent();
             ViewModel = new CheckListRubriqueGroupVM(id);
+            (BindingContext as CheckListRubriqueGroupVM).PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName.Equals("InvalidItem"))
+                {
+                    AddControlList.ScrollTo((BindingContext as CheckListRubriqueGroupVM)?.InvalidItem, ScrollToPosition.Center, false);
+                }
+            };
         }
+
     }
 }

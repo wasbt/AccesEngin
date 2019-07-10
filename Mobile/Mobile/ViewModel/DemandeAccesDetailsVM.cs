@@ -46,7 +46,7 @@ namespace Mobile.ViewModel
             Id = id;
         }
 
-        public override async void OnAppearing()
+        public override async void OnAppearingAsync()
         {
             MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) =>
             {
@@ -56,7 +56,7 @@ namespace Mobile.ViewModel
             });
 
             DemandeDetailCommand?.Execute(Id);
-            base.OnAppearing();
+            base.OnAppearingAsync();
 
         }
 

@@ -78,7 +78,7 @@ namespace Mobile.Services
             var data = await client.PostAsync(Constants.BaseApiAddress + "api/DemandeAccesList", content);
 
 
-            var demandeAcces =  JsonConvert.DeserializeObject<List<DemandeAcces>>(await data.Content.ReadAsStringAsync());
+            var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(await data.Content.ReadAsStringAsync());
 
             return demandeAcces;
         }
@@ -110,7 +110,7 @@ namespace Mobile.Services
                 throw;
             }
 
-        } 
+        }
         /// <summary>
         /// Get TypeCheck List
         /// </summary>
@@ -228,7 +228,7 @@ namespace Mobile.Services
         /// <param name="resultat"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, MediaFile _mediaFile,string accessToken)
+        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, MediaFile _mediaFile, string accessToken)
         {
 
 
@@ -236,9 +236,13 @@ namespace Mobile.Services
             var multipart = new MultipartFormDataContent();
             var body = new StringContent(jsonToSend);
             multipart.Add(body, "JsonDetails");
-            var fileName = _mediaFile.Path.Split('/').LastOrDefault();
-            multipart.Add(new StreamContent(_mediaFile.GetStream()), "\"file\"",
-                 $"\"{fileName}\"");
+            if (_mediaFile != null)
+            {
+                var fileName = _mediaFile.Path.Split('/').LastOrDefault();
+
+                multipart.Add(new StreamContent(_mediaFile.GetStream()), "\"file\"",
+                     $"\"{fileName}\"");
+            }
 
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -261,7 +265,7 @@ namespace Mobile.Services
         /// <param name="validerDemande"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        public async Task ValiderDemandeAsync(ValiderDemande validerDemande, string accessToken= "")
+        public async Task ValiderDemandeAsync(ValiderDemande validerDemande, string accessToken = "")
         {
 
             var client = new HttpClient();
@@ -273,13 +277,13 @@ namespace Mobile.Services
 
             var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
-            /// <summary>
-            /// get File
-            /// </summary>
-            /// <param name="validerDemande"></param>
-            /// <param name="accessToken"></param>
-            /// <returns></returns>
-        public async Task DownloadAsync(long? id,string accessToken = "")
+        /// <summary>
+        /// get File
+        /// </summary>
+        /// <param name="validerDemande"></param>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        public async Task DownloadAsync(long? id, string accessToken = "")
         {
 
             var client = new HttpClient();

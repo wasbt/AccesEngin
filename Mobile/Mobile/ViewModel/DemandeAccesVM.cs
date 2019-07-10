@@ -1,4 +1,5 @@
-﻿using Mobile.Helpers;
+﻿using Mobile.Extensions;
+using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
 using Mobile.View.PopUp;
@@ -51,10 +52,10 @@ namespace Mobile.ViewModel
                 OnPropertyChanged();
             }
         }
-        public override void OnAppearing()
+        public override void OnAppearingAsync()
         {
 
-            base.OnAppearing();
+            base.OnAppearingAsync();
             MessagingCenter.Subscribe<FilterListVM, FilterListDemande>(this, Constants.MESSAGE_FilterList, async (sender, filterModel) =>
             {
                 Items.Clear();
@@ -116,7 +117,7 @@ namespace Mobile.ViewModel
             {
                 return new Command(async () =>
                 {
-                    await PopupNavigation.Instance.PushAsync(new PopUpFilterListView());
+                    await PopupNavigation.Instance.PushPopupSingleAsync(new PopUpFilterListView());
                 });
             }
         }

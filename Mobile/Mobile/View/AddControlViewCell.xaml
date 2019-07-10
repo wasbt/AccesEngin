@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ViewCell
+    x:Class="Mobile.View.AddControlViewCell"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Mobile.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <ContentView Padding="5,5" BackgroundColor="White">
+        <Frame
+            Padding="10,15"
+            BackgroundColor="White"
+            OutlineColor="{Binding ColorCellView}">
+            <StackLayout>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="None"
+                        FontSize="Small"
+                        Text="{Binding Name}"
+                        TextColor="Black"
+                        VerticalTextAlignment="Center" />
+
+                    <Switch
+                        Grid.Column="1"
+                        HeightRequest="20"
+                        HorizontalOptions="Start"
+                        IsToggled="{Binding IsConforme}"
+                        VerticalOptions="Start"
+                        WidthRequest="60" />
+
+                </Grid>
+
+                <Grid>
+                    <Entry
+                        Grid.Column="0"
+                        Placeholder="Observation"
+                        Text="{Binding Observation, Mode=TwoWay}" />
+
+                    <local:NullableRoundedDatePicker
+                        x:Name="DatePickerDate"
+                        Grid.Column="1"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding IsHasDate}"
+                        MinimumDate="{Binding Source={x:Static sys:DateTime.Now}}"
+                        NullableDate="{Binding Date}"
+                        VerticalOptions="CenterAndExpand" />
+
+
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </ContentView>
+</ViewCell>

@@ -18,6 +18,7 @@ namespace Mobile.ViewModel
         }
 
         public string Name { get { return checkListExigence.Name; } }
+
         public string Observation
         {
             get
@@ -29,16 +30,19 @@ namespace Mobile.ViewModel
                 checkListExigence.Observation = value;
             }
         }
+
         public long Id { get { return checkListExigence.Id; } }
+
         public bool IsConforme { get { return checkListExigence.IsConforme; } set { checkListExigence.IsConforme = value; OnPropertyChanged();}
         }
         public System.Nullable<DateTime> Date { get { return checkListExigence.Date; } set { checkListExigence.Date = value; } }
-
 
         public CheckListExigence CheckListExigence
         {
             get => checkListExigence;
         }
+
         public bool IsHasDate { get { return checkListExigence.IsHasDate; } set { checkListExigence.IsHasDate = value; } }
+        public string ColorCellView { get { return checkListExigence.ColorCellView; } set { checkListExigence.ColorCellView = value; } }
     }
 }

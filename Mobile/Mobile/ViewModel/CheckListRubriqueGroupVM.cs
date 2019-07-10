@@ -1,12 +1,15 @@
 ﻿using Acr.UserDialogs;
+using Mobile.Extensions;
 using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
 using Mobile.View;
+using Mobile.View.PopUp;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
+using Rg.Plugins.Popup.Services;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace Mobile.ViewModel
 {
@@ -32,6 +36,7 @@ namespace Mobile.ViewModel
         private CheckListRubriqueVM _oldCheckListRubrique;
         public long DemandeAccesEnginId { get; set; }
 
+        public CheckListExigenceVM InvalidItem { get; set; }
 
         public CheckListRubriqueGroupVM()
         {
@@ -56,6 +61,7 @@ namespace Mobile.ViewModel
         }
 
         private ObservableCollection<CheckListRubriqueVM> items;
+
         public ObservableCollection<CheckListRubriqueVM> Items
         {
             get => items;
@@ -82,35 +88,10 @@ namespace Mobile.ViewModel
 
         private void ExecuteRefreshItemsCommand(CheckListRubriqueVM item)
         {
-            //if (_oldCheckListRubrique == item)
-            //{
-            //    // click twice on the same item will hide it
-            //    item.Expanded = !item.Expanded;
-            //}
-            //else
-            //{
-            //if (_oldCheckListRubrique != null)
-            //{
-            //    // hide previous selected item
-            //    _oldCheckListRubrique.Expanded = false;
-
-            //}
-            // show selected item
-            if (item.Expanded)
-            {
-                item.Expanded = false;
-            }
-            else
-            {
-
-                item.Expanded = true;
-            }
-            //}
-
-            //_oldCheckListRubrique = item;
+            item.Expanded = !item.Expanded;
         }
 
-        async Task ExecuteLoadItemsCommandAsync()
+        private async Task ExecuteLoadItemsCommandAsync()
         {
             try
             {
@@ -148,6 +129,7 @@ namespace Mobile.ViewModel
             set => SetProperty(ref typeCheckList, value);
 
         }
+
         private ImageSource imageSource;
 
         public ImageSource ImageSource
@@ -165,6 +147,7 @@ namespace Mobile.ViewModel
 
             set => SetProperty(ref rubriques, value);
         }
+
         private ResultatCheckList ResultatCheckList;
 
         public ICommand AddCommand
@@ -186,28 +169,54 @@ namespace Mobile.ViewModel
                     {
                         foreach (var exigence in rubrique)
                         {
-                            var ex = new Resultats()
+                            exigence.ColorCellView = "#AFAEAE";
+                            InvalidItem = null;
+                            var ex = new Resultats();
+                            if (exigence.IsHasDate && !exigence.Date.HasValue)
                             {
-                                CheckListExigenceId = exigence.Id,
-                                IsConform = exigence.IsConforme,
-                                Date = exigence.Date,
-                                Observation = exigence.Observation,
-                            };
-                            ResultatCheckList.ResultatsList.Add(ex);
+                                exigence.ColorCellView = "#DC3545";
+                                InvalidItem = exigence;
+                                return;
+                            }
+                            else
+                            {
+                                ex.CheckListExigenceId = exigence.Id;
+                                ex.IsConform = exigence.IsConforme;
+                                ex.Date = exigence.Date;
+                                ex.Observation = exigence.Observation;
+                                ResultatCheckList.ResultatsList.Add(ex);
+
+                            }
                         }
 
                     }
-                    if (_mediaFile != null)
+                    var resultDialog = await MaterialDialog.Instance.ConfirmAsync(message: "Merci de confirmer votre action!",
+                                       configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                       title: "Confirmation",
+                                       confirmingText: "Oui",
+                                       dismissiveText: "Non");
+                    if (resultDialog == true)
                     {
-                        await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                       
+                        //if (_mediaFile != null)
+                        //{
+                        //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
+                        //}
+                        //else
+                        //{
+                        //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
+                        //}
+
+                        await PopupNavigation.Instance.PushPopupSingleAsync(new PopUpSuccessAnimationView());
+
+                        await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
                     }
-                     await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
+
 
                 });
             }
         }
 
+        #region Camera
         public ICommand PickPhotoCommand
         {
             get
@@ -226,12 +235,15 @@ namespace Mobile.ViewModel
                                 UserDialogs.Instance.Alert("No PickPhoto", ":( No PickPhoto available.", "OK");
                                 return;
                             }
-                            
+
                             _mediaFile = await CrossMedia.Current.PickPhotoAsync();
 
                             UserDialogs.Instance.ShowLoading("Chargement...");
                             if (_mediaFile == null)
+                            {
+                                UserDialogs.Instance.HideLoading();
                                 return;
+                            }
 
                             ImageSource = ImageSource.FromStream(() =>
                             {
@@ -279,7 +291,7 @@ namespace Mobile.ViewModel
 
                         if (status == PermissionStatus.Granted)
                         {
-                            
+
                             await CrossMedia.Current.Initialize();
                             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                             {
@@ -290,14 +302,16 @@ namespace Mobile.ViewModel
 
                             _mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
                             {
-                                
+
                             });
 
-                            
-                            if (_mediaFile == null)
-                                return;
 
-         
+                            if (_mediaFile == null)
+                            {
+                                UserDialogs.Instance.HideLoading();
+                                return;
+                            }
+
                             ImageSource = ImageSource.FromStream(() =>
                             {
                                 return _mediaFile.GetStream();
@@ -319,6 +333,8 @@ namespace Mobile.ViewModel
             }
         }
 
+        #endregion
+
         public static byte[] AStreamToByteArray(Stream input)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -328,6 +344,30 @@ namespace Mobile.ViewModel
             }
         }
 
+        public override bool OnBackButtonPressed()
+        {
+            Xamarin.Essentials.MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await ConfirmExit();
+            });
+
+            return true;
+        }
+        public async Task ConfirmExit()
+        {
+
+            var decision = await MaterialDialog.Instance.ConfirmAsync(message: "êtes vous sur de vouloir fermer cette page?",
+                                   configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                   title: "Confirmation",
+                                   confirmingText: "Oui",
+                                   dismissiveText: "Non");
+
+            if (decision == true)
+            {
+                await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
+            }
+
+        }
     }
 
 }

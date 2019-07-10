@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace Mobile.ViewModel
 {
@@ -83,8 +84,27 @@ namespace Mobile.ViewModel
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        public virtual void OnAppearing() { }
+        public virtual void OnAppearingAsync() {
+
+            Xamarin.Essentials.Connectivity.ConnectivityChanged += (s, e) =>
+            {
+                if (e.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
+                {
+                    MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
+                                               msDuration: MaterialSnackbar.DurationLong,
+                                               configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
+                }
+                else
+                {
+                    MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
+                                              msDuration: MaterialSnackbar.DurationLong,
+                                              configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#DC3545") });
+
+                }
+            };
+        }
 
         public virtual void OnDisappearing() { }
+        public virtual bool OnBackButtonPressed() { return false; }
     }
 }

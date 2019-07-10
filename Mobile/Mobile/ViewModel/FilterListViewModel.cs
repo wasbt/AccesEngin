@@ -78,9 +78,9 @@ namespace Mobile.ViewModel
                 });
             }
         }
-        public async override void OnAppearing()
+        public async override void OnAppearingAsync()
         {
-            base.OnAppearing();
+            base.OnAppearingAsync();
             await  FillPicker();
         }
         private async Task FillPicker()

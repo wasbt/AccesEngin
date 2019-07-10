@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace Mobile.View.Base
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class BaseView : ContentPage
+    public partial class BaseView : ContentPage 
     {
 
         public Guid PageInstanceId { get; set; }
@@ -29,7 +29,7 @@ namespace Mobile.View.Base
             var bindingContext = BindingContext as BaseViewModel;
 
             if (bindingContext != null)
-                bindingContext.OnAppearing();
+                bindingContext.OnAppearingAsync();
 
         }
 
@@ -42,6 +42,14 @@ namespace Mobile.View.Base
             if (bindingContext != null)
                 bindingContext.OnDisappearing();
 
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            var bindingContext = BindingContext as BaseViewModel;
+
+            var result = bindingContext?.OnBackButtonPressed() ?? base.OnBackButtonPressed();
+            return result;
         }
 
     }

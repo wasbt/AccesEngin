@@ -30,9 +30,9 @@ namespace Mobile.ViewModel
         {
              Id = id;
         }
-        public override void OnAppearing()
+        public override void OnAppearingAsync()
         {
-            base.OnAppearing();
+            base.OnAppearingAsync();
             SearchResultsCommand?.Execute(Id);
   
         }

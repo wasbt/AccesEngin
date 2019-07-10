@@ -38,6 +38,7 @@ namespace Mobile.Model
 
 
         #endregion
+        public string ColorCellView { get; set; } = "#AFAEAE";
 
         public CheckListExigence(string name, int id)
         {
