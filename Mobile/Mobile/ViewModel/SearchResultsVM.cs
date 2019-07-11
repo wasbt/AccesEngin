@@ -30,9 +30,9 @@ namespace Mobile.ViewModel
         {
              Id = id;
         }
-        public override void OnAppearingAsync()
+        public override void OnAppearing()
         {
-            base.OnAppearingAsync();
+            base.OnAppearing();
             SearchResultsCommand?.Execute(Id);
   
         }
@@ -47,8 +47,7 @@ namespace Mobile.ViewModel
                     if (Id > 0)
                     {
                         UserDialogs.Instance.ShowLoading("Chargement...");
-                        var accessToken = Settings.AccessToken;
-                        ResultatExigence = await _apiServices.GetResultatExigenceByDemandeAccesId(Id, accessToken);
+                        ResultatExigence = (await Api.GetResultatExigenceByDemandeAccesId(Id)).data;
                         await Task.Delay(2000);
                         UserDialogs.Instance.HideLoading();
                     }

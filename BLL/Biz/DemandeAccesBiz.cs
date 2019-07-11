@@ -47,7 +47,7 @@ namespace BLL.Biz
             return Demendes;
         }
 
-        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(int Id)
+        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(long Id)
         {
             var demandeAcces = await context.DemandeAccesEngin.FindAsync(Id);
 
@@ -79,7 +79,7 @@ namespace BLL.Biz
             return demandeDetail;
         }
 
-        public async Task<TypeCheckListDTO> GetCheckListAsync(int id)
+        public async Task<TypeCheckListDTO> GetCheckListAsync(long id)
         {
             var controle = await context.DemandeAccesEngin.FindAsync(id);
 

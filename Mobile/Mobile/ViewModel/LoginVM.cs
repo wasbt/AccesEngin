@@ -1,4 +1,5 @@
 ﻿using Mobile.Helpers;
+using Mobile.Model;
 using Mobile.Services;
 using Mobile.View;
 using Mobile.View.Menu;
@@ -36,7 +37,11 @@ namespace Mobile.ViewModel
                         CrossToastPopUp.Current.ShowToastMessage("Verifier votre connexion internet et réessayer");
                         return;
                     }
-                    await _apiServices.LoginAsync(Username, Password);
+                    var loginModel = new LoginModel();
+                    loginModel.Username = Username;
+                    loginModel.Password = Password;
+                    var login = await Api.LoginAction(loginModel);
+                    SetSettings(login);
                     Constants.IsLoggedIn = true;
 
                     App.MasterDetailPage = new MasterDetailPage
@@ -44,7 +49,7 @@ namespace Mobile.ViewModel
                         Master = new MenuView(),
                         Detail = new NavigationPage(new ListDemandeView()),
                     };
-                    using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Connexion en cours",configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration() { TintColor = Xamarin.Forms.Color.FromHex("#289851") }))
+                    using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Connexion en cours", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration() { TintColor = Xamarin.Forms.Color.FromHex("#289851") }))
                     {
                         await Task.Delay(5000); // Represents a task that is running.
                     }
@@ -53,7 +58,13 @@ namespace Mobile.ViewModel
             }
         }
 
-
+        private static void SetSettings(LoginResultModel resultModel)
+        {
+            Settings.AccessTokenExpirationDate = resultModel.Expires;
+            Settings.AccessToken = resultModel.AccessToken;
+            Settings.UserId = resultModel.UserId;
+            Settings.UserRoles = resultModel.UserRoles;
+        }
 
 
     }

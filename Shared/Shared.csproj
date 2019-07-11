@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\IN\FilterListDemande.cs" />
+    <Compile Include="API\IN\GetCheckListByIdModel.cs" />
     <Compile Include="API\IN\GetEntityBySiteModel.cs" />
     <Compile Include="API\IN\GetInfoGeneraleByTypeCheckList.cs" />
     <Compile Include="API\IN\GetUserRolesModel.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="MailHelper.cs" />
     <Compile Include="Models\ExportExcelModel.cs" />
     <Compile Include="Models\KpiModel.cs" />
+    <Compile Include="Models\PostResultatExigenceModel.cs" />
     <Compile Include="Models\ResultatCheckList.cs" />
     <Compile Include="Models\ResultatExigenceModel.cs" />
     <Compile Include="Models\RoleElement.cs" />

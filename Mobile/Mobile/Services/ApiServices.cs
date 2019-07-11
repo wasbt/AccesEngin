@@ -21,6 +21,8 @@ namespace Mobile.Services
 {
     internal class ApiServices
     {
+
+
         /// <summary>
         /// Login
         /// </summary>
@@ -54,7 +56,7 @@ namespace Mobile.Services
         private static void SetSettings(JObject jwtDynamic)
         {
             Settings.AccessTokenExpirationDate = jwtDynamic.Value<DateTime>(".expires");
-            Settings.AccessToken = jwtDynamic.Value<string>("access_token"); ;
+            Settings.AccessToken = jwtDynamic.Value<string>("access_token");
             Settings.UserId = jwtDynamic.Value<string>("UserId");
             Settings.UserRoles = jwtDynamic.Value<string>("UserRoles");
         }
@@ -111,6 +113,7 @@ namespace Mobile.Services
             }
 
         }
+
         /// <summary>
         /// Get TypeCheck List
         /// </summary>
@@ -169,6 +172,7 @@ namespace Mobile.Services
             }
 
         }
+
         /// <summary>
         /// Get Demande By Matricule
         /// </summary>
@@ -198,6 +202,7 @@ namespace Mobile.Services
             }
 
         }
+
         public async Task<Model.ResultatExigenceModel> GetResultatExigenceByDemandeAccesId(long DemandeAccesId, string accessToken)
         {
             try
@@ -228,20 +233,18 @@ namespace Mobile.Services
         /// <param name="resultat"></param>
         /// <param name="accessToken"></param>
         /// <returns></returns>
-        public async Task PostResultatExigencesAsync(ResultatCheckList resultat, MediaFile _mediaFile, string accessToken)
+        public async Task PostResultatExigencesAsync(PostResultatExigenceModel resultat, string accessToken)
         {
 
 
-            var jsonToSend = JsonConvert.SerializeObject(resultat);
+            var jsonToSend = JsonConvert.SerializeObject(resultat.ResultatCheckList);
             var multipart = new MultipartFormDataContent();
             var body = new StringContent(jsonToSend);
             multipart.Add(body, "JsonDetails");
-            if (_mediaFile != null)
+            if (resultat.StreamFile != null)
             {
-                var fileName = _mediaFile.Path.Split('/').LastOrDefault();
-
-                multipart.Add(new StreamContent(_mediaFile.GetStream()), "\"file\"",
-                     $"\"{fileName}\"");
+                multipart.Add(new StreamContent(resultat.StreamFile), "\"file\"",
+                     $"\"{resultat.NameFile}\"");
             }
 
             var httpClient = new HttpClient();
@@ -277,6 +280,7 @@ namespace Mobile.Services
 
             var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
         }
+
         /// <summary>
         /// get File
         /// </summary>

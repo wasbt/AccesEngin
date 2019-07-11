@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using Shared;
 using Shared.API.IN;
+using Shared.API.OUT;
+using Shared.DTO;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
@@ -21,26 +23,14 @@ namespace Api.Controllers
     {
 
         #region get All DemadeAcces
-
         // GET: DemadeAcces
-        [HttpPost]
-        [Route("api/demandeAccesList")]
+        [HttpPost,Route("api/demandeAccesList")]
         public async Task<HttpResponseMessage> DemandeAccesList(FilterListDemande filterList)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = biz.DemandeAccesList(filterList);
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
+            var list = biz.DemandeAccesList(filterList);
+            var result = new RESTServiceResponse<List<DemandeAccesDto>>(true, string.Empty, list);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         #endregion
@@ -48,44 +38,24 @@ namespace Api.Controllers
 
         #region get CheckList For controller
 
-        [HttpGet]
-        [Route("api/GetCheckList/{Id}")]
-        public async Task<HttpResponseMessage> GetCheckListAsync(int Id)
+        [HttpPost, Route("api/GetCheckList")]
+        public async Task<HttpResponseMessage> GetCheckListAsync(GetCheckListByIdModel model)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = await biz.GetCheckListAsync(Id);
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            var typeCheckList = await biz.GetCheckListAsync(model.Id);
+            var result = new RESTServiceResponse<TypeCheckListDTO>(true, string.Empty, typeCheckList);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
-        [HttpGet]
-        [Route("api/GetTypeCheckList")]
+        [HttpPost, Route("api/GetTypeCheckList")]
         public async Task<HttpResponseMessage> GetTypeCheckListAsync()
         {
 
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = await biz.GetTypeCheckListAsync();
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
+            var ListtypeCheckList = await biz.GetTypeCheckListAsync();
+            var result = new RESTServiceResponse<List<TypeCheckListDTO>>(true, string.Empty, ListtypeCheckList);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
 
@@ -94,9 +64,8 @@ namespace Api.Controllers
 
         #region post CheckList For control
 
-        [HttpPost]
-        [Route("api/PostResultatExigences")]
-        public async Task<HttpResponseMessage> PostResultatExigencesAsync()
+        [HttpPost,Route("api/PostResultatExigences")]
+        public async Task<HttpResponseMessage> PostResultatExigencesAsync(PostResultatExigenceModel postResultat)
         {
             HttpPostedFileBase postedFile = null;
 
@@ -108,9 +77,9 @@ namespace Api.Controllers
             {
                 foreach (string file in httpRequest.Files)
                 {
-                    var cc = httpRequest.Files[file];
-                    var fileName = cc.FileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
-                    postedFile = new HttpPostedFileWrapper(cc);
+                    var image = httpRequest.Files[file];
+                    var fileName = image.FileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
+                    postedFile = new HttpPostedFileWrapper(image);
                 }
             }
 
@@ -132,64 +101,32 @@ namespace Api.Controllers
 
         #endregion
 
-        [HttpGet]
-        [Route("api/GetResultatExigence/{Id}")]
-        public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(int Id)
+        [HttpPost, Route("api/GetResultatExigence")]
+        public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(GetCheckListByIdModel model)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             ResultatExigenceBiz biz = new ResultatExigenceBiz(context, WebApiApplication.log);
-
-            var result = await biz.GetResultatExigenceByDemandeAccesId(Id);
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
+            var ControleResultat = await biz.GetResultatExigenceByDemandeAccesId(model.Id);
+            var result = new RESTServiceResponse<ResultatExigenceModel>(true, string.Empty, ControleResultat);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpGet]
-        [Route("api/DemandeAccesByMatricule/{Matricule}")]
-        public async Task<HttpResponseMessage> DemandeAccesByMatricule(string Matricule)
+        [HttpPost,Route("api/DemandeAccesByMatricule")]
+        public async Task<HttpResponseMessage> DemandeAccesByMatricule(GetCheckListByIdModel model)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = await biz.DemandeAccesByMatricule(Matricule);
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
+            var DemandeAcces = await biz.DemandeAccesByMatricule(model.Matricule);
+            var result = new RESTServiceResponse<List<DemandeAccesDto>>(true, string.Empty, DemandeAcces);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
 
-        [HttpGet]
-        [Route("api/GetDetailsDemandeById/{Id}")]
-        public async Task<HttpResponseMessage> GetDetailsDemandeById(int Id)
+        [HttpPost,Route("api/GetDetailsDemandeById")]
+        public async Task<HttpResponseMessage> GetDetailsDemandeById(GetCheckListByIdModel model)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = await biz.GetDetailsDemandeByIdAsync(Id);
-
-            if (result != null)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            var detailsDemande = await biz.GetDetailsDemandeByIdAsync(model.Id);
+            var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty, detailsDemande);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 

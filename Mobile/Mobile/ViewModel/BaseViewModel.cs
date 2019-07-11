@@ -84,7 +84,7 @@ namespace Mobile.ViewModel
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        public virtual void OnAppearingAsync() {
+        public virtual void OnAppearing() {
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += (s, e) =>
             {

@@ -52,28 +52,28 @@ namespace Mobile.ViewModel
                 OnPropertyChanged();
             }
         }
-        public override void OnAppearingAsync()
+        public override void OnAppearing()
         {
 
-            base.OnAppearingAsync();
+            base.OnAppearing();
             MessagingCenter.Subscribe<FilterListVM, FilterListDemande>(this, Constants.MESSAGE_FilterList, async (sender, filterModel) =>
             {
                 Items.Clear();
                 _filterListDemande = filterModel;
-                StartLoadSomething(_filterListDemande);
+                GetListDemende(_filterListDemande);
             });
             MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList, async (sender) =>
             {
 
                 Items.Clear();
-                StartLoadSomething(_filterListDemande);
+                GetListDemende(_filterListDemande);
 
             });
             MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, async (callback) =>
             {
 
                 Items.Clear();
-                StartLoadSomething(_filterListDemande);
+                GetListDemende(_filterListDemande);
 
             });
 
@@ -94,7 +94,7 @@ namespace Mobile.ViewModel
               _filterListDemande = new FilterListDemande();
             Items = new ObservableCollection<DemandeAcces>();
 
-            StartLoadSomething(_filterListDemande);
+            GetListDemende(_filterListDemande);
 
 
         }
@@ -122,11 +122,11 @@ namespace Mobile.ViewModel
             }
         }
 
-        private async void StartLoadSomething(FilterListDemande _filterListDemande)
+        private async void GetListDemende(FilterListDemande _filterListDemande)
         {
 
             // Load data to property.
-            Items = new ObservableCollection<DemandeAcces>(await _apiServices.GetDemandeAccesListAsync(Settings.AccessToken, _filterListDemande));
+            Items = new ObservableCollection<DemandeAcces>((await Api.GetDemandeAccesListAsync(_filterListDemande)).data);
         }
 
     }

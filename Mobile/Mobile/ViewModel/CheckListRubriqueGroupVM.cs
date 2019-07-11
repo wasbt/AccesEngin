@@ -2,6 +2,7 @@
 using Mobile.Extensions;
 using Mobile.Helpers;
 using Mobile.Model;
+using Mobile.Model.TableSql;
 using Mobile.Services;
 using Mobile.View;
 using Mobile.View.PopUp;
@@ -51,10 +52,10 @@ namespace Mobile.ViewModel
         {
             get
             {
-                return new Command<object>(async (key) =>
+                return new Command<long>(async (key) =>
                 {
                     var accessToken = Settings.AccessToken;
-                    TypeCheckList = await _apiServices.GetCheckListByIdAsync(key.ToString(), accessToken);
+                    TypeCheckList = (await Api.GetCheckListByIdAsync(key)).data;
                     Rubriques = TypeCheckList.Rubriques;
                     await ExecuteLoadItemsCommandAsync();
                 });
@@ -157,8 +158,9 @@ namespace Mobile.ViewModel
             {
                 return new Command<ObservableCollection<CheckListRubriqueVM>>(async (Rubriques) =>
                 {
-
-
+                    byte[] imageByte = null;
+                    string namefile = null;
+                    var resultat = new PostResultatExigenceModel();
                     ResultatCheckList = new ResultatCheckList();
                     ResultatCheckList.ResultatsList = new List<Resultats>();
                     //  var data = Rubrique;
@@ -198,36 +200,53 @@ namespace Mobile.ViewModel
                                        dismissiveText: "Non");
                     if (resultDialog == true)
                     {
+                        resultat.ResultatCheckList = ResultatCheckList;
+                        if (_mediaFile != null)
+                        {
+                            var ImageStream = _mediaFile.GetStream();
+                            resultat.NameFile = namefile = _mediaFile.Path.Split('\\').LastOrDefault()?.Split('/').LastOrDefault();
+                            //resultat.StreamFile = ImageStream;
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                resultat.StreamFile.CopyTo(memoryStream);
+                                imageByte = memoryStream.ToArray();
+                            }
+                            resultat.ByteFile = imageByte;
+
+                            _mediaFile.Dispose();
+                        }
+
                         if (Xamarin.Essentials.Connectivity.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
                         {
-                            //if (_mediaFile != null)
-                            //{
-                            //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                            //}
-                            //else
-                            //{
-                            //    await _apiServices.PostResultatExigencesAsync(ResultatCheckList, _mediaFile, Settings.AccessToken);
-                            //}
-
+                            await Api.PostResultatExigencesAsync(resultat);
                         }
                         else
                         {
                             try
                             {
-                               
-                                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
-                                        var result = new PostResultatExigenceModel()
-                                        {
-                                            ResultatExigencJson = json
-                                        };
-                                using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
-                                {
-                                    conn.CreateTable<PostResultatExigenceModel>();
-                                    int itemsInserted = conn.Insert(result);
 
-                                conn.CreateTable<PostResultatExigenceModel>();
-                               var notes = conn.Table<PostResultatExigenceModel>().ToList();
+                                if (resultat.StreamFile != null)
+                                {
+                                    using (var memoryStream = new MemoryStream())
+                                    {
+                                        resultat.StreamFile.CopyTo(memoryStream);
+                                        imageByte = memoryStream.ToArray();
+                                    }
                                 }
+                                var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
+                                var result = new TableResultatExigenceModel();
+                                result.ResultatExigencJson = json;
+                                result.ItemData = imageByte;
+                                result.FileName = resultat.NameFile;
+
+                                //using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+                                //{
+                                //    conn.CreateTable<PostResultatExigenceModel>();
+                                //    int itemsInserted = conn.Insert(result);
+
+                                //    conn.CreateTable<PostResultatExigenceModel>();
+                                //    var notes = conn.Table<PostResultatExigenceModel>().ToList();
+                                //}
                             }
                             catch (Exception e)
                             {

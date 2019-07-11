@@ -40,7 +40,7 @@ namespace Mobile.ViewModel
                     if (text.Length >= 1)
                     {
                         var accessToken = Settings.AccessToken;
-                        Items = await _apiServices.DemandeAccesByMatricule(text, accessToken);
+                        Items = (await Api.DemandeAccesByMatricule(text)).data;
                     }
                     else
                     {

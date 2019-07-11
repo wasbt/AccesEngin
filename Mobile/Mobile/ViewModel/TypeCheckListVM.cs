@@ -55,10 +55,10 @@ namespace Mobile.ViewModel
         {
             get
             {
-                return new Command<object>(async (key) =>
+                return new Command<long>(async (key) =>
                 {
                     var accessToken = Settings.AccessToken;
-                    TypeCheckList = await _apiServices.GetCheckListByIdAsync(key.ToString(),accessToken);
+                    TypeCheckList = (await Api.GetCheckListByIdAsync(key)).data;
                     Rubriques = TypeCheckList.Rubriques;
                 });
             }

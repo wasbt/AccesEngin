@@ -46,7 +46,7 @@ namespace Mobile.ViewModel
             Id = id;
         }
 
-        public override async void OnAppearingAsync()
+        public override async void OnAppearing()
         {
             MessagingCenter.Subscribe<CheckListRubriqueGroupVM>(this, Constants.MESSAGE_GoToDetail, async (sender) =>
             {
@@ -56,7 +56,7 @@ namespace Mobile.ViewModel
             });
 
             DemandeDetailCommand?.Execute(Id);
-            base.OnAppearingAsync();
+            base.OnAppearing();
 
         }
 
@@ -200,8 +200,7 @@ namespace Mobile.ViewModel
                         try
                         {
                             UserDialogs.Instance.ShowLoading("Chargement...");
-                            var accessToken = Settings.AccessToken;
-                            DemandeDetail = await _apiServices.GetDetailsDemandeByIdAsync(Id, accessToken);
+                            DemandeDetail = (await Api.GetDetailsDemandeByIdAsync(Id)).data;
                             UserDialogs.Instance.HideLoading();
                         }
                         catch (Exception)

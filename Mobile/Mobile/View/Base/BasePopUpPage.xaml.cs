@@ -29,7 +29,7 @@ namespace Mobile.View.Base
             var bindingContext = BindingContext as BaseViewModel;
 
             if (bindingContext != null)
-                bindingContext.OnAppearingAsync();
+                bindingContext.OnAppearing();
 
         }
 

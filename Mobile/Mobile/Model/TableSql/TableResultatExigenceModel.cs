@@ -6,14 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mobile.Model
+namespace Mobile.Model.TableSql
 {
-    public class PostResultatExigenceModel
+    public class TableResultatExigenceModel
     {
         [JsonProperty("id")]
         [PrimaryKey, AutoIncrement]
         public long Id { get; set; }
 
         public string ResultatExigencJson { get; set; }
+
+        public byte[] ItemData { get; set; }
+
+        public string FileName { get; set; }
+
     }
 }

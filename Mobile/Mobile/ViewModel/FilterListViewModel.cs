@@ -78,9 +78,9 @@ namespace Mobile.ViewModel
                 });
             }
         }
-        public async override void OnAppearingAsync()
+        public async override void OnAppearing()
         {
-            base.OnAppearingAsync();
+            base.OnAppearing();
             await  FillPicker();
         }
         private async Task FillPicker()
@@ -90,7 +90,7 @@ namespace Mobile.ViewModel
                 DemandeStatus.Accepter,
                 DemandeStatus.Refuser,
             };
-            TypeCheckList = await _apiServices.GetTypeCheckListAsync(Settings.AccessToken);
+            TypeCheckList = (await Api.GetTypeCheckListAsync()).data;
         }
 
 
