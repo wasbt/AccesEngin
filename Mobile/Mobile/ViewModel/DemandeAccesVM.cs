@@ -1,5 +1,4 @@
 ﻿using Mobile.Extensions;
-using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
 using Mobile.View.PopUp;
@@ -8,12 +7,8 @@ using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using Shared.API.IN;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Extended;
 
 namespace Mobile.ViewModel
 {
@@ -86,21 +81,18 @@ namespace Mobile.ViewModel
             MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList);
         }
 
-        
+
 
 
         public DemandeAccesVM()
         {
-              _filterListDemande = new FilterListDemande();
+            _filterListDemande = new FilterListDemande();
             Items = new ObservableCollection<DemandeAcces>();
-
             GetListDemende(_filterListDemande);
-
-
         }
 
 
-       
+
 
         public bool IsWorking
         {
@@ -124,9 +116,15 @@ namespace Mobile.ViewModel
 
         private async void GetListDemende(FilterListDemande _filterListDemande)
         {
+            var response = (await Api.GetDemandeAccesListAsync(_filterListDemande));
 
-            // Load data to property.
-            Items = new ObservableCollection<DemandeAcces>((await Api.GetDemandeAccesListAsync(_filterListDemande)).data);
+            if (response?.success == true)
+            {
+                 Items = new ObservableCollection<DemandeAcces>(response.data);
+                return;
+            }
+
+            Items = new ObservableCollection<DemandeAcces>();
         }
 
     }

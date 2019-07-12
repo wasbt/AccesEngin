@@ -25,7 +25,8 @@ namespace Mobile.Services
         #region Get List Demande
         public static async Task<RESTServiceResponse<List<DemandeAcces>>> GetDemandeAccesListAsync(FilterListDemande filterListDemande)
         {
-            return await RESTHelper.GetRequest<List<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: filterListDemande);
+            var cc = await RESTHelper.GetRequest<List<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: filterListDemande);
+            return cc;
         }
         #endregion
 
@@ -76,49 +77,25 @@ namespace Mobile.Services
         {
             return await RESTHelper.GetRequest<Model.ResultatExigenceModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/PostResultatExigences", HttpVerbs.POST, postObject: resultat);
         }
+        #endregion 
+
+        #region Valider Demande
+        public static async Task<RESTServiceResponse<bool>> ValiderDemandeAsync(ValiderDemande validerDemande)
+        {
+            return await RESTHelper.GetRequest<bool>(Settings.AccessToken, Constants.BaseApiAddress + "api/ValiderDemande", HttpVerbs.POST, postObject: validerDemande);
+        }
+        #endregion
+        #region Download File
+        public static async Task<RESTServiceResponse<bool>> DownloadAsync(long Id)
+        {
+            var model = new GetCheckListByIdModel();
+            model.Id = Id;
+            return await RESTHelper.GetRequest<bool>(Settings.AccessToken, Constants.BaseApiAddress + "api/File", HttpVerbs.POST, postObject: model);
+        }
         #endregion
 
 
 
-        //#region Toggle commission availability
-        //public static async Task<RESTServiceResponse<bool>> ToggleCommissionAvailability(ToggleCommissionModel model)
-        //{
-        //    return await RESTHelper.GetRequest<bool>(Settings.AccessToken, AppUrls.ToggleCommissionAvailability, HttpVerbs.POST, postObject: model);
-        //}
-        //#endregion
-
-        //#region Save project results
-        //public static async Task<RESTServiceResponse<bool>> SaveProjectResults(ProjectResultValueModel model)
-        //{
-        //    return await RESTHelper.GetRequest<bool>(Settings.AccessToken, AppUrls.SaveProjectResultValues, HttpVerbs.POST, postObject: model);
-        //}
-        //#endregion
-
-        //#region Get project details
-        //public static async Task<RESTServiceResponse<ProjectDetailsElement>> GetProjectDetails(ProjectDetailsFilterModel model)
-        //{
-        //    return await RESTHelper.GetRequest<ProjectDetailsElement>(Settings.AccessToken, AppUrls.GetProjectDetails, HttpVerbs.POST, postObject: model);
-        //}
-        //#endregion
-
-        //#region Get projects list
-        //public static async Task<RESTServiceResponse<List<ProjectElement>>> GetProjectsList(ProjectFilterModel model)
-        //{
-        //    var response = await RESTHelper.GetRequest<List<ProjectElement>>(Settings.AccessToken, AppUrls.GetProjectsList, HttpVerbs.POST, postObject: model);
-
-        //    return response;
-        //}
-        //#endregion
-
-        //#region Get commissions list
-        //public static async Task<RESTServiceResponse<List<CommissionElement>>> GetCommissionsList(CommissionFilterModel model)
-        //{
-        //    var response = await RESTHelper.GetRequest<List<CommissionElement>>(Settings.AccessToken, AppUrls.GetCommissionsList, HttpVerbs.POST, postObject: model);
-
-
-        //    return response;
-        //}
-        //#endregion
-
+        
     }
 }

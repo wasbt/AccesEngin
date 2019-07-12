@@ -61,7 +61,6 @@ namespace Mobile.Services
             Settings.UserRoles = jwtDynamic.Value<string>("UserRoles");
         }
 
-
         /// <summary>
         /// Get List Demande
         /// </summary>

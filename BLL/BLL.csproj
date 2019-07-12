@@ -96,6 +96,7 @@
     <Compile Include="Biz\SitesEntitiesBiz.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Common\CommonBiz.cs" />
+    <Compile Include="Helpers\MemoryPostedFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

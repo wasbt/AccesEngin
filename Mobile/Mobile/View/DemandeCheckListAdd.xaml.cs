@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace Mobile.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DemandeCheckListAdd : BaseView
+	public partial class DemandeCheckListAdd : CoolContentPage
     {
         //TypeCheckListVM ViewModel;
         private CheckListRubriqueGroupVM ViewModel
@@ -29,6 +29,7 @@ namespace Mobile.View
         public DemandeCheckListAdd ()
 		{
 			InitializeComponent ();
+          
         }
 
         protected override void OnAppearing()
@@ -66,6 +67,21 @@ namespace Mobile.View
                     AddControlList.ScrollTo((BindingContext as CheckListRubriqueGroupVM)?.InvalidItem, ScrollToPosition.Center, false);
                 }
             };
+            if (EnableBackButtonOverride)
+            {
+                this.CustomBackButtonAction = async () =>
+                {
+                    var result = await this.DisplayAlert(null,
+                        "Are you sure " +
+                        "you want to go back?",
+                        "Yes go back", "No");
+
+                    if (result)
+                    {
+                        await Navigation.PopAsync(true);
+                    }
+                };
+            }
         }
 
     }

@@ -63,42 +63,17 @@ namespace Api.Controllers
 
 
         #region post CheckList For control
-
         [HttpPost,Route("api/PostResultatExigences")]
         public async Task<HttpResponseMessage> PostResultatExigencesAsync(PostResultatExigenceModel postResultat)
         {
-            HttpPostedFileBase postedFile = null;
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-            var httpRequest = HttpContext.Current.Request;
-            if (httpRequest.Files.Count > 0)
-            {
-                foreach (string file in httpRequest.Files)
-                {
-                    var image = httpRequest.Files[file];
-                    var fileName = image.FileName.Split('\\').LastOrDefault().Split('/').LastOrDefault();
-                    postedFile = new HttpPostedFileWrapper(image);
-                }
-            }
-
-            var content = httpRequest.Form.GetValues("JsonDetails").FirstOrDefault();
-
-            var resultat = JsonConvert.DeserializeObject<ResultatCheckList>(content);
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
 
-            var result = await biz.PostResultatExigencesAsync(resultat, postedFile, ConstsAccesEngin.ContainerName, ConstsAccesEngin.ContainerName);
+            var save = await biz.PostResultatExigencesAsync(postResultat);
+            var result = new RESTServiceResponse<List<TypeCheckListDTO>>(true, string.Empty);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
-            if (result)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
 
         }
-
-
         #endregion
 
         [HttpPost, Route("api/GetResultatExigence")]
@@ -130,25 +105,15 @@ namespace Api.Controllers
 
         }
 
-        [ResponseType(typeof(ValiderDemande))]
-        [Route("api/ValiderDemande")]
+        [HttpPost, Route("api/ValiderDemande")]
         public async Task<HttpResponseMessage> ValiderDemandeAsync(ValiderDemande resultat)
         {
-
-            if (!ModelState.IsValid)
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var result = await biz.ValiderDemande(resultat, CurrentUserId);
-
-            if (result)
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
+            var Isvalid = await biz.ValiderDemande(resultat, CurrentUserId);
+            var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
         [HttpGet, AllowAnonymous, Route("api/File/{id}")]
         public async Task<HttpResponseMessage> GetProjectImage(long id)
         {

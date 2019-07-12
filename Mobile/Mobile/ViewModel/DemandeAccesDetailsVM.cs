@@ -144,8 +144,7 @@ namespace Mobile.ViewModel
                             StatutDemandeId = (int)DemandeStatus.Refuser
 
                         };
-                        var accessToken = Settings.AccessToken;
-                        await _apiServices.ValiderDemandeAsync(result, accessToken);
+                        await Api.ValiderDemandeAsync(result);
                         var mdp = Application.Current.MainPage as MasterDetailPage;
                         MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList);
                         await mdp.Detail.Navigation.PopAsync(true);
@@ -172,8 +171,7 @@ namespace Mobile.ViewModel
                     };
                     try
                     {
-                        var accessToken = Settings.AccessToken;
-                        await _apiServices.ValiderDemandeAsync(result, accessToken);
+                        await Api.ValiderDemandeAsync(result);
                         MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
                         var mdp = Application.Current.MainPage as MasterDetailPage;
                         await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));

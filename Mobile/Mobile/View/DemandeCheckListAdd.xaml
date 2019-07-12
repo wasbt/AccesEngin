@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Base:BaseView
+<Mobile:CoolContentPage
     x:Class="Mobile.View.DemandeCheckListAdd"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
+    xmlns:Mobile="clr-namespace:Mobile"
     xmlns:View="clr-namespace:Mobile.View"
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     x:Name="currentPage"
-    Title="Contrôle">
+    Title="Contrôle"
+    EnableBackButtonOverride="True">
     <ContentPage.Content>
         <Grid>
 
@@ -91,34 +93,4 @@
             </StackLayout>
         </Grid>
     </ContentPage.Content>
-</Base:BaseView>
-
-<!--<ContentPage.Content>
-        <StackLayout Spacing="0">
-            <StackLayout Margin="16,16,16,0">
-                <Label Text="{Binding TypeCheckList.Name}"  />
-                <Label Text="{Binding Rubriques.Name}"  />
-
-            </StackLayout>
-
-            <ListView ItemsSource="{Binding TypeCheckList.Rubriques}"   HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell Height="60">
-                            <StackLayout Orientation="Horizontal">
-                                <BoxView BackgroundColor="Blue" WidthRequest="10" Margin="0,0,0,10" />
-                                <StackLayout BackgroundColor="White" Orientation="Vertical" Margin="5,5,10,5">
-                                    <Label Text="{Binding Name}" />
-                                    <StackLayout BackgroundColor="White" Orientation="Vertical" Margin="5,5,10,5">
-                                        <Label Text="{Binding Name}" />
-
-                                    </StackLayout>
-                                </StackLayout>
-                            </StackLayout>
-                        </ViewCell>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
-    </ContentPage.Content>-->
+</Mobile:CoolContentPage>

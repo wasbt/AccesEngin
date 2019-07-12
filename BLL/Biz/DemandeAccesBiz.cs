@@ -17,6 +17,7 @@ using Shared.ENUMS;
 using Shared.API.OUT;
 using System.IO;
 using Shared.API.IN;
+using BLL.Helpers;
 
 namespace BLL.Biz
 {
@@ -96,7 +97,7 @@ namespace BLL.Biz
             return typeCheckListDTO;
         }
 
-        public async Task<bool> PostResultatExigencesAsync(ResultatCheckList resultat, HttpPostedFileBase uploadedFile, string ContainerName, string SourceName)
+        public async Task<bool> PostResultatExigencesAsync(PostResultatExigenceModel postResultat)
         {
             byte[] fileData = null;
             long SourceId = 0;
@@ -104,24 +105,24 @@ namespace BLL.Biz
             try
             {
                 #region Update Demande
-                var demande = await context.DemandeAccesEngin.FindAsync(resultat.DemandeAccesEnginId);
-                demande.IsAutorise = resultat.IsAutorise;
+                var demande = await context.DemandeAccesEngin.FindAsync(postResultat.ResultatCheckList.DemandeAccesEnginId);
+                demande.IsAutorise = postResultat.ResultatCheckList.IsAutorise;
                 #endregion
 
                 #region Save entete resultat Exigence 
                 var resultatEntete = new ResultatControleEntete();
-                resultatEntete.DemandeAccesEnginId = resultat.DemandeAccesEnginId;
-                resultatEntete.CreatedBy = resultat.CreatedBy;
+                resultatEntete.DemandeAccesEnginId = postResultat.ResultatCheckList.DemandeAccesEnginId;
+                resultatEntete.CreatedBy = postResultat.ResultatCheckList.CreatedBy;
                 resultatEntete.CreatedOn = DateTime.Now;
                 #endregion
 
                 context.ResultatControleEntete.Add(resultatEntete);
-                await context.SaveChangesAsync();
+               await context.SaveChangesAsync();
 
                 SourceId = resultatEntete.Id;
 
                 #region Save resultat Exigence
-                foreach (var resultatEx in resultat.ResultatsList)
+                foreach (var resultatEx in postResultat.ResultatCheckList.ResultatsList)
                 {
                     var controlResultatExigence = new ResultatControleDetail()
                     {
@@ -140,7 +141,13 @@ namespace BLL.Biz
                 #region Ajout de la pièce jointe dans le contexte
                 var biz = new CommonBiz(context, log);
 
-                fileId = await biz.SaveAppFile(uploadedFile, ContainerName, SourceId.ToString(), SourceName);
+                var stream = new MemoryStream(postResultat.ByteFile);
+
+                var memoryPostedFile = new MemoryPostedFile(stream, "image/jpeg", postResultat.NameFile);
+
+                var objFile =  memoryPostedFile;
+
+                fileId = await biz.SaveAppFile(objFile, ConstsAccesEngin.ContainerName, SourceId.ToString(), ConstsAccesEngin.ContainerName);
 
                 resultatEntete.AppFileId = fileId;
                 await context.SaveChangesAsync();

@@ -1,6 +1,9 @@
 ﻿using Mobile.Interfaces;
+using Mobile.Services;
 using Plugin.Toast;
 using PropertyChanged;
+using Shared.Models;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -84,7 +87,8 @@ namespace Mobile.ViewModel
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-        public virtual void OnAppearing() {
+        public virtual void OnAppearing()
+        {
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += (s, e) =>
             {
@@ -93,6 +97,12 @@ namespace Mobile.ViewModel
                     MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
                                                msDuration: MaterialSnackbar.DurationLong,
                                                configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
+                    using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+                    {
+                        conn.CreateTable<PostResultatExigenceModel>();
+                        var resultat = conn.Table<PostResultatExigenceModel>()?.LastOrDefault();
+                        Task.Run(async () => await Api.PostResultatExigencesAsync(resultat));
+                    }
                 }
                 else
                 {

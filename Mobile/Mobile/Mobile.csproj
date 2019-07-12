@@ -111,6 +111,9 @@
     <None Update="View\PopUp\PopUpFilterListView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <None Update="View\PopUp\PopUpSuccessAnimationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="View\SearchResultsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>

@@ -201,20 +201,8 @@ namespace Mobile.ViewModel
                     if (resultDialog == true)
                     {
                         resultat.ResultatCheckList = ResultatCheckList;
-                        if (_mediaFile != null)
-                        {
-                            var ImageStream = _mediaFile.GetStream();
-                            resultat.NameFile = namefile = _mediaFile.Path.Split('\\').LastOrDefault()?.Split('/').LastOrDefault();
-                            //resultat.StreamFile = ImageStream;
-                            using (var memoryStream = new MemoryStream())
-                            {
-                                resultat.StreamFile.CopyTo(memoryStream);
-                                imageByte = memoryStream.ToArray();
-                            }
-                            resultat.ByteFile = imageByte;
 
-                            _mediaFile.Dispose();
-                        }
+                        ImageToByte(ref imageByte, ref namefile, resultat);
 
                         if (Xamarin.Essentials.Connectivity.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
                         {
@@ -224,29 +212,7 @@ namespace Mobile.ViewModel
                         {
                             try
                             {
-
-                                if (resultat.StreamFile != null)
-                                {
-                                    using (var memoryStream = new MemoryStream())
-                                    {
-                                        resultat.StreamFile.CopyTo(memoryStream);
-                                        imageByte = memoryStream.ToArray();
-                                    }
-                                }
-                                var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
-                                var result = new TableResultatExigenceModel();
-                                result.ResultatExigencJson = json;
-                                result.ItemData = imageByte;
-                                result.FileName = resultat.NameFile;
-
-                                //using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
-                                //{
-                                //    conn.CreateTable<PostResultatExigenceModel>();
-                                //    int itemsInserted = conn.Insert(result);
-
-                                //    conn.CreateTable<PostResultatExigenceModel>();
-                                //    var notes = conn.Table<PostResultatExigenceModel>().ToList();
-                                //}
+                                SaveDataToDBSqlLite(imageByte, resultat);
                             }
                             catch (Exception e)
                             {
@@ -261,6 +227,42 @@ namespace Mobile.ViewModel
 
 
                 });
+            }
+        }
+
+        private void SaveDataToDBSqlLite(byte[] imageByte, PostResultatExigenceModel resultat)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
+            var result = new TableResultatExigenceModel();
+            result.ResultatExigencJson = json;
+            result.ItemData = imageByte;
+            result.FileName = resultat.NameFile;
+
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+            {
+                conn.CreateTable<PostResultatExigenceModel>();
+                int itemsInserted = conn.Insert(result);
+
+                conn.CreateTable<PostResultatExigenceModel>();
+                var notes = conn.Table<PostResultatExigenceModel>().ToList();
+            }
+        }
+
+        private void ImageToByte(ref byte[] imageByte, ref string namefile, PostResultatExigenceModel resultat)
+        {
+            if (_mediaFile != null)
+            {
+                var ImageStream = _mediaFile.GetStream();
+                resultat.NameFile = namefile = _mediaFile.Path.Split('\\').LastOrDefault()?.Split('/').LastOrDefault();
+                //resultat.StreamFile = ImageStream;
+                using (var memoryStream = new MemoryStream())
+                {
+                    ImageStream.CopyTo(memoryStream);
+                    imageByte = memoryStream.ToArray();
+                }
+                resultat.ByteFile = imageByte;
+
+                _mediaFile.Dispose();
             }
         }
 
