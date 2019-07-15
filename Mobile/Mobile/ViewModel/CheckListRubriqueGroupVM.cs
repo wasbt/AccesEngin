@@ -212,7 +212,7 @@ namespace Mobile.ViewModel
                         {
                             try
                             {
-                                SaveDataToDBSqlLite(imageByte, resultat);
+                                await SaveDataToDBSqlLiteAsync(imageByte, resultat);
                             }
                             catch (Exception e)
                             {
@@ -230,7 +230,7 @@ namespace Mobile.ViewModel
             }
         }
 
-        private void SaveDataToDBSqlLite(byte[] imageByte, PostResultatExigenceModel resultat)
+        private async Task SaveDataToDBSqlLiteAsync(byte[] imageByte, PostResultatExigenceModel resultat)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
             var result = new TableResultatExigenceModel();
@@ -238,14 +238,17 @@ namespace Mobile.ViewModel
             result.ItemData = imageByte;
             result.FileName = resultat.NameFile;
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+            try
             {
-                conn.CreateTable<PostResultatExigenceModel>();
-                int itemsInserted = conn.Insert(result);
+                var test = await App.Database.SaveItemAsync(result);
 
-                conn.CreateTable<PostResultatExigenceModel>();
-                var notes = conn.Table<PostResultatExigenceModel>().ToList();
+                var testlist =  App.Database.GetItemsAsync();
             }
+            catch (Exception e)
+            {
+
+            }
+
         }
 
         private void ImageToByte(ref byte[] imageByte, ref string namefile, PostResultatExigenceModel resultat)

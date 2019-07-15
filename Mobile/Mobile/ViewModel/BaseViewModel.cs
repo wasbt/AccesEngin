@@ -1,5 +1,7 @@
 ﻿using Mobile.Interfaces;
+using Mobile.Model.TableSql;
 using Mobile.Services;
+using Newtonsoft.Json;
 using Plugin.Toast;
 using PropertyChanged;
 using Shared.Models;
@@ -90,23 +92,48 @@ namespace Mobile.ViewModel
         public virtual void OnAppearing()
         {
 
-            Xamarin.Essentials.Connectivity.ConnectivityChanged += (s, e) =>
+            Xamarin.Essentials.Connectivity.ConnectivityChanged += async (s, e) =>
             {
                 if (e.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
                 {
-                    MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
-                                               msDuration: MaterialSnackbar.DurationLong,
-                                               configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
+                    await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
+                                                msDuration: MaterialSnackbar.DurationLong,
+                                                configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
                     using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
                     {
-                        conn.CreateTable<PostResultatExigenceModel>();
-                        var resultat = conn.Table<PostResultatExigenceModel>()?.LastOrDefault();
-                        Task.Run(async () => await Api.PostResultatExigencesAsync(resultat));
+                        var resultat = App.Database.GetItemsAsync().LastOrDefault();
+                       var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
+                        if (resultat != null)
+                        {
+                            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours..."))
+                            {
+
+
+                                var resultats = new PostResultatExigenceModel();
+                                var ResultatCheckList = JsonConvert.DeserializeObject<ResultatCheckList>(resultat.ResultatExigencJson);
+                                resultats.ResultatCheckList = ResultatCheckList;
+                                resultats.ByteFile = resultat.ItemData;
+                                resultats.NameFile = resultat.FileName;
+                                resultatApi = await Api.PostResultatExigencesAsync(resultats);
+                               
+                            }
+
+                            if (resultatApi.success)
+                                {
+                                    await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete");
+                                    var test = App.Database.DeleteItemAsync(resultat);
+                                }
+                                else
+                                {
+                                    await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation");
+                                }
+
+                        }
                     }
                 }
                 else
                 {
-                    MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
+                    await MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
                                               msDuration: MaterialSnackbar.DurationLong,
                                               configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#DC3545") });
 

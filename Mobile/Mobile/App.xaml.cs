@@ -1,11 +1,19 @@
-﻿using Mobile.Helpers;
+﻿using Mobile.Data;
+using Mobile.Helpers;
 using Mobile.Interfaces;
 using Mobile.Services;
 using Mobile.View;
 using Mobile.View.Menu;
+using Newtonsoft.Json;
+using Shared.Models;
+using SQLite;
 using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XF.Material.Forms.UI.Dialogs;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mobile
@@ -17,6 +25,8 @@ namespace Mobile
         public static MasterDetailPage MasterDetailPage;
 
         public static string DatabasePath = string.Empty;
+
+        static Database database;
 
         public App(string databasePath)
         {
@@ -43,6 +53,7 @@ namespace Mobile
                 Detail = new NavigationPage(new ListDemandeView()),
             };
 
+
             #region Login Case
 
             if (AppHelper.IsTokenStillValid)
@@ -61,12 +72,26 @@ namespace Mobile
             {
                 MainPage = new NavigationPage(new Login());
             }
+           
 
             #endregion
             DatabasePath = databasePath;
 
         }
 
+     
+
+        public static Database Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new Database(DatabasePath);
+                }
+                return database;
+            }
+        }
         protected override void OnStart()
         {
             // Handle when your app starts

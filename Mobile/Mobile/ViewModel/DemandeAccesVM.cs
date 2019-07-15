@@ -2,25 +2,29 @@
 using Mobile.Model;
 using Mobile.Services;
 using Mobile.View.PopUp;
+using Newtonsoft.Json;
 using PropertyChanged;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using Shared.API.IN;
+using Shared.Models;
+using SQLite;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
 
 namespace Mobile.ViewModel
 {
     [AddINotifyPropertyChangedInterface]
     public class DemandeAccesVM : BaseViewModel
     {
-        private static readonly IPopupNavigation _popupNavigation;
         public bool isNeedLoadMore = false;
         private bool _isShowLoading = false;
         private const int PageSize = 10;
         private readonly ApiServices _apiServices = new ApiServices();
-        private ObservableCollection<DemandeAcces> demandeAcces;
         public static readonly BindableProperty IsWorkingProperty =
          BindableProperty.Create(nameof(IsWorking), typeof(bool), typeof(DemandeAccesVM), default(bool));
         //public DemandeAccesVM()
@@ -47,24 +51,39 @@ namespace Mobile.ViewModel
                 OnPropertyChanged();
             }
         }
+
+
+
         public override void OnAppearing()
         {
 
             base.OnAppearing();
-            MessagingCenter.Subscribe<FilterListVM, FilterListDemande>(this, Constants.MESSAGE_FilterList, async (sender, filterModel) =>
+            if (AppHelper.IsConnected)
             {
-                Items.Clear();
-                _filterListDemande = filterModel;
-                GetListDemende(_filterListDemande);
-            });
-            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList, async (sender) =>
+                Task.Run(() => AsyncData());
+            }
+            else
+            {
+                MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion");
+            }
+
+            Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChangedAsync;
+
+     
+            MessagingCenter.Subscribe<FilterListVM, FilterListDemande>(this, Constants.MESSAGE_FilterList, (sender, filterModel) =>
+        {
+            Items.Clear();
+            _filterListDemande = filterModel;
+            GetListDemende(_filterListDemande);
+        });
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList, (sender) =>
             {
 
                 Items.Clear();
                 GetListDemende(_filterListDemande);
 
             });
-            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, async (callback) =>
+            MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, (callback) =>
             {
 
                 Items.Clear();
@@ -72,12 +91,31 @@ namespace Mobile.ViewModel
 
             });
 
+            _filterListDemande = new FilterListDemande();
+            Items = new ObservableCollection<DemandeAcces>();
+            GetListDemende(_filterListDemande);
+        }
 
+        private async void Connectivity_ConnectivityChangedAsync(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs e)
+        {
+            {
+                if (e.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
+                {
+                    _filterListDemande = new FilterListDemande();
+                    Items = new ObservableCollection<DemandeAcces>();
+                    GetListDemende(_filterListDemande);
+                }
+                else
+                {
+                    await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion");
+                }
+            };
         }
 
         public override void OnDisappearing()
         {
             base.OnDisappearing();
+            Xamarin.Essentials.Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChangedAsync;
             MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList);
         }
 
@@ -86,9 +124,7 @@ namespace Mobile.ViewModel
 
         public DemandeAccesVM()
         {
-            _filterListDemande = new FilterListDemande();
-            Items = new ObservableCollection<DemandeAcces>();
-            GetListDemende(_filterListDemande);
+
         }
 
 
@@ -120,11 +156,46 @@ namespace Mobile.ViewModel
 
             if (response?.success == true)
             {
-                 Items = new ObservableCollection<DemandeAcces>(response.data);
+                Items = new ObservableCollection<DemandeAcces>(response.data);
                 return;
             }
 
             Items = new ObservableCollection<DemandeAcces>();
+        }
+
+        private static async Task AsyncData()
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
+            {
+                var resultat = App.Database.GetItemsAsync().LastOrDefault();
+                var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
+                if (resultat != null)
+                {
+                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours..."))
+                    {
+
+
+                        var resultats = new PostResultatExigenceModel();
+                        var ResultatCheckList = JsonConvert.DeserializeObject<ResultatCheckList>(resultat.ResultatExigencJson);
+                        resultats.ResultatCheckList = ResultatCheckList;
+                        resultats.ByteFile = resultat.ItemData;
+                        resultats.NameFile = resultat.FileName;
+                        resultatApi = await Api.PostResultatExigencesAsync(resultats);
+
+                    }
+
+                    if (resultatApi.success)
+                    {
+                        await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete");
+                        var test = App.Database.DeleteItemAsync(resultat);
+                    }
+                    else
+                    {
+                        await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation");
+                    }
+
+                }
+            }
         }
 
     }

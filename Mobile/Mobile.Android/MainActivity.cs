@@ -24,7 +24,7 @@ namespace Mobile.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            string dbName = "notes.db3";
+            string dbName = "accesEnginsDB.db3";
 
             UserDialogs.Init(this);
             base.OnCreate(savedInstanceState);

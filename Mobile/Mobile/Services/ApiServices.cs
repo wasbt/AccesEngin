@@ -240,11 +240,11 @@ namespace Mobile.Services
             var multipart = new MultipartFormDataContent();
             var body = new StringContent(jsonToSend);
             multipart.Add(body, "JsonDetails");
-            if (resultat.StreamFile != null)
-            {
-                multipart.Add(new StreamContent(resultat.StreamFile), "\"file\"",
-                     $"\"{resultat.NameFile}\"");
-            }
+            //if (resultat.StreamFile != null)
+            //{
+            //    multipart.Add(new StreamContent(resultat.StreamFile), "\"file\"",
+            //         $"\"{resultat.NameFile}\"");
+            //}
 
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);

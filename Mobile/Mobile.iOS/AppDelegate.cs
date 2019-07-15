@@ -24,7 +24,7 @@ namespace Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            string dbName = "notes.db3";
+            string dbName = "accesEnginsDB.db3";
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
