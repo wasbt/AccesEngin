@@ -568,7 +568,10 @@ namespace Front.Controllers
         }
         #endregion
 
+        public void StatistiquesQuery()
+        {
 
+        }
 
 
     }

@@ -11,69 +11,69 @@
             {
                 @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label class="control-label col-md-2">Site</label>
-                    <div class="col-md-10">
-                        @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Site</label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("SiteId", null, "-- choisis le site --", htmlAttributes: new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Entité</label>
-                    <div class="col-md-10">
-                        <select class="form-control" id="EntiteId" name="EntiteId"></select>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Entité</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="EntiteId" name="EntiteId"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("TypeCheckListId", null, "-- choisis votre formulaire --", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TypeCheckListId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("TypeCheckListId", null, "-- choisis votre formulaire --", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TypeCheckListId, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Type d'engin</label>
-                    <div class="col-md-10">
-                        <select class="form-control" id="TypeEnginId" name="TypeEnginId"></select>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Type d'engin</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="TypeEnginId" name="TypeEnginId"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Nature de la matiere</label>
-                    <div class="col-md-10">
-                        <select class="form-control" id="NatureMatiereId" name="NatureMatiereId"></select>
+                    <div id="NatureMatiereDevId" class="form-group">
+                        <label class="control-label col-md-2">Nature de la matiere</label>
+                        <div class="col-md-10">
+                            <select class="form-control" id="NatureMatiereId" name="NatureMatiereId"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Observation, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Observation, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Observation, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.DatePlannification, new { @class = "form-control datepicker-autoclose" })
-                        @Html.ValidationMessageFor(model => model.DatePlannification, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DatePlannification, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.DatePlannification, new { @class = "form-control datepicker-autoclose" })
+                            @Html.ValidationMessageFor(model => model.DatePlannification, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
-                <div id="InfosGeneralId">
+                    <div id="InfosGeneralId">
 
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2">Pièce jointe</label>
-                    <div class="col-md-10">
-                        <input type="file" class="form-control" id="file" name="file"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Pièce jointe</label>
+                        <div class="col-md-10">
+                            <input type="file" class="form-control" id="file" name="file[]" multiple = "multiple"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-primary waves-effect w-md waves-light m-b-5">Ajouter</button>
-                    </div>
-                </div>
-            </div>
             }
 
             @Html.Partial("_BackToList")
@@ -84,15 +84,15 @@
 
     <script type="text/javascript">
 
-          //GET INFO TYPE ENGIN
-           function FillTypeEnginDDL() {
+        //GET INFO TYPE ENGIN
+        function FillTypeEnginDDL() {
             var selectedTypeCheckListId = $('#TypeCheckListId').val();
-             var jsonObject = {
+            var jsonObject = {
                 TypeCheckListId: selectedTypeCheckListId
             }
             var posting = $.post('/AccesEnginapi/GetTypeEnginByTypeCheckList', jsonObject, function (response) {
                 $("#TypeEnginId").html("");
-                $.each(response.data, function (i,typeEngin) {
+                $.each(response.data, function (i, typeEngin) {
                     $("#TypeEnginId").append($('<option>', {
                         value: typeEngin.Id,
                         text: typeEngin.Name
@@ -100,35 +100,39 @@
                 });
             });
         }
-         //GET INFO Nature de la Matiere
+        //GET INFO Nature de la Matiere
         function FillNatureMatiereDDL() {
             var selectedTypeCheckListId = $('#TypeCheckListId').val();
-             var jsonObject = {
+            var jsonObject = {
                 TypeCheckListId: selectedTypeCheckListId
             }
-               var posting = $.post('/AccesEnginapi/GetNatureMatiereByTypeCheckList', jsonObject, function (response) {
+            var posting = $.post('/AccesEnginapi/GetNatureMatiereByTypeCheckList', jsonObject, function (response) {
                 $("#NatureMatiereId").html("");
-                $.each(response.data, function (i,typeEngin) {
-                    $("#NatureMatiereId").append($('<option>', {
-                        value: typeEngin.Id,
-                        text: typeEngin.Name
-                    }));
-                });
+                //hide Nature de la matiere
+                if (response.data.length == 0) {
+                    $("#NatureMatiereDevId").hide();
+                } else {
+                     //show  Nature de la matiere
+                    $("#NatureMatiereDevId").show();
+                    //Fill DD Nature de la matiere
+                    $.each(response.data, function (i, typeEngin) {
+                        $("#NatureMatiereId").append($('<option>', {
+                            value: typeEngin.Id,
+                            text: typeEngin.Name
+                        }));
+                    });
+                }
             });
         }
-
-
-
-
         //GET Entitis
-         function FillEnitiesDDL() {
+        function FillEnitiesDDL() {
             var selectedSiteId = $('#SiteId').val();
-             var jsonObject = {
-                SiteId : selectedSiteId
+            var jsonObject = {
+                SiteId: selectedSiteId
             }
             var posting = $.post('/AccesEnginapi/GetEntityBySite', jsonObject, function (response) {
                 $("#EntiteId").html("");
-                $.each(response.data, function (i,entity) {
+                $.each(response.data, function (i, entity) {
                     $("#EntiteId").append($('<option>', {
                         value: entity.Id,
                         text: entity.Name
@@ -158,7 +162,7 @@
                             '<input name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].GeneralInfoId" type="hidden" value="' + currentInfosGeneral.Id + '" />' +
                             '<div class="form-group">' +
                             '<label class="control-label col-md-2" for="">' + currentInfosGeneral.Name + '</label>' +
-                            ' <div class="col-md-10">'+
+                            ' <div class="col-md-10">' +
                             '<input class="form-control ValueInfo" name="ResultatInfoGeneral[' + currentInfosGeneral.Id + '].ValueInfo" type="text">' +
                             '</div>' +
                             '</div>'
@@ -172,14 +176,16 @@
             });
 
         }
+        //show & hide Nature de la matiere
 
         $(document).ready(function () {
-        // Date Picker
-                //jQuery('.datepicker-autoclose').datepicker({
-                //    format: "yyyy/mm/dd",
-                //     autoclose: true,
-                //     todayHighlight: true,
-                //});
+            // Date Picker
+            //jQuery('.datepicker-autoclose').datepicker({
+            //    format: "yyyy/mm/dd",
+            //     autoclose: true,
+            //     todayHighlight: true,
+            //});
+            $("#NatureMatiereDevId").hide();
             $('#TypeCheckListId').change(function () {
                 GetInfosGenerals();
                 FillTypeEnginDDL();

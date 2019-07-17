@@ -16,7 +16,7 @@ namespace BLL.Biz
 {
     public class DownloadResultatsToExcel : CommonBiz
     {
-        public DownloadResultatsToExcel(OcpPerformanceDataContext  context, ILog log) : base(context, log)
+        public DownloadResultatsToExcel(OcpPerformanceDataContext context, ILog log) : base(context, log)
         {
         }
 
@@ -273,6 +273,34 @@ namespace BLL.Biz
         {
             get
             { return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; }
+        }
+        public async Task<byte[]> GetStatistqueToExcelAsync()
+        {
+            #region get All demandes
+            var demandes = await context.DemandeAccesEngin.Where(x => x.ResultatControleEntete.Any()).ToListAsync();
+            #endregion
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                foreach (var demande in demandes)
+                {
+                    var entite = demande.Entite.Name;
+                    var chefprojet = demande.AspNetUsers.Profile.FullName;
+                    var nCommande = demande.Id;
+                    var typeEngin = demande.REF_TypeEngin.Name;
+                    var resultatControleDetail = demande.ResultatControleEntete.SelectMany(x => x.ResultatControleDetail).ToList();
+                    foreach (var item in resultatControleDetail)
+                    {
+                        var label = item.REF_CheckListExigence.Name;
+                        var isConform = item.IsConform;
+                    }
+                    var isAutorise = demande.IsAutorise;
+                    var observation = demande.Observation;
+                    
+                }
+
+            }
+            return null;
+
         }
     }
 }
