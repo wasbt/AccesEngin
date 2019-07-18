@@ -274,32 +274,70 @@ namespace BLL.Biz
             get
             { return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; }
         }
-        public async Task<byte[]> GetStatistqueToExcelAsync()
+        public async Task<byte[]> GetStatistqueToExcelAsync(DateTime? dateStart, DateTime? dateEnd)
         {
+            byte[] result = null;
+
             #region get All demandes
-            var demandes = await context.DemandeAccesEngin.Where(x => x.ResultatControleEntete.Any()).ToListAsync();
+            var demandes = context.DemandeAccesEngin.AsQueryable();
+            demandes = demandes.Where(x => x.ResultatControleEntete.Any());
+            if (dateStart.HasValue && dateEnd.HasValue)
+            {
+                demandes = demandes.Where(x => x.CreatedOn >= dateStart && x.CreatedOn < dateEnd);
+            }
             #endregion
+
+            var heading = "si";
+            var minColumn = 1;
+            var maxColumnInfoG = 7;
+            var startingRow = 1;
+            var index = 1;
             using (ExcelPackage package = new ExcelPackage())
             {
+                ExcelWorksheet workSheet = package.Workbook.Worksheets.Add(String.Format("{0} Data", heading));
+                int startRowFrom = String.IsNullOrEmpty(heading) ? 1 : 1;
+                workSheet.InsertRow(workSheet.Cells[startingRow + 1, minColumn, startingRow, maxColumnInfoG].Start.Row, 1, copyStylesFromRow: 1);
+
                 foreach (var demande in demandes)
                 {
+                    workSheet.Cells[startingRow, minColumn + 1].Value = demande.Entite.Name;
+                    workSheet.Cells[startingRow, minColumn + 2].Value = demande.AspNetUsers.Profile.FullName;
+                    workSheet.Cells[startingRow, minColumn + 3].Value = demande.Id;
+                    workSheet.Cells[startingRow, minColumn + 4].Value = demande.REF_TypeEngin.Name;
+                    workSheet.Cells[startingRow, minColumn + 5].Value = demande.Observation;
+                    workSheet.Cells[startingRow, minColumn + 6].Value = demande.IsAutorise ? "Autorise" : "Non autorise";
+                    workSheet.Cells[startingRow, minColumn + 7].Value = demande?.REF_NatureMatiere?.Name;
+
                     var entite = demande.Entite.Name;
                     var chefprojet = demande.AspNetUsers.Profile.FullName;
                     var nCommande = demande.Id;
                     var typeEngin = demande.REF_TypeEngin.Name;
                     var resultatControleDetail = demande.ResultatControleEntete.SelectMany(x => x.ResultatControleDetail).ToList();
-                    foreach (var item in resultatControleDetail)
+                    var groupByRub = resultatControleDetail.GroupBy(x => x.REF_CheckListExigence.REF_CheckListRubrique.Name);
+                    foreach (var items in groupByRub)
                     {
-                        var label = item.REF_CheckListExigence.Name;
-                        var isConform = item.IsConform;
+                        index = 8;
+                        workSheet.Cells[startingRow, minColumn + index].Value = items.Key;
+                        foreach (var item in items)
+                        {
+                            startingRow++;
+                            workSheet.Cells[startingRow, minColumn + index].Value = item.REF_CheckListExigence.Name;
+                            workSheet.Cells[startingRow, minColumn + index + 2].Value = item.IsConform ? "Conforme" : "Non conforme";
+                            workSheet.Cells[startingRow, minColumn + index + 3].Value = item.DateExpiration?.ToString("dd/MM/yyyy");
+                            var label = item.REF_CheckListExigence.Name;
+                            var isConform = item.IsConform;
+                        }
+                        index++;
+                        startingRow++;
                     }
                     var isAutorise = demande.IsAutorise;
                     var observation = demande.Observation;
-                    
+                    startingRow++;
                 }
+                result = package.GetAsByteArray();
 
             }
-            return null;
+            return result;
 
         }
     }

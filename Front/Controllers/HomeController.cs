@@ -568,9 +568,22 @@ namespace Front.Controllers
         }
         #endregion
 
-        public void StatistiquesQuery()
+        [ActionName("GetStatiqtique")]
+        public async Task<ActionResult> StatistiquesQueryAsync(DateTime? dateStart,DateTime?  dateEnd)
         {
+            var biz = new DownloadResultatsToExcel(context, log);
+            var toto = await biz.GetStatistqueToExcelAsync(dateStart,dateEnd); 
 
+            if (toto != null)
+            {
+                byte[] filecontent = toto;
+                return File(filecontent, biz.ExcelContentType, $"Statistiques.xlsx");
+            }
+            else
+            {
+                TempData[ConstsAccesEngin.MESSAGE_ERROR] = "Erreur telechargement fichier Excel.";
+                return RedirectToAction("Index");
+            }
         }
 
 

@@ -6,6 +6,13 @@
 
 
 <div class="row">
+    <form action="/Home/GetStatiqtique" method="post">
+        <input type="datetime" name="dateStart" value="" />
+        <input type="datetime" name="dateEnd" value="" />
+        <input type="submit" name="name" value="oki" />
+    </form>
+    <div class="btn  btn-primary waves-effect   btn-xs waves-light m-b-5" onclick="location.href='@Url.Action("GetStatiqtique", "Home")'"><span class="fa fa-download"></span> Exporter Vers Excel</div>
+
     @{
 
         if (HttpContext.Current.User.IsInRole(ConstsAccesEngin.ROLE_CHEFPROJET))
@@ -82,7 +89,7 @@
                     });
                     chart.render();
                 });
-            FileChartExpire()
+                FileChartExpire()
             }
         </script>
     }
@@ -94,7 +101,8 @@
                     var chart = new CanvasJS.Chart("chartContainer1", {
                         animationEnabled: true,
                         title: {
-                            text: "Demandes autorisées / non autorisées"                        },
+                            text: "Demandes autorisées / non autorisées"
+                        },
                         data: [{
                             type: "pie",
                             startAngle: 240,
@@ -115,15 +123,15 @@
     }
 
     <script type="text/javascript">
-    function FileChartExpire() {
-        var posting = $.post('/AccesEnginapi/MesDemandeExpire', function (response) {
-            CanvasJS.addColorSet("greenShades",
-                [//colorSet Array
-                    "#D38583",
-                    "#4285f4",
-                    "#51CDA0",
-                    "#FBCCA6",
-                ]);
+        function FileChartExpire() {
+            var posting = $.post('/AccesEnginapi/MesDemandeExpire', function (response) {
+                CanvasJS.addColorSet("greenShades",
+                    [//colorSet Array
+                        "#D38583",
+                        "#4285f4",
+                        "#51CDA0",
+                        "#FBCCA6",
+                    ]);
 
                 var chart = new CanvasJS.Chart("chartExpireId", {
                     animationEnabled: true,
