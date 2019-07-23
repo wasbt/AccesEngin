@@ -139,17 +139,21 @@ namespace BLL.Biz
 
 
                 #region Ajout de la pièce jointe dans le contexte
-                var biz = new CommonBiz(context, log);
 
-                var stream = new MemoryStream(postResultat.ByteFile);
+                if (postResultat.ByteFile != null)
+                {
+                    var biz = new CommonBiz(context, log);
 
-                var memoryPostedFile = new MemoryPostedFile(stream, "image/jpeg", postResultat.NameFile);
+                    var stream = new MemoryStream(postResultat.ByteFile);
 
-                var objFile =  memoryPostedFile;
+                    var memoryPostedFile = new MemoryPostedFile(stream, "image/jpeg", postResultat.NameFile);
 
-                fileId = await biz.SaveAppFile(objFile, ConstsAccesEngin.ContainerName, SourceId.ToString(), ConstsAccesEngin.ContainerName);
+                    var objFile = memoryPostedFile;
 
-                resultatEntete.AppFileId = fileId;
+                    fileId = await biz.SaveAppFile(objFile, ConstsAccesEngin.ContainerName, SourceId.ToString(), ConstsAccesEngin.ContainerName);
+
+                    resultatEntete.AppFileId = fileId; 
+                }
                 await context.SaveChangesAsync();
 
                 #endregion

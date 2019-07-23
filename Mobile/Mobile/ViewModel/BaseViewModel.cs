@@ -102,7 +102,7 @@ namespace Mobile.ViewModel
                     using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
                     {
                         var resultat = App.Database.GetItemsAsync().LastOrDefault();
-                       var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
+                        var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
                         if (resultat != null)
                         {
                             using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours..."))
@@ -115,18 +115,18 @@ namespace Mobile.ViewModel
                                 resultats.ByteFile = resultat.ItemData;
                                 resultats.NameFile = resultat.FileName;
                                 resultatApi = await Api.PostResultatExigencesAsync(resultats);
-                               
+
                             }
 
                             if (resultatApi.success)
-                                {
-                                    await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete");
-                                    var test = App.Database.DeleteItemAsync(resultat);
-                                }
-                                else
-                                {
-                                    await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation");
-                                }
+                            {
+                                await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                                var test = App.Database.DeleteItemAsync(resultat);
+                            }
+                            else
+                            {
+                                await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                            }
 
                         }
                     }

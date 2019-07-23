@@ -64,7 +64,8 @@ namespace Mobile.ViewModel
             }
             else
             {
-                MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion");
+                MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
+                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851") });
             }
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChangedAsync;
@@ -107,7 +108,8 @@ namespace Mobile.ViewModel
                 }
                 else
                 {
-                    await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion");
+                    await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
+                        configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851") });
                 }
             };
         }

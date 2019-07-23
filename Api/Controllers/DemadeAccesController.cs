@@ -24,11 +24,12 @@ namespace Api.Controllers
 
         #region get All DemadeAcces
         // GET: DemadeAcces
-        [HttpPost,Route("api/demandeAccesList")]
-        public async Task<HttpResponseMessage> DemandeAccesList(FilterListDemande filterList)
+        [HttpPost, Route("api/demandeAccesList")]
+        public async Task<HttpResponseMessage> DemandeAccesList(PostDataModel filterList)
         {
+            var filterListDemande = JsonConvert.DeserializeObject<FilterListDemande>(filterList.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-            var list = biz.DemandeAccesList(filterList);
+            var list = biz.DemandeAccesList(filterListDemande);
             var result = new RESTServiceResponse<List<DemandeAccesDto>>(true, string.Empty, list);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -39,10 +40,11 @@ namespace Api.Controllers
         #region get CheckList For controller
 
         [HttpPost, Route("api/GetCheckList")]
-        public async Task<HttpResponseMessage> GetCheckListAsync(GetCheckListByIdModel model)
+        public async Task<HttpResponseMessage> GetCheckListAsync(PostDataModel model)
         {
+            var checkListByIdModel = JsonConvert.DeserializeObject<GetCheckListByIdModel>(model.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-            var typeCheckList = await biz.GetCheckListAsync(model.Id);
+            var typeCheckList = await biz.GetCheckListAsync(checkListByIdModel.Id);
             var result = new RESTServiceResponse<TypeCheckListDTO>(true, string.Empty, typeCheckList);
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -63,12 +65,12 @@ namespace Api.Controllers
 
 
         #region post CheckList For control
-        [HttpPost,Route("api/PostResultatExigences")]
-        public async Task<HttpResponseMessage> PostResultatExigencesAsync(PostResultatExigenceModel postResultat)
+        [HttpPost, Route("api/PostResultatExigences")]
+        public async Task<HttpResponseMessage> PostResultatExigencesAsync(PostDataModel postResultat)
         {
+            var exigenceModel = JsonConvert.DeserializeObject<PostResultatExigenceModel>(postResultat.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-
-            var save = await biz.PostResultatExigencesAsync(postResultat);
+            var save = await biz.PostResultatExigencesAsync(exigenceModel);
             var result = new RESTServiceResponse<List<TypeCheckListDTO>>(true, string.Empty);
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
@@ -77,39 +79,43 @@ namespace Api.Controllers
         #endregion
 
         [HttpPost, Route("api/GetResultatExigence")]
-        public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(GetCheckListByIdModel model)
+        public async Task<HttpResponseMessage> GetResultatExigenceByDemandeAccesId(PostDataModel model)
         {
+            var checkListByIdModel = JsonConvert.DeserializeObject<GetCheckListByIdModel>(model.PostData);
             ResultatExigenceBiz biz = new ResultatExigenceBiz(context, WebApiApplication.log);
-            var ControleResultat = await biz.GetResultatExigenceByDemandeAccesId(model.Id);
+            var ControleResultat = await biz.GetResultatExigenceByDemandeAccesId(checkListByIdModel.Id);
             var result = new RESTServiceResponse<ResultatExigenceModel>(true, string.Empty, ControleResultat);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPost,Route("api/DemandeAccesByMatricule")]
-        public async Task<HttpResponseMessage> DemandeAccesByMatricule(GetCheckListByIdModel model)
+        [HttpPost, Route("api/DemandeAccesByMatricule")]
+        public async Task<HttpResponseMessage> DemandeAccesByMatricule(PostDataModel model)
         {
+            var checkListByIdModel = JsonConvert.DeserializeObject<string>(model.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-            var DemandeAcces = await biz.DemandeAccesByMatricule(model.Matricule);
+            var DemandeAcces = await biz.DemandeAccesByMatricule(checkListByIdModel);
             var result = new RESTServiceResponse<List<DemandeAccesDto>>(true, string.Empty, DemandeAcces);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
 
-        [HttpPost,Route("api/GetDetailsDemandeById")]
-        public async Task<HttpResponseMessage> GetDetailsDemandeById(GetCheckListByIdModel model)
+        [HttpPost, Route("api/GetDetailsDemandeById")]
+        public async Task<HttpResponseMessage> GetDetailsDemandeById(PostDataModel model)
         {
+            var checkListByIdModel = JsonConvert.DeserializeObject<GetCheckListByIdModel>(model.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-            var detailsDemande = await biz.GetDetailsDemandeByIdAsync(model.Id);
+            var detailsDemande = await biz.GetDetailsDemandeByIdAsync(checkListByIdModel.Id);
             var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty, detailsDemande);
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
 
         [HttpPost, Route("api/ValiderDemande")]
-        public async Task<HttpResponseMessage> ValiderDemandeAsync(ValiderDemande resultat)
+        public async Task<HttpResponseMessage> ValiderDemandeAsync(PostDataModel resultat)
         {
+            var validerDemande = JsonConvert.DeserializeObject<ValiderDemande>(resultat.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
-            var Isvalid = await biz.ValiderDemande(resultat, CurrentUserId);
+            var Isvalid = await biz.ValiderDemande(validerDemande, CurrentUserId);
             var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
@@ -123,7 +129,7 @@ namespace Api.Controllers
             System.IO.MemoryStream memoryStream = new MemoryStream();
             if (data != null && data.Length > 10)
             {
-            
+
                 //string path = System.Web.Hosting.HostingEnvironment.MapPath(imgData);
 
                 var localPhotoData = File.ReadAllBytes(data);

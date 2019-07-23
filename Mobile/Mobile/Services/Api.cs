@@ -1,6 +1,7 @@
 ﻿using Mobile.Helpers;
 using Mobile.HttpREST;
 using Mobile.Model;
+using Newtonsoft.Json;
 using Shared.API.IN;
 using Shared.API.OUT;
 using Shared.Models;
@@ -25,8 +26,12 @@ namespace Mobile.Services
         #region Get List Demande
         public static async Task<RESTServiceResponse<List<DemandeAcces>>> GetDemandeAccesListAsync(FilterListDemande filterListDemande)
         {
-            var cc = await RESTHelper.GetRequest<List<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: filterListDemande);
-            return cc;
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(filterListDemande),
+            };
+
+            return await RESTHelper.GetRequest<List<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 
@@ -35,7 +40,11 @@ namespace Mobile.Services
         {
             var model = new GetCheckListByIdModel();
             model.Id = Id;
-            return await RESTHelper.GetRequest<TypeCheckList>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetCheckList", HttpVerbs.POST, postObject: model);
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(model),
+            };
+            return await RESTHelper.GetRequest<TypeCheckList>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetCheckList", HttpVerbs.POST, postObject: postData);
         }
         #endregion 
         
@@ -50,16 +59,23 @@ namespace Mobile.Services
         {
             var model = new GetCheckListByIdModel();
             model.Id = Id;
-            return await RESTHelper.GetRequest<DemandeDetail>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetDetailsDemandeById", HttpVerbs.POST, postObject: model);
+
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(model),
+            };
+            return await RESTHelper.GetRequest<DemandeDetail>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetDetailsDemandeById", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 
         #region Get  Details Demande By Matricule
         public static async Task<RESTServiceResponse<ObservableCollection<DemandeAcces>>> DemandeAccesByMatricule(string Matricule)
         {
-            var model = new GetCheckListByIdModel();
-            model.Matricule = Matricule;
-            return await RESTHelper.GetRequest<ObservableCollection<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesByMatricule", HttpVerbs.POST, postObject: model);
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(Matricule),
+            };
+            return await RESTHelper.GetRequest<ObservableCollection<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesByMatricule", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 
@@ -68,21 +84,33 @@ namespace Mobile.Services
         {
             var model = new GetCheckListByIdModel();
             model.Id = Id;
-            return await RESTHelper.GetRequest<Model.ResultatExigenceModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetResultatExigence", HttpVerbs.POST, postObject: model);
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(model),
+            };
+            return await RESTHelper.GetRequest<Model.ResultatExigenceModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetResultatExigence", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 
         #region Get  Resultat Exigence
         public static async Task<RESTServiceResponse<Model.ResultatExigenceModel>> PostResultatExigencesAsync(PostResultatExigenceModel resultat)
         {
-            return await RESTHelper.GetRequest<Model.ResultatExigenceModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/PostResultatExigences", HttpVerbs.POST, postObject: resultat);
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(resultat),
+            };
+            return await RESTHelper.GetRequest<Model.ResultatExigenceModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/PostResultatExigences", HttpVerbs.POST, postObject: postData);
         }
         #endregion 
 
         #region Valider Demande
         public static async Task<RESTServiceResponse<bool>> ValiderDemandeAsync(ValiderDemande validerDemande)
         {
-            return await RESTHelper.GetRequest<bool>(Settings.AccessToken, Constants.BaseApiAddress + "api/ValiderDemande", HttpVerbs.POST, postObject: validerDemande);
+            var postData = new PostDataModel
+            {
+                PostData = JsonConvert.SerializeObject(validerDemande),
+            };
+            return await RESTHelper.GetRequest<bool>(Settings.AccessToken, Constants.BaseApiAddress + "api/ValiderDemande", HttpVerbs.POST, postObject: postData);
         }
         #endregion
         #region Download File

@@ -5,12 +5,63 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms">
-    <forms:AnimationView
-        x:Name="AnimationView"
-        Animation="success.json"
-        AutoPlay="True"
-        HorizontalOptions="FillAndExpand"
-        Loop="True"
-        VerticalOptions="FillAndExpand"
-        Duration="300" />
+
+    <!--  You can use any elements here which are extended from Xamarin.Forms.View  -->
+    <Frame
+        Margin="20"
+        Padding="0"
+        BackgroundColor="White"
+        CornerRadius="20"
+        HasShadow="False"
+        HorizontalOptions="Fill"
+        VerticalOptions="CenterAndExpand">
+
+        <ScrollView>
+            <StackLayout Spacing="20">
+
+                <StackLayout Padding="10,15" Spacing="10">
+                    <forms:AnimationView
+                        x:Name="AnimationView"
+                        Animation="success.json"
+                        AutoPlay="True"
+                        HeightRequest="50"
+                        HorizontalOptions="FillAndExpand"
+                        Loop="True"
+                        VerticalOptions="FillAndExpand"
+                        WidthRequest="50"
+                        Duration="300" />
+
+
+                    <StackLayout Spacing="2">
+
+                        <Label
+                            x:Name="titleMessage"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            TextColor="Green" />
+
+                        <Label
+                            x:Name="Message"
+                            FontSize="12"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            TextColor="Green" />
+
+                    </StackLayout>
+
+
+                </StackLayout>
+
+                <Grid ColumnSpacing="0" VerticalOptions="EndAndExpand">
+                    <Grid x:Name="OkGrid" Grid.Column="0">
+                        <Button x:Name="Ok_btn" Text="ok" />
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+
+    </Frame>
+
 </Base:BasePopUpPage>

@@ -66,6 +66,7 @@
     <Compile Include="MailHelper.cs" />
     <Compile Include="Models\ExportExcelModel.cs" />
     <Compile Include="Models\KpiModel.cs" />
+    <Compile Include="Models\PostDataModel.cs" />
     <Compile Include="Models\PostResultatExigenceModel.cs" />
     <Compile Include="Models\ResultatCheckList.cs" />
     <Compile Include="Models\ResultatExigenceModel.cs" />
