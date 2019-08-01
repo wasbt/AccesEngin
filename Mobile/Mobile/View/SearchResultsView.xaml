@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
-    xmlns:vm="clr-namespace:Mobile.ViewModel">
+    xmlns:vm="clr-namespace:Mobile.ViewModel"
+    Title="Resultat">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="nameLabel" TargetType="Label">
@@ -101,13 +102,14 @@
                             Style="{StaticResource valueLabel}"
                             Text="{Binding ResultatExigence.DemandeAccesDto.CreatedOn, StringFormat={StaticResource formatdecimalfourplaces}}" />
                     </StackLayout>
-                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
                 </StackLayout>
             </Frame>
 
             <ListView
                 BackgroundColor="Transparent"
+                CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
+                IsPullToRefreshEnabled="False"
                 ItemsSource="{Binding ResultatExigence.ResultatValueGrouping}"
                 SeparatorVisibility="None">
                 <ListView.ItemTemplate>

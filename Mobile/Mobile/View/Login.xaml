@@ -23,18 +23,33 @@
             Spacing="20"
             VerticalOptions="Center">
 
+            <!--<material:MaterialTextField
+                ErrorText="Error Text"
+                HelperText="Helper Text"
+                InputType="Email"
+                Placeholder="Email"
+                Text="{Binding Username}" />
+
+            <material:MaterialTextField
+                ErrorText="Error Text"
+                HelperText="Helper Text"
+                InputType="Password"
+                Placeholder="Mot de passe"
+                Text="{Binding Password}" />-->
+
             <local:CustomEntryRenderer
                 EntryLineButtomColor="White"
                 Placeholder="Email"
                 PlaceholderColor="White"
-                Text="{Binding Username}" />
-
+                Text="{Binding Username}"
+                TextColor="White" />
             <local:CustomEntryRenderer
                 EntryLineButtomColor="White"
                 IsPassword="True"
                 Placeholder="Password"
                 PlaceholderColor="White"
-                Text="{Binding Password}" />
+                Text="{Binding Password}"
+                TextColor="White" />
 
             <Button
                 BackgroundColor="White"

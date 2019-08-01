@@ -29,10 +29,25 @@
     <item name="android:colorFocusedHighlight">@color/ColorTransparent</item>
     <item name="android:colorActivatedHighlight">@color/ColorTransparent</item>
     <!--to remove listview pressed orange color-->
-
+    <item name="android:windowNoTitle">false</item>
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#289851</item>
+  </style>
+  <style name="splashscreen" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!--background splash image-->
+    <item name="android:windowBackground">@drawable/splash_background</item>
+    <!--status bar color-->
+    <!--no title bar-->
+    <item name="android:windowNoTitle">true</item>
+    <!--fullscreen -->
+    <item name="android:windowFullscreen">true</item>
+    <!--no translucense-->
+    <item name="android:windowIsTranslucent">false</item>
+    <!--no floating-->
+    <item name="android:windowIsFloating">false</item>
+    <!--background dim enable-->
+    <item name="android:backgroundDimEnabled">true</item>
   </style>
 </resources>

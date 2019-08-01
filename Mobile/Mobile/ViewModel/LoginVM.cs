@@ -42,18 +42,27 @@ namespace Mobile.ViewModel
                     loginModel.Password = Password;
                     var login = await Api.LoginAction(loginModel);
                     SetSettings(login);
-                    Constants.IsLoggedIn = true;
+                    if (string.IsNullOrEmpty(login.Error) && !string.IsNullOrEmpty(login.AccessToken))
+                    {
+                        Constants.IsLoggedIn = true;
 
-                    App.MasterDetailPage = new MasterDetailPage
-                    {
-                        Master = new MenuView(),
-                        Detail = new NavigationPage(new ListDemandeView()),
-                    };
-                    using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Connexion en cours", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration() { TintColor = Xamarin.Forms.Color.FromHex("#289851") }))
-                    {
-                        await Task.Delay(5000); // Represents a task that is running.
+                        App.MasterDetailPage = new MasterDetailPage
+                        {
+                            Master = new MenuView(),
+                            Detail = new NavigationPage(new ListDemandeView()),
+                        };
+                        using (var dialog = await MaterialDialog.Instance.LoadingDialogAsync(message: "Connexion en cours", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration() { TintColor = Xamarin.Forms.Color.FromHex("#289851") }))
+                        {
+                            await Task.Delay(5000); // Represents a task that is running.
+                        }
+                        App.Current.MainPage = App.MasterDetailPage;
                     }
-                    App.Current.MainPage = App.MasterDetailPage;
+                    else
+                    {
+                        CrossToastPopUp.Current.ShowToastMessage("Login ou mot de passe incorrect!");
+                        return;
+                    }
+                    
                 });
             }
         }

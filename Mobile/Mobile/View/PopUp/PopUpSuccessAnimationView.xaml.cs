@@ -1,4 +1,5 @@
 ﻿using Mobile.View.Base;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,21 @@ namespace Mobile.View.PopUp
         public PopUpSuccessAnimationView()
         {
             InitializeComponent();
+        }
+
+        private async void Ok_btn_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+
+                await PopupNavigation.Instance.RemovePageAsync(this);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
         }
     }
 }

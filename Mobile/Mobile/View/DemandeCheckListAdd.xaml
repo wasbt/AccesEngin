@@ -56,7 +56,7 @@
                         <StackLayout Padding="5,5,5,5">
 
                             <StackLayout Padding="10" Orientation="Horizontal">
-                                <Label Text="Aitorisé" TextColor="Black" />
+                                <Label Text="Autorisé" TextColor="Black" />
                                 <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding IsAutorise}" />
                             </StackLayout>
                             <Image

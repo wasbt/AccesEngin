@@ -65,31 +65,33 @@ namespace Mobile.ViewModel
             else
             {
                 MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
-                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851") });
+                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851"), TintColor = Color.FromHex("#289851") });
             }
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChangedAsync;
 
-     
+
             MessagingCenter.Subscribe<FilterListVM, FilterListDemande>(this, Constants.MESSAGE_FilterList, (sender, filterModel) =>
-        {
-            Items.Clear();
-            _filterListDemande = filterModel;
-            GetListDemende(_filterListDemande);
-        });
+                {
+                    Items.Clear();
+                    _filterListDemande = filterModel;
+                    GetListDemende(_filterListDemande);
+                });
             MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList, (sender) =>
             {
-
                 Items.Clear();
                 GetListDemende(_filterListDemande);
+            });
 
+            MessagingCenter.Subscribe<BaseViewModel>(this, Constants.MESSAGE_RefreshList, (sender) =>
+            {
+                Items.Clear();
+                GetListDemende(_filterListDemande);
             });
             MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, (callback) =>
             {
-
                 Items.Clear();
                 GetListDemende(_filterListDemande);
-
             });
 
             _filterListDemande = new FilterListDemande();
@@ -118,6 +120,8 @@ namespace Mobile.ViewModel
         {
             base.OnDisappearing();
             Xamarin.Essentials.Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChangedAsync;
+            MessagingCenter.Unsubscribe<FilterListVM>(this, Constants.MESSAGE_FilterList);
+            MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList);
             MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList);
         }
 
@@ -167,8 +171,7 @@ namespace Mobile.ViewModel
 
         private static async Task AsyncData()
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
-            {
+          
                 var resultat = App.Database.GetItemsAsync().LastOrDefault();
                 var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
                 if (resultat != null)

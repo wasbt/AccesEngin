@@ -24,11 +24,11 @@
                         x:Name="AnimationView"
                         Animation="success.json"
                         AutoPlay="True"
-                        HeightRequest="50"
+                        HeightRequest="80"
                         HorizontalOptions="FillAndExpand"
                         Loop="True"
                         VerticalOptions="FillAndExpand"
-                        WidthRequest="50"
+                        WidthRequest="80"
                         Duration="300" />
 
 
@@ -47,6 +47,7 @@
                             FontSize="12"
                             HorizontalOptions="CenterAndExpand"
                             HorizontalTextAlignment="Center"
+                            Text="Contrôle effectué"
                             TextColor="Green" />
 
                     </StackLayout>
@@ -56,7 +57,11 @@
 
                 <Grid ColumnSpacing="0" VerticalOptions="EndAndExpand">
                     <Grid x:Name="OkGrid" Grid.Column="0">
-                        <Button x:Name="Ok_btn" Text="ok" />
+                        <Button
+                            x:Name="Ok_btn"
+                            BackgroundColor="#289851"
+                            Clicked="Ok_btn_Clicked"
+                            Text="ok" />
                     </Grid>
                 </Grid>
             </StackLayout>

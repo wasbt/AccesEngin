@@ -29,7 +29,7 @@
             <ListView
                 x:Name="ListViewItems"
                 HasUnevenRows="True"
-                IsPullToRefreshEnabled="True"
+                IsPullToRefreshEnabled="False"
                 ItemsSource="{Binding Source={StaticResource vm}, Path=Items}">
                 <ListView.Behaviors>
                     <local:SearchListViewBehavior />

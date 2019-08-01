@@ -75,6 +75,7 @@ namespace Mobile
            
 
             #endregion
+
             DatabasePath = databasePath;
 
         }
