@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XF.Material.Forms.UI.Dialogs;
+using XF.Material.Forms.UI.Dialogs.Configurations;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mobile
@@ -24,11 +25,17 @@ namespace Mobile
 
         public static MasterDetailPage MasterDetailPage;
 
-        public static string DatabasePath = string.Empty;
+        private static Database database;
 
-        static Database database;
+        public static Database Database
+        {
+            get
+            {
+                return database ?? (database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "accesEnginsDB.db3")));
+            }
+        }
 
-        public App(string databasePath)
+        public App()
         {
             InitializeComponent();
             #region Hot Reload
@@ -67,32 +74,33 @@ namespace Mobile
                     AppHelper.SetMainPageAsMasterDetailPage(new ListDemandeView());
                     Constants.IsLoggedIn = true;
                 }
+                Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
             }
             else
             {
                 MainPage = new NavigationPage(new Login());
             }
-           
+
 
             #endregion
 
-            DatabasePath = databasePath;
 
         }
 
-     
-
-        public static Database Database
+        private async void Connectivity_ConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs e)
         {
-            get
+            if (AppHelper.IsConnected)
             {
-                if (database == null)
+                var res = await AppHelper.syncControles();
+                if (res)
                 {
-                    database = new Database(DatabasePath);
+                    MessagingCenter.Send(this, Constants.MESSAGE_RefreshList);
                 }
-                return database;
             }
         }
+
+
+
         protected override void OnStart()
         {
             // Handle when your app starts

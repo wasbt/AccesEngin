@@ -204,7 +204,7 @@ namespace Mobile.ViewModel
 
                         ImageToByte(ref imageByte, ref namefile, resultat);
 
-                        if (Xamarin.Essentials.Connectivity.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
+                        if (AppHelper.IsConnected)
                         {
                             await Api.PostResultatExigencesAsync(resultat);
                         }
@@ -212,7 +212,14 @@ namespace Mobile.ViewModel
                         {
                             try
                             {
-                                await SaveDataToDBSqlLiteAsync(imageByte, resultat);
+                                var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
+                                var result = new TableResultatExigenceModel
+                                {
+                                    ResultatExigencJson = json,
+                                    ItemData = imageByte,
+                                    FileName = resultat.NameFile
+                                };
+                                var test = await App.Database.SaveItemAsync(result);
                             }
                             catch (Exception e)
                             {
@@ -228,27 +235,6 @@ namespace Mobile.ViewModel
 
                 });
             }
-        }
-
-        private async Task SaveDataToDBSqlLiteAsync(byte[] imageByte, PostResultatExigenceModel resultat)
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(ResultatCheckList);
-            var result = new TableResultatExigenceModel();
-            result.ResultatExigencJson = json;
-            result.ItemData = imageByte;
-            result.FileName = resultat.NameFile;
-
-            try
-            {
-                var test = await App.Database.SaveItemAsync(result);
-
-                var testlist =  App.Database.GetItemsAsync();
-            }
-            catch (Exception e)
-            {
-
-            }
-
         }
 
         private void ImageToByte(ref byte[] imageByte, ref string namefile, PostResultatExigenceModel resultat)

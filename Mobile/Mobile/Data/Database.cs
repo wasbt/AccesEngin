@@ -20,10 +20,9 @@ namespace Mobile.Data
             database.CreateTableAsync<TableResultatExigenceModel>().Wait();
         }
       
-        public List<TableResultatExigenceModel> GetItemsAsync()
+        public Task<List<TableResultatExigenceModel>> GetItemsAsync()
         {
-            var list = database.Table<TableResultatExigenceModel>().ToListAsync().Result;
-            return list;
+            return database.Table<TableResultatExigenceModel>().ToListAsync();
         }
 
         public Task<List<TableResultatExigenceModel>> GetItemsNotDoneAsync()

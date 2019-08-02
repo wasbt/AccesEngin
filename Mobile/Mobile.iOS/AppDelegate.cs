@@ -24,15 +24,15 @@ namespace Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            string dbName = "accesEnginsDB.db3";
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
             XF.Material.iOS.Material.Init();
             //! added using System.IO;
-            string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
-            string dbPath = Path.Combine(folderPath, dbName);
-            LoadApplication(new App(dbPath));
+            //string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
+            //string dbName = "accesEnginsDB.db3";
+            //string dbPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new App());
             AnimationViewRenderer.Init();
             return base.FinishedLaunching(app, options);
         }

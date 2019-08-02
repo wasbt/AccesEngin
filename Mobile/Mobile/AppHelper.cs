@@ -1,10 +1,15 @@
 ﻿using Mobile.Helpers;
+using Mobile.Services;
+using Newtonsoft.Json;
+using Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
+using XF.Material.Forms.UI.Dialogs.Configurations;
 
 namespace Mobile
 {
@@ -19,6 +24,50 @@ namespace Mobile
 
             App.Current.MainPage = App.MasterDetailPage;
             App.MasterDetailPage.IsPresented = false;
+        }
+
+
+        public static async Task<bool> syncControles()
+        {
+            if (!AppHelper.IsConnected)
+            {
+                await MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
+                                        msDuration: MaterialSnackbar.DurationLong,
+                                        configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#DC3545") });
+                return false;
+            }
+            await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
+                                        msDuration: MaterialSnackbar.DurationLong,
+                                        configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#289851") });
+
+            var listItems = await App.Database.GetItemsAsync();
+            var resultat = listItems.LastOrDefault();
+            var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
+            if (resultat == null)
+            {
+                return false;
+            }
+            var resultats = new PostResultatExigenceModel();
+            var ResultatCheckList = JsonConvert.DeserializeObject<ResultatCheckList>(resultat.ResultatExigencJson);
+            resultats.ResultatCheckList = ResultatCheckList;
+            resultats.ByteFile = resultat.ItemData;
+            resultats.NameFile = resultat.FileName;
+            using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours...", configuration: new MaterialLoadingDialogConfiguration { TintColor = Color.FromHex("#289851") }))
+            {
+                resultatApi = await Api.PostResultatExigencesAsync(resultats);
+            }
+
+            if (resultatApi.success)
+            {
+                await MaterialDialog.Instance.AlertAsync(message: $"Le controle de {resultats.ResultatCheckList.CreatedOn } est traité avec succés", configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                var test = await App.Database.DeleteItemAsync(resultat);
+                return true;
+            }
+            else
+            {
+                await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation", configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                return false;
+            }
         }
     }
 }

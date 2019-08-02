@@ -91,12 +91,11 @@ namespace Mobile.ViewModel
         #endregion
         public virtual void OnAppearing()
         {
-            Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
         }
 
         public virtual void OnDisappearing()
         {
-            Xamarin.Essentials.Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
+        //    Xamarin.Essentials.Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
         }
 
         private async void Connectivity_ConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs e)
@@ -106,9 +105,8 @@ namespace Mobile.ViewModel
                 await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
                                             msDuration: MaterialSnackbar.DurationLong,
                                             configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
-                using (SQLiteConnection conn = new SQLiteConnection(App.DatabasePath))
-                {
-                    var listItems = App.Database.GetItemsAsync();
+               
+                    var listItems = await App.Database.GetItemsAsync();
                     var resultat = listItems.LastOrDefault();
                     var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
                     if (resultat != null)
@@ -129,7 +127,7 @@ namespace Mobile.ViewModel
                         if (resultatApi.success)
                         {
                             await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
-                            var test = App.Database.DeleteItemAsync(resultat);
+                            var test = await App.Database.DeleteItemAsync(resultat);
                             MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
                         }
                         else
@@ -138,7 +136,6 @@ namespace Mobile.ViewModel
                         }
 
                     }
-                }
             }
             else
             {

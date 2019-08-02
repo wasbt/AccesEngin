@@ -30,7 +30,6 @@ namespace Mobile.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            string dbName = "accesEnginsDB.db3";
 
             UserDialogs.Init(this);
             base.OnCreate(savedInstanceState);
@@ -44,8 +43,9 @@ namespace Mobile.Droid
             AnimationViewRenderer.Init();
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             //! added using System.IO;
-            string dbPath = Path.Combine(folderPath, dbName);
-            LoadApplication(new App(dbPath));
+            //string dbName = "accesEnginsDB.db3";
+            //string dbPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

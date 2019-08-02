@@ -60,12 +60,21 @@ namespace Mobile.ViewModel
             base.OnAppearing();
             if (AppHelper.IsConnected)
             {
-                Task.Run(() => AsyncData());
+                Task.Run(async () =>
+                {
+                    var res = await AppHelper.syncControles();
+                    if (res)
+                    {
+                        Items.Clear();
+                        GetListDemende(_filterListDemande);
+                    }
+                   
+                });
             }
             else
             {
                 MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
-                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851"), TintColor = Color.FromHex("#289851") });
+                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
             }
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChangedAsync;
@@ -82,8 +91,7 @@ namespace Mobile.ViewModel
                 Items.Clear();
                 GetListDemende(_filterListDemande);
             });
-
-            MessagingCenter.Subscribe<BaseViewModel>(this, Constants.MESSAGE_RefreshList, (sender) =>
+            MessagingCenter.Subscribe<App>(this, Constants.MESSAGE_RefreshList, (sender) =>
             {
                 Items.Clear();
                 GetListDemende(_filterListDemande);
@@ -111,7 +119,7 @@ namespace Mobile.ViewModel
                 else
                 {
                     await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
-                        configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { MessageTextColor = Color.FromHex("#289851") });
+                        configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
                 }
             };
         }
@@ -125,16 +133,10 @@ namespace Mobile.ViewModel
             MessagingCenter.Unsubscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList);
         }
 
-
-
-
         public DemandeAccesVM()
         {
 
         }
-
-
-
 
         public bool IsWorking
         {
@@ -169,39 +171,39 @@ namespace Mobile.ViewModel
             Items = new ObservableCollection<DemandeAcces>();
         }
 
-        private static async Task AsyncData()
+        private static async Task SyncData()
         {
-          
-                var resultat = App.Database.GetItemsAsync().LastOrDefault();
-                var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
-                if (resultat != null)
+
+            var listItems = await App.Database.GetItemsAsync();
+            var resultat = listItems.LastOrDefault();
+            var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
+            if (resultat != null)
+            {
+                using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours..."))
                 {
-                    using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours..."))
-                    {
 
 
-                        var resultats = new PostResultatExigenceModel();
-                        var ResultatCheckList = JsonConvert.DeserializeObject<ResultatCheckList>(resultat.ResultatExigencJson);
-                        resultats.ResultatCheckList = ResultatCheckList;
-                        resultats.ByteFile = resultat.ItemData;
-                        resultats.NameFile = resultat.FileName;
-                        resultatApi = await Api.PostResultatExigencesAsync(resultats);
-
-                    }
-
-                    if (resultatApi.success)
-                    {
-                        await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete");
-                        var test = App.Database.DeleteItemAsync(resultat);
-                    }
-                    else
-                    {
-                        await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation");
-                    }
+                    var resultats = new PostResultatExigenceModel();
+                    var ResultatCheckList = JsonConvert.DeserializeObject<ResultatCheckList>(resultat.ResultatExigencJson);
+                    resultats.ResultatCheckList = ResultatCheckList;
+                    resultats.ByteFile = resultat.ItemData;
+                    resultats.NameFile = resultat.FileName;
+                    resultatApi = await Api.PostResultatExigencesAsync(resultats);
 
                 }
+
+                if (resultatApi.success)
+                {
+                    await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete");
+                    var test = App.Database.DeleteItemAsync(resultat);
+                }
+                else
+                {
+                    await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation");
+                }
+
             }
         }
-
     }
+
 }

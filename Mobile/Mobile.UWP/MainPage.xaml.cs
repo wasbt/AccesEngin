@@ -21,12 +21,12 @@ namespace Mobile.UWP
         public MainPage()
         {
             this.InitializeComponent();
-            string dbName = "accesEnginsDB.db3";
-            //! added using Windows.Storage;
-            string folderPath = ApplicationData.Current.LocalFolder.Path;
-            //! added using System.IO;
-            string dbPath = Path.Combine(folderPath, dbName);
-            LoadApplication(new Mobile.App(dbPath));
+            //string dbName = "accesEnginsDB.db3";
+            ////! added using Windows.Storage;
+            //string folderPath = ApplicationData.Current.LocalFolder.Path;
+            ////! added using System.IO;
+            //string dbPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new Mobile.App());
         }
     }
 }
