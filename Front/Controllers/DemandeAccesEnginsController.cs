@@ -209,7 +209,26 @@ namespace Front.Controllers
                 }
                 #endregion
 
+
+
                 await context.SaveChangesAsync();
+
+                #region Notif + push
+                //var FullName = biz.GetFullNameByUserId(CurrentUserId);
+
+                //string Content = string.Format("<strong>{0}</strong> vous a affecté l'action suivante: <strong>{1}</strong> prévue pour le <strong>{2}</strong>", FullName, demandeAccesEngin.REF_TypeEngin.Name, demandeAccesEngin.Observation, demandeAccesEngin.DatePlannification.ToString("yyyy-MM-dd"));
+                //string DestUserId = demandeAccesEngin.ResponsableUserId;
+
+                //biz.AddNotification(DestUserId, Content, CurrentUserId, NotifType: NotifTypes.ActionInfo, ObjectId: demandeAccesEngin.Id);
+
+                //#region push
+                //string PushTitle = "Nouvelle Action";
+                //string PushContent = string.Format("{0} vous a affecté une nouvelle action prévue pour le {1}", FullName, actionInfo.DtPrevue.ToString("yyyy-MM-dd"));
+                //string UserToken = context.AspNetUsers.Find(DestUserId).Profile.SingleOrDefault().MyOPSToken;
+                //biz.SendGCMPushToUser(PushTitle, PushContent, UserToken);
+                // #endregion
+
+                #endregion
                 TempData[ConstsAccesEngin.MESSAGE_SUCCESS] = "Élément ajouté avec succès!";
                 return RedirectToAction("Index");
             }

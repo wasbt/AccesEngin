@@ -101,6 +101,9 @@
     <Compile Include="Metadata\ResultatControleDetail.cs" />
     <Compile Include="Metadata\ResultatExigenceMetadata.cs" />
     <Compile Include="Metadata\TypeEnginMetadata.cs" />
+    <Compile Include="Notification.cs">
+      <DependentUpon>AccesEnginModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PartialClasses\DemandeAccesEngin.cs" />
     <Compile Include="PartialClasses\DemandeResultatEntete.cs" />
     <Compile Include="PartialClasses\Entite.cs" />

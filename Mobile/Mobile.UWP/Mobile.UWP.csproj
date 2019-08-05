@@ -143,6 +143,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Plugin.FirebasePushNotification">
+      <Version>2.3.6</Version>
+    </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>1.1.5.188</Version>
     </PackageReference>

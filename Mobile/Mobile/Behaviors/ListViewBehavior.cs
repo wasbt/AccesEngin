@@ -1,6 +1,7 @@
 ﻿using Mobile.Model;
 using Mobile.View;
 using Mobile.ViewModel;
+using Shared.API.OUT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Mobile.Behaviors
 
         void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            DemandeAcces selectedDemande = ((ListView)sender).SelectedItem as DemandeAcces;
+            ControleModel selectedDemande = ((ListView)sender).SelectedItem as ControleModel;
 
             if (selectedDemande == null)
             {
@@ -34,8 +35,16 @@ namespace Mobile.Behaviors
             //Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
             var mdp = Application.Current.MainPage as MasterDetailPage;
 
-            mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
-            ((ListView)sender).SelectedItem = null;
+            if (selectedDemande.OnlyControle)
+            {
+                mdp.Detail.Navigation.PushAsync(new SearchResultsView(selectedDemande.Id));
+                ((ListView)sender).SelectedItem = null;
+            }
+            else
+            {
+                mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
+                ((ListView)sender).SelectedItem = null;
+            }
         }
 
         protected override void OnDetachingFrom(ListView bindable)

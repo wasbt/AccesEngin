@@ -148,7 +148,7 @@ namespace Mobile.Services
         /// <param name="Id"></param>
         /// <param name="accessToken"></param>
         /// <returns>TypeCheckListDTO</returns>
-        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(long Id, string accessToken)
+        public async Task<ControleModel> GetDetailsDemandeByIdAsync(long Id, string accessToken)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace Mobile.Services
                 var json = await client.GetStringAsync(
                     Constants.BaseApiAddress + "api/GetDetailsDemandeById/" + Id);
 
-                var demandeDetail = JsonConvert.DeserializeObject<DemandeDetail>(json);
+                var demandeDetail = JsonConvert.DeserializeObject<ControleModel>(json);
                 return demandeDetail;
 
 

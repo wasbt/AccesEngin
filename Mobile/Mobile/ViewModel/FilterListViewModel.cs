@@ -18,6 +18,7 @@ namespace Mobile.ViewModel
     public class FilterListVM : BaseViewModel
     {
         private DemandeStatus _demandeStatus; // this is our enum 
+
         private readonly ApiServices _apiServices = new ApiServices();
 
         public List<TypeCheckList> TypeCheckList { get; set; }
@@ -37,9 +38,26 @@ namespace Mobile.ViewModel
             }
         }
 
+        public Control SelectedControl { get; set; }
+
+        public List<Control> controlList;
+        public List<Control> ControlList
+        {
+
+            get
+            {
+                return controlList;
+            }
+            set
+            {
+                controlList = value;
+            }
+        }
+
         public long _typeCheckListId;
 
         public DemandeStatus SelectedStatus { get; set; }
+        public string Matricule { get; set; }
 
         public TypeCheckList TypeCheckListId { get; set; }
 
@@ -69,9 +87,9 @@ namespace Mobile.ViewModel
                     filterModel.StatutId = (int)SelectedStatus;
                     filterModel.TypeCheckListId = TypeCheckListId?.Id;
                     filterModel.DatePlanification = DatePlanification;
-                    filterModel.PageIndex = 0;
-                    filterModel.PageSize = 4;
-
+                    filterModel.Matricule = Matricule;
+                    if (SelectedControl != null)
+                        filterModel.OnlyControle = SelectedControl.OnlyControle;
 
                     MessagingCenter.Send(this, Constants.MESSAGE_FilterList, filterModel);
                     await PopupNavigation.Instance.PopAsync();
@@ -81,7 +99,7 @@ namespace Mobile.ViewModel
         public async override void OnAppearing()
         {
             base.OnAppearing();
-            await  FillPicker();
+            await FillPicker();
         }
         private async Task FillPicker()
         {
@@ -90,6 +108,14 @@ namespace Mobile.ViewModel
                 DemandeStatus.Accepter,
                 DemandeStatus.Refuser,
             };
+
+            ControlList = new List<Control>()
+            {
+                new Control { OnlyControle = false, Name = "Non contrôlée" },
+                new Control { OnlyControle = true, Name = "Contrôlée" }
+        };
+
+
             TypeCheckList = (await Api.GetTypeCheckListAsync()).data;
         }
 

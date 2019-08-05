@@ -27,14 +27,17 @@ namespace BLL.Biz
         {
         }
 
-        public List<DemandeAccesDto> DemandeAccesList(FilterListDemande filterList)
+        public List<ControleModel> DemandeAccesList(FilterListDemande filterList)
         {
+            var controlesList = new List<ControleModel>();
+            IQueryable<ControleModel> controles;
             var demandeAccesQuery = context.DemandeAccesEngin.AsQueryable();
+
             if (filterList.TypeCheckListId.HasValue && filterList.TypeCheckListId != 0)
             {
                 demandeAccesQuery = demandeAccesQuery.Where(x => x.TypeCheckListId == filterList.TypeCheckListId);
             }
-             if (filterList.StatutId.HasValue && filterList.StatutId != 0)
+            if (filterList.StatutId.HasValue && filterList.StatutId != 0)
             {
                 demandeAccesQuery = demandeAccesQuery.Where(x => x.StatutDemandeId == filterList.StatutId);
             }
@@ -42,13 +45,58 @@ namespace BLL.Biz
             {
                 demandeAccesQuery = demandeAccesQuery.Where(x => x.DatePlannification == filterList.DatePlanification);
             }
-            var demandeAccesList = demandeAccesQuery.ToList();
-            var Demendes = demandeAccesList.Where(x => !x.ResultatControleEntete.Any()).Select(x => x.DemandeAccesToDTO()).ToList();
+            if (!string.IsNullOrWhiteSpace(filterList.Matricule))
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x =>
+                    x.IsAutorise &&
+                    x.StatutDemandeId == (int)DemandeStatus.Accepter &&
+                    x.DemandeAccesEnginInfoGeneraleValue
+                    .Any(i => i.REF_InfoGenerale.Name.Equals("Matricule", StringComparison.OrdinalIgnoreCase) &&
+                          i.ValueInfo.Contains(filterList.Matricule)));
+            }
+
+            if (filterList.OnlyControle)
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x => x.ResultatControleEntete.Any());
+                 controles = demandeAccesQuery.Select(x => new ControleModel
+                {
+
+                    IsAutorise = x.IsAutorise,
+                    TypeCheckListName = x.REF_TypeCheckList.Name,
+                    TypeEnginName = x.REF_TypeEngin.Name,
+                    DatePlannification = x.DatePlannification,
+                    Statut = x.REF_StatutDemandes.Name,
+                    StatutColor = x.REF_StatutDemandes.Color,
+                    Id = x.Id,
+                    AutoriseName = x.IsAutorise ? "Autorisé" : "Non autorisé",
+                     OnlyControle = true,
+                });
+            }
+            else
+            {
+                demandeAccesQuery = demandeAccesQuery.Where(x => !x.ResultatControleEntete.Any());
+                 controles = demandeAccesQuery.Select(x => new ControleModel
+                {
+
+                    IsAutorise = x.IsAutorise,
+                    TypeCheckListName = x.REF_TypeCheckList.Name,
+                    TypeEnginName = x.REF_TypeEngin.Name,
+                    DatePlannification = x.DatePlannification,
+                    Statut = x.REF_StatutDemandes.Name,
+                    StatutColor = x.REF_StatutDemandes.Color,
+                    Id = x.Id,
+                    AutoriseName = x.IsAutorise ? "Autorisé" : "Non autorisé",
+                     OnlyControle = false,
+                });
+            }
+
+            var demandeList = controles.ToList();
+
             //var demandeAcces = Demendes.Skip(filterList.PageIndex * filterList.PageSize).Take(filterList.PageSize).ToList();
-            return Demendes;
+            return demandeList;
         }
 
-        public async Task<DemandeDetail> GetDetailsDemandeByIdAsync(long Id)
+        public async Task<ControleModel> GetDetailsDemandeByIdAsync(long Id)
         {
             var demandeAcces = await context.DemandeAccesEngin.FindAsync(Id);
 
@@ -56,7 +104,7 @@ namespace BLL.Biz
                 return null;
 
 
-            var demandeDetail = new DemandeDetail();
+            var demandeDetail = new ControleModel();
             demandeDetail.Id = demandeAcces.Id;
             demandeDetail.TypeCheckListId = demandeAcces.TypeCheckListId;
             demandeDetail.TypeEnginName = demandeAcces.REF_TypeEngin.Name;
@@ -110,6 +158,11 @@ namespace BLL.Biz
                 #endregion
 
                 #region Save entete resultat Exigence 
+                var controlHasDetails = demande.ResultatControleEntete.Count > 0;
+                if (controlHasDetails)
+                {
+                    return false;
+                }
                 var resultatEntete = new ResultatControleEntete();
                 resultatEntete.DemandeAccesEnginId = postResultat.ResultatCheckList.DemandeAccesEnginId;
                 resultatEntete.CreatedBy = postResultat.ResultatCheckList.CreatedBy;
@@ -117,7 +170,7 @@ namespace BLL.Biz
                 #endregion
 
                 context.ResultatControleEntete.Add(resultatEntete);
-               await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
 
                 SourceId = resultatEntete.Id;
 
@@ -152,7 +205,7 @@ namespace BLL.Biz
 
                     fileId = await biz.SaveAppFile(objFile, ConstsAccesEngin.ContainerName, SourceId.ToString(), ConstsAccesEngin.ContainerName);
 
-                    resultatEntete.AppFileId = fileId; 
+                    resultatEntete.AppFileId = fileId;
                 }
                 await context.SaveChangesAsync();
 
@@ -305,11 +358,11 @@ namespace BLL.Biz
 
         public async Task<List<TypeCheckListDTO>> GetTypeCheckListAsync()
         {
-            var typeCheckList =  await context.REF_TypeCheckList.AsQueryable().ToListAsync();
+            var typeCheckList = await context.REF_TypeCheckList.AsQueryable().ToListAsync();
 
             #region Check Controle id & find it
 
-            var typeCheckListDTO =  typeCheckList.Select(x   => x.TypeCheckListToDTO()).ToList();
+            var typeCheckListDTO = typeCheckList.Select(x => x.TypeCheckListToDTO()).ToList();
 
             //  var tt = typeCheckListDTO.Rubriques.GroupBy(r => r.Name).Select(x => new Grouping<string, CheckListRubriqueDTO>(x.Key, x)).ToList();
             #endregion

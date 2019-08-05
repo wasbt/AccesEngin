@@ -5,6 +5,7 @@ using Mobile.Services;
 using Mobile.View;
 using Mobile.View.Menu;
 using Newtonsoft.Json;
+using Plugin.FirebasePushNotification;
 using Shared.Models;
 using SQLite;
 using System;
@@ -85,17 +86,28 @@ namespace Mobile
             #endregion
 
 
+
         }
 
         private async void Connectivity_ConnectivityChanged(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs e)
         {
             if (AppHelper.IsConnected)
             {
+                await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
+                                      msDuration: MaterialSnackbar.DurationLong,
+                                      configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#289851") });
                 var res = await AppHelper.syncControles();
                 if (res)
                 {
                     MessagingCenter.Send(this, Constants.MESSAGE_RefreshList);
                 }
+
+            }
+            else
+            {
+                await MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
+                                      msDuration: MaterialSnackbar.DurationLong,
+                                      configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#DC3545") });
             }
         }
 
@@ -104,6 +116,30 @@ namespace Mobile
         protected override void OnStart()
         {
             // Handle when your app starts
+            #region FireBase
+            CrossFirebasePushNotification.Current.OnTokenRefresh += (s, p) =>
+            {
+                CrossFirebasePushNotification.Current.Subscribe("general");
+                System.Diagnostics.Debug.WriteLine($"TOKEN : {p.Token}");
+            };
+
+            CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+            {
+
+                System.Diagnostics.Debug.WriteLine("Received");
+
+            };
+            CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+            {
+                System.Diagnostics.Debug.WriteLine("Opened");
+                foreach (var data in p.Data)
+                {
+                    System.Diagnostics.Debug.WriteLine($"{data.Key} : {data.Value}");
+                }
+
+
+            };
+            #endregion
         }
 
         protected override void OnSleep()

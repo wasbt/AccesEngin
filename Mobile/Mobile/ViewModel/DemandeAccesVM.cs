@@ -7,6 +7,7 @@ using PropertyChanged;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using Shared.API.IN;
+using Shared.API.OUT;
 using Shared.Models;
 using SQLite;
 using System.Collections.ObjectModel;
@@ -62,12 +63,12 @@ namespace Mobile.ViewModel
             {
                 Task.Run(async () =>
                 {
-                    var res = await AppHelper.syncControles();
-                    if (res)
-                    {
-                        Items.Clear();
-                        GetListDemende(_filterListDemande);
-                    }
+                    //var res = await AppHelper.syncControles();
+                    //if (res)
+                    //{
+                    //    Items.Clear();
+                    //    GetListDemende(_filterListDemande);
+                    //}
                    
                 });
             }
@@ -103,7 +104,7 @@ namespace Mobile.ViewModel
             });
 
             _filterListDemande = new FilterListDemande();
-            Items = new ObservableCollection<DemandeAcces>();
+            Items = new ObservableCollection<ControleModel>();
             GetListDemende(_filterListDemande);
         }
 
@@ -113,7 +114,7 @@ namespace Mobile.ViewModel
                 if (e.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
                 {
                     _filterListDemande = new FilterListDemande();
-                    Items = new ObservableCollection<DemandeAcces>();
+                    Items = new ObservableCollection<ControleModel>();
                     GetListDemende(_filterListDemande);
                 }
                 else
@@ -144,7 +145,7 @@ namespace Mobile.ViewModel
             set { SetValue(IsWorkingProperty, value); }
         }
 
-        public ObservableCollection<DemandeAcces> Items { get; set; }
+        public ObservableCollection<ControleModel> Items { get; set; }
 
         public ICommand RefreshCommand { get; }
         public ICommand OpenPopUpCommand
@@ -164,11 +165,11 @@ namespace Mobile.ViewModel
 
             if (response?.success == true)
             {
-                Items = new ObservableCollection<DemandeAcces>(response.data);
+                Items = new ObservableCollection<ControleModel>(response.data);
                 return;
             }
 
-            Items = new ObservableCollection<DemandeAcces>();
+            Items = new ObservableCollection<ControleModel>();
         }
 
         private static async Task SyncData()

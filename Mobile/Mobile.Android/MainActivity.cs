@@ -13,6 +13,7 @@ using Plugin.Media  ;
 using Plugin.CurrentActivity;
 using System.IO;
 using System.Linq;
+using Plugin.FirebasePushNotification;
 
 namespace Mobile.Droid
 {
@@ -47,6 +48,8 @@ namespace Mobile.Droid
             //string dbPath = Path.Combine(folderPath, dbName);
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
+            FirebasePushNotificationManager.ProcessIntent(this, Intent);
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

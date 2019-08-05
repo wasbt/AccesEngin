@@ -12,6 +12,8 @@ namespace Shared.API.IN
         public int PageSize { get; set; }
         public long? TypeCheckListId { get; set; }
         public long? StatutId { get; set; }
+        public bool OnlyControle { get; set; }
+        public string Matricule { get; set; }
         public DateTime? DatePlanification { get; set; }
     }
 }

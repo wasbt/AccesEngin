@@ -18,7 +18,7 @@ namespace Mobile.View
             InitializeComponent();
         }
 
-        public WebViewPage(DemandeDetail demandeDetail)
+        public WebViewPage(ControleModel demandeDetail)
         {
             InitializeComponent();
             //WebView wv = new WebView();

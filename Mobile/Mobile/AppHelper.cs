@@ -31,14 +31,9 @@ namespace Mobile
         {
             if (!AppHelper.IsConnected)
             {
-                await MaterialDialog.Instance.SnackbarAsync(message: "Pas de connexion",
-                                        msDuration: MaterialSnackbar.DurationLong,
-                                        configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#DC3545") });
                 return false;
             }
-            await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
-                                        msDuration: MaterialSnackbar.DurationLong,
-                                        configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#289851") });
+           
 
             var listItems = await App.Database.GetItemsAsync();
             var resultat = listItems.LastOrDefault();

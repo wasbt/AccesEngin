@@ -34,6 +34,23 @@ namespace BLL.Common
             return Guid.NewGuid().ToString() + Path.GetExtension(fileName);
         }
 
+        public string GetFullNameByUserId(string UserId)
+        {
+            var profil = context
+                .Profile
+                .Where(p => p.Id == UserId)
+                .SingleOrDefault();
+
+            if (profil != null)
+            {
+                return profil.FullName;
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public async Task<long> SaveAppFile(HttpPostedFileBase uploadedFile, string ContainerName, string SourceId, string SourceName)
         {
             try
@@ -333,6 +350,66 @@ namespace BLL.Common
             }
 
             return ds;
+        }
+        #endregion
+
+        #region Notifications
+        public void AddNotification(string DestUserId, string Content, string SenderUserId, NotifTypes NotifType = NotifTypes.Info, long ObjectId = 0)
+        {
+            Notification n = new Notification();
+            n.DtNotif = DateTime.Now;
+            n.UserId = DestUserId;
+            n.Content = Content;
+            n.ObjectId = (int)ObjectId;
+            n.SenderUserId = SenderUserId;
+
+            if (NotifType == NotifTypes.Info)
+            {
+                n.ObjectType = "INFO";
+            }
+            else if (NotifType == NotifTypes.Activite)
+            {
+                n.ObjectType = "ACTIVITE";
+            }
+            else if (NotifType == NotifTypes.ActionInfo)
+            {
+                n.ObjectType = "ACTION";
+            }
+            else if (NotifType == NotifTypes.NewFollowRequest)
+            {
+                n.ObjectType = "NEWFOLLOW";
+            }
+            else if (NotifType == NotifTypes.FollowRequestAccepted)
+            {
+                n.ObjectType = "FOLLOW-ACCEPTED";
+            }
+            else if (NotifType == NotifTypes.FollowRequestDiscarded)
+            {
+                n.ObjectType = "FOLLOW-DISCARDED";
+            }
+            else if (NotifType == NotifTypes.HSE_NouvelleVose)
+            {
+                n.ObjectType = "NEW-VOSE";
+            }
+            else if (NotifType == NotifTypes.HSE_NouveauRapportFlash)
+            {
+                n.ObjectType = "NEW-FLASHREPORT";
+            }
+            else if (NotifType == NotifTypes.Fiabilite_AnalyseAFroid)
+            {
+                n.ObjectType = "FIABILITE-NEWACTION";
+            }
+            else if (NotifType == NotifTypes.Relance_Action)
+            {
+                n.ObjectType = "RELANCE-ACTION";
+            }
+            else if (NotifType == NotifTypes.AccesEngis)
+            {
+                n.ObjectType = "AccesEngis";
+            }
+
+            context.Notification.Add(n);
+            context.SaveChanges();
         }
         #endregion
     }

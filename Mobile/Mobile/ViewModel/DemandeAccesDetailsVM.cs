@@ -32,7 +32,7 @@ namespace Mobile.ViewModel
 
 
 
-        public DemandeDetail DemandeDetail { get; set; }
+        public ControleModel DemandeDetail { get; set; }
 
 
         public DemandeAccesDetailsVM(long id)

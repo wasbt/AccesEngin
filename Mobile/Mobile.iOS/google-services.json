@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "361642068231",
+    "firebase_url": "https://digicontroltest.firebaseio.com",
+    "project_id": "digicontroltest",
+    "storage_bucket": "digicontroltest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361642068231:android:ebdfbd0860f008a9",
+        "android_client_info": {
+          "package_name": "ma.ocpgroup.digicontrol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361642068231-brvdknkkib5okgm5mahuoumj7n43mson.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYnMThbYxwiXEhiI9Ym6vXoiq4mN4r6o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361642068231-brvdknkkib5okgm5mahuoumj7n43mson.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

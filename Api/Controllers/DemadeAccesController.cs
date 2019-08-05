@@ -30,12 +30,11 @@ namespace Api.Controllers
             var filterListDemande = JsonConvert.DeserializeObject<FilterListDemande>(filterList.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
             var list = biz.DemandeAccesList(filterListDemande);
-            var result = new RESTServiceResponse<List<DemandeAccesDto>>(true, string.Empty, list);
+            var result = new RESTServiceResponse<List<ControleModel>>(true, string.Empty, list);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         #endregion
-
 
         #region get CheckList For controller
 
@@ -105,7 +104,7 @@ namespace Api.Controllers
             var checkListByIdModel = JsonConvert.DeserializeObject<GetCheckListByIdModel>(model.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
             var detailsDemande = await biz.GetDetailsDemandeByIdAsync(checkListByIdModel.Id);
-            var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty, detailsDemande);
+            var result = new RESTServiceResponse<ControleModel>(true, string.Empty, detailsDemande);
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
         }
@@ -116,7 +115,7 @@ namespace Api.Controllers
             var validerDemande = JsonConvert.DeserializeObject<ValiderDemande>(resultat.PostData);
             DemandeAccesBiz biz = new DemandeAccesBiz(context, WebApiApplication.log);
             var Isvalid = await biz.ValiderDemande(validerDemande, CurrentUserId);
-            var result = new RESTServiceResponse<DemandeDetail>(true, string.Empty);
+            var result = new RESTServiceResponse<ControleModel>(true, string.Empty);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

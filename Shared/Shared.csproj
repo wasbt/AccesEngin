@@ -49,7 +49,7 @@
     <Compile Include="API\IN\SaveNewResultatExigence.cs" />
     <Compile Include="API\IN\SaveNewResultatInfoGenerale.cs" />
     <Compile Include="API\IN\SaveUserRolesModel.cs" />
-    <Compile Include="API\OUT\DemandeDetail.cs" />
+    <Compile Include="API\OUT\ControleModel.cs" />
     <Compile Include="ConstsAccesEngin.cs" />
     <Compile Include="DTO\CheckListExigenceDTO.cs" />
     <Compile Include="DTO\CheckListRubriqueDTO.cs" />
@@ -60,6 +60,7 @@
     <Compile Include="DTO\NatureMatiereDTO.cs" />
     <Compile Include="DTO\TypeCheckListDTO.cs" />
     <Compile Include="DTO\TypeEnginDTO.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="ENUMS\DemandeStatus.cs" />
     <Compile Include="ENUMS\DureeEstimativeEnums.cs" />
     <Compile Include="Grouping.cs" />

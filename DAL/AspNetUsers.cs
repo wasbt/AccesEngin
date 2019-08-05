@@ -30,6 +30,7 @@ namespace DAL
             this.AspNetUserLogins = new HashSet<AspNetUserLogins>();
             this.Entite = new HashSet<Entite>();
             this.Sites = new HashSet<Sites>();
+            this.Notification = new HashSet<Notification>();
             this.AspNetRoles = new HashSet<AspNetRoles>();
         }
     
@@ -73,6 +74,8 @@ namespace DAL
         public virtual Profile Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sites> Sites { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notification> Notification { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }

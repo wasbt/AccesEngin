@@ -24,14 +24,14 @@ namespace Mobile.Services
         #endregion
 
         #region Get List Demande
-        public static async Task<RESTServiceResponse<List<DemandeAcces>>> GetDemandeAccesListAsync(FilterListDemande filterListDemande)
+        public static async Task<RESTServiceResponse<List<ControleModel>>> GetDemandeAccesListAsync(FilterListDemande filterListDemande)
         {
             var postData = new PostDataModel
             {
                 PostData = JsonConvert.SerializeObject(filterListDemande),
             };
 
-            return await RESTHelper.GetRequest<List<DemandeAcces>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: postData);
+            return await RESTHelper.GetRequest<List<ControleModel>>(Settings.AccessToken, Constants.BaseApiAddress + "api/DemandeAccesList", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 
@@ -55,7 +55,7 @@ namespace Mobile.Services
         }
         #endregion
         #region Get  Details Demande By Id
-        public static async Task<RESTServiceResponse<DemandeDetail>> GetDetailsDemandeByIdAsync(long Id)
+        public static async Task<RESTServiceResponse<ControleModel>> GetDetailsDemandeByIdAsync(long Id)
         {
             var model = new GetCheckListByIdModel();
             model.Id = Id;
@@ -64,7 +64,7 @@ namespace Mobile.Services
             {
                 PostData = JsonConvert.SerializeObject(model),
             };
-            return await RESTHelper.GetRequest<DemandeDetail>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetDetailsDemandeById", HttpVerbs.POST, postObject: postData);
+            return await RESTHelper.GetRequest<ControleModel>(Settings.AccessToken, Constants.BaseApiAddress + "api/GetDetailsDemandeById", HttpVerbs.POST, postObject: postData);
         }
         #endregion
 

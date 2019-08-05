@@ -5,27 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8411c9da3a854bf59bef11aa731e9953" Name="Diagram1">
-        <EntityTypeShape EntityType="AccesEngisModel.DemandeAccesEngin" Width="1.5" PointX="7.5" PointY="18" />
-        <EntityTypeShape EntityType="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue" Width="1.5" PointX="9.75" PointY="23.25" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_CheckListExigence" Width="1.5" PointX="5.25" PointY="14.25" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_CheckListRubrique" Width="1.5" PointX="5.25" PointY="24.375" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_InfoGenerale" Width="1.5" PointX="7.5" PointY="28.25" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_InfoGeneralRubrique" Width="1.5" PointX="5.25" PointY="38.875" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_NatureMatiere" Width="1.5" PointX="15" PointY="22.5" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_StatutDemandes" Width="1.5" PointX="5.25" PointY="28.75" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_TypeCheckList" Width="1.5" PointX="12.75" PointY="22.875" />
-        <EntityTypeShape EntityType="AccesEngisModel.REF_TypeEngin" Width="1.5" PointX="18" PointY="20.375" />
-        <EntityTypeShape EntityType="AccesEngisModel.ReponseDemande" Width="1.5" PointX="9.75" PointY="26.625" />
-        <EntityTypeShape EntityType="AccesEngisModel.ResultatControleDetail" Width="1.5" PointX="13" PointY="17" />
-        <EntityTypeShape EntityType="AccesEngisModel.ResultatControleEntete" Width="1.5" PointX="9.75" PointY="19.375" />
-        <EntityTypeShape EntityType="AccesEngisModel.AppFile" Width="1.5" PointX="5.25" PointY="10.125" />
-        <EntityTypeShape EntityType="AccesEngisModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="20" />
-        <EntityTypeShape EntityType="AccesEngisModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="44.75" />
-        <EntityTypeShape EntityType="AccesEngisModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="42.125" />
-        <EntityTypeShape EntityType="AccesEngisModel.AspNetUsers" Width="1.5" PointX="3" PointY="17.75" />
-        <EntityTypeShape EntityType="AccesEngisModel.Entite" Width="1.5" PointX="5.25" PointY="19" />
-        <EntityTypeShape EntityType="AccesEngisModel.Profile" Width="1.5" PointX="10.5" PointY="15.25" />
-        <EntityTypeShape EntityType="AccesEngisModel.Sites" Width="1.5" PointX="15.75" PointY="18" />
+        <EntityTypeShape EntityType="AccesEngisModel.DemandeAccesEngin" Width="1.5" PointX="10.5" PointY="18" />
+        <EntityTypeShape EntityType="AccesEngisModel.DemandeAccesEnginInfoGeneraleValue" Width="1.5" PointX="15.75" PointY="25.875" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_CheckListExigence" Width="1.5" PointX="7.5" PointY="21.125" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_CheckListRubrique" Width="1.5" PointX="5.25" PointY="21.25" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_InfoGenerale" Width="1.5" PointX="7.5" PointY="33.375" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_InfoGeneralRubrique" Width="1.5" PointX="5.25" PointY="47.625" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_NatureMatiere" Width="1.5" PointX="15" PointY="17.125" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_StatutDemandes" Width="1.5" PointX="8.25" PointY="30.75" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_TypeCheckList" Width="1.5" PointX="9.75" PointY="26.375" />
+        <EntityTypeShape EntityType="AccesEngisModel.REF_TypeEngin" Width="1.5" PointX="15" PointY="29" />
+        <EntityTypeShape EntityType="AccesEngisModel.ReponseDemande" Width="1.5" PointX="12.75" PointY="26.5" />
+        <EntityTypeShape EntityType="AccesEngisModel.ResultatControleDetail" Width="1.5" PointX="15" PointY="21.125" />
+        <EntityTypeShape EntityType="AccesEngisModel.ResultatControleEntete" Width="1.5" PointX="12.75" PointY="20.5" />
+        <EntityTypeShape EntityType="AccesEngisModel.AppFile" Width="1.5" PointX="8.25" PointY="12.125" />
+        <EntityTypeShape EntityType="AccesEngisModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="21.875" />
+        <EntityTypeShape EntityType="AccesEngisModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="44.875" />
+        <EntityTypeShape EntityType="AccesEngisModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="42.375" />
+        <EntityTypeShape EntityType="AccesEngisModel.AspNetUsers" Width="1.5" PointX="3" PointY="19.5" />
+        <EntityTypeShape EntityType="AccesEngisModel.Entite" Width="1.5" PointX="5.25" PointY="15.75" />
+        <EntityTypeShape EntityType="AccesEngisModel.Notification" Width="1.5" PointX="5.25" PointY="35.5" />
+        <EntityTypeShape EntityType="AccesEngisModel.Profile" Width="1.5" PointX="7.5" PointY="16.25" />
+        <EntityTypeShape EntityType="AccesEngisModel.Sites" Width="1.5" PointX="12.75" PointY="16.5" />
         <AssociationConnector Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_NatureMatiere_NatureMatiereId" />
         <AssociationConnector Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_StatutDemandes_StatutDemandeId" />
         <AssociationConnector Association="AccesEngisModel.FK_AccesEngins_DemandeAccesEngin_AccesEngins_TypeCheckList_TypeCheckListId" />
@@ -58,6 +59,7 @@
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Entitie_dbo_AspNetUsers_CreatedBy" />
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Profile_dbo_AspNetUsers_Id" />
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Sites_dbo_AspNetUsers_CreatedBy" />
+        <AssociationConnector Association="AccesEngisModel.FK_Notification_ToUsers" />
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Entitie_dbo_Profile_HSEEntiteUserId" />
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Entitie_dbo_Sites_SiteId" />
         <AssociationConnector Association="AccesEngisModel.FK_dbo_Profile_dbo_Entities_EntiteId" />

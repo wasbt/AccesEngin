@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shared.API.OUT
 {
-    public class DemandeDetail
+    public class ControleModel
     {
         public long Id { get; set; }
 
@@ -47,8 +47,8 @@ namespace Shared.API.OUT
 
         public long? FileId { get; set; }
 
-
         private bool _IsControlled;
+
         public bool IsControlled
         {
             get { return _IsControlled; }
@@ -73,6 +73,7 @@ namespace Shared.API.OUT
         }
 
         private bool _ButtonValideIsVisible;
+
         public bool ButtonValideIsVisible
         {
             get { return _ButtonValideIsVisible; }
@@ -95,7 +96,7 @@ namespace Shared.API.OUT
                 }
             }
         }
-
+        public bool OnlyControle { get; set; }
 
     }
 }
