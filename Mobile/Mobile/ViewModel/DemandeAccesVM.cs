@@ -53,26 +53,15 @@ namespace Mobile.ViewModel
             }
         }
 
+        public bool VisibleIconSync { get; set; } = false;
 
 
         public override void OnAppearing()
         {
 
             base.OnAppearing();
-            if (AppHelper.IsConnected)
-            {
-                Task.Run(async () =>
-                {
-                    //var res = await AppHelper.syncControles();
-                    //if (res)
-                    //{
-                    //    Items.Clear();
-                    //    GetListDemende(_filterListDemande);
-                    //}
-                   
-                });
-            }
-            else
+
+            if (!AppHelper.IsConnected)
             {
                 MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
                      configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
@@ -96,6 +85,7 @@ namespace Mobile.ViewModel
             {
                 Items.Clear();
                 GetListDemende(_filterListDemande);
+                VisibleIconSync = false;
             });
             MessagingCenter.Subscribe<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshControlList, (callback) =>
             {
@@ -111,14 +101,20 @@ namespace Mobile.ViewModel
         private async void Connectivity_ConnectivityChangedAsync(object sender, Xamarin.Essentials.ConnectivityChangedEventArgs e)
         {
             {
-                if (e.NetworkAccess == Xamarin.Essentials.NetworkAccess.Internet)
+                if (AppHelper.IsConnected)
                 {
+                    var checkLastItem = await AppHelper.getLastControl();
+                    if (checkLastItem != null)
+                    {
+                        VisibleIconSync = true;
+                    }
                     _filterListDemande = new FilterListDemande();
                     Items = new ObservableCollection<ControleModel>();
                     GetListDemende(_filterListDemande);
                 }
                 else
                 {
+                    VisibleIconSync = false;
                     await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
                         configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
                 }
@@ -155,6 +151,22 @@ namespace Mobile.ViewModel
                 return new Command(async () =>
                 {
                     await PopupNavigation.Instance.PushPopupSingleAsync(new PopUpFilterListView());
+                });
+            }
+        }
+        public ICommand SyncDataLocalToServer
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    var res = await AppHelper.syncControles();
+                    if (res)
+                    {
+                        VisibleIconSync = false;
+                        Items.Clear();
+                        GetListDemende(_filterListDemande);
+                    }
                 });
             }
         }

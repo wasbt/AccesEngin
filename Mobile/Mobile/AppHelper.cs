@@ -33,10 +33,8 @@ namespace Mobile
             {
                 return false;
             }
-           
 
-            var listItems = await App.Database.GetItemsAsync();
-            var resultat = listItems.LastOrDefault();
+            Model.TableSql.TableResultatExigenceModel resultat = await getLastControl();
             var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
             if (resultat == null)
             {
@@ -63,6 +61,13 @@ namespace Mobile
                 await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation", configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
                 return false;
             }
+        }
+
+        public static async Task<Model.TableSql.TableResultatExigenceModel> getLastControl()
+        {
+            var listItems = await App.Database.GetItemsAsync();
+            var resultat = listItems.LastOrDefault();
+            return resultat;
         }
     }
 }

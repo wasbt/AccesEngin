@@ -98,5 +98,21 @@ namespace Shared.API.OUT
         }
         public bool OnlyControle { get; set; }
 
+        public bool VisibleStatut
+        {
+            get
+            {
+                if (Statut == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+        }
+
     }
 }

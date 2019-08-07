@@ -1,5 +1,6 @@
 ﻿using DAL;
 using ExcelDataReader;
+using FirebaseNet.Messaging;
 using log4net;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -22,6 +23,7 @@ namespace BLL.Common
         public string RootFilesPath = ConfigurationManager.AppSettings["RootFilesPath"]?.ToString();
         public static string AzureStorageConnectionString = ConfigurationManager.ConnectionStrings["AzureStorageConnectionString"].ConnectionString;
         public static log4net.ILog log;
+        public string FCMServerKey = ConfigurationManager.AppSettings["FCMServerKey"]?.ToString();
         public OcpPerformanceDataContext  context { get; set; }
 
         public CommonBiz(OcpPerformanceDataContext  context, ILog log)
@@ -412,5 +414,67 @@ namespace BLL.Common
             context.SaveChanges();
         }
         #endregion
+
+        public void SendGCMPushToUser(string title, string body, string userToken)
+        {
+            Task.Run(() =>
+            {
+                FCMClient client = new FCMClient(FCMServerKey);
+
+                var message = new Message()
+                {
+                    To = userToken, //topic example /topics/all
+                    Priority = MessagePriority.high,
+                    Notification = new AndroidNotification()
+                    {
+                        Body = body,
+                        Icon = "icon",
+                        Sound = "default",
+                        Title = title
+                    },
+                    Data = new Dictionary<string, string>
+                    {
+                      { "body", body },
+                      { "title", title },
+                      { "icon", "icon" },
+                      { "target","news"},
+                      { "sound","default"},
+                    },
+                };
+
+                var result = client.SendMessageAsync(message).Result;
+            });
+        }
+
+        public void SendGCMPushToTopics(string title, string body, string topics)
+        {
+            Task.Run(() =>
+            {
+                FCMClient client = new FCMClient(FCMServerKey);
+
+                var message = new Message()
+                {
+                    Condition = topics,   //topic example /topics/all
+                    Priority = MessagePriority.high,
+                    Notification = new AndroidNotification()
+                    {
+                        Body = body,
+                        Icon = "icon",
+                        Sound = "default",
+                        Title = title
+                    },
+                    Data = new Dictionary<string, string>
+                    {
+                      { "body", body },
+                      { "title", title },
+                      { "icon", "icon" },
+                      { "target","news"},
+                      { "sound","default"},
+                    },
+                };
+
+                var result = client.SendMessageAsync(message).Result;
+            });
+        }
     }
 }
