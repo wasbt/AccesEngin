@@ -92,7 +92,14 @@ namespace Shared.API.OUT
                 }
                 else
                 {
-                    _ButtonValideIsVisible = false;
+                    if (StatutId == (int)DemandeStatus.en_cours_de_traitement)
+                    {
+                        _ButtonValideIsVisible = true;
+                    }
+                    else
+                    {
+                        _ButtonValideIsVisible = false;
+                    }
                 }
             }
         }

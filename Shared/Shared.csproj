@@ -50,6 +50,7 @@
     <Compile Include="API\IN\SaveNewResultatInfoGenerale.cs" />
     <Compile Include="API\IN\SaveUserRolesModel.cs" />
     <Compile Include="API\OUT\ControleModel.cs" />
+    <Compile Include="AppKeys.cs" />
     <Compile Include="ConstsAccesEngin.cs" />
     <Compile Include="DTO\CheckListExigenceDTO.cs" />
     <Compile Include="DTO\CheckListRubriqueDTO.cs" />

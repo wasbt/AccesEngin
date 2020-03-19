@@ -27,7 +27,6 @@ namespace DAL
         public long TypeCheckListId { get; set; }
         public string Observation { get; set; }
         public long TypeEnginId { get; set; }
-        public bool IsAutorise { get; set; }
         public System.DateTime DatePlannification { get; set; }
         public Nullable<long> NatureMatiereId { get; set; }
         public Nullable<long> AppFileId { get; set; }

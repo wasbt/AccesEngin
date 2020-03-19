@@ -21,8 +21,8 @@ namespace Mobile.ViewModel
 
         private readonly ApiServices _apiServices = new ApiServices();
 
-        public string Username { get; set; } = Settings.FullName = "Controleur@ocp.ma";
-        public string Password { get; set; } = Settings.Password = "AZERTY123456";
+        public string Username { get; set; } = Settings.FullName = "admin";
+        public string Password { get; set; } = Settings.Password = "123456";
 
 
 
@@ -37,10 +37,7 @@ namespace Mobile.ViewModel
                         CrossToastPopUp.Current.ShowToastMessage("Verifier votre connexion internet et réessayer");
                         return;
                     }
-                    var loginModel = new LoginModel();
-                    loginModel.Username = Username;
-                    loginModel.Password = Password;
-                    var login = await Api.LoginAction(loginModel);
+                    var login = await Api.LoginAction(Username, Password);
                     SetSettings(login);
                     if (string.IsNullOrEmpty(login.Error) && !string.IsNullOrEmpty(login.AccessToken))
                     {

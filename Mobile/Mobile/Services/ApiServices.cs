@@ -39,7 +39,7 @@ namespace Mobile.Services
             };
 
             var request = new HttpRequestMessage(
-                HttpMethod.Post, Constants.BaseApiAddress + "Token");
+                HttpMethod.Post, AppUrls.BaseUrl + "Token");
 
             request.Content = new FormUrlEncodedContent(keyValues);
 
@@ -76,7 +76,7 @@ namespace Mobile.Services
             HttpContent content = new StringContent(json);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var data = await client.PostAsync(Constants.BaseApiAddress + "api/DemandeAccesList", content);
+            var data = await client.PostAsync(AppUrls.BaseUrl + "api/DemandeAccesList", content);
 
 
             var demandeAcces = JsonConvert.DeserializeObject<List<DemandeAcces>>(await data.Content.ReadAsStringAsync());
@@ -99,7 +99,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/GetCheckList/" + Id);
+                    AppUrls.BaseUrl + "api/GetCheckList/" + Id);
 
                 var typeCheckList = JsonConvert.DeserializeObject<TypeCheckList>(json);
                 return typeCheckList;
@@ -127,7 +127,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/GetTypeCheckList");
+                    AppUrls.BaseUrl + "api/GetTypeCheckList");
 
                 var typeCheckList = JsonConvert.DeserializeObject<List<TypeCheckList>>(json);
                 return typeCheckList;
@@ -157,7 +157,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/GetDetailsDemandeById/" + Id);
+                    AppUrls.BaseUrl + "api/GetDetailsDemandeById/" + Id);
 
                 var demandeDetail = JsonConvert.DeserializeObject<ControleModel>(json);
                 return demandeDetail;
@@ -187,7 +187,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/DemandeAccesByMatricule/" + Matricule);
+                    AppUrls.BaseUrl + "api/DemandeAccesByMatricule/" + Matricule);
 
                 var demandeAcces = JsonConvert.DeserializeObject<ObservableCollection<DemandeAcces>>(json);
                 return demandeAcces;
@@ -211,7 +211,7 @@ namespace Mobile.Services
                     "Bearer", accessToken);
 
                 var json = await client.GetStringAsync(
-                    Constants.BaseApiAddress + "api/GetResultatExigence/" + DemandeAccesId);
+                    AppUrls.BaseUrl + "api/GetResultatExigence/" + DemandeAccesId);
 
                 var demandeAcces = JsonConvert.DeserializeObject<Model.ResultatExigenceModel>(json);
                 return demandeAcces;
@@ -248,7 +248,7 @@ namespace Mobile.Services
 
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = httpClient.PostAsync(Constants.BaseApiAddress + "api/PostResultatExigences", multipart).Result;
+            var response = httpClient.PostAsync(AppUrls.BaseUrl + "api/PostResultatExigences", multipart).Result;
 
         }
 
@@ -256,7 +256,7 @@ namespace Mobile.Services
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await client.PostAsync(Constants.BaseApiAddress + "api/Files/Upload", contents);
+            var response = await client.PostAsync(AppUrls.BaseUrl + "api/Files/Upload", contents);
             var Text = await response.Content.ReadAsStringAsync();
 
         }
@@ -277,7 +277,7 @@ namespace Mobile.Services
             HttpContent content = new StringContent(json);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync(Constants.BaseApiAddress + "api/ValiderDemande", content);
+            var response = await client.PostAsync(AppUrls.BaseUrl + "api/ValiderDemande", content);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Mobile.Services
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var response = await client.GetStringAsync(Constants.BaseApiAddress + "api/File/" + id);
+            var response = await client.GetStringAsync(AppUrls.BaseUrl + "api/File/" + id);
         }
     }
 }

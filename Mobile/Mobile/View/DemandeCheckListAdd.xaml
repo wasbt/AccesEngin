@@ -57,7 +57,7 @@
 
                             <StackLayout Padding="10" Orientation="Horizontal">
                                 <Label Text="Autorisé" TextColor="Black" />
-                                <Switch HorizontalOptions="EndAndExpand" IsToggled="{Binding IsAutorise}" />
+                                <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding IsAutorise}" />
                             </StackLayout>
                             <Image
                                 x:Name="FileImage"

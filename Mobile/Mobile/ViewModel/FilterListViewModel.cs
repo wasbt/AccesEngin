@@ -105,7 +105,7 @@ namespace Mobile.ViewModel
         {
             DemandeStatusList = new List<DemandeStatus>()
             {
-                DemandeStatus.Accepter,
+              //  DemandeStatus.Accepter,
                 DemandeStatus.Refuser,
             };
 

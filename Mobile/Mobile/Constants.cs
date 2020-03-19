@@ -8,7 +8,6 @@ namespace Mobile
 {
     public static class Constants
     {
-        public static string BaseApiAddress => "http://controleacceswebapi.azurewebsites.net/";
         //public static string BaseApiAddress => "http://192.168.137.197:3481/";
         public const string MESSAGE_RefreshControlList = "refreshcontrollist";
         public const string MESSAGE_RefreshList = "Refreshlist";

@@ -25,11 +25,11 @@
                         TextColor="Black"
                         VerticalTextAlignment="Center" />
 
-                    <Switch
+                    <CheckBox
                         Grid.Column="1"
                         HeightRequest="20"
                         HorizontalOptions="Start"
-                        IsToggled="{Binding IsConforme}"
+                        IsChecked="{Binding IsConforme}"
                         VerticalOptions="Start"
                         WidthRequest="60" />
 

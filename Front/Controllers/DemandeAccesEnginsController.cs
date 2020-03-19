@@ -49,10 +49,10 @@ namespace Front.Controllers
             {
                 query = query.Where(x => x.TypeCheckListId == Filter.TypeCheckListId);
             }
-            if (Filter.Autorise.HasValue)
-            {
-                query = query.Where(x => x.IsAutorise == Filter.Autorise);
-            }
+            //if (Filter.Autorise.HasValue)
+            //{
+            //    query = query.Where(x => x.IsAutorise == Filter.Autorise);
+            //}
             if (Filter.DatePlannification.HasValue)
             {
                 query = query.Where(x => x.DatePlannification.Day == Filter.DatePlannification.Value.Day &&
@@ -90,6 +90,8 @@ namespace Front.Controllers
             }
 
             query = query.OrderByDescending(x => x.Id);
+
+            var ccc = query.ToListAsync();
 
             model.resultList = query.ToPagedList(pageNumber, pageSize);
 
@@ -173,7 +175,7 @@ namespace Front.Controllers
 
                 demandeAccesEngin.CreatedBy = CurrentUserId;
                 demandeAccesEngin.CreatedOn = DateTime.Now;
-                demandeAccesEngin.IsAutorise = false;
+                demandeAccesEngin.StatutDemandeId = (int)DemandeStatus.en_cours_de_traitement;
                 context.DemandeAccesEngin.Add(demandeAccesEngin);
                 await context.SaveChangesAsync();
 
@@ -373,10 +375,10 @@ namespace Front.Controllers
             {
                 query = query.Where(x => x.TypeCheckListId == Filter.TypeCheckListId);
             }
-            if (Filter.Autorise.HasValue)
-            {
-                query = query.Where(x => x.IsAutorise == Filter.Autorise);
-            }
+            //if (Filter.Autorise.HasValue)
+            //{
+            //    query = query.Where(x => x.IsAutorise == Filter.Autorise);
+            //}
             if (Filter.Controle.HasValue)
             {
                 if (Filter.Controle.Value)

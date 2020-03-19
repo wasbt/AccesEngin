@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mobile.Services;
 using Mobile.Model;
+using Shared;
 
 namespace Mobile.HttpREST
 {
@@ -23,63 +24,45 @@ namespace Mobile.HttpREST
         }
 
 
-        #region Login Method
-        public static async Task<LoginResultModel> GetLoginResultModel(LoginModel loginModel, string loginUrl, string acceptMediaType = "application/json")
+        #region Get LoginResultModel
+        public static async Task<LoginResultModel> GetLoginResultModel(string userName, string password, string apiBaseUri = AppUrls.Login)
         {
-            try
+            string f5_header = GetF5Header();
+
+            using (var client = new HttpClient())
             {
-                #region Is valid model
-                if (loginModel == null || string.IsNullOrWhiteSpace(loginModel?.Username) || string.IsNullOrWhiteSpace(loginModel?.Password))
-                    return new LoginResultModel() { Error = "Invalid input", ErrorDescription = "Invalid username/ password" };
-                #endregion
+                //setup client
+                client.BaseAddress = new Uri(apiBaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+           //     client.DefaultRequestHeaders.TryAddWithoutValidation("From", f5_header);
 
-                #region IsConnected
-                if (!IsConnected())
-                    return new LoginResultModel() { Error = "Connection problem", ErrorDescription = "No connection available!" };
-                #endregion
-
-                using (var client = new HttpClient())
+                //setup login data
+                var formContent = new FormUrlEncodedContent(new[]
                 {
-                    client.BaseAddress = new Uri(loginUrl);
-                    client.DefaultRequestHeaders.Accept.Clear();
+                     new KeyValuePair<string, string>("grant_type", "password"),
+                     new KeyValuePair<string, string>("username", userName),
+                     new KeyValuePair<string, string>("password", password),
+               //      new KeyValuePair<string, string>("clientAppCode", "myops-mobile"),
+                 });
 
-                    if (!string.IsNullOrWhiteSpace(acceptMediaType))
-                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptMediaType));
+                //send request
+                HttpResponseMessage responseMessage = await client.PostAsync("/Token", formContent);
 
-                    //if (!string.IsNullOrWhiteSpace(fromKey))
-                    //    client.DefaultRequestHeaders.TryAddWithoutValidation("From", fromKey);
+                //get access token from response body
+                var stringResponseJson = await responseMessage.Content.ReadAsStringAsync();
 
-                    var formEncodedContent = new FormUrlEncodedContent(new[]
-                    {
-                         new KeyValuePair<string, string>("grant_type", "password"),
-                         new KeyValuePair<string, string>("username", loginModel.Username),
-                         new KeyValuePair<string, string>("password", loginModel.Password),
-                    });
+                LoginResultModel result = JsonConvert.DeserializeObject<LoginResultModel>(stringResponseJson);
 
-                    var response = await client.PostAsync(string.Empty, formEncodedContent).ConfigureAwait(false);
-
-
-#if DEBUG
-                    // Memory Heavy in production
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    {
-                        var text = await StreamToStringAsync(stream);
-                        return JsonConvert.DeserializeObject<LoginResultModel>(text);
-                    }
-#else
-                    using (var stream = await response.Content.ReadAsStreamAsync())
-                    using (var reader = new StreamReader(stream))
-                    using (var json = new JsonTextReader(reader))
-                    {
-                        return Serializer.Deserialize<LoginResultModel>(json);
-                    }
-#endif
-                }
+                return result;
             }
-            catch (Exception ex)
-            {
-                return new LoginResultModel() { Error = "Error", ErrorDescription = ex.Message };
-            }
+        }
+        #endregion
+
+        #region GetF5Header
+        private static string GetF5Header()
+        {
+            return AppKeys.F5_KEY;
         }
         #endregion
 

@@ -98,7 +98,7 @@ namespace Mobile.ViewModel
                             var accessToken = Settings.AccessToken;
                             var Id = DemandeDetail.FileId;
                             //  await _apiServices.DownloadAsync(Id, accessToken);
-                            Device.OpenUri(new Uri(Constants.BaseApiAddress + "api/File/" + DemandeDetail.FileId));
+                            Device.OpenUri(new Uri(AppUrls.BaseUrl + "api/File/" + DemandeDetail.FileId));
                          //   await Xamarin.Essentials.Browser.OpenAsync(Constants.BaseApiAddress+ "api/File/" + DemandeDetail.FileId + ".pdf");
 
                         }
@@ -167,7 +167,7 @@ namespace Mobile.ViewModel
                     {
                         DemandeAccesEnginId = Id,
                         DateSortie = DateTime.Now,
-                        StatutDemandeId = (int)DemandeStatus.Accepter
+                     //   StatutDemandeId = (int)DemandeStatus.Accepter
                     };
                     try
                     {

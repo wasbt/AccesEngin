@@ -14,7 +14,6 @@
           <Property Name="TypeCheckListId" Type="bigint" Nullable="false" />
           <Property Name="Observation" Type="nvarchar(max)" />
           <Property Name="TypeEnginId" Type="bigint" Nullable="false" />
-          <Property Name="IsAutorise" Type="bit" Nullable="false" />
           <Property Name="DatePlannification" Type="datetime" Nullable="false" />
           <Property Name="NatureMatiereId" Type="bigint" />
           <Property Name="AppFileId" Type="bigint" />
@@ -1152,7 +1151,6 @@
           <Property Name="TypeCheckListId" Type="Int64" Nullable="false" />
           <Property Name="Observation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TypeEnginId" Type="Int64" Nullable="false" />
-          <Property Name="IsAutorise" Type="Boolean" Nullable="false" />
           <Property Name="DatePlannification" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NatureMatiereId" Type="Int64" />
           <Property Name="AppFileId" Type="Int64" />
@@ -1942,7 +1940,6 @@
                 <ScalarProperty Name="AppFileId" ColumnName="AppFileId" />
                 <ScalarProperty Name="NatureMatiereId" ColumnName="NatureMatiereId" />
                 <ScalarProperty Name="DatePlannification" ColumnName="DatePlannification" />
-                <ScalarProperty Name="IsAutorise" ColumnName="IsAutorise" />
                 <ScalarProperty Name="TypeEnginId" ColumnName="TypeEnginId" />
                 <ScalarProperty Name="Observation" ColumnName="Observation" />
                 <ScalarProperty Name="TypeCheckListId" ColumnName="TypeCheckListId" />
