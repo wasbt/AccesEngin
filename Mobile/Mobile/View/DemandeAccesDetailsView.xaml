@@ -111,6 +111,7 @@
                             Style="{StaticResource valueLabel}"
                             Text="{Binding DemandeDetail.Observation}" />
                     </StackLayout>
+                    
                     <StackLayout HorizontalOptions="Fill" IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}">
                         <Button
                             BackgroundColor="Gray"
@@ -121,6 +122,7 @@
                             Text="Pièce jointe"
                             TextColor="White" />
                     </StackLayout>
+                    
                     <StackLayout
                         HorizontalOptions="Fill"
                         IsVisible="False"
@@ -174,7 +176,7 @@
                             <DataTrigger
                                 Binding="{Binding DemandeDetail.Statut}"
                                 TargetType="StackLayout"
-                                Value="Accepté">
+                                Value="En attente">
                                 <Setter Property="IsVisible" Value="True" />
                             </DataTrigger>
                         </StackLayout.Triggers>
@@ -185,7 +187,32 @@
                             Text="Controler"
                             TextColor="Black" />
                     </StackLayout>
-
+                    
+                    <StackLayout
+                        IsVisible="False"
+                        Orientation="Vertical"
+                        VerticalOptions="End">
+                        <StackLayout.Triggers>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.Statut}"
+                                TargetType="StackLayout"
+                                Value="Autorisé">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding DemandeDetail.Statut}"
+                                TargetType="StackLayout"
+                                Value="Non autorisé">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </StackLayout.Triggers>
+                        <Button
+                            BackgroundColor="#FFC107"
+                            Command="{Binding GetResultCommand}"
+                            FontSize="10"
+                            Text="Resultat"
+                            TextColor="Black" />
+                    </StackLayout>
                 </StackLayout>
             </Frame>
 

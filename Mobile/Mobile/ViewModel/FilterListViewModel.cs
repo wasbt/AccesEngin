@@ -105,16 +105,20 @@ namespace Mobile.ViewModel
         {
             DemandeStatusList = new List<DemandeStatus>()
             {
-              //  DemandeStatus.Accepter,
+                DemandeStatus.en_cours_de_traitement,
+                DemandeStatus.En_attente,
                 DemandeStatus.Refuser,
+                DemandeStatus.Autorise,
+                DemandeStatus.Non_autorise,
+                DemandeStatus.Expirer,
+                DemandeStatus.Sortir,
             };
 
             ControlList = new List<Control>()
             {
                 new Control { OnlyControle = false, Name = "Non contrôlée" },
                 new Control { OnlyControle = true, Name = "Contrôlée" }
-        };
-
+            };
 
             TypeCheckList = (await Api.GetTypeCheckListAsync()).data;
         }

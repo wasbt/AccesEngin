@@ -72,6 +72,20 @@ namespace Mobile.ViewModel
                 });
             }
         }
+
+        public ICommand GetResultCommand
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    var mdp = Application.Current.MainPage as MasterDetailPage;
+                    await mdp.Detail.Navigation.PushAsync(new SearchResultsView(DemandeDetail.Id));
+                });
+            }
+        }
+
+
         public ICommand OpenPdfCommand
         {
             get
@@ -99,7 +113,7 @@ namespace Mobile.ViewModel
                             var Id = DemandeDetail.FileId;
                             //  await _apiServices.DownloadAsync(Id, accessToken);
                             Device.OpenUri(new Uri(AppUrls.BaseUrl + "api/File/" + DemandeDetail.FileId));
-                         //   await Xamarin.Essentials.Browser.OpenAsync(Constants.BaseApiAddress+ "api/File/" + DemandeDetail.FileId + ".pdf");
+                            //   await Xamarin.Essentials.Browser.OpenAsync(Constants.BaseApiAddress+ "api/File/" + DemandeDetail.FileId + ".pdf");
 
                         }
                         else if (status != PermissionStatus.Unknown)
@@ -167,7 +181,7 @@ namespace Mobile.ViewModel
                     {
                         DemandeAccesEnginId = Id,
                         DateSortie = DateTime.Now,
-                     //   StatutDemandeId = (int)DemandeStatus.Accepter
+                        StatutDemandeId = (int)DemandeStatus.En_attente
                     };
                     try
                     {
