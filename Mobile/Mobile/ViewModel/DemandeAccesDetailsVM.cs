@@ -12,6 +12,8 @@ using Shared.Models;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XF.Material.Forms.UI.Dialogs;
+using XF.Material.Forms.UI.Dialogs.Configurations;
 
 namespace Mobile.ViewModel
 {
@@ -141,24 +143,31 @@ namespace Mobile.ViewModel
             {
                 return new Command<long>(async (Id) =>
                 {
-                    PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
-                    {
-                        InputType = InputType.Name,
-                        Placeholder = "Motif",
-                        OkText = "Valider",
-                        Title = "Valider la demande",
-                    });
-                    if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                    var input = await MaterialDialog.Instance.InputAsync(title: "Valider la demande",
+                   confirmingText: "Valider", dismissiveText: "non", inputPlaceholder: "Motif",
+                   configuration: new MaterialInputDialogConfiguration { TintColor = Color.FromHex("#289851"),InputTextColor = Color.FromHex("#289851") });
+
+                    //PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                    //{
+                    //    InputType = InputType.Name,
+                    //    Placeholder = "Motif",
+                    //    OkText = "Valider",
+                    //    Title = "Valider la demande",
+                    //});
+
+                    if (!string.IsNullOrWhiteSpace(input))
                     {
                         var result = new ValiderDemande()
                         {
                             DemandeAccesEnginId = Id,
-                            Motif = pResult.Text,
+                            Motif = input,
                             DateSortie = DateTime.Now,
                             StatutDemandeId = (int)DemandeStatus.Refuser
 
                         };
+                        UserDialogs.Instance.ShowLoading("Chargement...");
                         await Api.ValiderDemandeAsync(result);
+                        UserDialogs.Instance.HideLoading();
                         var mdp = Application.Current.MainPage as MasterDetailPage;
                         MessagingCenter.Send<DemandeAccesDetailsVM>(this, Constants.MESSAGE_RefreshList);
                         await mdp.Detail.Navigation.PopAsync(true);
@@ -177,23 +186,34 @@ namespace Mobile.ViewModel
             {
                 return new Command<long>(async (Id) =>
                 {
-                    var result = new ValiderDemande()
-                    {
-                        DemandeAccesEnginId = Id,
-                        DateSortie = DateTime.Now,
-                        StatutDemandeId = (int)DemandeStatus.En_attente
-                    };
-                    try
-                    {
-                        await Api.ValiderDemandeAsync(result);
-                        MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
-                        var mdp = Application.Current.MainPage as MasterDetailPage;
-                        await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
-                    }
-                    catch (Exception)
-                    {
+                    var decision = await MaterialDialog.Instance.ConfirmAsync(message: "êtes vous sur de vouloir valider cette demande?",
+                                 configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                 title: "Confirmation",
+                                 confirmingText: "Oui",
+                                 dismissiveText: "Non");
 
-                        throw;
+                    if (decision == true)
+                    {
+                        var result = new ValiderDemande()
+                        {
+                            DemandeAccesEnginId = Id,
+                            DateSortie = DateTime.Now,
+                            StatutDemandeId = (int)DemandeStatus.En_attente
+                        };
+                        try
+                        {
+
+                            UserDialogs.Instance.ShowLoading("Chargement...");
+                            await Api.ValiderDemandeAsync(result);
+                            UserDialogs.Instance.HideLoading();
+                            MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
+                            var mdp = Application.Current.MainPage as MasterDetailPage;
+                            await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+
+                        }
+                        catch (Exception)
+                        {
+                        }
                     }
 
                 });

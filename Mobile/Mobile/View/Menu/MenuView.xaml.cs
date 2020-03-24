@@ -31,12 +31,12 @@ namespace Mobile.View.Menu
                 MenuList.Add(page1);
             }
 
-            var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "search", TargetType = typeof(SearchView) };
+            //var page2 = new MasterPageItem() { Title = "Rechercher", Icon = "search", TargetType = typeof(SearchView) };
             var page3 = new MasterPageItem() { Title = "Se déconnecter", Icon = "logout", TargetType = typeof(Login) };
 
 
             // Adding menu items to menuList
-            MenuList.Add(page2);
+            //MenuList.Add(page2);
             MenuList.Add(page3);
 
 

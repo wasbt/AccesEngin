@@ -46,68 +46,19 @@
                                     HasShadow="False">
                                     <StackLayout>
                                         <Grid Grid.Column="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="40*" />
-                                                <ColumnDefinition Width="30*" />
-                                                <ColumnDefinition Width="20*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Label
+                                          
+                                            <Label 
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
                                                 FontFamily="SemiBold"
                                                 FontSize="14"
                                                 Text="{Binding TypeEnginName}"
                                                 TextColor="Black" />
-
+                                          
                                             <Frame
+                                                HorizontalOptions="EndAndExpand"
                                                 Grid.Column="1"
-                                                Padding="1,2,2,2"
-                                                BackgroundColor="#34b7eb"
-                                                CornerRadius="5"
-                                                HasShadow="False"
-                                                HorizontalOptions="FillAndExpand">
-                                                <Frame.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding OnlyControle}"
-                                                        TargetType="Frame"
-                                                        Value="true">
-                                                        <Setter Property="BackgroundColor" Value="#34b7eb" />
-                                                    </DataTrigger>
-                                                    <DataTrigger
-                                                        Binding="{Binding OnlyControle}"
-                                                        TargetType="Frame"
-                                                        Value="false">
-                                                        <Setter Property="IsVisible" Value="False" />
-                                                    </DataTrigger>
-
-                                                </Frame.Triggers>
-                                                <Label
-                                                    FontAttributes="Bold"
-                                                    FontFamily="SemiBold"
-                                                    FontSize="14"
-                                                    HorizontalOptions="Center"
-                                                    TextColor="White">
-                                                    <Label.Triggers>
-                                                        <DataTrigger
-                                                            Binding="{Binding OnlyControle}"
-                                                            TargetType="Label"
-                                                            Value="true">
-                                                            <Setter Property="IsVisible" Value="true" />
-                                                            <Setter Property="BackgroundColor" Value="#34b7eb" />
-                                                            <Setter Property="Text" Value="Controlée" />
-                                                        </DataTrigger>
-                                                        <DataTrigger
-                                                            Binding="{Binding OnlyControle}"
-                                                            TargetType="Label"
-                                                            Value="false">
-                                                            <Setter Property="IsVisible" Value="False" />
-                                                        </DataTrigger>
-                                                    </Label.Triggers>
-                                                </Label>
-                                            </Frame>
-                                            <Frame
-                                                Grid.Column="2"
-                                                Padding="1,2,2,2"
+                                                Padding="2,2,2,2"
                                                 BackgroundColor="{Binding StatutColor}"
                                                 CornerRadius="5"
                                                 HasShadow="False"

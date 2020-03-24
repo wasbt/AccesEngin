@@ -29,7 +29,6 @@ namespace Mobile.View
         public DemandeCheckListAdd ()
 		{
 			InitializeComponent ();
-          
         }
 
         protected override void OnAppearing()
