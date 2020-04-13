@@ -37,12 +37,7 @@
         VerticalOptions="Center">
         <StackLayout Padding="0,3" Orientation="Vertical">
             <Entry Placeholder="Matricule" Text="{Binding Matricule}" />
-            <Picker
-                Title="Non controlée"
-                HorizontalOptions="FillAndExpand"
-                ItemDisplayBinding="{Binding Name}"
-                ItemsSource="{Binding ControlList}"
-                SelectedItem="{Binding SelectedControl}" />
+            
             <Picker
                 Title="Statut demande"
                 ItemsSource="{Binding DemandeStatusList}"

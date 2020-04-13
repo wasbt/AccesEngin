@@ -39,18 +39,6 @@ namespace Mobile
         public App()
         {
             InitializeComponent();
-            #region Hot Reload
-#if DEBUG
-            try
-            {
-                HotReloader.Current.Run(this);
-            }
-            catch
-            {
-
-            }
-#endif 
-            #endregion
             XF.Material.Forms.Material.Init(this);
             NavigationService.Configure(nameof(Login), typeof(Login));
             NavigationService.Configure(nameof(ListDemandeView), typeof(ListDemandeView));
@@ -72,7 +60,11 @@ namespace Mobile
                 }
                 else
                 {
-                    AppHelper.SetMainPageAsMasterDetailPage(new ListDemandeView());
+                    var navPage = new NavigationPage(new ListDemandeView());
+                    Application.Current.MainPage = navPage;
+
+                    navPage.BarBackgroundColor = Color.FromHex("#202965");
+                    navPage.BarTextColor = Color.FromHex("#FFFFFF"); 
                     Constants.IsLoggedIn = true;
                 }
                 Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;

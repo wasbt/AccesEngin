@@ -6,7 +6,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Lottie.Forms.Droid;
 using Acr.UserDialogs;
 using Plugin.Permissions;
 using Plugin.Media  ;
@@ -14,6 +13,9 @@ using Plugin.CurrentActivity;
 using System.IO;
 using System.Linq;
 using Plugin.FirebasePushNotification;
+using Lottie.Forms.Droid;
+using FormsToolkit;
+using Xamarin.Forms.Platform.Android;
 
 namespace Mobile.Droid
 {
@@ -47,9 +49,25 @@ namespace Mobile.Droid
             //string dbName = "accesEnginsDB.db3";
             //string dbPath = Path.Combine(folderPath, dbName);
             LoadApplication(new App());
-            Window.SetStatusBarColor(Android.Graphics.Color.Rgb(35, 129, 70)); //here
+            Window.SetStatusBarColor(Android.Graphics.Color.Rgb(255, 255, 255)); //here
             FirebasePushNotificationManager.ProcessIntent(this, Intent);
-
+            MessagingService.Current.Subscribe<Xamarin.Forms.Color>("ChangeStatutBarColor", (page, color) =>
+            {
+                try
+                {
+                    if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+                    {
+                        // Change the StatutBarColor
+                        Window.SetStatusBarColor(new Android.Graphics.Color(color.ToAndroid()));
+                        Window.SetNavigationBarColor(new Android.Graphics.Color(color.ToAndroid()));
+                        //Window.SetDecorCaptionShade(DecorCaptionShade.Light);
+                    }
+                }
+                catch (Exception Ex)
+                {
+                    Toast.MakeText(this, Ex.Message, ToastLength.Short).Show();
+                }
+            });
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

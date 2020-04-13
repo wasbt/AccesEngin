@@ -6,7 +6,7 @@
     xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:local="clr-namespace:Mobile.Controls"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
-    BackgroundColor="#289851">
+    BackgroundColor="#FFFFFF">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,49 +15,80 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout
-            Padding="20"
-            BackgroundColor="#289851"
-            BindingContext="{Binding Source={StaticResource vm}}"
-            Orientation="Vertical"
-            Spacing="20"
-            VerticalOptions="Center">
+        <StackLayout>
+            <StackLayout Padding="20">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="SF Pro Text Heavy"
+                    FontSize="30"
+                    Text="DigiControl."
+                    TextColor="#2D377A" />
+            </StackLayout>
+            <StackLayout Padding="20">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="SF Pro Text Heavy"
+                    FontSize="22"
+                    Text="Authentification"
+                    TextColor="#1D2451" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="SF Pro Text Heavy"
+                    FontSize="15"
+                    Text="Connecter-vous avec votre identifiant et mot de passe"
+                    TextColor="#282C52" />
+            </StackLayout>
+            <StackLayout
+                Padding="20"
+                BindingContext="{Binding Source={StaticResource vm}}"
+                Orientation="Vertical"
+                Spacing="20"
+                VerticalOptions="Center">
 
-            <!--<material:MaterialTextField
-                ErrorText="Error Text"
-                HelperText="Helper Text"
-                InputType="Email"
-                Placeholder="Email"
-                Text="{Binding Username}" />
 
-            <material:MaterialTextField
-                ErrorText="Error Text"
-                HelperText="Helper Text"
-                InputType="Password"
-                Placeholder="Mot de passe"
-                Text="{Binding Password}" />-->
 
-            <local:CustomEntryRenderer
-                EntryLineButtomColor="White"
-                Placeholder="Email"
-                PlaceholderColor="White"
-                Text="{Binding Username}"
-                TextColor="White" />
-            <local:CustomEntryRenderer
-                EntryLineButtomColor="White"
-                IsPassword="True"
-                Placeholder="Password"
-                PlaceholderColor="White"
-                Text="{Binding Password}"
-                TextColor="White" />
+                <local:CustomEntryRenderer
+                    BorderColor="#F2F3F4"
+                    EntryLineButtomColor="Transparent"
+                    Icon="msg.png"
+                    Placeholder="Identifiant"
+                    PlaceholderColor="Gray"
+                    Text="{Binding Username}"
+                    TextColor="Gray" />
 
-            <Button
-                BackgroundColor="White"
-                Command="{Binding Source={StaticResource vm}, Path=LoginCommand}"
-                FontSize="10"
-                Text="Connexion"
-                TextColor="#289851" />
+                <local:CustomEntryRenderer
+                    BorderColor="#F2F3F4"
+                    EntryLineButtomColor="Transparent"
+                    Icon="lock.png"
+                    IsPassword="True"
+                    Placeholder="Mot de passe"
+                    PlaceholderColor="Gray"
+                    Text="{Binding Password}"
+                    TextColor="Gray" />
 
+                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                    <StackLayout HorizontalOptions="Start" Orientation="Vertical">
+                        <Switch HorizontalOptions="Start" OnColor="#00A996" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="SF Pro Text Heavy"
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Se souvenir de moi"
+                            TextColor="#30355D" />
+                    </StackLayout>
+                </StackLayout>
+                <Button
+                    Padding="0,0,0,5"
+                    BackgroundColor="#252F6D"
+                    Command="{Binding Source={StaticResource vm}, Path=LoginCommand}"
+                    FontSize="17"
+                    Text="Se connecter"
+                    TextColor="White" />
+
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </Base:BaseView>

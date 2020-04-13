@@ -6,12 +6,18 @@
     xmlns:Base="clr-namespace:Mobile.View.Base"
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     xmlns:controls="clr-namespace:Mobile.Controls"
+    xmlns:fontawesome="clr-namespace:FontAwesome"
+    xmlns:local="clr-namespace:Mobile.Converters"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
     Title="Liste contrôles">
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Command="{Binding OpenPopUpCommand}"
             Icon="filter"
+            Order="Primary" />
+        <ToolbarItem
+            Command="{Binding Logout}"
+            Icon="logout"
             Order="Primary" />
         <controls:BindableToolbarItem
             Command="{Binding SyncDataLocalToServer}"
@@ -23,76 +29,136 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
+            <local:ToUpperConverter x:Key="UpperCaseConverter" />
+            <local:ConcatenateFontToTextConverter x:Key="ConcatenateConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="#F3F5FF">
+            <Frame
+                Margin="0,-40,-40,0"
+                Padding="0,40,40,0"
+                BackgroundColor="#202965"
+                CornerRadius="45"
+                HeightRequest="120">
+                <Label
+                    Margin="15,0,0,0"
+                    FontFamily="SF Pro Display Bold"
+                    FontSize="14"
+                    LineHeight="22"
+                    Text="Aujourd'hui"
+                    TextColor="#FFFFFF" />
+            </Frame>
             <ListView
                 x:Name="listView"
+                Margin="20,-40,20,0"
+                BackgroundColor="Transparent"
                 CachingStrategy="RecycleElement"
                 HasUnevenRows="True"
-                ItemsSource="{Binding Items}">
+                HorizontalScrollBarVisibility="Never"
+                ItemsSource="{Binding Items}"
+                SeparatorVisibility="None">
                 <ListView.Behaviors>
                     <behaviors:ListViewBehavior />
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <ContentView Padding="5,10" BackgroundColor="White">
+                            <ContentView Padding="5,10" BackgroundColor="Transparent">
                                 <Frame
                                     Padding="10,15"
                                     BackgroundColor="White"
+                                    CornerRadius="10"
                                     HasShadow="False">
                                     <StackLayout>
                                         <Grid Grid.Column="0">
-                                          
-                                            <Label 
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="80" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
                                                 FontFamily="SemiBold"
                                                 FontSize="14"
                                                 Text="{Binding TypeEnginName}"
                                                 TextColor="Black" />
-                                          
-                                            <Frame
-                                                HorizontalOptions="EndAndExpand"
-                                                Grid.Column="1"
-                                                Padding="2,2,2,2"
-                                                BackgroundColor="{Binding StatutColor}"
-                                                CornerRadius="5"
-                                                HasShadow="False"
-                                                IsVisible="{Binding VisibleStatut}">
-                                                <Label
-                                                    BackgroundColor="{Binding StatutColor}"
-                                                    FontAttributes="Bold"
-                                                    FontFamily="SemiBold"
-                                                    FontSize="14"
-                                                    HorizontalOptions="Center"
-                                                    Text="{Binding Statut}"
-                                                    TextColor="White" />
-                                            </Frame>
-                                        </Grid>
-                                        <Grid>
                                             <Label
+                                                Grid.Row="1"
                                                 Grid.Column="0"
                                                 FontFamily="SemiBold"
-                                                FontSize="10"
+                                                FontSize="13"
                                                 Text="{Binding TypeCheckListName}"
                                                 TextColor="Gray" />
 
+                                            <StackLayout
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Margin="0"
+                                                Padding="5"
+                                                BackgroundColor="#EBE4FA"
+                                                HorizontalOptions="Start"
+                                                Orientation="Horizontal"
+                                                VerticalOptions="Center">
+                                                <StackLayout HorizontalOptions="Start" Orientation="Vertical">
+                                                    <Label
+                                                        BackgroundColor="#EBE4FA"
+                                                        FontFamily="{StaticResource FontAwesomeRegular}"
+                                                        FontSize="10"
+                                                        HorizontalOptions="Start"
+                                                        Text="{x:Static fontawesome:FontAwesomeIcons.User}"
+                                                        TextColor="#5A2CB2" />
+                                                </StackLayout>
+                                                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Vertical">
+                                                    <Label
+                                                        FontFamily="{StaticResource FontAwesomeBrands}"
+                                                        FontSize="12"
+                                                        HorizontalOptions="Start"
+                                                        Text="Mohammed BEN ALLAL"
+                                                        TextColor="#5A2CB2"
+                                                        VerticalOptions="Center" />
+                                                </StackLayout>
+                                            </StackLayout>
+
+
+
+
                                             <Label
+                                                Grid.Row="2"
                                                 Grid.Column="1"
+                                                Padding="3"
+                                                BackgroundColor="#E9EBFC"
                                                 FontAttributes="None"
                                                 FontSize="Default"
-                                                HorizontalOptions="EndAndExpand"
+                                                HorizontalOptions="Start"
                                                 Text="{Binding DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
-                                                TextColor="Gray"
+                                                TextColor="#7076B2"
                                                 VerticalOptions="CenterAndExpand" />
 
-
-
                                         </Grid>
+
+                                        <StackLayout
+                                            Margin="0,15,0,0"
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontFamily="SemiBold"
+                                                FontSize="14"
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding Statut, Converter={StaticResource UpperCaseConverter}}"
+                                                TextColor="{Binding StatutColor}" />
+                                            <Label
+                                                FontAttributes="None"
+                                                FontSize="Default"
+                                                HorizontalOptions="End"
+                                                Text="&gt;"
+                                                TextColor="Gray"
+                                                VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
                                     </StackLayout>
                                 </Frame>
                             </ContentView>

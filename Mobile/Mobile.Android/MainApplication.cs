@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.OS;
 using Android.Runtime;
+using Firebase;
 using Plugin.FirebasePushNotification;
 using System;
 using System.Collections.Generic;
@@ -34,9 +35,11 @@ namespace Mobile.Droid
 
             //If debug you should reset the token each time.
 #if DEBUG
-              FirebasePushNotificationManager.Initialize(this,true);
+            Firebase.FirebaseApp.InitializeApp(this);
 #else
-            FirebasePushNotificationManager.Initialize(this, false);
+           // FirebaseApp.InitializeApp(this);
+            //FirebasePushNotificationManager.Initialize(this, false);
+
 #endif
 
             //Handle notification when app is closed here

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="launcher_background">#FFFFFF</color>
-    <color name="colorPrimary">#289851</color>
-    <color name="colorPrimaryDark">#289851</color>
-    <color name="colorAccent">#289851</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="ColorTransparent">#00000000</color>
-    <color name="color_action_bar">#289851</color>
+    <color name="color_action_bar">#FFFFFF</color>
 </resources>

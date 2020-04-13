@@ -11,15 +11,16 @@
     <item name="windowActionBar">false</item>
     <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
     <!-- colorPrimary is used for the default action bar background -->
-    <item name="colorPrimary">#289851</item>
+    <item name="colorPrimary">#FFFFFF</item>
     <!-- colorPrimaryDark is used for the status bar -->
     <item name="colorPrimaryDark">#1976D2</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#289851</item>
+    <item name="colorAccent">#FFFFFF</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
+    <item name="android:windowLightStatusBar">true</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
 
@@ -33,12 +34,15 @@
   </style>
 
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-    <item name="colorAccent">#289851</item>
+    <item name="colorAccent">#FFFFFF</item>
+    <item name="android:windowLightStatusBar">true</item>
+
   </style>
   <style name="splashscreen" parent="Theme.AppCompat.Light.DarkActionBar">
     <!--background splash image-->
     <item name="android:windowBackground">@drawable/splash_background</item>
     <!--status bar color-->
+    <item name="android:windowLightStatusBar">true</item>
     <!--no title bar-->
     <item name="android:windowNoTitle">true</item>
     <!--fullscreen -->

@@ -12,7 +12,7 @@ namespace Mobile
         public const string BaseUrl = "https://myopsapi.azurewebsites.net/";
         //public const string BaseUrl = "http://192.168.1.118:6028";
 #else
-    public const string BaseUrl = "https://myopsapi.ocpgroup.ma";
+        public const string BaseUrl = "https://myopsapi.azurewebsites.net/";
 #endif
 
 

@@ -1,6 +1,8 @@
 ﻿using Mobile.Extensions;
+using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
+using Mobile.View;
 using Mobile.View.PopUp;
 using Newtonsoft.Json;
 using PropertyChanged;
@@ -217,6 +219,19 @@ namespace Mobile.ViewModel
 
             }
         }
+        public ICommand Logout
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    await Task.Delay(300);
+                    Settings.ClearSettings();
+                    App.Current.MainPage = new Login();
+                });
+            }
+        }
+
     }
 
 }

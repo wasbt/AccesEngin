@@ -31,20 +31,23 @@ namespace Mobile.Behaviors
                 ((ListView)sender).SelectedItem = null;
                 return;
             }
+                            (App.Current.MainPage as NavigationPage).PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
+            ((ListView)sender).SelectedItem = null;
 
-            //Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
-            var mdp = Application.Current.MainPage as MasterDetailPage;
+            ////Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));
+            //var mdp = Application.Current.MainPage as MasterDetailPage;
 
-            if (selectedDemande.OnlyControle)
-            {
-                mdp.Detail.Navigation.PushAsync(new SearchResultsView(selectedDemande.Id));
-                ((ListView)sender).SelectedItem = null;
-            }
-            else
-            {
-                mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
-                ((ListView)sender).SelectedItem = null;
-            }
+            //if (selectedDemande.OnlyControle)
+            //{
+            //    //mdp.Detail.Navigation.PushAsync(new SearchResultsView(selectedDemande.Id));
+            //    (App.Current.MainPage as NavigationPage).PushAsync(new SearchResultsView(selectedDemande.Id));
+            //    ((ListView)sender).SelectedItem = null;
+            //}
+            //else
+            //{
+            //    mdp.Detail.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
+            //    ((ListView)sender).SelectedItem = null;
+            //}
         }
 
         protected override void OnDetachingFrom(ListView bindable)
