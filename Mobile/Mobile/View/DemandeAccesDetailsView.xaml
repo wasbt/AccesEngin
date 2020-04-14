@@ -39,183 +39,258 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ContentView Padding="5,10" BackgroundColor="White">
-            <Frame
-                Padding="10,15"
-                BackgroundColor="White"
-                HasShadow="True">
-                <StackLayout
-                    Margin="0,0,0,0"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand">
-                    <StackLayout
-                        Orientation="Vertical"
-                        Spacing="10"
-                        VerticalOptions="Start">
-                        <StackLayout>
-                            <Label Style="{StaticResource TitreLabel}" Text="{Binding DemandeDetail.TypeCheckListName}" />
-                        </StackLayout>
-                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                            <Label
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource nameLabel}"
-                                Text="Type d'engin" />
-                            <Label
-                                HorizontalOptions="EndAndExpand"
-                                Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.TypeEnginName}" />
-                        </StackLayout>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                            <Label
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource nameLabel}"
-                                Text="Date de plannification" />
-                            <Label
-                                HorizontalOptions="EndAndExpand"
-                                Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}" />
-                        </StackLayout>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                            <Label
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource nameLabel}"
-                                Text="Crée par" />
-                            <Label
-                                HorizontalOptions="EndAndExpand"
-                                Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.CreatedEmail}" />
-                        </StackLayout>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
+        <ScrollView>
 
-                        <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                            <Label
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource nameLabel}"
-                                Text="Date de création" />
-                            <Label
-                                HorizontalOptions="EndAndExpand"
-                                Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.CreatedOn}" />
-                        </StackLayout>
-                        <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand">
+            <StackLayout>
+                <StackLayout>
+                    <Frame
+                        Margin="0,-40,-40,0"
+                        Padding="0,40,40,0"
+                        BackgroundColor="{StaticResource Primary}"
+                        CornerRadius="45"
+                        HeightRequest="120">
+
                         <Label
+                            Margin="30,0,0,0"
+                            Padding="0"
+                            FontFamily="SF Pro Display Regular"
+                            FontSize="14"
+                            LineHeight="22"
+                            Text="{Binding DemandeDetail.TypeCheckListName}"
+                            TextColor="#FFFFFF" />
+                    </Frame>
+                </StackLayout>
+                <Frame Margin="20,-60,20,0" CornerRadius="15">
+                    <StackLayout>
+
+                        <Label
+                            FontAttributes="Bold"
                             HorizontalOptions="StartAndExpand"
                             Style="{StaticResource nameLabel}"
-                            Text="Observation" />
+                            Text="Observation"
+                            TextColor="{StaticResource Primary}" />
+
                         <Label
+                            FontSize="14"
                             HorizontalOptions="StartAndExpand"
                             Style="{StaticResource valueLabel}"
-                            Text="{Binding DemandeDetail.Observation}" />
+                            Text="{Binding DemandeDetail.Observation}"
+                            TextColor="#636990" />
                     </StackLayout>
-                    
-                    <StackLayout HorizontalOptions="Fill" IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}">
-                        <Button
-                            BackgroundColor="Gray"
-                            Command="{Binding OpenPdfCommand}"
-                            CommandParameter="{Binding DemandeDetail.Id}"
-                            FontSize="10"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Pièce jointe"
-                            TextColor="White" />
-                    </StackLayout>
-                    
-                    <StackLayout
-                        HorizontalOptions="Fill"
-                        IsVisible="False"
-                        Orientation="Horizontal">
+                </Frame>
+                <StackLayout>
+                    <Label
+                        Padding="22"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="INFORMATIONS"
+                        TextColor="#212332" />
 
-                        <StackLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
-                                TargetType="StackLayout"
-                                Value="True">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
-                                TargetType="StackLayout"
-                                Value="False">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-
-                        </StackLayout.Triggers>
-
-                        <Button
-                            BackgroundColor="#289851"
-                            Command="{Binding ValiderCommand}"
-                            CommandParameter="{Binding DemandeDetail.Id}"
-                            FontSize="10"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Accepter"
-                            TextColor="White" />
-                        <Button
-                            BackgroundColor="#DC3545"
-                            Command="{Binding RefuserCommand}"
-                            CommandParameter="{Binding DemandeDetail.Id}"
-                            FontSize="10"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Refuser"
-                            TextColor="White" />
-                    </StackLayout>
-
-                    <StackLayout
-                        IsVisible="False"
-                        Orientation="Vertical"
-                        VerticalOptions="End">
-                        <StackLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="Refusé">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="En attente">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                        </StackLayout.Triggers>
-                        <Button
-                            BackgroundColor="#FFC107"
-                            Command="{Binding GoToControleCommand}"
-                            FontSize="10"
-                            Text="Controler"
-                            TextColor="Black" />
-                    </StackLayout>
-                    
-                    <StackLayout
-                        IsVisible="False"
-                        Orientation="Vertical"
-                        VerticalOptions="End">
-                        <StackLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="Autorisé">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DemandeDetail.Statut}"
-                                TargetType="StackLayout"
-                                Value="Non autorisé">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                        </StackLayout.Triggers>
-                        <Button
-                            BackgroundColor="#FFC107"
-                            Command="{Binding GetResultCommand}"
-                            FontSize="10"
-                            Text="Resultat"
-                            TextColor="Black" />
-                    </StackLayout>
                 </StackLayout>
-            </Frame>
+                <Frame
+                    Margin="20,0,20,20"
+                    BackgroundColor="#FFFFFF"
+                    CornerRadius="15">
+                    <StackLayout>
+                        <StackLayout Margin="5,0,0,0">
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Type d'engin"
+                                TextColor="#B9BCCB" />
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeDetail.TypeEnginName}"
+                                TextColor="{StaticResource Primary}" />
 
-        </ContentView>
+                        </StackLayout>
+                        <BoxView
+                            Margin="10"
+                            BackgroundColor="#E9ECF9"
+                            HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0">
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Date de plannification"
+                                TextColor="#B9BCCB" />
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeDetail.DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}"
+                                TextColor="{StaticResource Primary}" />
+                        </StackLayout>
+                        <BoxView
+                            Margin="10"
+                            BackgroundColor="#E9ECF9"
+                            HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0">
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Crée par"
+                                TextColor="#B9BCCB" />
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeDetail.CreatedEmail}"
+                                TextColor="{StaticResource Primary}" />
+
+                        </StackLayout>
+                        <BoxView
+                            Margin="10"
+                            BackgroundColor="#E9ECF9"
+                            HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0">
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Date création"
+                                TextColor="#B9BCCB" />
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeDetail.CreatedOn}"
+                                TextColor="{StaticResource Primary}" />
+
+                        </StackLayout>
+                        <BoxView
+                            Margin="10"
+                            BackgroundColor="#E9ECF9"
+                            HeightRequest="1" />
+                        <StackLayout Margin="5,0,0,0">
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                FontSize="14"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Date création"
+                                TextColor="#B9BCCB" />
+                            <Label
+                                FontFamily="SF Pro Display Regular"
+                                HorizontalOptions="StartAndExpand"
+                                Style="{StaticResource valueLabel}"
+                                Text="{Binding DemandeDetail.CreatedOn}"
+                                TextColor="{StaticResource Primary}" />
+
+                        </StackLayout>
+                        <BoxView
+                            Margin="10"
+                            BackgroundColor="#E9ECF9"
+                            HeightRequest="1" />
+                        <StackLayout HorizontalOptions="Fill" IsVisible="{Binding DemandeDetail.FileName, Converter={converters:StringToBoolConverter}}">
+                            <Button
+                                BackgroundColor="Gray"
+                                Command="{Binding OpenPdfCommand}"
+                                CommandParameter="{Binding DemandeDetail.Id}"
+                                FontSize="10"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Pièce jointe"
+                                TextColor="White" />
+                        </StackLayout>
+
+                        <StackLayout
+                            HorizontalOptions="Fill"
+                            IsVisible="False"
+                            Orientation="Horizontal">
+
+                            <StackLayout.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                    TargetType="StackLayout"
+                                    Value="True">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.ButtonValideIsVisible}"
+                                    TargetType="StackLayout"
+                                    Value="False">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+
+                            </StackLayout.Triggers>
+
+                            <Button
+                                BackgroundColor="#289851"
+                                Command="{Binding ValiderCommand}"
+                                CommandParameter="{Binding DemandeDetail.Id}"
+                                FontSize="10"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Accepter"
+                                TextColor="White" />
+                            <Button
+                                BackgroundColor="#DC3545"
+                                Command="{Binding RefuserCommand}"
+                                CommandParameter="{Binding DemandeDetail.Id}"
+                                FontSize="10"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Refuser"
+                                TextColor="White" />
+                        </StackLayout>
+
+                        <StackLayout
+                            IsVisible="False"
+                            Orientation="Vertical"
+                            VerticalOptions="End">
+                            <StackLayout.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.Statut}"
+                                    TargetType="StackLayout"
+                                    Value="Refusé">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.Statut}"
+                                    TargetType="StackLayout"
+                                    Value="En attente">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                            </StackLayout.Triggers>
+                            <Button
+                                BackgroundColor="#FFC107"
+                                Command="{Binding GoToControleCommand}"
+                                FontSize="10"
+                                Text="Controler"
+                                TextColor="Black" />
+                        </StackLayout>
+
+                        <StackLayout
+                            IsVisible="False"
+                            Orientation="Vertical"
+                            VerticalOptions="End">
+                            <StackLayout.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.Statut}"
+                                    TargetType="StackLayout"
+                                    Value="Autorisé">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding DemandeDetail.Statut}"
+                                    TargetType="StackLayout"
+                                    Value="Non autorisé">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                            </StackLayout.Triggers>
+                            <Button
+                                BackgroundColor="#FFC107"
+                                Command="{Binding GetResultCommand}"
+                                FontSize="10"
+                                Text="Resultat"
+                                TextColor="Black" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+        </ScrollView>
     </ContentPage.Content>
 </Base:BaseView>

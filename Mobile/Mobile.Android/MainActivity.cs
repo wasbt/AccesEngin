@@ -16,6 +16,7 @@ using Plugin.FirebasePushNotification;
 using Lottie.Forms.Droid;
 using FormsToolkit;
 using Xamarin.Forms.Platform.Android;
+using Shared;
 
 namespace Mobile.Droid
 {
@@ -51,7 +52,7 @@ namespace Mobile.Droid
             LoadApplication(new App());
             Window.SetStatusBarColor(Android.Graphics.Color.Rgb(255, 255, 255)); //here
             FirebasePushNotificationManager.ProcessIntent(this, Intent);
-            MessagingService.Current.Subscribe<Xamarin.Forms.Color>("ChangeStatutBarColor", (page, color) =>
+            MessagingService.Current.Subscribe<Xamarin.Forms.Color>(ConstsAccesEngin.ChangeStatutBarColor, (page, color) =>
             {
                 try
                 {
@@ -59,7 +60,7 @@ namespace Mobile.Droid
                     {
                         // Change the StatutBarColor
                         Window.SetStatusBarColor(new Android.Graphics.Color(color.ToAndroid()));
-                        Window.SetNavigationBarColor(new Android.Graphics.Color(color.ToAndroid()));
+                        //Window.SetNavigationBarColor(new Android.Graphics.Color(Xamarin.Forms.Color.White.ToAndroid()));
                         //Window.SetDecorCaptionShade(DecorCaptionShade.Light);
                     }
                 }

@@ -5,6 +5,7 @@ using Mobile.Services;
 using Mobile.View;
 using Mobile.View.Menu;
 using Plugin.Toast;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,9 +61,9 @@ namespace Mobile.ViewModel
                         navPage.BarBackgroundColor = Color.FromHex("#202965");
                         navPage.BarTextColor = Color.FromHex("#FFFFFF");
 
-                        ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
-                        ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
-                        MessagingService.Current.SendMessage("ChangeStatutBarColor", Color.FromHex("#202965"));
+                        //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
+                        //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
+                        MessagingService.Current.SendMessage(ConstsAccesEngin.ChangeStatutBarColor, (Color)Application.Current.Resources["Primary"]);
                     }
                     else
                     {

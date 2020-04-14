@@ -37,7 +37,8 @@ namespace Shared
         //File
         public const string ContainerName = "DigiControl";
 
-
+        //Messaging Kyes
+        public const string ChangeStatutBarColor = "ChangeStatutBarColor";
     }
 
 }

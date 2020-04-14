@@ -1,4 +1,5 @@
-﻿using Mobile.Data;
+﻿using FormsToolkit;
+using Mobile.Data;
 using Mobile.Helpers;
 using Mobile.Interfaces;
 using Mobile.Services;
@@ -6,6 +7,7 @@ using Mobile.View;
 using Mobile.View.Menu;
 using Newtonsoft.Json;
 using Plugin.FirebasePushNotification;
+using Shared;
 using Shared.Models;
 using SQLite;
 using System;
@@ -39,6 +41,7 @@ namespace Mobile
         public App()
         {
             InitializeComponent();
+
             XF.Material.Forms.Material.Init(this);
             NavigationService.Configure(nameof(Login), typeof(Login));
             NavigationService.Configure(nameof(ListDemandeView), typeof(ListDemandeView));
@@ -54,17 +57,23 @@ namespace Mobile
 
             if (AppHelper.IsTokenStillValid)
             {
+                MessagingService.Current.Unsubscribe(ConstsAccesEngin.ChangeStatutBarColor);
+
                 if (Constants.IsLoggedIn)
                 {
+                  
                     AppHelper.SetMainPageAsMasterDetailPage();
                 }
                 else
                 {
+
                     var navPage = new NavigationPage(new ListDemandeView());
                     Application.Current.MainPage = navPage;
 
                     navPage.BarBackgroundColor = Color.FromHex("#202965");
-                    navPage.BarTextColor = Color.FromHex("#FFFFFF"); 
+                    navPage.BarTextColor = Color.FromHex("#FFFFFF");
+
+
                     Constants.IsLoggedIn = true;
                 }
                 Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;

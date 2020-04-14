@@ -9,7 +9,9 @@
         <Color x:Key="AppBackgroundColor">AliceBlue</Color>
         <Color x:Key="NavigationBarColor">#1976D2</Color>
         <Color x:Key="NavigationBarTextColor">White</Color>
+        <Color x:Key="WhiteBarColor">White</Color>
         <Color x:Key="NormalTextColor">Black</Color>
+        <Color x:Key="Primary">#202965</Color>
 
         <ResourceDictionary>
             <Style

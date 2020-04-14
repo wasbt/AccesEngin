@@ -1,4 +1,5 @@
-﻿using Mobile.Extensions;
+﻿using FormsToolkit;
+using Mobile.Extensions;
 using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
@@ -8,6 +9,7 @@ using Newtonsoft.Json;
 using PropertyChanged;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
+using Shared;
 using Shared.API.IN;
 using Shared.API.OUT;
 using Shared.Models;
@@ -68,6 +70,11 @@ namespace Mobile.ViewModel
                 MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
                      configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
             }
+
+            //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
+            //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
+            MessagingService.Current.SendMessage(ConstsAccesEngin.ChangeStatutBarColor, (Color)Application.Current.Resources["Primary"]);
+        //    AppHelper.SetMainPageAsMasterDetailPage();
 
             Xamarin.Essentials.Connectivity.ConnectivityChanged += Connectivity_ConnectivityChangedAsync;
 
@@ -227,6 +234,8 @@ namespace Mobile.ViewModel
                 {
                     await Task.Delay(300);
                     Settings.ClearSettings();
+                    MessagingService.Current.SendMessage(ConstsAccesEngin.ChangeStatutBarColor, (Color)Application.Current.Resources["WhiteBarColor"]);
+
                     App.Current.MainPage = new Login();
                 });
             }

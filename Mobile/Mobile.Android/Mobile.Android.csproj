@@ -135,6 +135,10 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj">
+      <Project>{71D97417-B9D5-49B3-80F3-0B15ECE6B6F5}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mobile\Mobile.csproj">
       <Project>{8FB62719-8016-43A9-85B2-5D19550427A0}</Project>
       <Name>Mobile</Name>
