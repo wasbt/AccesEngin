@@ -104,14 +104,14 @@ namespace Mobile.ViewModel
             {
                 await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
                                             msDuration: MaterialSnackbar.DurationLong,
-                                            configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#289851") });
+                                            configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialSnackbarConfiguration() { BackgroundColor = Xamarin.Forms.Color.FromHex("#2B3673") });
                
                     var listItems = await App.Database.GetItemsAsync();
                     var resultat = listItems.LastOrDefault();
                     var resultatApi = new HttpREST.RESTServiceResponse<Model.ResultatExigenceModel>();
                     if (resultat != null)
                     {
-                        using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours...",configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration { TintColor = Color.FromHex("#289851") }))
+                        using (await MaterialDialog.Instance.LoadingDialogAsync(message: "Synchronisation en cours...",configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialLoadingDialogConfiguration { TintColor = Color.FromHex("#2B3673") }))
                         {
 
 
@@ -126,13 +126,13 @@ namespace Mobile.ViewModel
 
                         if (resultatApi.success)
                         {
-                            await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                            await MaterialDialog.Instance.AlertAsync(message: "Synchronisation complete", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") });
                             var test = await App.Database.DeleteItemAsync(resultat);
                             MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
                         }
                         else
                         {
-                            await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                            await MaterialDialog.Instance.AlertAsync(message: "Échec de synchronisation", configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") });
                         }
 
                     }

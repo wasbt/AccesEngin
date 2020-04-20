@@ -31,7 +31,11 @@ namespace Mobile.Behaviors
                 ((ListView)sender).SelectedItem = null;
                 return;
             }
-                            (App.Current.MainPage as NavigationPage).PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
+            (App.Current.MainPage as NavigationPage).PushAsync(new DemandeAccesDetailsView(selectedDemande.Id));
+
+
             ((ListView)sender).SelectedItem = null;
 
             ////Application.Current.MainPage.Navigation.PushAsync(new DemandeAccesDetailsView(selectedDemande));

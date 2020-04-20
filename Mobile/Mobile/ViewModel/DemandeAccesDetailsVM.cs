@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using FormsToolkit;
 using Mobile.Helpers;
 using Mobile.Model;
 using Mobile.Services;
@@ -6,6 +7,7 @@ using Mobile.View;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using PropertyChanged;
+using Shared;
 using Shared.API.OUT;
 using Shared.ENUMS;
 using Shared.Models;
@@ -69,8 +71,7 @@ namespace Mobile.ViewModel
             {
                 return new Command(async () =>
                 {
-                    var mdp = Application.Current.MainPage as MasterDetailPage;
-                    await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                   await (App.Current.MainPage as NavigationPage).PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
                 });
             }
         }
@@ -81,8 +82,17 @@ namespace Mobile.ViewModel
             {
                 return new Command(async () =>
                 {
-                    var mdp = Application.Current.MainPage as MasterDetailPage;
-                    await mdp.Detail.Navigation.PushAsync(new SearchResultsView(DemandeDetail.Id));
+                    var navPage = new NavigationPage(new ListDemandeView());
+                    Application.Current.MainPage = navPage;
+                    navPage.BarBackgroundColor = Color.FromHex("#038F7E");
+                    navPage.BarTextColor = Color.FromHex("#FFFFFF");
+
+                    //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
+                    //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
+                    MessagingService.Current.SendMessage(ConstsAccesEngin.ChangeStatutBarColor, (Color)Application.Current.Resources["Second"]);
+
+                    await (App.Current.MainPage as NavigationPage).PushAsync(new SearchResultsView(DemandeDetail.Id));
+
                 });
             }
         }
@@ -145,7 +155,7 @@ namespace Mobile.ViewModel
                 {
                     var input = await MaterialDialog.Instance.InputAsync(title: "Valider la demande",
                    confirmingText: "Valider", dismissiveText: "non", inputPlaceholder: "Motif",
-                   configuration: new MaterialInputDialogConfiguration { TintColor = Color.FromHex("#289851"),InputTextColor = Color.FromHex("#289851") });
+                   configuration: new MaterialInputDialogConfiguration { TintColor = Color.FromHex("#2B3673"),InputTextColor = Color.FromHex("#2B3673") });
 
                     //PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
                     //{
@@ -187,7 +197,7 @@ namespace Mobile.ViewModel
                 return new Command<long>(async (Id) =>
                 {
                     var decision = await MaterialDialog.Instance.ConfirmAsync(message: "êtes vous sur de vouloir valider cette demande?",
-                                 configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                 configuration: new MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") },
                                  title: "Confirmation",
                                  confirmingText: "Oui",
                                  dismissiveText: "Non");
@@ -207,8 +217,7 @@ namespace Mobile.ViewModel
                             await Api.ValiderDemandeAsync(result);
                             UserDialogs.Instance.HideLoading();
                             MessagingCenter.Send(this, Constants.MESSAGE_RefreshControlList);
-                            var mdp = Application.Current.MainPage as MasterDetailPage;
-                            await mdp.Detail.Navigation.PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
+                            await (App.Current.MainPage as NavigationPage).PushAsync(new DemandeCheckListAdd(DemandeDetail.Id));
 
                         }
                         catch (Exception)

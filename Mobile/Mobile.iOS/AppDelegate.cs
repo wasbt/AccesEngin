@@ -28,6 +28,7 @@ namespace Mobile.iOS
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
             XF.Material.iOS.Material.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             //! added using System.IO;
             //string folderPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "..", "Library");
             //string dbName = "accesEnginsDB.db3";

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item>
-    <color android:color="#289851"/>
+    <color android:color="#333D83"/>
   </item>
   <item>
     <bitmap
-    android:src="@drawable/checkList"
+    android:src="@drawable/logodigicontrol"
     android:tileMode="disabled"
     android:gravity="center"/>
   </item>

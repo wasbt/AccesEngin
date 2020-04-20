@@ -8,7 +8,7 @@
 
     <StackLayout Orientation="Vertical">
 
-        <StackLayout BackgroundColor="#289851" HeightRequest="75">
+        <StackLayout BackgroundColor="#2B3673" HeightRequest="75">
 
             <Label
                 FontSize="20"

@@ -9,88 +9,168 @@
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     x:Name="currentPage"
     Title="Contrôle"
-    EnableBackButtonOverride="True">
+    EnableBackButtonOverride="True"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid>
+        <StackLayout>
+            <StackLayout x:Name="Header">
+                <Frame
+                    Margin="0,-50,-50,0"
+                    Padding="0,50,50,0"
+                    BackgroundColor="#202965"
+                    CornerRadius="50"
+                    HasShadow="True"
+                    HeightRequest="150">
+                    <Grid>
+                        <Grid.Padding>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0, 11, 8, 0" />
+                            </OnPlatform>
+                        </Grid.Padding>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout
+                            Grid.Column="0"
+                            Margin="0"
+                            VerticalOptions="Center">
+                            <Label
+                                Margin="35,0,0,0"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalOptions="Start"
+                                Text="Contrôle"
+                                TextColor="White" />
+                        </StackLayout>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="35,0,0,0"
+                            FontAttributes="None"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text="Controle normal"
+                            TextColor="White" />
+                    </Grid>
+                </Frame>
+            </StackLayout>
+            <!--<Frame
+                Margin="0,-40,-40,0"
+                Padding="0,40,40,0"
+                BackgroundColor="#202965"
+                CornerRadius="45"
+                HeightRequest="100">
+                <Label
+                    Margin="20,20,0,0"
+                    FontFamily="SF Pro Display Bold"
+                    FontSize="15"
+                    LineHeight="22"
+                    Text="CONTROLE NORMALE"
+                    TextColor="#FFFFFF" />
+            </Frame>-->
+            <Grid>
 
-            <StackLayout x:Name="hotelStack" Padding="1,0,1,0">
-                <ListView
-                    x:Name="AddControlList"
-                    BackgroundColor="White"
-                    CachingStrategy="RetainElement"
-                    HasUnevenRows="True"
-                    IsGroupingEnabled="True"
-                    ItemsSource="{Binding Items}"
-                    SeparatorVisibility="None">
+                <StackLayout x:Name="hotelStack" Padding="1,0,1,0">
+                    <ListView
+                        x:Name="AddControlList"
+                        BackgroundColor="White"
+                        CachingStrategy="RetainElement"
+                        HasUnevenRows="True"
+                        IsGroupingEnabled="True"
+                        ItemsSource="{Binding Items}"
+                        SeparatorVisibility="None">
 
-                    <ListView.Behaviors>
-                        <behaviors:ListViewBehaviorCheckBox />
-                    </ListView.Behaviors>
+                        <ListView.Behaviors>
+                            <behaviors:ListViewBehaviorCheckBox />
+                        </ListView.Behaviors>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <View:AddControlViewCell />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.GroupHeaderTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Padding="10,10,10,10" BackgroundColor="#FFC107">
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontFamily="Poppins"
-                                        FontSize="Medium"
-                                        HorizontalOptions="FillAndExpand"
-                                        Text="{Binding Name}"
-                                        TextColor="Black"
-                                        VerticalTextAlignment="Center" />
-                                    <!--<Grid.GestureRecognizers>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <View:AddControlViewCell />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="10,10,10,10">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontFamily="Poppins"
+                                            FontSize="Medium"
+                                            HorizontalOptions="FillAndExpand"
+                                            Text="{Binding Name}"
+                                            TextColor="Black"
+                                            VerticalTextAlignment="Center" />
+                                        <!--<Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference currentPage}, Path=BindingContext.RefreshItemsCommand}"  NumberOfTapsRequired="1" CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>-->
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.GroupHeaderTemplate>
-                    <ListView.Footer>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.GroupHeaderTemplate>
+                        <ListView.Footer>
 
-                        <StackLayout Padding="5,5,5,5">
+                            <StackLayout Padding="5,5,5,5">
 
-                            <StackLayout Padding="10" Orientation="Horizontal">
-                                <Label Text="Autorisé" TextColor="Black" />
-                                <CheckBox HorizontalOptions="EndAndExpand" IsChecked="{Binding IsAutorise}" />
-                            </StackLayout>
-                            <Image
-                                x:Name="FileImage"
-                                HeightRequest="100"
-                                IsVisible="{Binding ShowImage}"
-                                Source="{Binding ImageSource}"
-                                WidthRequest="100" />
-                            <StackLayout HorizontalOptions="Fill" Orientation="Horizontal">
+                                <Frame
+                                    Margin="20,5,20,5"
+                                    HasShadow="True"
+                                    OutlineColor="#E9EBFC">
+                                    <StackLayout Orientation="Horizontal">
+                                        <CheckBox
+                                            HorizontalOptions="Start"
+                                            IsChecked="{Binding IsAutorise}"
+                                            VerticalOptions="Center"
+                                            Color="{StaticResource Primary}" />
+                                        <Label
+                                            FontSize="16"
+                                            Text="Autorisé"
+                                            TextColor="{StaticResource Primary}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Frame>
+                                <Frame
+                                    Margin="20,5,20,0"
+                                    HasShadow="True"
+                                    OutlineColor="#E9EBFC">
+                                    <StackLayout Orientation="Horizontal">
+                                        <ImageButton
+                                            Command="{Binding PickPhotoCommand}"
+                                            HeightRequest="30"
+                                            HorizontalOptions="Start"
+                                            Source="camera"
+                                            WidthRequest="30" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="Ajouter une photo"
+                                            TextColor="{StaticResource Primary}"
+                                            VerticalOptions="Center" />
+                                        <Image
+                                            x:Name="FileImage"
+                                            HeightRequest="30"
+                                            HorizontalOptions="EndAndExpand"
+                                            IsVisible="{Binding ShowImage}"
+                                            Source="{Binding ImageSource}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="30" />
+                                    </StackLayout>
+                                </Frame>
+
                                 <Button
-                                    BackgroundColor="Teal"
-                                    Command="{Binding PickPhotoCommand}"
-                                    FontSize="15"
-                                    Text="Choisir image"
-                                    TextColor="White" />
-                                <Button
-                                    BackgroundColor="Teal"
-                                    Command="{Binding TakePhotoCommand}"
-                                    FontSize="15"
-                                    Text="Prendre photo"
-                                    TextColor="White" />
+                                    BackgroundColor="#00AB96"
+                                    BorderRadius="5"
+                                    Command="{Binding AddCommand}"
+                                    CommandParameter="{Binding Items}"
+                                    Text=" Soumettre "
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
                             </StackLayout>
-                            <Button
-                                BackgroundColor="Green"
-                                BorderRadius="5"
-                                Command="{Binding AddCommand}"
-                                CommandParameter="{Binding Items}"
-                                Text=" Soumettre "
-                                TextColor="White"
-                                VerticalOptions="Center" />
-                        </StackLayout>
-                    </ListView.Footer>
-                </ListView>
-            </StackLayout>
-        </Grid>
+                        </ListView.Footer>
+                    </ListView>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </Mobile:CoolContentPage>

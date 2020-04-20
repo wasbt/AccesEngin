@@ -12,8 +12,13 @@
         <Color x:Key="WhiteBarColor">White</Color>
         <Color x:Key="NormalTextColor">Black</Color>
         <Color x:Key="Primary">#202965</Color>
+        <Color x:Key="Second">#038F7E</Color>
 
         <ResourceDictionary>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="#202965" />
+                <Setter Property="BarTextColor" Value="#FFFFFF" />
+            </Style>
             <Style
                 ApplyToDerivedTypes="True"
                 CanCascade="True"

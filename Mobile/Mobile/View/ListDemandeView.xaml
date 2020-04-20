@@ -4,12 +4,14 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
+    xmlns:FF="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:behaviors="clr-namespace:Mobile.Behaviors"
     xmlns:controls="clr-namespace:Mobile.Controls"
     xmlns:fontawesome="clr-namespace:FontAwesome"
     xmlns:local="clr-namespace:Mobile.Converters"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
-    Title="Liste contrôles">
+    Title="Liste contrôles"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Command="{Binding OpenPopUpCommand}"
@@ -36,7 +38,72 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="#F3F5FF">
-            <Frame
+            <StackLayout x:Name="Header">
+                <Frame
+                    Margin="0,-50,-50,0"
+                    Padding="0,50,50,0"
+                    BackgroundColor="#202965"
+                    CornerRadius="50"
+                    HasShadow="True"
+                    HeightRequest="150">
+                    <Grid>
+                        <Grid.Padding>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0, 11, 8, 0" />
+                            </OnPlatform>
+                        </Grid.Padding>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout
+                            Grid.Column="0"
+                            Margin="0"
+                            VerticalOptions="Center">
+                            <Label
+                                Margin="35,0,0,0"
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                HorizontalOptions="Start"
+                                Text="Liste des Missions"
+                                TextColor="White" />
+                        </StackLayout>
+                        <StackLayout
+                            Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalOptions="Center">
+                            <StackLayout.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="Android" Value="0, 0, 20, 0" />
+                                </OnPlatform>
+                            </StackLayout.Margin>
+                            <FF:CachedImage
+                                Aspect="Fill"
+                                HeightRequest="30"
+                                HorizontalOptions="EndAndExpand"
+                                Source="filter"
+                                WidthRequest="30">
+                                <FF:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenPopUpCommand}" NumberOfTapsRequired="1" />
+                                </FF:CachedImage.GestureRecognizers>
+                            </FF:CachedImage>
+                            <FF:CachedImage
+                                Aspect="Fill"
+                                HeightRequest="30"
+                                HorizontalOptions="EndAndExpand"
+                                IsVisible="True"
+                                Source="logout"
+                                WidthRequest="30">
+                                <FF:CachedImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Logout}" NumberOfTapsRequired="1" />
+                                </FF:CachedImage.GestureRecognizers>
+                            </FF:CachedImage>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </StackLayout>
+
+            <!--<Frame
                 Margin="0,-40,-40,0"
                 Padding="0,40,40,0"
                 BackgroundColor="#202965"
@@ -49,7 +116,7 @@
                     LineHeight="22"
                     Text="Aujourd'hui"
                     TextColor="#FFFFFF" />
-            </Frame>
+            </Frame>-->
             <ListView
                 x:Name="listView"
                 Margin="20,-40,20,0"
@@ -74,10 +141,7 @@
                                     <StackLayout>
                                         <Grid Grid.Column="0">
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="80" />
-                                            </Grid.ColumnDefinitions>
+
                                             <Label
                                                 Grid.Column="0"
                                                 FontAttributes="Bold"
@@ -116,7 +180,7 @@
                                                         FontFamily="{StaticResource FontAwesomeBrands}"
                                                         FontSize="12"
                                                         HorizontalOptions="Start"
-                                                        Text="Mohammed BEN ALLAL"
+                                                        Text="{Binding CreatedBy}"
                                                         TextColor="#5A2CB2"
                                                         VerticalOptions="Center" />
                                                 </StackLayout>

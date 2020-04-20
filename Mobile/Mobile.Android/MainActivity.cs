@@ -8,7 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
 using Plugin.Permissions;
-using Plugin.Media  ;
+using Plugin.Media;
 using Plugin.CurrentActivity;
 using System.IO;
 using System.Linq;
@@ -17,6 +17,7 @@ using Lottie.Forms.Droid;
 using FormsToolkit;
 using Xamarin.Forms.Platform.Android;
 using Shared;
+using Xamarin.Forms;
 
 namespace Mobile.Droid
 {
@@ -46,6 +47,8 @@ namespace Mobile.Droid
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
             AnimationViewRenderer.Init();
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
+
             //! added using System.IO;
             //string dbName = "accesEnginsDB.db3";
             //string dbPath = Path.Combine(folderPath, dbName);
@@ -60,7 +63,7 @@ namespace Mobile.Droid
                     {
                         // Change the StatutBarColor
                         Window.SetStatusBarColor(new Android.Graphics.Color(color.ToAndroid()));
-                        //Window.SetNavigationBarColor(new Android.Graphics.Color(Xamarin.Forms.Color.White.ToAndroid()));
+                        Window.SetNavigationBarColor(new Android.Graphics.Color(color.ToAndroid()));
                         //Window.SetDecorCaptionShade(DecorCaptionShade.Light);
                     }
                 }
@@ -115,19 +118,28 @@ namespace Mobile.Droid
         {
 
             // retrieve the current xamarin forms page instance
-            var currentpage = (CoolContentPage)
-            Xamarin.Forms.Application.
+            NavigationPage mainPage = App.Current.MainPage as NavigationPage;
+            var tst = Xamarin.Forms.Application.
             Current.MainPage.Navigation.
             NavigationStack.LastOrDefault();
-            if (currentpage?.CustomBackButtonAction != null)
+            var gt = tst.GetType();
+            var fn = gt.FullName;
+
+            if (fn == "Mobile.View.DemandeCheckListAdd")
             {
+
+                var currentpage = (CoolContentPage)
+                Xamarin.Forms.Application.
+                Current.MainPage.Navigation.
+                NavigationStack.LastOrDefault();
+
                 currentpage?.CustomBackButtonAction.Invoke();
             }
             else
             {
                 XF.Material.Droid.Material.HandleBackButton(base.OnBackPressed);
             }
-         
+
         }
     }
 }

@@ -39,54 +39,54 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
 
+        <StackLayout>
             <StackLayout>
-                <StackLayout>
-                    <Frame
-                        Margin="0,-40,-40,0"
-                        Padding="0,40,40,0"
-                        BackgroundColor="{StaticResource Primary}"
-                        CornerRadius="45"
-                        HeightRequest="120">
+                <Frame
+                    Margin="0,-40,-40,0"
+                    Padding="0,40,40,0"
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="45"
+                    HeightRequest="120">
 
-                        <Label
-                            Margin="30,0,0,0"
-                            Padding="0"
-                            FontFamily="SF Pro Display Regular"
-                            FontSize="14"
-                            LineHeight="22"
-                            Text="{Binding DemandeDetail.TypeCheckListName}"
-                            TextColor="#FFFFFF" />
-                    </Frame>
-                </StackLayout>
-                <Frame Margin="20,-60,20,0" CornerRadius="15">
-                    <StackLayout>
-
-                        <Label
-                            FontAttributes="Bold"
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource nameLabel}"
-                            Text="Observation"
-                            TextColor="{StaticResource Primary}" />
-
-                        <Label
-                            FontSize="14"
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource valueLabel}"
-                            Text="{Binding DemandeDetail.Observation}"
-                            TextColor="#636990" />
-                    </StackLayout>
-                </Frame>
-                <StackLayout>
                     <Label
-                        Padding="22"
-                        FontAttributes="Bold"
+                        Margin="30,0,0,0"
+                        Padding="0"
+                        FontFamily="SF Pro Display Regular"
                         FontSize="14"
-                        Text="INFORMATIONS"
-                        TextColor="#212332" />
+                        LineHeight="22"
+                        Text="{Binding DemandeDetail.TypeCheckListName}"
+                        TextColor="#FFFFFF" />
+                </Frame>
+            </StackLayout>
+            <Frame Margin="20,-60,20,0" CornerRadius="15">
+                <StackLayout>
 
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="StartAndExpand"
+                        Style="{StaticResource nameLabel}"
+                        Text="Observation"
+                        TextColor="{StaticResource Primary}" />
+
+                    <Label
+                        FontSize="14"
+                        HorizontalOptions="StartAndExpand"
+                        Style="{StaticResource valueLabel}"
+                        Text="{Binding DemandeDetail.Observation}"
+                        TextColor="#636990" />
                 </StackLayout>
+            </Frame>
+            <StackLayout>
+                <Label
+                    Padding="22"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Text="INFORMATIONS"
+                    TextColor="#212332" />
+
+            </StackLayout>
+            <ScrollView>
                 <Frame
                     Margin="20,0,20,20"
                     BackgroundColor="#FFFFFF"
@@ -148,25 +148,7 @@
                             Margin="10"
                             BackgroundColor="#E9ECF9"
                             HeightRequest="1" />
-                        <StackLayout Margin="5,0,0,0">
-                            <Label
-                                FontFamily="SF Pro Display Regular"
-                                FontSize="14"
-                                HorizontalOptions="FillAndExpand"
-                                Text="Date création"
-                                TextColor="#B9BCCB" />
-                            <Label
-                                FontFamily="SF Pro Display Regular"
-                                HorizontalOptions="StartAndExpand"
-                                Style="{StaticResource valueLabel}"
-                                Text="{Binding DemandeDetail.CreatedOn}"
-                                TextColor="{StaticResource Primary}" />
 
-                        </StackLayout>
-                        <BoxView
-                            Margin="10"
-                            BackgroundColor="#E9ECF9"
-                            HeightRequest="1" />
                         <StackLayout Margin="5,0,0,0">
                             <Label
                                 FontFamily="SF Pro Display Regular"
@@ -289,8 +271,8 @@
                         </StackLayout>
                     </StackLayout>
                 </Frame>
-            </StackLayout>
+            </ScrollView>
+        </StackLayout>
 
-        </ScrollView>
     </ContentPage.Content>
 </Base:BaseView>

@@ -194,7 +194,7 @@ namespace Mobile.ViewModel
 
                     }
                     var resultDialog = await MaterialDialog.Instance.ConfirmAsync(message: "Merci de confirmer votre action!",
-                                       configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                       configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") },
                                        title: "Confirmation",
                                        confirmingText: "Oui",
                                        dismissiveText: "Non");
@@ -229,7 +229,7 @@ namespace Mobile.ViewModel
                         }
                         await PopupNavigation.Instance.PushPopupSingleAsync(new PopUpSuccessAnimationView());
 
-                        await _navigationService.NavigateMasterDetailAsync(nameof(ListDemandeView));
+                        await _navigationService.NavigateAsync(nameof(ListDemandeView));
                     }
 
 
@@ -396,7 +396,7 @@ namespace Mobile.ViewModel
         {
 
             var decision = await MaterialDialog.Instance.ConfirmAsync(message: "êtes vous sur de vouloir fermer cette page?",
-                                   configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") },
+                                   configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") },
                                    title: "Confirmation",
                                    confirmingText: "Oui",
                                    dismissiveText: "Non");

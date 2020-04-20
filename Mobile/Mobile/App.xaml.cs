@@ -96,7 +96,7 @@ namespace Mobile
             {
                 await MaterialDialog.Instance.SnackbarAsync(message: "la connexion est rétablie.",
                                       msDuration: MaterialSnackbar.DurationLong,
-                                      configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#289851") });
+                                      configuration: new MaterialSnackbarConfiguration() { BackgroundColor = Color.FromHex("#2B3673") });
                 var res = await AppHelper.syncControles();
                 if (res)
                 {

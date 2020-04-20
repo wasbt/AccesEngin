@@ -7,43 +7,49 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ContentView Padding="5,5" BackgroundColor="White">
         <Frame
-            Padding="10,15"
+            Margin="15"
             BackgroundColor="White"
+            CornerRadius="15"
             OutlineColor="{Binding ColorCellView}">
             <StackLayout>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label
-                        Grid.Column="0"
-                        FontAttributes="None"
-                        FontSize="Small"
-                        Text="{Binding Name}"
-                        TextColor="Black"
-                        VerticalTextAlignment="Center" />
-
                     <CheckBox
-                        Grid.Column="1"
+                        Grid.Column="0"
                         HeightRequest="20"
                         HorizontalOptions="Start"
                         IsChecked="{Binding IsConforme}"
                         VerticalOptions="Start"
-                        WidthRequest="60" />
+                        WidthRequest="60"
+                        Color="{StaticResource Primary}" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontFamily="SF Pro Display Bold"
+                        FontSize="16"
+                        Text="{Binding Name}"
+                        TextColor="{StaticResource Primary}"
+                        VerticalTextAlignment="Center" />
+
+
 
                 </Grid>
 
-                <Grid>
-                    <Entry
+                <Grid Margin="5">
+                    <local:CustomEntryRenderer
+                        Grid.Row="0"
                         Grid.Column="0"
                         Placeholder="Observation"
                         Text="{Binding Observation, Mode=TwoWay}" />
 
                     <local:NullableRoundedDatePicker
                         x:Name="DatePickerDate"
-                        Grid.Column="1"
+                        Grid.Row="1"
+                        Grid.Column="0"
                         HorizontalOptions="FillAndExpand"
                         IsVisible="{Binding IsHasDate}"
                         MinimumDate="{Binding Source={x:Static sys:DateTime.Now}}"

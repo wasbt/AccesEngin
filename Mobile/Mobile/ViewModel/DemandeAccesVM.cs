@@ -68,8 +68,14 @@ namespace Mobile.ViewModel
             if (!AppHelper.IsConnected)
             {
                 MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
-                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                     configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") });
             }
+            //var navPage = new NavigationPage(new ListDemandeView());
+            //Application.Current.MainPage = navPage;
+
+            //navPage.BarBackgroundColor = Color.FromHex("#202965");
+            //navPage.BarTextColor = Color.FromHex("#FFFFFF");
+
 
             //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#202965");
             //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.FromHex("#FFFFFF");
@@ -125,7 +131,7 @@ namespace Mobile.ViewModel
                 {
                     VisibleIconSync = false;
                     await MaterialDialog.Instance.AlertAsync(message: "Verifier votre connexion",
-                        configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#289851") });
+                        configuration: new XF.Material.Forms.UI.Dialogs.Configurations.MaterialAlertDialogConfiguration { TintColor = Color.FromHex("#2B3673") });
                 }
             };
         }
@@ -141,6 +147,7 @@ namespace Mobile.ViewModel
 
         public DemandeAccesVM()
         {
+            MessagingService.Current.SendMessage(ConstsAccesEngin.ChangeStatutBarColor, (Color)Application.Current.Resources["Primary"]);
 
         }
 

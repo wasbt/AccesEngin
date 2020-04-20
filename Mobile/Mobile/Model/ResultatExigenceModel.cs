@@ -14,7 +14,8 @@ namespace Mobile.Model
       
 
         public DemandeAccesDto DemandeAccesDto { get; set; }
-        public List<Group> ResultatValueGrouping { get; set; }
+        public List<Group> ResultatValueInfoGrouping { get; set; }
+        public List<Group> ResultatValueExigenceGrouping { get; set; }
     }
 
     public class ResultatValue : INotifyPropertyChanged
@@ -38,7 +39,7 @@ namespace Mobile.Model
     {
         public string Key { get; set; }
         public string ColorRubrique { get; set; }
-        public List<ResultatValue> ResultatValue { get; set; }
-
+        public List<ResultatValue> ResultatValueInfo { get; set; }
+        public List<ResultatValue> ResultatValueExigence { get; set; }
     }
 }

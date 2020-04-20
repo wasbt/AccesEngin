@@ -59,7 +59,7 @@
                     <Grid x:Name="OkGrid" Grid.Column="0">
                         <Button
                             x:Name="Ok_btn"
-                            BackgroundColor="#289851"
+                            BackgroundColor="#2B3673"
                             Clicked="Ok_btn_Clicked"
                             Text="ok" />
                     </Grid>

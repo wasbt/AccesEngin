@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Base="clr-namespace:Mobile.View.Base"
+    xmlns:local="clr-namespace:Mobile.Converters"
     xmlns:vm="clr-namespace:Mobile.ViewModel"
     Title="Resultat">
     <ContentPage.Resources>
@@ -19,194 +20,285 @@
                 <Setter Property="FontFamily" Value="Poppins" />
             </Style>
             <x:String x:Key="formatdecimalfourplaces">{0:dd/MM/yyyy}</x:String>
+            <local:ToUpperConverter x:Key="UpperCaseConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <!--<Frame
-                Padding="10,15"
-                BackgroundColor="White"
-                HasShadow="True">
+
+        <Frame
+            Margin="0,6,0,0"
+            Padding="10,0"
+            CornerRadius="30">
+            <Frame.HasShadow>
+                <OnPlatform
+                    x:TypeArguments="x:Boolean"
+                    Android="true"
+                    iOS="false" />
+            </Frame.HasShadow>
+            <StackLayout Margin="0,0,0,0">
+
+                <Frame
+                    Margin="10,0,10,20"
+                    Padding="4"
+                    BorderColor="#a2a6a8"
+                    HasShadow="False">
+                    <Frame.CornerRadius>
+                        <OnPlatform
+                            x:TypeArguments="x:Single"
+                            Android="30"
+                            iOS="25" />
+                    </Frame.CornerRadius>
+                    <StackLayout Padding="0">
+                        <Grid Padding="0" ColumnSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".5*" />
+                                <ColumnDefinition Width=".5*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Frame
+                                Grid.Column="0"
+                                Padding="0"
+                                HasShadow="false">
+                                <Frame.CornerRadius>
+                                    <OnPlatform
+                                        x:TypeArguments="x:Single"
+                                        Android="30"
+                                        iOS="20" />
+                                </Frame.CornerRadius>
+                                <Button
+                                    x:Name="InfoGeneral"
+                                    BackgroundColor="#038F7E"
+                                    Clicked="BtnBesoinExcep"
+                                    FontAttributes="Bold"
+                                    FontSize="12.5"
+                                    HeightRequest="40"
+                                    Text="Info generale"
+                                    TextColor="White">
+                                    <Button.CornerRadius>
+                                        <OnPlatform Android="30" iOS="20" />
+                                    </Button.CornerRadius>
+                                </Button>
+                            </Frame>
+
+                            <Frame
+                                Grid.Column="1"
+                                Padding="0"
+                                HasShadow="false">
+                                <Frame.CornerRadius>
+                                    <OnPlatform
+                                        x:TypeArguments="x:Single"
+                                        Android="30"
+                                        iOS="20" />
+                                </Frame.CornerRadius>
+                                <Button
+                                    x:Name="BtnResultat"
+                                    BackgroundColor="White"
+                                    Clicked="BtnBesoinPrev"
+                                    FontAttributes="Bold"
+                                    FontSize="12.5"
+                                    HeightRequest="40"
+                                    Text="Resultat"
+                                    TextColor="#828491">
+                                    <Button.CornerRadius>
+                                        <OnPlatform Android="30" iOS="20" />
+                                    </Button.CornerRadius>
+                                </Button>
+                            </Frame>
+
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+
                 <StackLayout
-                    Orientation="Vertical"
-                    Spacing="10"
-                    VerticalOptions="Start">
-                    <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                        <Label
-                            FontAttributes="Bold"
-                            HorizontalOptions="StartAndExpand"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.TypeCheckListName}"
-                            TextColor="Black" />
-                        <Label
-                            FontAttributes="Bold"
-                            HorizontalOptions="Center"
-                            Style="{StaticResource nameLabel}"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.AutoriseName}"
-                            TextColor="Black" />
-                        <Frame
-                            Margin="0"
-                            Padding="3,1,3,1"
-                            BackgroundColor="{Binding ResultatExigence.DemandeAccesDto.StatutColor}"
-                            CornerRadius="5"
-                            HasShadow="False"
-                            HorizontalOptions="EndAndExpand">
-                            <Label
-                                BackgroundColor="{Binding ResultatExigence.DemandeAccesDto.StatutColor}"
-                                Text="{Binding ResultatExigence.DemandeAccesDto.Statut}"
-                                TextColor="White" />
-                        </Frame>
-                    </StackLayout>
-                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                    <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                        <Label
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource nameLabel}"
-                            Text="Type d'engin" />
-                        <Label
-                            HorizontalOptions="EndAndExpand"
-                            Style="{StaticResource valueLabel}"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.TypeEnginName}" />
-                    </StackLayout>
-                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                    <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                        <Label
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource nameLabel}"
-                            Text="Date de plannification" />
-                        <Label
-                            HorizontalOptions="EndAndExpand"
-                            Style="{StaticResource valueLabel}"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.DatePlannification, StringFormat={StaticResource formatdecimalfourplaces}}" />
-                    </StackLayout>
-                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
-                    <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                        <Label
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource nameLabel}"
-                            Text="Crée par" />
-                        <Label
-                            HorizontalOptions="EndAndExpand"
-                            Style="{StaticResource valueLabel}"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.CreatedEmail}" />
-                    </StackLayout>
-                    <BoxView BackgroundColor="Gray" HeightRequest="1" />
-
-                    <StackLayout Margin="5,0,0,0" Orientation="Horizontal">
-                        <Label
-                            HorizontalOptions="StartAndExpand"
-                            Style="{StaticResource nameLabel}"
-                            Text="Date de création" />
-                        <Label
-                            HorizontalOptions="EndAndExpand"
-                            Style="{StaticResource valueLabel}"
-                            Text="{Binding ResultatExigence.DemandeAccesDto.CreatedOn, StringFormat={StaticResource formatdecimalfourplaces}}" />
-                    </StackLayout>
-                </StackLayout>
-            </Frame>-->
-
-            <ListView
-                BackgroundColor="Transparent"
-                CachingStrategy="RecycleElement"
-                HasUnevenRows="True"
-                IsPullToRefreshEnabled="False"
-                ItemsSource="{Binding ResultatExigence.ResultatValueGrouping}"
-                SeparatorVisibility="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout VerticalOptions="FillAndExpand">
-                                <StackLayout Padding="5,5" BackgroundColor="{Binding ColorRubrique}">
+                    x:Name="ListInfoGeneral"
+                    BindableLayout.ItemsSource="{Binding ResultatExigence.ResultatValueInfoGrouping}"
+                    VerticalOptions="FillAndExpand">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Margin="0" VerticalOptions="FillAndExpand">
+                                <StackLayout Padding="5,5">
                                     <Label
-                                        BackgroundColor="{Binding ColorRubrique}"
-                                        Font="Bold,15"
-                                        HorizontalOptions="CenterAndExpand"
-                                        Text="{Binding Key}" />
+                                        Margin="20,0,0,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="SF Pro Display Bold"
+                                        FontSize="14"
+                                        Text="{Binding Key}"
+                                        TextColor="#000000" />
                                 </StackLayout>
-                                <StackLayout BindableLayout.ItemsSource="{Binding ResultatValue}">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate>
+                                <Frame
+                                    Margin="20,0"
+                                    CornerRadius="15"
+                                    HasShadow="True">
+                                    <StackLayout BindableLayout.ItemsSource="{Binding ResultatValueInfo}">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
                                                 <Frame Padding="0,5" HasShadow="False">
-                                            <StackLayout
-                                                Padding="5,5"
-                                                HorizontalOptions="Fill"
-                                                Orientation="Horizontal">
-                                                <Grid HorizontalOptions="FillAndExpand">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="24*" />
-                                                        <ColumnDefinition Width="8*" />
-                                                    </Grid.ColumnDefinitions>
                                                     <StackLayout
-                                                        Grid.Column="0"
-                                                        HorizontalOptions="Start"
-                                                        Orientation="Vertical">
-                                                        <Label
-                                                            FontAttributes="None"
-                                                            FontSize="Small"
-                                                            LineBreakMode="WordWrap"
-                                                            Text="{Binding Name}"
-                                                            TextColor="Black" />
-
-                                                    </StackLayout>
-                                                    <StackLayout
-                                                        Grid.Column="1"
+                                                        Margin="0"
+                                                        Padding="10"
                                                         HorizontalOptions="FillAndExpand"
-                                                        IsVisible="{Binding IsInfoG}">
-                                                        <Label
-                                                            Font="Small"
-                                                            HorizontalOptions="Start"
-                                                            Text="{Binding Value}"
-                                                            TextColor="Gray" />
-                                                    </StackLayout>
+                                                        Orientation="Horizontal">
+                                                        <Grid HorizontalOptions="FillAndExpand">
+                                                            <StackLayout
+                                                                Grid.Column="0"
+                                                                HorizontalOptions="Start"
+                                                                Orientation="Vertical">
+                                                                <Label
+                                                                    FontAttributes="None"
+                                                                    FontFamily="SF Pro Display Regular"
+                                                                    FontSize="14"
+                                                                    LineBreakMode="WordWrap"
+                                                                    Text="{Binding Name}"
+                                                                    TextColor="#636990" />
 
-                                                    <StackLayout
-                                                        Grid.Column="1"
-                                                        Padding="1,1,1,1"
-                                                        HorizontalOptions="End"
-                                                        IsVisible="{Binding IsExigence}"
-                                                        VerticalOptions="Center"
-                                                        WidthRequest="100">
-                                                        <Frame
-                                                            Margin="0"
-                                                            Padding="0"
-                                                            BackgroundColor="{Binding Color}"
-                                                            CornerRadius="5"
-                                                            HasShadow="False"
-                                                            VerticalOptions="Center">
-                                                            <Label
-                                                                Font="Small"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding Conform}"
-                                                                TextColor="White"
-                                                                VerticalOptions="Center" />
-                                                        </Frame>
-                                                        <Frame
-                                                            Margin="0"
-                                                            Padding="0"
-                                                            CornerRadius="5"
-                                                            HasShadow="False"
-                                                            VerticalOptions="Center">
-                                                            <Label
-                                                                Font="Small"
-                                                                HorizontalOptions="Center"
-                                                                Text="{Binding Datetime, StringFormat={StaticResource formatdecimalfourplaces}}" 
-                                                                TextColor="Black"
-                                                                VerticalOptions="Center" />
-                                                        </Frame>
+                                                            </StackLayout>
+
+                                                            <StackLayout
+                                                                Grid.Column="1"
+                                                                HorizontalOptions="EndAndExpand"
+                                                                IsVisible="{Binding IsInfoG}">
+                                                                <Label
+                                                                    FontAttributes="Bold"
+                                                                    FontSize="16"
+                                                                    HorizontalOptions="Start"
+                                                                    Text="{Binding Value}"
+                                                                    TextColor="#2D377A" />
+                                                            </StackLayout>
+
+                                                        </Grid>
+
+
                                                     </StackLayout>
-                                                </Grid>
-                                            </StackLayout>
                                                 </Frame>
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </StackLayout>
+                                                <!--<BoxView
+                                                    Margin="10"
+                                                    BackgroundColor="#E9ECF9"
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="FillAndExpand" />-->
+
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </Frame>
                             </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+
+                <ScrollView x:Name="ListResultat" IsVisible="False">
+
+                    <StackLayout
+                        Margin="0"
+                        BindableLayout.ItemsSource="{Binding ResultatExigence.ResultatValueExigenceGrouping}"
+                        VerticalOptions="FillAndExpand">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Margin="0" VerticalOptions="FillAndExpand">
+                                    <StackLayout Padding="5,5">
+                                        <Label
+                                            Margin="20,0,0,0"
+                                            FontAttributes="Bold"
+                                            FontFamily="SF Pro Display Bold"
+                                            FontSize="14"
+                                            Text="{Binding Key}"
+                                            TextColor="#000000" />
+                                    </StackLayout>
+                                    <StackLayout
+                                        Margin="0"
+                                        BindableLayout.ItemsSource="{Binding ResultatValueExigence}"
+                                        HorizontalOptions="FillAndExpand">
+                                        <BindableLayout.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackLayout
+                                                    Padding="15"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Orientation="Horizontal">
+
+                                                    <!--<BoxView
+                                                    Margin="10"
+                                                    BackgroundColor="#E9ECF9"
+                                                    HeightRequest="1"
+                                                    HorizontalOptions="FillAndExpand" />-->
+                                                    <Frame
+                                                        Margin="15,0"
+                                                        CornerRadius="15"
+                                                        HasShadow="True"
+                                                        HorizontalOptions="FillAndExpand">
+
+                                                        <Grid
+                                                            Margin="0"
+                                                            Padding="0"
+                                                            HorizontalOptions="FillAndExpand">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="20" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label
+                                                                Grid.Column="0"
+                                                                FontAttributes="Bold"
+                                                                FontFamily="SF Pro Display Regular"
+                                                                FontSize="14"
+                                                                HorizontalOptions="StartAndExpand"
+                                                                LineBreakMode="WordWrap"
+                                                                Text="{Binding Name}"
+                                                                TextColor="{StaticResource Primary}" />
+
+                                                            <StackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
+                                                                <Label
+                                                                    FontAttributes="Bold"
+                                                                    FontSize="Default"
+                                                                    HorizontalOptions="FillAndExpand"
+                                                                    Text="{Binding Datetime, StringFormat={StaticResource formatdecimalfourplaces}}"
+                                                                    TextColor="#7076B2"
+                                                                    VerticalOptions="Start" />
 
 
-        </StackLayout>
+                                                            </StackLayout>
 
+                                                            <Label
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                Text="{Binding Observation, Mode=TwoWay}" />
+
+                                                            <StackLayout
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                Margin="0,2,0,0"
+                                                                Padding="0"
+                                                                HorizontalOptions="Start"
+                                                                VerticalOptions="Start">
+                                                                <Label
+                                                                    FontAttributes="Bold"
+                                                                    FontFamily="SF Pro Display Bold"
+                                                                    HorizontalOptions="Start"
+                                                                    Text="{Binding Conform, Converter={StaticResource UpperCaseConverter}}"
+                                                                    TextColor="{Binding Color}"
+                                                                    VerticalOptions="Start" />
+                                                            </StackLayout>
+
+                                                        </Grid>
+
+
+                                                    </Frame>
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </BindableLayout.ItemTemplate>
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                </ScrollView>
+            </StackLayout>
+        </Frame>
     </ContentPage.Content>
 </Base:BaseView>
